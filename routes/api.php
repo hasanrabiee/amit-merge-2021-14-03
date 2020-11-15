@@ -1,0 +1,48 @@
+<?php
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
+|
+*/
+
+Route::get('access_token', 'AccessTokenController@generate_token');
+Route::group(['prefix' => 'v1' , 'as' => 'Api.'],function (){
+    Route::group(['prefix' => 'Chat'] , function (){
+        Route::get('ChatStore' , 'ApiController@ChatStore');
+        Route::get('Chat' , 'ApiController@ChatGet');
+        Route::get('ChatAdmin' , 'ApiController@ChatGetAdmin');
+        Route::get('ChatAdminStore' , 'ApiController@ChatStoreAdmin');
+    });
+    Route::group(['prefix' => 'AuditoriumChat'] , function (){
+        Route::get('Get' , 'ApiController@AudituriumChatGet')->name('AudituriumGet');
+        Route::post('Post' , 'ApiController@AudituriumChat')->name('AudituriumPost');
+           });
+    Route::group(['prefix' => 'Lounge'] , function (){
+        Route::get('Get' , 'ApiController@LoungeGet')->name('LoungeGet');
+        Route::post('Post' , 'ApiController@LoungePost')->name('LoungePost');
+        Route::get('Count' , 'ApiController@LoungeCount')->name('LoungeCount');
+           });
+    Route::get('WhatIsUserName' , 'ApiController@WhatIsUserName')->name('WhatIsUserName');
+    Route::post('Login' , 'ApiController@Login');
+    Route::get('Images' , 'ApiController@Images');
+    Route::get('test' , 'WebController@test');
+    Route::get('UserDetails/{ID}' , 'ApiController@UserDetails');
+    Route::get('Booth/{ID}' , 'ApiController@BoothGet');
+    Route::get('color/{Color}' , 'ApiController@hexToRgb');
+    Route::get('ContactUs' , 'ApiController@ContactUs');
+    Route::get('Statistics' , 'ApiController@Statistics');
+    Route::get('Test' , 'ApiController@test');
+    Route::get('hall/full/{HallName}' , 'ApiController@HallIsFull');
+    Route::get('booth/occupied/{HallName}/{Position}' , 'ApiController@PositionIsAvailable');
+    Route::get('JobDetails/{JobID}' , 'ApiController@JobDetails');
+});
+
+

@@ -1,0 +1,21 @@
+       <div class='border rounded'
+                                     style='background-color: #c2c5c5;height: 40px;width: 193px;margin-left: 4px;margin-top: 5px;'>
+                                    <a href='eeeee'>
+                                        <p class='text-left d-inline float-left'
+                                           style='margin-top: 4px;margin-left: 6px;margin-right: 7px;color: rgb(255,255,255);'>
+
+
+                                            CompayName
+
+                                        </p>
+                                    </a>
+                                    <div style='float: right'>
+                                        <button class=' '+BtnStyle+' text-center border rounded-circle' type='button'
+                                                style='width: 30px;margin-left: 34px;height: 28px;padding: 1px;margin-top: 3px;'>
+
+
+                                           Count
+
+                                        </button>
+                                    </div>
+                                </div>
