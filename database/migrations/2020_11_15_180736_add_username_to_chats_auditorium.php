@@ -13,6 +13,7 @@ class AddUsernameToChatsAuditorium extends Migration
      */
     public function up()
     {
+
         Schema::table('auditorium_chats', function (Blueprint $table) {
             $table->string("Username")->nullable();
         });
