@@ -190,7 +190,7 @@
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button onclick="resume_form.submit()" class="btn btn-success btn-block" data-dismiss="modal" type="button">{{__('message.Upload')}}
+                                        <button onclick="resume_form.submit()" class="btn btn-success btn-block" type="button">{{__('message.Upload')}}
                                         </button>
                                     </div>
                                 </div>
