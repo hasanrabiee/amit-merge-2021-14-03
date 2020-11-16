@@ -209,7 +209,7 @@ return [
     //---------Hosein
 
     'Search' => 'Kërko',
-    'Restore' => 'Rikthe',
+    'Restore' => 'Eksporto',
     'Chooseyourboothtype' => 'Zgjedhni llojin tuaj të shtandit',
     'Pleaseaddyourstaffinformation' => 'Ju lutemi shtoni informacionin tuaj të stafit',
     'ModalStepTwoNum1' => 'Ju mund të shtoni email adresat e punonjësve tuaj në listën më poshtë në mënyrë që të menaxhoni dhe t`u përgjigjeni më mirë vizitorëve. Një email regjistrimi do t`u dërgohet punonjësve tuaj të zgjedhur.',

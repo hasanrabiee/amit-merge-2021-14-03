@@ -18,7 +18,7 @@ trait Uploader
     {
         $client = new S3Client([
             'endpoint' => "https://" . env('WAS_BUCKET') . ".s3." . env('WASABI_DEFAULT_REGION') . ".wasabisys.com/",
-            'region' => env('WASABI_DEFAULT_REGION'),
+            'region' => env('WASABI_DEFAULT_REGION', 'eu-central-1'),
             'version' => 'latest',
             'credentials' => [
                 'key' => env('WAS_ACCESS_KEY_ID'),
@@ -40,6 +40,10 @@ trait Uploader
             'ACL' => 'public-read'
         ]);*/
         return $result['ObjectURL'];
+
+
+
+
     }
 
 

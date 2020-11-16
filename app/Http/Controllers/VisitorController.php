@@ -25,6 +25,26 @@ class VisitorController extends Controller
 
 
 
+    public function Resume(Request $request){
+
+
+        $this->validate($request,
+        [
+            'resume' => 'required|mimes:pdf'
+        ]
+        );
+
+
+
+        $user = Auth::user();
+        $user->resume = $request->hasFile('resume') ? $this->S3Doc($request, 'resume') : $user->resume;
+
+
+
+
+
+    }
+
 
 
 

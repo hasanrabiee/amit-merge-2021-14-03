@@ -225,10 +225,12 @@
                                                    class="btn btn-primary btn-lg d-block" role="button"
                                                    style="margin-bottom: 10px;color: #ffffff">{{__('message.BackUp')}}:
                                                     <i class="fa fa-hdd-o"></i> </a>
-                                                <a href="{{route('Admin.BackUp')}}"
-                                                   class="btn btn-secondary btn-lg d-block" role="button"
+                                                <a href="{{route('Admin.Export')}}"
+                                                   class="btn btn-success btn-lg d-block" role="button"
                                                    style="margin-bottom: 10px;color: #ffffff">{{__('message.Restore')}}:
-                                                    <i class="fa fa-upload"></i> </a>
+                                                    <i class="fa fa-file-excel-o"></i> </a>
+
+
                                             </div>
 
 

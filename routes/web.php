@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth']] , function (){
 
         Route::get('index', 'AdminController@index')->name('index');
         Route::get('BackUp', 'AdminController@BackUp')->name('BackUp');
+        Route::get('Export', 'AdminController@Export')->name('Export');
         Route::get('Reset', 'AdminController@Reset')->name('Reset')->middleware(['password.confirm']);
         Route::post('SendMessage', 'AdminController@SendMessage')->name('SendMessage');
         Route::get('InboxChatGet', 'AdminController@InboxChatGet')->name('InboxChatGet');
@@ -144,6 +145,7 @@ Route::group(['middleware' => ['auth']] , function (){
         Route::get('/VisitHistory', 'VisitorController@VisitHistory')->name('VisitHistory');
         Route::get('/Payment', 'VisitorController@Payment')->name('Payment');
         Route::get('/Contact', 'VisitorController@Contact')->name('Contact');
+        Route::post('/Resume', 'VisitorController@Resume')->name('Resume');
         Route::post('/Chat', 'VisitorController@Chat')->name('Chat');
         Route::get('ChatGet', 'VisitorController@ChatGet')->name('ChatGet');
 

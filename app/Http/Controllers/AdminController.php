@@ -22,6 +22,9 @@ use App\Statistics;
 use App\Traits\Uploader;
 use App\User;
 use Carbon\Carbon;
+use DB;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use \Illuminate\Support\Facades\Response;
@@ -31,7 +34,6 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
-use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminController extends Controller
@@ -299,6 +301,16 @@ class AdminController extends Controller
         Artisan::call('backup:run');
         Alert::success('BackUp Created Successfully');
         return redirect()->back();
+    }
+
+
+    public function Export(){
+
+
+        return Excel::download(new UsersExport, 'users.xlsx');
+
+
+
     }
 
     public function Restore()

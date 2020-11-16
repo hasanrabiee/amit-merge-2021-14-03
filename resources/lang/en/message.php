@@ -207,7 +207,7 @@ return [
     'RedirectToPanel' => 'Redirect To Panel',
     'Search' => 'Search',
     //------------V2--------------
-    'Restore' => 'Restore',
+    'Restore' => 'Export Users Info',
     'Chooseyourboothtype' => 'Choose your booth type',
     'Pleaseaddyourstaffinformation' => 'Please add your staff information',
     'ModalStepTwoNum1' => 'You can add your employees emails in the list below in order to manage and respond to visitors better.A registration email will be sent to your selected employees.',

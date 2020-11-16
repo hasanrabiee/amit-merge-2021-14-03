@@ -218,7 +218,7 @@ return [
 
     'Search' => 'Suchen',
 
-'Restore' => 'Wiederherstellen',
+'Restore' => 'Export',
 
     'Chooseyourboothtype' => 'Standtyp auswählen',
 

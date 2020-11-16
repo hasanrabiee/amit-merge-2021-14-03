@@ -146,6 +146,20 @@
                                 <p><i class="fa fa-map-marker" style="width: 17px;font-size: 24px;margin-right: 11px;color: #7abbb2;"></i>{{\App\Site::find(1)->AdminLocation}}</p>
                                 <p><i class="fa fa-phone" style="width: 17px;font-size: 24px;margin-right: 11px;color: #7abbb2;"></i>{{\App\Site::find(1)->AdminTel}}</p>
                                 <p><i class="fa fa-envelope" style="width: 17px;font-size: 24px;margin-right: 15px;color: #7abbb2;"></i>{{\App\Site::find(1)->AdminAddress}}</p>
+
+                                <form method="post" action="{{route("Visitor.Resume")}}" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="custom-file">
+                                        <input name="resume" type="file" class="custom-file-input d-inline" id="customFile">
+                                        <label class="custom-file-label" for="customFile">Upload PDF Resume...</label>
+                                        <button type="submit" class="btn btn-primary">Upload</button>
+                                    </div>
+
+
+                                </form>
+
+
+
                             </div>
                         </div>
                     </div>
@@ -156,6 +170,12 @@
 @endsection
 @section('js')
     <script>
+
+
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
 
 
         myInput.addEventListener("keyup", function(event) {

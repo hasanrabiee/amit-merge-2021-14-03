@@ -177,7 +177,13 @@ return [
         Aws\Laravel\AwsServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         ProbablyRational\Wasabi\WasabiServiceProvider::class,
+
+
+
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
     ],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -230,6 +236,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'AWS' => Aws\Laravel\AwsFacade::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
     ],
 
 ];

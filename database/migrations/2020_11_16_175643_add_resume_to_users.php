@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddUsernameToChatsAuditorium extends Migration
+class AddResumeToUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class AddUsernameToChatsAuditorium extends Migration
      */
     public function up()
     {
-
-        Schema::table('auditorium_chats', function (Blueprint $table) {
-            $table->string("Username")->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string("resume")->nullable();
         });
     }
-
-
 
     /**
      * Reverse the migrations.
@@ -28,13 +25,8 @@ class AddUsernameToChatsAuditorium extends Migration
      */
     public function down()
     {
-        Schema::table('auditorium_chats', function (Blueprint $table) {
-
-            $table->dropColumn('Username');
-
-            //
-
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('resume');
         });
     }
-
 }
