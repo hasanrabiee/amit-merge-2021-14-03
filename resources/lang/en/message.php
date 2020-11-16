@@ -41,7 +41,7 @@ return [
     'All'  => 'All',
     'Gender'  => 'Gender',
 
-    'Resume' => 'Resume',
+    'Resume' => 'Upload CV',
 
     'Profession'  => 'Profession',
     'WeeklyStatisticsoftheWebsite' => 'Weekly Statistics of the 	Website',

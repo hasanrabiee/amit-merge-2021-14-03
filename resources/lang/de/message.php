@@ -40,7 +40,7 @@ return [
     'Top'  => 'Top',
     'All'  => 'Alle',
     'Gender'  => 'Anrede',
-    'Resume'  => 'Fortsetzen',
+    'Resume'  => 'Lebenslauf hochladen',
     'Profession'  => 'Beruf',
     'WeeklyStatisticsoftheWebsite' => 'Wöchentliche Statistik der Webseite',
     'Close' => 'Schließen',
