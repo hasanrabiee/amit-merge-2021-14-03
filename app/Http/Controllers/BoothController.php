@@ -99,6 +99,11 @@ class BoothController extends Controller
 
     public function RegisterTwo(Request $request)
     {
+
+
+        dd($request->all());
+
+
         $request->validate([
             'OperatorEmails' => 'array',
             'UserID' => 'required|string',
