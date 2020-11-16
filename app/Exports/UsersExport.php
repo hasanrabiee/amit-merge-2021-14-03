@@ -16,6 +16,7 @@ class UsersExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
+            'Role',
             'FirstName',
             'LastName',
             'UserName',
@@ -33,7 +34,7 @@ class UsersExport implements FromCollection, WithHeadings
     public function collection()
     {
 //        return User::all();
-        return User::select('FirstName', 'LastName', 'UserName', 'PhoneNumber','Gender','email','City','Country', 'BirthDate','VisitExperience')->whereIn('Rule', ['Visitor', 'Exhibitor'] )->get();
+        return User::select('Rule','FirstName', 'LastName', 'UserName', 'PhoneNumber','Gender','email','City','Country', 'BirthDate','VisitExperience')->whereIn('Rule', ['Visitor', 'Exhibitor'] )->get();
 
     }
 }

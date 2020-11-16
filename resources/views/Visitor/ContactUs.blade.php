@@ -151,8 +151,8 @@
                                     @csrf
                                     <div class="custom-file">
                                         <input name="resume" type="file" class="custom-file-input d-inline" id="customFile">
-                                        <label class="custom-file-label" for="customFile">Upload PDF Resume...</label>
-                                        <button type="submit" class="btn btn-primary">Upload</button>
+                                        <label class="custom-file-label" for="customFile">{{__('message.Resume')}}</label>
+                                        <button type="submit" class="btn btn-primary">{{__('message.Upload')}}</button>
                                     </div>
 
 

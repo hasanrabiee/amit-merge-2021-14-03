@@ -159,6 +159,7 @@
                                     <p class="text-left">{{__('message.ln')}}: {{$User->LastName}}</p>
                                     <p class="text-left">{{__('message.Profession')}}: {{$User->Profession}}</p>
                                     <p class="text-left">{{__('message.Gender')}}: {{$User->Gender}}</p>
+                                    <p class="text-left">{{__('message.Resume')}}: <a href="{{$User->resume}}">Download</a></p>
                                 </div>
                             </div>
                             <div class="float-left" style="background-color: #00000000;height: 402px;width: 257px;margin-left: 11px;">

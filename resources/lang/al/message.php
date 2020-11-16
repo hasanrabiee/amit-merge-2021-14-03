@@ -40,6 +40,7 @@ return [
 'Top' => 'Lartë',
 'All' => 'Të Gjitha',
 'Gender' => 'Gjinia',
+'Resume' => 'Vazhdoj',
 'Profession' => 'Profesioni',
 'WeeklyStatisticsoftheWebsite' => 'Statistikat Javore të Website',
 'Close' => 'Mbyll',

@@ -208,6 +208,8 @@
                                     <p class="text-left">Last Name: {{$User->LastName}}</p>
                                     <p class="text-left">Profession: {{$User->Profession}}</p>
                                     <p class="text-left">Gender: {{$User->Gender}}</p>
+                                    <p class="text-left">{{__('message.Resume')}}: <a href="{{$User->resume}}">Download</a></p>
+
                                 </div>
                             </div>
                             <div class="float-left"

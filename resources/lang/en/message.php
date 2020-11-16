@@ -40,6 +40,9 @@ return [
     'Top'  => 'Top',
     'All'  => 'All',
     'Gender'  => 'Gender',
+
+    'Resume' => 'Resume',
+
     'Profession'  => 'Profession',
     'WeeklyStatisticsoftheWebsite' => 'Weekly Statistics of the 	Website',
     'Close' => 'Close',
