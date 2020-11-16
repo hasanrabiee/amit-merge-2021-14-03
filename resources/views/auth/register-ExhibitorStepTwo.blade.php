@@ -142,7 +142,7 @@
                                                                                                 type="text"
                                                                                                 placeholder="Speaker Name * "
                                                                                                 style="width: 280px;"
-                                                                                                name="SpeakerName" value="{{old('SpeakerName')}}">
+                                                                                                name="Name" value="{{old('SpeakerName')}}">
                             </div>
 
                             <div class="form-group float-left" style="margin-top: 14px;"><input id="#javad_2"
@@ -150,7 +150,7 @@
                                                                                                 type="text"
                                                                                                 placeholder="Username * "
                                                                                                 style="width: 280px;"
-                                                                                                name="SpeakerUserName" value="{{old('SpeakerUserName')}}">
+                                                                                                name="UserName" value="{{old('SpeakerUserName')}}">
 
                             </div>
                             <div class="form-group float-left" style="margin-top: 14px;"><input id="#javad_11"
