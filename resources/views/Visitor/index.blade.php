@@ -131,6 +131,77 @@
                             <label class="border rounded" style="margin-left: 27px;background-color: rgb(209,28,28);padding: 5px;margin-bottom: 1px;color: rgb(255,255,255);">{{__('message.AccountSuspended')}}</label>
                         @endif
 
+
+                        <button  data-toggle="tooltip" data-placement="top" title="Upload Resume" onclick="$('#Resume_Modal').modal('show')" class="btn btn-danger pull-right">
+                            <span class="fa fa-upload"></span>
+                            {{__('message.Resume')}}</button>
+
+
+
+
+                        <div class="modal fade" role="dialog" tabindex="-1" id="Resume_Modal">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="text-dark">{{__('message.Resume')}}</h4>
+
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                aria-hidden="true">×</span></button>
+                                    </div>
+                                    <div class="modal-body">
+
+
+                                        <div class="container">
+
+
+                                            <div class="row">
+
+
+                                                <div class="col-12">
+
+                                                    <form id="resume_form" class="" method="post" action="{{route("Visitor.Resume")}}" enctype="multipart/form-data">
+                                                        @csrf
+
+
+                                                        <div class="form-group ">
+
+                                                            <input name="resume" type="file" class="custom-file-input" id="customFile">
+                                                            <label class="custom-file-label" for="customFile">{{__('message.Resume')}}</label>
+
+                                                        </div>
+
+
+
+
+
+
+                                                    </form>
+
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+
+
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button onclick="resume_form.submit()" class="btn btn-success btn-block" data-dismiss="modal" type="button">{{__('message.Upload')}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
                     </h5>
                     <div class="border rounded border-primary border" style="background-color: #e8e8e8;height: 129px;width: 770px;margin-bottom: 0px;margin-left: 38px;padding: 25px;padding-top: 18px;margin-top: 18px;">
                         <div style="height: 91px;background-color: transparent;margin-top: -11px;">
@@ -187,8 +258,20 @@
     </header>
 @endsection
 @section('js')
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
+
+
+
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+
         function show_info(javad) {
             Swal.fire({
                 text: javad,
