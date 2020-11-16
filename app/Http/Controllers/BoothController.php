@@ -101,7 +101,6 @@ class BoothController extends Controller
     {
 
 
-        dd($request->all());
 
 
         $request->validate([
@@ -134,6 +133,55 @@ class BoothController extends Controller
                 }
             }
         }
+
+
+
+        if($request->has('need_live_conf')){
+
+            $request->validate([
+                'SpeakerName' => 'required|string',
+                'email' => 'required|string|unique:speakers',
+                'SpeakerUserName' => 'required|string|unique:speakers',
+                'password' => 'required|string|min:8|confirmed|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!@#$%^&*]).*$/',
+                'SpeechTitle' => 'required|string',
+                'PreferredDate1' => 'required|date',
+                'PreferredDate2' => 'required|date',
+                'PreferredDate3' => 'required|date',
+            ]);
+
+
+
+            $Speaker = Speaker::create([
+                'Name' => $request->SpeakerName,
+                'email' => $request->email,
+                'UserName' => $request->SpeakerUserName,
+                'password' => $request->password,
+                'SpeechTitle' => $request->SpeechTitle,
+                'PreferredDate1' => $request->PreferredDate1,
+                'PreferredDate2' => $request->PreferredDate2,
+                'PreferredDate3' => $request->PreferredDate3,
+            ]);
+
+            $data = [
+                'Name' => $request->SpeakerName,
+                'email' => $request->email,
+                'UserName' => $request->SpeakerUserName,
+                'password' => $request->password,
+                'Speech Title' => $request->SpeechTitle,
+            ];
+
+
+            Mail::to($Speaker->email)->send(new SpeakerRegister($data));
+
+
+
+
+
+
+        }
+
+
+
 
         if ($request->need_live_conf) {
             $request->validate([
