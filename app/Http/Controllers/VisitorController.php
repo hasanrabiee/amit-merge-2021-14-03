@@ -40,6 +40,8 @@ class VisitorController extends Controller
         $user->resume = $request->hasFile('resume') ? $this->S3Doc($request, 'resume') : $user->resume;
 
 
+        Alert::success('Ok');
+        return redirect()->back();
 
 
 
