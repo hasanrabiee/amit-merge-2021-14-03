@@ -124,8 +124,9 @@
 
                                                 @endif
                                             </div>
+                                            <small>Members:</small>
                                             <span class="badge bg-danger hoseinSpan" id="{{$group->id}}"
-                                                  style=" border-radius: 50%; color:white;">
+                                                  style=" border-radius: 50%; color:white;">:
                                                 {{__('message.Loading')}}
                                             </span>
                                         </div>
@@ -140,7 +141,7 @@
 
             @if(isset($Group))
 
-                <div class="col-md-5 px-0">
+                <div class="col-md-5 px-0" id="test1">
                     <div class="px-4 py-5 chat-box bg-white" id="messages">
 
 
@@ -180,7 +181,123 @@
 <script src="{{asset('assets/js/stylish-portfolio.js')}}"></script>
 <script src="{{asset('assets/js/Table-With-Search-1.js')}}"></script>
 
+
+
+
 <script>
+
+
+    function getMessages() {
+
+
+
+        $('#messages').empty()
+
+
+
+
+        $.get("{{route("Api.LoungeGet", \request()->GroupID)}}", function (data, status) {
+
+
+            for (var i in data["Chat"]) {
+
+
+                var text = data["Chat"][i]["Text"]
+                var username = data["Chat"][i]["UserID"] == current_UserID
+
+                if (username == true) {
+
+                    var message = "<div class=\"media w-50 ml-auto mb-3\"><div class=\"media-body\"><div class=\"bg-primary rounded py-2 px-3 mb-2\"><p class=\"text-small mb-0 text-white\">" + data["Chat"][i]["Text"] + "</p></div></div></div>"
+
+
+                    $('#messages').append(message)
+
+
+                } else {
+
+                    var message = "<div class=\"media w-50 mb-3\"><div class=\"media-body ml-3\"><div class=\"bg-success rounded py-2 px-3 mb-2\"><p class=\"text-small text-white mb-0\">" + data["Chat"][i]["Text"] + "</p><i class=\"text-small text-mute mb-0 font-weight-bold\"> Sender:" + data["Chat"][i]["Username"] + "</i></div></div></div>"
+
+
+                    $('#messages').append(message)
+
+                }
+
+
+            }
+
+
+        })
+
+
+
+
+
+
+    }
+
+
+
+
+    function sendMessage() {
+
+        var msg = $("#myInput").val()
+        $("#myInput").val("")
+
+
+        const GroupID = {{\request()->GroupID}}
+
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{route('Api.LoungePost')}}",
+            method: 'post',
+            data: {
+                UserID: '{{\Illuminate\Support\Facades\Auth::id()}}',
+                Username: '{{\Illuminate\Support\Facades\Auth::user()->UserName}}',
+                LoungeID: GroupID,
+                Text: msg
+            },
+            success: function (data) {
+
+
+                getMessages()
+
+                var objDiv = document.getElementById("messages");
+                objDiv.scrollTop = objDiv.scrollHeight;
+
+
+
+            }
+
+
+        });
+
+
+
+
+    }
+
+
+
+    function ChangeSpanCount(){
+        $('.hoseinSpan').each(function() {
+            $.get('{{route('Api.LoungeCount')}}',{
+                    LoungeID: this.id
+                },
+                function (data) {
+                    var id = data['ID'];
+                    document.getElementById(id).innerHTML = data['Count'];
+                });
+        });
+    }
+
+
+    var current_UserID = {{Auth::id() ?? 0}};
+
 
 
     myInput.addEventListener("keyup", function (event) {
@@ -193,58 +310,30 @@
     });
 
 
-    function sendMessage(){
 
-        var msg = $("#myInput").val()
+    $(document).ready(function (){
 
-        alert(msg)
-
-    }
+getMessages()
+        ChangeSpanCount()
 
 
-    function getMessages() {
+
+        setInterval(getMessages, 6000)
+        setInterval(ChangeSpanCount, 6000)
 
 
-        $.get("{{route("Api.LoungeGet", \request()->GroupID)}}", function (data, status) {
 
-
-            for (var i in data["Chat"]) {
-
-
-                var message = ""
-
-                if (data["Chat"][i]["UserID"] == {{Auth::user()->id}}) {
-
-                    var message = "<div class=\"media w-50 ml-auto mb-3\"><div class=\"media-body\"><div class=\"bg-primary rounded py-2 px-3 mb-2\"><p class=\"text-small mb-0 text-white\">" + data["Chat"][i]["Text"] + "</p></div></div></div>"
-
-
-                } else {
-
-
-                    var username = $.get("{{route("Api.WhatIsUserName")}}" + data["Chat"][i]["UserID"], function (status, data) {
-
-                        return data
-                    })
-
-
-                    var message = "<div class=\"media w-50 mb-3\"><div class=\"media-body ml-3\"><div class=\"bg-success rounded py-2 px-3 mb-2\"><p class=\"text-small text-white mb-0\">" + data["Chat"][i]["Text"] + "</p><p class=\"text-small text-mute mb-0 font-weight-bold\"> Sender:" + username + "</p></div></div></div>"
-
-                }
-
-
-            }
-
-
-        })
-
-
-    }
-
-
-    $(document).ready(function () {
 
 
     })
+
+
+
+
+
+
+
+
 
 
 </script>

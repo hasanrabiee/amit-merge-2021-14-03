@@ -26,7 +26,7 @@ Route::group(['prefix' => 'v1' , 'as' => 'Api.'],function (){
         Route::post('Post' , 'ApiController@AudituriumChat')->name('AudituriumPost');
            });
     Route::group(['prefix' => 'Lounge'] , function (){
-        Route::get('Get/{lounge}' , 'ApiController@LoungeGet')->name('LoungeGet');
+        Route::get('Get/{lounge?}' , 'ApiController@LoungeGet')->name('LoungeGet');
         Route::post('Post' , 'ApiController@LoungePost')->name('LoungePost');
         Route::get('Count' , 'ApiController@LoungeCount')->name('LoungeCount');
            });

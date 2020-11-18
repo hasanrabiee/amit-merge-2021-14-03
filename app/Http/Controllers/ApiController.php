@@ -9,6 +9,7 @@ use App\Chat;
 use App\ContactUs;
 use App\Hall;
 use App\Jobs;
+use App\Lounge;
 use App\LoungeChat;
 use App\Statistics;
 use App\User;
@@ -55,14 +56,22 @@ class ApiController extends Controller
 
 
     public function LoungeCount(Request $request){
+
+
+        $array =  Lounge::where('id', "1")->get(["Members"])->first()->Members;
+        eval("\$myarray = $array;");
+
+        $count = count($myarray);
+
+
         return response()->json([
-                'Count' => LoungeChat::where('LoungeID' , $request->LoungeID)->count(),
+                'Count' => $count,
                 'ID' => $request->LoungeID
         ]);
     }
-    public function LoungeGet(LoungeChat $lounge, Request $request){
+    public function LoungeGet(LoungeChat $lounge){
 
-        $Chats = $lounge->get(["Text", "UserID"])->first();
+        $Chats = $lounge->get(["Text", "UserID", "Username"]);
 
 
 
@@ -73,16 +82,9 @@ class ApiController extends Controller
     }
 
     public function LoungePost(Request $request){
-        $request->validate([
-            'UserID' => 'required|string',
-            'LoungeID' => 'required|string',
-            'Text' => 'required|string'
-        ]);
-         LoungeChat::create([
-            'UserID' => $request->UserID,
-            'LoungeID' => $request->LoungeID,
-            'Text' => $request->Text
-        ]);
+
+
+         LoungeChat::create($request->all());
          $Chats = LoungeChat::where('LoungeID' , $request->LoungeID)->get();
         return response()->json([
             'Status' => 'Success',
