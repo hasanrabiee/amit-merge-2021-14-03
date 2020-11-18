@@ -47,4 +47,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(booth::class,'UserID','id');
     }
 
+    public function AuditoriumChat() {
+
+        return $this->hasMany('App\AuditoriumChat');
+
+    }
+
 }

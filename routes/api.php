@@ -26,11 +26,11 @@ Route::group(['prefix' => 'v1' , 'as' => 'Api.'],function (){
         Route::post('Post' , 'ApiController@AudituriumChat')->name('AudituriumPost');
            });
     Route::group(['prefix' => 'Lounge'] , function (){
-        Route::get('Get' , 'ApiController@LoungeGet')->name('LoungeGet');
+        Route::get('Get/{lounge}' , 'ApiController@LoungeGet')->name('LoungeGet');
         Route::post('Post' , 'ApiController@LoungePost')->name('LoungePost');
         Route::get('Count' , 'ApiController@LoungeCount')->name('LoungeCount');
            });
-    Route::get('WhatIsUserName' , 'ApiController@WhatIsUserName')->name('WhatIsUserName');
+    Route::get('WhatIsUserName/{user_id?}' , 'ApiController@WhatIsUserName')->name('WhatIsUserName');
     Route::post('Login' , 'ApiController@Login');
     Route::get('Images' , 'ApiController@Images');
     Route::get('test' , 'WebController@test');

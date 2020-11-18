@@ -3,25 +3,97 @@
     <header class="d-flex masthead"
             style="background-image: url({{\App\Site::VisitorBackground()}});padding: 45px;padding-top: 0px;padding-right: 0px;padding-left: 0px;">
         <div class="container my-auto text-center">
-            <h3 class="mb-5"></h3>
-            <div style="width: 354px;height: 45px;background-color: #525252;" class="rounded">
-                <div class="d-inline float-left " style="background-color: transparent;height: 46px;width: 214px;">
-                    <h5 style="width: 185px;height: 56px;padding: 8px;color: rgb(255,255,255);" class="text-left">
-                        {{\App\Speaker::find(\Illuminate\Support\Facades\Session::get('Speaker')->id)->UserName}}
-                    </h5>
-                </div>
-                <div class="d-inline float-right"
-                     style="background-color: transparent;height: 45px;width: 140px; margin-top: 3px"><a
-                        class="remove_underline" href="{{ route('Auditorium.LogOut') }}"
-                        style="font-size: 15px;color: #c5c5c5;margin-bottom: 16px;" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">Log Out</a><i
-                        class="icon ion-log-out" style=";margin-left: 8px;color: #c5c5c5;"></i>
 
-                    <form id="logout-form" action="{{ route('Auditorium.LogOut') }}" method="POST" class="d-none">
+            <h3 class="mb-5"></h3>
+            <div class="pull-right d-inline m-0">
+
+
+                @if(\App\Site::find(1)->Logo1)
+                    <img class="float-right" src="{{\App\Site::find(1)->Logo1}}"
+                         style="width: 113px;margin-right: 34px;">
+                @endif
+                @if(\App\Site::find(1)->Logo2)
+                    <img class="float-right" src="{{\App\Site::find(1)->Logo2}}"
+                         style="width: 113px;margin-right: 34px;">
+                @endif
+                @if(\App\Site::find(1)->Logo3)
+                    <img class="float-right" src="{{\App\Site::find(1)->Logo3}}"
+                         style="width: 113px;margin-right: 34px;">
+                @endif
+
+            </div>
+
+            <div style="width: 354px;height: 45px;background-color: #525252; margin-top: 70px" class="rounded">
+
+                <div class="pull-right p-1">
+                    <button type="button" data-toggle="tooltip" data-placement="top" title="Change Language" onclick="$('#Lang_Modal').modal('show')" class="btn btn-warning">
+                        <i class="fa fa-globe"></i>
+                    </button>
+                    <div class="modal fade" role="dialog" tabindex="-1" id="Lang_Modal">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4>{{__('message.ChangeLang')}}</h4>
+
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">×</span></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="dropdown">
+
+                                        <a style="text-decoration: none !important" class="" href="{{ url('locale/en') }}"><i
+                                                class="fa fa-globe"></i>English</a><br>
+                                        <a style="text-decoration: none !important" class="" href="{{ url('locale/de') }}"><i
+                                                class="fa fa-globe"></i>German</a><br>
+                                        <a style="text-decoration: none !important" class="" href="{{ url('locale/al') }}"><i
+                                                class="fa fa-globe"></i>Shqip</a><br>
+
+
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-light btn-block" data-dismiss="modal" type="button">Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="pull-right p-1 logout_section">
+                    <button data-toggle="tooltip" data-placement="top" title="Logout" onclick="document.getElementById('logout-form').submit()" class="btn btn-danger">
+                        <i class="fa fa-sign-out"></i>
+                    </button>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
+
+
                 </div>
+
+
+
+
+
+                <div class="d-inline float-left"
+                     style="background-color: transparent;height: 26px;width: 122px;margin-left: 2px;">
+                    <h6 class="text-left"
+                        style="width: 115px;height: 41px;padding: 7px;color: rgb(255,255,255);margin-left: 4px;">
+                        {{\App\Speaker::find(\Illuminate\Support\Facades\Session::get('Speaker')->id)->UserName}} </h6>
+                </div>
+
+
+
             </div>
+
+
+
+
+
+
             <div class="d-inline-block float-left rounded"
                  style="background-color: rgb(54,54,54,65%);width: 900px;height: 452px;margin-right: 10px;padding: 1px;padding-top: 0px;padding-right: 3px;">
                 <div class="border rounded d-block float-left border"

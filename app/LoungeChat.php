@@ -9,4 +9,8 @@ class LoungeChat extends Model
     protected $fillable = [
         'UserID' , 'LoungeID' , 'Text'
     ];
+
+
+
+
 }

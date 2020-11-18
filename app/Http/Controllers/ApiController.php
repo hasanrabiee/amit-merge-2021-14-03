@@ -28,8 +28,8 @@ class ApiController extends Controller
         ]);
     }
 
-    public function WhatIsUserName(Request $request){
-        return User::find($request->id)->UserName;
+    public function WhatIsUserName($user_id = 999){
+        return User::find($user_id)->UserName;
     }
 
     public function AudituriumChat(Request $request){
@@ -60,8 +60,13 @@ class ApiController extends Controller
                 'ID' => $request->LoungeID
         ]);
     }
-    public function LoungeGet(Request $request){
-        $Chats = LoungeChat::where('LoungeID' , $request->LoungeID)->get();
+    public function LoungeGet(LoungeChat $lounge, Request $request){
+
+        $Chats = $lounge->get(["Text", "UserID"])->first();
+
+
+
+
         return response()->json([
             'Chat' => $Chats
         ]);

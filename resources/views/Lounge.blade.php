@@ -32,18 +32,18 @@
 </head>
 
 <body>
-<div class="bootstrap_chat" >
+<div class="bootstrap_chat">
     <div class="container py-5 px-4">
         <!-- For demo purpose-->
 
 
-        <div class="row rounded-lg overflow-hidden shadow" >
+        <div class="row rounded-lg overflow-hidden shadow">
             <!-- Groups box-->
-            <div class="col-md-2 px-0" >
-                <div  class="bg-white">
+            <div class="col-md-2 px-0">
+                <div class="bg-white">
 
 
-                    <div class="bg-gray px-4 py-2 " >
+                    <div class="bg-gray px-4 py-2 ">
                         <span class="h5 mb-0 py-1">Groups</span>
                         <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#groups_modal"><i
                                 class="fa fa-search"></i></button>
@@ -66,7 +66,9 @@
 
 
                                             <div class="input-group">
-                                                <input name="GroupName" onblur="is_typing = false" onfocus="is_typing = true" type="text" placeholder="Search Here..."
+                                                <input name="GroupName" onblur="is_typing = false"
+                                                       onfocus="is_typing = true" type="text"
+                                                       placeholder="Search Here..."
 
                                                        class="form-control rounded-0 border-0">
 
@@ -75,9 +77,11 @@
 
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-info" data-dismiss="modal">{{__('message.Close')}}
+                                            <button type="button" class="btn btn-info"
+                                                    data-dismiss="modal">{{__('message.Close')}}
                                             </button>
-                                            <button type="submit" class="btn btn-success">{{__('message.Search')}}</button>
+                                            <button type="submit"
+                                                    class="btn btn-success">{{__('message.Search')}}</button>
                                         </div>
                                     </form>
                                 </div>
@@ -96,29 +100,32 @@
                                     @if(request()->GroupID == $group->id)
                                     class="list-group-item list-group-item-action active text-white rounded-0"
                                     @else
-                                        class="list-group-item list-group-item-action  text-black rounded-0" style="background-color: rgb(255,255,255)"
+                                    class="list-group-item list-group-item-action  text-black rounded-0"
+                                    style="background-color: rgb(255,255,255)"
                                     @endif
-                                  >
+                                >
                                     <div class="media">
                                         <div class="media-body ">
                                             <div class="d-flex align-items-center justify-content-between mb-1">
                                                 <h6 class="mb-0">{{\Illuminate\Support\Str::limit($group->Name,8)}}</h6>
                                                 @if(!in_array(\Illuminate\Support\Facades\Auth::id() ,json_decode($group->Members)  ))
-                                                <span
-                                                    class="badge bg-success" onclick="window.open('?GroupID={{$group->id}}', '_self')"
-                                                    style=" border-radius: 50%; color:white; cursor: pointer">
+                                                    <span
+                                                        class="badge bg-success"
+                                                        onclick="window.open('?GroupID={{$group->id}}', '_self')"
+                                                        style=" border-radius: 50%; color:white; cursor: pointer">
                                             <i class="fa fa-plus"></i>
                                         </span>
-                                        @else
-                                        <span
-                                                    class="badge bg-primary" onclick="window.open('?GroupID={{$group->id}}', '_self')"
-                                                    style=" border-radius: 50%; color:white; cursor: pointer">
+                                                @else
+                                                    <span
+                                                        class="badge bg-primary"
+                                                        onclick="window.open('?GroupID={{$group->id}}', '_self')"
+                                                        style=" border-radius: 50%; color:white; cursor: pointer">
                                             <i class="fa fa-eye"></i>
 
-                                                    @endif
+                                                @endif
                                             </div>
                                             <span class="badge bg-danger hoseinSpan" id="{{$group->id}}"
-                                                  style=" border-radius: 50%; color:white;" >
+                                                  style=" border-radius: 50%; color:white;">
                                                 {{__('message.Loading')}}
                                             </span>
                                         </div>
@@ -133,28 +140,26 @@
 
             @if(isset($Group))
 
-            <div class="col-md-5 px-0">
-                <div class="px-4 py-5 chat-box HoseinDiv bg-white"  id="sinsin">
+                <div class="col-md-5 px-0">
+                    <div class="px-4 py-5 chat-box bg-white" id="messages">
 
 
-
-
-                </div>
-
-                <!-- Typing area -->
-
-
-                <div class="input-group bg-white">
-                    <input name="message" id="myInput" type="text" placeholder="Type a message"
-                           aria-describedby="button-addon2"
-                           class="form-control rounded-0 border-0 py-4 " style="background-color: rgb(255,255,255)">
-                    <div class="input-group-append">
-                        <button  onclick="sendMessage()" class="btn btn-link"><i
-                                class="fa fa-paper-plane"></i></button>
                     </div>
-                </div>
 
-            </div>
+                    <!-- Typing area -->
+
+
+                    <div class="input-group bg-white">
+                        <input name="message" id="myInput" type="text" placeholder="Type a message"
+                               aria-describedby="button-addon2"
+                               class="form-control rounded-0 border-0 py-4 " style="background-color: rgb(255,255,255)">
+                        <div class="input-group-append">
+                            <button onclick="sendMessage()" class="btn btn-link"><i
+                                    class="fa fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+
+                </div>
 
 
             @else
@@ -178,8 +183,7 @@
 <script>
 
 
-
-    myInput.addEventListener("keyup", function(event) {
+    myInput.addEventListener("keyup", function (event) {
         // Number 13 is the "Enter" key on the keyboard
         if (event.keyCode === 13) {
             // Cancel the default action, if needed
@@ -189,105 +193,59 @@
     });
 
 
+    function sendMessage(){
+
+        var msg = $("#myInput").val()
+
+        alert(msg)
+
+    }
 
 
-    setInterval(GetMesage, 3000);
-    setInterval(ChangeSpanCount, 3000);
-    $( document ).ready(function() {
-        GetMesage()
-    });
-    var LastSender = '{{__('message.Loading')}}';
+    function getMessages() {
 
-    function GetMesage(){
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const GroupID = urlParams.get('GroupID')
-        $.get('{{route('Api.LoungeGet')}}',{
-                LoungeID: GroupID
-            },
-            function (data, status) {
-                $( ".HoseinDiv" ).empty();
-                for (var i = 0; i < data["Chat"].length; i++) {
-                    $.get('{{route('Api.WhatIsUserName')}}',{
-                            id: data["Chat"][i]['UserID']
-                        },
-                        function (data) {
-                            LastSender = data
-                        });
-                    if (data["Chat"][i]["UserID"] === {{\Illuminate\Support\Facades\Auth::id()}}) {
-                        var fieldHTML = '<div class="media w-50 ml-auto mb-3"><div class="media-body"><div class="bg-primary rounded py-2 px-3 mb-2"><p class="text-small mb-0 text-white">'+data["Chat"][i]["Text"]+'</p></div></div></div>';
-                    }else {
 
-                        var fieldHTML = '<div class="media w-50 mb-3"><div class="media-body ml-3"><div class="bg-success rounded py-2 px-3 mb-2"><p class="text-small text-white mb-0">'+data["Chat"][i]["Text"]+'</p><p class="text-small text-mute mb-0 font-weight-bold"> {{__('message.Sender')}}: '+LastSender+'</p></div></div></div>';
-                    }
-                    $('.HoseinDiv').append(fieldHTML);
+        $.get("{{route("Api.LoungeGet", \request()->GroupID)}}", function (data, status) {
 
-                    var objDiv = document.getElementById("sinsin");
-                    objDiv.scrollTop = objDiv.scrollHeight;
+
+            for (var i in data["Chat"]) {
+
+
+                var message = ""
+
+                if (data["Chat"][i]["UserID"] == {{Auth::user()->id}}) {
+
+                    var message = "<div class=\"media w-50 ml-auto mb-3\"><div class=\"media-body\"><div class=\"bg-primary rounded py-2 px-3 mb-2\"><p class=\"text-small mb-0 text-white\">" + data["Chat"][i]["Text"] + "</p></div></div></div>"
+
+
+                } else {
+
+
+                    var username = $.get("{{route("Api.WhatIsUserName")}}" + data["Chat"][i]["UserID"], function (status, data) {
+
+                        return data
+                    })
+
+
+                    var message = "<div class=\"media w-50 mb-3\"><div class=\"media-body ml-3\"><div class=\"bg-success rounded py-2 px-3 mb-2\"><p class=\"text-small text-white mb-0\">" + data["Chat"][i]["Text"] + "</p><p class=\"text-small text-mute mb-0 font-weight-bold\"> Sender:" + username + "</p></div></div></div>"
 
                 }
 
-            });
+
+            }
+
+
+        })
+
+
     }
-   function sendMessage(){
 
-       new_message = myInput.value
-       myInput.value = ''
 
-       const queryString = window.location.search;
-       const urlParams = new URLSearchParams(queryString);
-       const GroupID = urlParams.get('GroupID')
-       $.ajaxSetup({
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-           }
-       });
-       $.ajax({
-           url: "{{route('Api.LoungePost')}}",
-           method: 'post',
-           data: {
-               UserID: '{{\Illuminate\Support\Facades\Auth::id()}}',
-               LoungeID: GroupID,
-               Text: new_message
-           },
-           success: function (data) {
+    $(document).ready(function () {
 
-               $( ".HoseinDiv" ).empty();
-               for (var i = 0; i < data["Chat"].length; i++) {
-                   $.get('{{route('Api.WhatIsUserName')}}',{
-                           id: data["Chat"][i]['UserID']
-                       },
-                       function (data) {
-                           LastSender = data
-                       });
 
-                   if (data["Chat"][i]["UserID"] === {{\Illuminate\Support\Facades\Auth::id()}}){
-                       var fieldHTML = '<div class="media w-50 ml-auto mb-3 mymessage"><div class="media-body"><div class="bg-primary rounded py-2 px-3 mb-2"><p class="text-small mb-0 text-white">'+data["Chat"][i]["Text"]+'</p></div></div></div>';
-                   }else {
-                       var fieldHTML = '<div class="media w-50 mb-3"><div class="media-body ml-3"><div class="bg-success rounded py-2 px-3 mb-2"><p class="text-small text-white mb-0">'+data["Chat"][i]["Text"]+'</p><p class="text-small text-mute mb-0 font-weight-bold"> {{__('message.Sender')}}: '+LastSender+'</p></div></div></div>';
+    })
 
-                   }
-                   var objDiv = document.getElementById("sinsin");
-                   objDiv.scrollTop = objDiv.scrollHeight;
-
-                   $('.HoseinDiv').append(fieldHTML); //Add field html
-               }
-           }
-       });
-   }
-   function ChangeSpanCount(){
-
-       $('.hoseinSpan').each(function() {
-
-           $.get('{{route('Api.LoungeCount')}}',{
-                   LoungeID: this.id
-               },
-               function (data) {
-                    var id = data['ID'];
-                    document.getElementById(id).innerHTML = data['Count'];
-               });
-       });
-   }
 
 </script>
 </body>

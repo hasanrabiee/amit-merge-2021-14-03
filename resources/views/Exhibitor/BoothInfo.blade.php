@@ -226,7 +226,19 @@
                                        value="{{$Booth->Video}}"></div>
                         </div>
                         <div class="col-lg-7">
-                            <button class="btn btn-dark btn-block" type="button" onclick="$('#BoothColor').modal('show')" style="margin-top: -10px;">{{__('message.AdjustBoothColors')}}<i class="fa fa-paint-brush" style="margin-left: 5px;"></i></button>
+
+
+                            <div class="btn-group btn-block">
+
+                                <button class="btn btn-danger btn-block btn-sm" type="button" onclick="$('#BoothColor').modal('show')" style="margin-top: -10px;">{{__('message.AdjustBoothColors')}}<i class="fa fa-paint-brush" style="margin-left: 5px;"></i></button>
+
+                                <button class="btn btn-info btn-block btn-sm" type="button" onclick="$('#BoothLogo').modal('show')" style="margin-top: -10px;">{{__('message.BoothLogo')}}<i class="fa fa-paint-brush" style="margin-left: 5px;"></i></button>
+
+
+                            </div>
+
+
+
                         </div>
                         <div class="col-lg-7">
                             <button class="btn btn-success btn-block" type="submit" style="margin-top: 10px;">{{__('message.Save')}}<i class="fa fa-save" style="margin-left: 5px;"></i></button>
@@ -298,6 +310,41 @@
                             </div>
                         </div>
                     </div>
+
+
+
+
+                    <div class="modal fade" role="dialog" tabindex="-1" id="BoothLogo">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4>{{__('message.BoothLogo')}}</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <img src="{{$Booth->Logo}}" alt="no_picture" class="img-thumbnail">
+
+                                    <br>
+
+                                    <div class="form-group">
+                                        <p class="text-left">{{__('message.BoothLogo')}}<br></p>
+                                        <input class="form-control" type="file" name="Logo"
+                                               value="{{$Booth->Logo}}">
+                                    </div>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-light btn-block" data-dismiss="modal" type="button">
+                                        {{__('message.Close')}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
 
 

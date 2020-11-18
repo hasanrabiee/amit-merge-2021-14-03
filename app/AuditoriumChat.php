@@ -9,4 +9,6 @@ class AuditoriumChat extends Model
     protected $fillable = [
         'UserID' , 'auditoriaID', 'Text', 'Username'
     ];
+
+
 }

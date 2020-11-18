@@ -6,7 +6,7 @@
 
     <div class="bg-primary rounded " style="height: 40px;width: 193px;margin-left: 4px;margin-top: 5px;"><a href="?UserID={{$user_one->id}}"><p
                 class="text-left d-inline float-left"
-                style="margin-top: 4px;margin-left: 6px;margin-right: 7px;color: rgb(255,255,255);">{{\Illuminate\Support\Str::limit($user_one->UserName , 12)}}</p>
+                style="margin-top: 4px;margin-left: 6px;margin-right: 7px;color: rgb(255,255,255);">{{\Illuminate\Support\Str::limit($user_one->UserName , 8)}}</p>
         </a>
         <div style="float: right">
             <button class=" btn btn-dark text-center border rounded-circle" type="button"
@@ -23,7 +23,7 @@
 
     <div style="height: 40px;width: 193px;margin-left: 4px;margin-top: 5px;"><a href="?UserID={{$user_one->id}}"><p
                 class="text-left d-inline float-left"
-                style="margin-top: 4px;margin-left: 6px;margin-right: 7px;color: rgb(255,255,255);">{{\Illuminate\Support\Str::limit($user_one->UserName , 12)}}</p>
+                style="margin-top: 4px;margin-left: 6px;margin-right: 7px;color: rgb(255,255,255);">{{\Illuminate\Support\Str::limit($user_one->UserName , 8)}}</p>
         </a>
         <div style="float: right">
             <button class=" btn @if (\App\Http\Controllers\AdminController::ChatCount($user_one->id) > 0) btn-success @else btn-dark @endif text-center border rounded-circle" type="button"

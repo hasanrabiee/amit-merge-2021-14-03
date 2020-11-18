@@ -454,6 +454,7 @@ class ExhibitorController extends Controller
         $Booth->Poster1 = $request->hasFile('Poster1') ? $this->S3($request, 'Poster1') : $Booth->Poster1;
         $Booth->Poster2 = $request->hasFile('Poster2') ? $this->S3($request, 'Poster2') : $Booth->Poster2;
         $Booth->Poster3 = $request->hasFile('Poster3') ? $this->S3($request, 'Poster3') : $Booth->Poster3;
+        $Booth->Logo = $request->hasFile('Logo') ? $this->S3($request, 'Logo') : $Booth->Logo;
         $Booth->Doc1 = $request->hasFile('PdfFile') ? $this->S3Doc($request, 'PdfFile') : $Booth->Doc1;
         if ($request->Video) {
             $Booth->Video = preg_match('/.*embed.*/', $request->Video) ? $request->Video : preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i", "https://www.youtube.com/embed/$1", $request->Video);
