@@ -126,7 +126,7 @@
                                 style="background-color: transparent;height: 40px;width: 258px;margin-left: 4px;margin-top: 5px;"
                                 @endif
                             >
-                            <p class="text-left d-inline float-left" style="margin-top: 4px;margin-left: 6px;margin-right: 7px;color: #000000;">{{\Illuminate\Support\Str::limit($booth->CompanyName , 12)}}</p>
+                            <p class="text-left d-inline float-left" style="margin-top: 4px;margin-left: 6px;margin-right: 7px;color: #000000;">{{\Illuminate\Support\Str::limit($booth->CompanyName , 8)}}</p>
                             <div class="text-right border rounded float-right" style="height: 29px;width: 89px;margin-top: 4px;margin-right: 14px;padding: 0px;background-color: @if($booth->User->AccountStatus == 'Active') #05c965 @else #363636 @endif ;padding-left: 4px;">
                                 <p class="d-inline float-left" style="margin-right: 6px;color: rgb(255,255,255);">
                                     @if($booth->User->AccountStatus == 'Active') {{__('message.Confirmed')}} @else {{__('message.Pending')}} @endif
