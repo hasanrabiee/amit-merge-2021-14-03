@@ -106,6 +106,8 @@ Route::group(['middleware' => ['auth']] , function (){
         Route::post('UserPaid', 'AdminController@UserPaid')->name('UserPaid');
         Route::get('/', 'AdminOperatorController@index')->name('index');
         Route::get('/index', 'AdminOperatorController@index')->name('index');
+        Route::get('InboxChatGet', 'AdminController@InboxChatGet')->name('InboxChatGet');
+
         Route::get('/Statistics', 'AdminOperatorController@Statistics')->name('Statistics');
         Route::get('/History', 'AdminOperatorController@History')->name('History');
         Route::get('Lounge', 'AdminOperatorController@Lounge')->name('Lounge');

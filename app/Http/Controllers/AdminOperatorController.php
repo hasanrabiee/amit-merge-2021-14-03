@@ -16,6 +16,27 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminOperatorController extends Controller
 {
+
+
+
+    public function InboxChatGet(Request $request)
+    {
+        $request->validate([
+            'Mode' => ['required'],
+            'ID' => ['required'],
+            'UserID' => ['required'],
+        ]);
+        if ($request->Mode == 'Company') {
+            $ID = booth::find($request->ID)->UserID;
+        } else {
+            $ID = $request->ID;
+        }
+        $Chats = AdminChat::where('ReceiverID', $ID)->get();
+        return response()->json([
+            'Chat' => $Chats
+        ], 200);
+    }
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
