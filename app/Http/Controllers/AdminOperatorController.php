@@ -457,13 +457,33 @@ class AdminOperatorController extends Controller
     public function SuspendBooth($BoothID)
     {
         $Booth = booth::find($BoothID);
+        $User = User::find($Booth->UserID);
 
         if (\request()->has('BoothStatus')) {
-            $Booth->Status = 'Active';
+            $User->AccountStatus = 'Active';
+            if ($User->email_verified_at == null) {
+                $User->sendEmailVerificationNotification();
+            }
         } else {
-            $Booth->Status = 'DeActive';
+            $User->AccountStatus = 'Suspend';
         }
-        $Booth->save();
+        $User->save();
+        Alert::success('User Changed Successful');
+
         return redirect()->back();
     }
+
+
+//    public function SuspendBooth($BoothID)
+//    {
+//        $Booth = booth::find($BoothID);
+//
+//        if (\request()->has('BoothStatus')) {
+//            $Booth->Status = 'Active';
+//        } else {
+//            $Booth->Status = 'DeActive';
+//        }
+//        $Booth->save();
+//        return redirect()->back();
+//    }
 }
