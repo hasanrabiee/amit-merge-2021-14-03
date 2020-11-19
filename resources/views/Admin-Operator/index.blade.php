@@ -161,17 +161,15 @@
                         <div class="border rounded d-inline float-left "
                              style="width: 224px;height: 420px;margin-top: 4px;margin-right: 19px;margin-left: 13px;" onscroll="is_typing = true;">
                             <form style="height: 7px;margin-bottom: 23px;width: 205px;" action="{{route('AdminOperator.index')}}">
-                                <div class="form-group" style="width: 305px;"><input onblur="is_typing = false" onfocus="is_typing = true" class="form-control float-left"
-                                                                                     type="search" placeholder="User Name"
-                                                                                     style="width: 163px;height: 33px;margin-bottom: 24px;font-size: 13px;"
-                                                                                     name="SearchTermUser">
-
-                                    <button  class="btn float-left shadow-none" type="button"
-                                             style="width: 1px;margin-right: 16px;margin-bottom: 31px;margin-top: -4px;"><i id="visiotr_refresh"
-                                                                                                                            class="fa fa-cog text-dark"
-                                                                                                                            style="font-size: 20px;margin-bottom: 16px;margin-right: 19px;"></i></button>
-
-
+                                <div class="form-group" style="width: 305px;"><input class="form-control float-left"
+                                                                                     type="search"
+                                                                                     placeholder="{{__('message.UserName')}}"
+                                                                                     style="width: 163px;height: 33px;margin-bottom: 24px;font-size: 13px;" name="SearchTermUser">
+                                    <button class="btn float-left shadow-none" type="button"
+                                            style="width: 1px;margin-right: 16px;margin-bottom: 31px;margin-top: -4px;"><i
+                                            id="visiotr_refresh"
+                                            class="fa fa-cog text-dark"
+                                            style="font-size: 20px;margin-bottom: 16px;margin-right: 19px;"></i></button>
                                 </div>
                             </form>
                             <div id="Users" class="scroll_box" style="height: 350px !important;" onscroll="scroll_status = true">
