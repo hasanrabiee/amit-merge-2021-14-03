@@ -118,13 +118,11 @@ class AdminOperatorController extends Controller
 
         }
 
-
         if (isset($Chats))
 
-            return view('Admin.index', compact('booth_list', 'users_list', 'Chats'));
+            return view('Admin-Operator.index', compact('booth_list', 'users_list', 'Chats'));
         else
-            return view('Admin.index', compact('booth_list', 'users_list'));
-
+            return view('Admin-Operator.index', compact('booth_list', 'users_list'));
 
     }
 
