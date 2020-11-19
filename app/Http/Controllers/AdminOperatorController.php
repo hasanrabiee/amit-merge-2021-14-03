@@ -16,44 +16,23 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminOperatorController extends Controller
 {
-    public function index(Request $request){
-
+    public function index(Request $request)
+    {
         if ($request->ajax()) {
-
-
-            // prepare bootlist
-
             if ($request->SearchTermBooth)
                 $booth_list = booth::select('id', "UserID", "CompanyName")->where('CompanyName', 'LIKE', '%' . \request()->SearchTermBooth . '%')->paginate(10);
-
             else
                 $booth_list = booth::select('id', "UserID", "CompanyName")->paginate(10);
-
             $booth_list_view = view('company-list-data', compact('booth_list'))->render();
-
-
-            // end prepare boothlist
-
-            // prepare users
 
             if ($request->SearchTermUser)
                 $users_list = User::select("id", "UserName")->where('UserName', 'LIKE', '%' . \request()->SearchTermUser . '%')->whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->paginate(10);
-
             else
                 $users_list = User::select("id", "UserName")->whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->paginate(10);
-
             $users_list_view = view('user-list-data', compact('users_list'))->render();
-
-
-            // end prepare users
-
-
             return response()->json(['booth_list' => $booth_list_view, 'users_list' => $users_list_view]);
 
         }
-
-
-
 
 
         if (\request()->CompanyID) {
@@ -87,9 +66,9 @@ class AdminOperatorController extends Controller
 
         } else {
 
-            if(\request()->SearchTermBooth){
+            if (\request()->SearchTermBooth) {
                 $booth_list = booth::where('CompanyName', 'LIKE', '%' . \request()->SearchTermBooth . '%')->get(['id', "UserID", "CompanyName"]);
-            }else{
+            } else {
                 $booth_list = booth::select('id', "UserID", "CompanyName")->paginate(10);
 
             }
@@ -99,7 +78,10 @@ class AdminOperatorController extends Controller
 
         if (\request()->UserID) {
             $Chats = AdminChat::where('UserID', Auth::id())->where('ReceiverID', \request()->UserID)->get();
-            $Chatsssss = AdminChat::where('ReceiverID', \request()->UserID)->get();
+            $Chatsssss = AdminChat::where([
+                ['ReceiverID', \request()->UserID],
+                ['Status', 'New'],
+            ])->get();
             foreach ($Chatsssss as $chatsssss) {
                 $chatsssss->Status = 'Viewed';
                 $chatsssss->save();
@@ -123,16 +105,15 @@ class AdminOperatorController extends Controller
 
         } else {
 
-            if(\request()->SearchTermUser){
+            if (\request()->SearchTermUser) {
 
                 $users_list = User::where('UserName', 'LIKE', '%' . \request()->SearchTermUser . '%')->whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->get(["id", "UserName"]);
 
 
-            }else{
+            } else {
                 $users_list = User::select("id", "UserName")->whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->paginate(10);
 
             }
-
 
 
         }
@@ -140,9 +121,10 @@ class AdminOperatorController extends Controller
 
         if (isset($Chats))
 
-            return view('Admin-Operator.index', compact('booth_list', 'users_list', 'Chats'));
+            return view('Admin.index', compact('booth_list', 'users_list', 'Chats'));
         else
-            return view('Admin-Operator.index', compact('booth_list', 'users_list'));
+            return view('Admin.index', compact('booth_list', 'users_list'));
+
 
     }
 
