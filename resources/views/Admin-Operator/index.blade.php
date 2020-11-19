@@ -74,6 +74,9 @@
             </div>
             <div class="d-inline-block float-left"
                  style="background-color: rgba(0,0,0,0);width: 1126px;height: 452px;margin-right: 46px;padding: 2px;padding-top: 0px;padding-right: 3px;">
+
+
+
                 <div class="border rounded d-block float-left border"
                      style="width: 230px;height: 480px;background-color: rgba(54,54,54,0.77);padding: 7px;color: #363636;padding-top: 7px;">
                     <div>
@@ -81,61 +84,39 @@
                             style="color: rgb(255,255,255);">{{__('message.Manage')}} {{__('message.Event')}}</h5>
                         <div class="text-left active-page"
                              style="/*background-color: #00000000;*/height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #b3b8b8;">
-                            <a class="text-left" href="#" style="color: #b3b8b8;">{{__('message.Inbox')}}</a></div>
+                            <a class="text-left" href="{{route('AdminOperator.index')}}"
+                               style="color: #b3b8b8;">{{__('message.Inbox')}}</a></div>
                         <div class="text-left"
                              style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #363636;">
                             <a class="text-left" href="{{route('AdminOperator.History')}}"
-                               style="color: #b3b8b8;">{{__('message.History')}}</a>
-                        </div>
+                               style="color: #b3b8b8;">{{__('message.History')}}</a></div>
                         <div class="text-left"
                              style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;">
                             <a class="text-left" href="{{route('AdminOperator.Lounge')}}"
-                               style="color: #b3b8b8;">{{__('message.Lounge')}}</a>
-                        </div>
-                        <div class="text-left"
+                               style="color: #b3b8b8;">{{__('message.Lounge')}}</a></div>
+                        <div class="text-left "
                              style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;">
-                            <a class="text-left" href="{{route('AdminOperator.Statistics')}}"
-                               style="color: #b3b8b8;">{{__('message.Statistics')}}</a></div>
+                            <a class="text-left" href="#" style="color: #b3b8b8;">{{__('message.Statistics')}}</a></div>
                         <div class="text-left"
                              style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;">
                             <a class="text-left" href="{{route('AdminOperator.RegisteredVisitor')}}"
-                               style="color: #b3b8b8;">{{__('message.Registered')}} {{__('message.Visitors')}}</a></div>
+                               style="color: #b3b8b8;">{{__('message.Registered')}} {{__('message.Visitors')}}<br></a>
+                        </div>
                         <div class="text-left"
                              style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #b3b8b8;">
                             <a class="text-left" href="{{route('AdminOperator.RegisteredExhibitor')}}"
-                               style="color: #b3b8b8;">{{__('message.Registered')}} {{__('message.Exhibitors')}}</a>
+                               style="color: #b3b8b8;">{{__('message.Registered')}} {{__('message.Exhibitors')}}<br></a>
                         </div>
-                        <div class="text-left"
-                             style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #b3b8b8;">
-                            <a class="text-left" href="{{route('AdminOperator.Auditorium')}}"
-                               style="color: #b3b8b8;">{{__('message.Auditorium')}} {{__('message.Schedule')}}<br></a>
-                        </div>
-                        <h5 class="text-left"
-                            style="color: rgb(255,255,255);">{{__('message.Create')}} {{__('message.Event')}}</h5>
                         <div class="text-left"
                              style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;">
                             <a class="text-left" href="{{route('AdminOperator.Setting')}}"
-                               style="color: #b3b8b8;">{{__('message.Setting')}}</a>
-                        </div>
+                               style="color: #b3b8b8;">{{__('message.Setting')}}</a></div>
+
                     </div>
-                    <div class="text-left"
-                         style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;">
-                        <a class="text-left" href="{{route('AdminOperator.Signin')}}"
-                           style="color: #b3b8b8;">{{__('message.Signin')}} {{__('message.Page')}}</a>
-                    </div>
-                    <div class="text-left"
-                         style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #b3b8b8;">
-                        <a class="text-left" href="{{route('AdminOperator.VisitorSetting')}}"
-                           style="color: #b3b8b8;">{{__('message.Visitor')}} {{__('message.Page')}}</a></div>
-                    <div class="text-left"
-                         style="/*background-color: #00000000;*/height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #b3b8b8;">
-                        <a class="text-left" href="{{route('AdminOperator.ExhibitorSetting')}}"
-                           style="color: #b3b8b8;">{{__('message.Exhibitor')}} {{__('message.Page')}}</a></div>
-                    <div class="text-left"
-                         style="/*background-color: #00000000;*/height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #b3b8b8;">
-                        <a class="text-left" href="{{route('AdminOperator.AppAdjustment')}}"
-                           style="color: #b3b8b8;">{{__('message.App')}} {{__('message.Adjustment')}}<br></a></div>
                 </div>
+
+
+
                 <div class="border rounded d-block float-left border"
                      style="width: 868px;height: 422px;background-color: rgba(168,168,168,0.84);padding: 7px;color: #363636;margin-left: 22px;">
                     <div id="company_box" class="border rounded d-inline float-left "
