@@ -160,7 +160,11 @@ class AdminOperatorController extends Controller
             'Chat' => $Chats
         ],200);
     }
-    public function ChangeChatStatus(Request $request){
+
+
+
+    public function ChangeChatStatus(Request $request)
+    {
         if ($request->ID && $request->UserID) {
             $Chatsssss = AdminChat::where('UserID', $request->UserID)->where('ReceiverID', $request->ID)->get();
 
@@ -170,11 +174,11 @@ class AdminOperatorController extends Controller
             }
             return response()->json([
                 'msg' => 'Done'
-            ],200);
-        }else{
+            ], 200);
+        } else {
             return response()->json([
                 'msg' => 'Error'
-            ],200);
+            ], 200);
 
         }
     }

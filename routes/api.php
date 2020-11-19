@@ -17,8 +17,14 @@ Route::get('access_token', 'AccessTokenController@generate_token');
 Route::group(['prefix' => 'v1' , 'as' => 'Api.'],function (){
     Route::group(['prefix' => 'Chat'] , function (){
         Route::get('ChatStore' , 'ApiController@ChatStore');
+
+
+
         Route::get('Chat' , 'ApiController@ChatGet');
         Route::get('ChatAdmin' , 'ApiController@ChatGetAdmin');
+
+
+
         Route::get('ChatAdminStore' , 'ApiController@ChatStoreAdmin');
     });
     Route::group(['prefix' => 'AuditoriumChat'] , function (){

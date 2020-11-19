@@ -303,6 +303,9 @@ class ApiController extends Controller
 
     public function ChatGet(Request $request)
     {
+        //chats for exhibitors
+
+
         $request->validate([
             'UserID' => 'required|integer',
             'BoothID' => 'required|integer',
@@ -344,10 +347,15 @@ class ApiController extends Controller
 
     public function ChatGetAdmin(Request $request)
     {
+
+        //Chats for Admin OR Admin-operator
+
         $request->validate([
-            'UserID' => 'required|integer',
+            'UserID' => 'required',
         ]);
-        $ID = User::where('Rule' , 'Admin')->get()[0]->id;
+
+
+        $ID = User::whereIn('Rule' , ['Admin', 'Admin-Operator'])->get()[0]->id;
         $Chats = AdminChat::where('UserID', $ID)->where('ReceiverID', \request()->UserID)->whereIn('Sender' , ['Admin' , 'Admin-Operator'])->latest('id')->first();
 
         return response()->json(
