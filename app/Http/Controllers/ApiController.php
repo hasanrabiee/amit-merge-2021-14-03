@@ -348,7 +348,7 @@ class ApiController extends Controller
             'UserID' => 'required|integer',
         ]);
         $ID = User::whereIn('Rule', ['Admin', 'Admin-Operator'] )->get()[0]->id;
-        $Chats = AdminChat::where('UserID', $ID)->where('ReceiverID', \request()->UserID)->whereIn('Sender' , ['Admin' , 'Admin-Operator'])->latest('id');
+        $Chats = AdminChat::where('UserID', $ID)->where('ReceiverID', \request()->UserID)->whereIn('Sender' , ['Admin' , 'Admin-Operator'])->latest('id')->first();
 
         return response()->json(
             ['Chat' => $Chats]
