@@ -81,237 +81,143 @@
                             style="color: rgb(255,255,255);">{{__('message.Manage')}} {{__('message.Event')}}</h5>
                         <div class="text-left active-page"
                              style="/*background-color: #00000000;*/height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #b3b8b8;">
-                            <a class="text-left" href="{{route('AdminOperator.index')}}"
-                               style="color: #b3b8b8;">{{__('message.Inbox')}}</a></div>
+                            <a class="text-left" href="#" style="color: #b3b8b8;">{{__('message.Inbox')}}</a></div>
                         <div class="text-left"
                              style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #363636;">
                             <a class="text-left" href="{{route('AdminOperator.History')}}"
-                               style="color: #b3b8b8;">{{__('message.History')}}</a></div>
+                               style="color: #b3b8b8;">{{__('message.History')}}</a>
+                        </div>
                         <div class="text-left"
                              style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;">
                             <a class="text-left" href="{{route('AdminOperator.Lounge')}}"
-                               style="color: #b3b8b8;">{{__('message.Lounge')}}</a></div>
-                        <div class="text-left "
+                               style="color: #b3b8b8;">{{__('message.Lounge')}}</a>
+                        </div>
+                        <div class="text-left"
                              style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;">
-                            <a class="text-left" href="#" style="color: #b3b8b8;">{{__('message.Statistics')}}</a></div>
+                            <a class="text-left" href="{{route('AdminOperator.Statistics')}}"
+                               style="color: #b3b8b8;">{{__('message.Statistics')}}</a></div>
                         <div class="text-left"
                              style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;">
                             <a class="text-left" href="{{route('AdminOperator.RegisteredVisitor')}}"
-                               style="color: #b3b8b8;">{{__('message.Registered')}} {{__('message.Visitors')}}<br></a>
-                        </div>
+                               style="color: #b3b8b8;">{{__('message.Registered')}} {{__('message.Visitors')}}</a></div>
                         <div class="text-left"
                              style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #b3b8b8;">
                             <a class="text-left" href="{{route('AdminOperator.RegisteredExhibitor')}}"
-                               style="color: #b3b8b8;">{{__('message.Registered')}} {{__('message.Exhibitors')}}<br></a>
+                               style="color: #b3b8b8;">{{__('message.Registered')}} {{__('message.Exhibitors')}}</a>
                         </div>
+                        <div class="text-left"
+                             style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #b3b8b8;">
+                            <a class="text-left" href="{{route('AdminOperator.Auditorium')}}"
+                               style="color: #b3b8b8;">{{__('message.Auditorium')}} {{__('message.Schedule')}}<br></a>
+                        </div>
+                        <h5 class="text-left"
+                            style="color: rgb(255,255,255);">{{__('message.Create')}} {{__('message.Event')}}</h5>
                         <div class="text-left"
                              style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;">
                             <a class="text-left" href="{{route('AdminOperator.Setting')}}"
-                               style="color: #b3b8b8;">{{__('message.Setting')}}</a></div>
-
+                               style="color: #b3b8b8;">{{__('message.Setting')}}</a>
+                        </div>
                     </div>
+                    <div class="text-left"
+                         style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;">
+                        <a class="text-left" href="{{route('AdminOperator.Signin')}}"
+                           style="color: #b3b8b8;">{{__('message.Signin')}} {{__('message.Page')}}</a>
+                    </div>
+                    <div class="text-left"
+                         style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #b3b8b8;">
+                        <a class="text-left" href="{{route('AdminOperator.VisitorSetting')}}"
+                           style="color: #b3b8b8;">{{__('message.Visitor')}} {{__('message.Page')}}</a></div>
+                    <div class="text-left"
+                         style="/*background-color: #00000000;*/height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #b3b8b8;">
+                        <a class="text-left" href="{{route('AdminOperator.ExhibitorSetting')}}"
+                           style="color: #b3b8b8;">{{__('message.Exhibitor')}} {{__('message.Page')}}</a></div>
+                    <div class="text-left"
+                         style="/*background-color: #00000000;*/height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #b3b8b8;">
+                        <a class="text-left" href="{{route('AdminOperator.AppAdjustment')}}"
+                           style="color: #b3b8b8;">{{__('message.App')}} {{__('message.Adjustment')}}<br></a></div>
                 </div>
                 <div class="border rounded d-block float-left border"
-                     style="width: 861px;height: 452px;background-color: rgba(168,168,168,0.84);padding: 7px;color: #363636;margin-left: 22px;">
-                    <div class="table-responsive"
-                         style="background-color: #ffffff;width: 820px;height: 133px;margin-bottom: 54px;">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th class="border rounded-0" style="width: 300px;">Total Exhibitors</th>
-                                <th class="border rounded-0" style="width: 300px;">Total Visitors</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td class="border rounded-0">{{\App\User::where('Rule' , 'Exhibitor')->count()}}</td>
-                                <td class="border rounded-0">{{\App\User::where('Rule' , 'Visitor')->count()}}</td>
-                            </tr>
-                            <tr></tr>
-                            </tbody>
-                        </table>
+                     style="width: 868px;height: 422px;background-color: rgba(168,168,168,0.84);padding: 7px;color: #363636;margin-left: 22px;">
+                    <div id="company_box" class="border rounded d-inline float-left "
+                         style="width: auto;;margin-top: 4px;" onscroll="is_typing = true;">
+                        <form style="height: 7px;margin-bottom: 23px;width: 205px;" method="get"
+                              action="{{route('AdminOperator.index')}}">
+                            <div class="form-group" style="width: 305px;">
+                                <input class="form-control float-left" type="search"
+                                       placeholder="{{__('message.Company')}} {{__('message.Name')}}"
+                                       style="width: 163px;height: 33px;margin-bottom: 24px;font-size: 14px;"
+                                       name="SearchTermBooth" value="{{request()->SearchTermBooth}}">
+                                <button class="btn float-left shadow-none" type="button"
+                                        style="width: 1px;margin-right: 16px;margin-bottom: 31px;margin-top: -4px;"><i
+                                        id="company_refresh"
+                                        class="fa fa-cog text-dark "
+                                        style="font-size: 20px;margin-bottom: 16px;margin-right: 19px;"></i></button>
+                            </div>
+                        </form>
+                        <div id="Companys" class="scroll_box" onscroll="scroll_status = true" onblur="scroll_status = false" style="height: 350px !important;">
+                            @include("company-list-data")
+                        </div>
                     </div>
-                    <div><a class="btn btn-primary " role="button" data-toggle="modal" href="#modal_weekly"
-                            style="font-size: 20px;margin-right: 6px;width: 138px;">{{__('message.Weekly')}} {{__('message.State')}}</a>
-                        <a class="btn btn-primary " role="button" data-toggle="modal" href="#modal_company"
-                           style="font-size: 20px;margin-right: 6px;width: 166px;">{{__('message.Top')}} {{__('message.Companys')}} {{__('message.State')}}</a>
-                        <a class="btn btn-primary " role="button" data-toggle="modal" href="#modal_speaker"
-                           style="font-size: 20px;margin-right: 6px;width: 160px;">{{__('message.All')}} {{__('message.Companys')}} {{__('message.State')}}</a>
-                        <a class="btn btn-primary " role="button" data-toggle="modal" href="#modal_gender"
-                           style="font-size: 20px;margin-right: 6px;width: 138px;">{{__('message.Gender')}} {{__('message.State')}}</a>
-                        <a class="btn btn-primary " role="button" data-toggle="modal" href="#modal_profession"
-                           style="font-size: 20px;margin-right: 6px;width: 172px;height: 70px">{{__('message.Profession')}} {{__('message.State')}}</a>
-                        <a class="btn btn-primary " role="button" data-toggle="modal" href="#modal_group"
-                           style="font-size: 20px;margin-right: 6px;width: 138px;margin-top: 12px;">{{__('message.Group')}} {{__('message.State')}}</a>
-
-
-                        <div class="modal fade" role="dialog" tabindex="-1" id="modal_weekly" aria-hidden="true"
-                             style="display: none;">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4>{{__('message.WeeklyStatisticsoftheWebsite')}}</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span></button>
-                                    </div>
-                                    <p>Number of visit in each day</p>
-                                    <div>
-
-                                        <canvas id="chart-area-Date" width="440" height="220"
-                                                class="chartjs-render-monitor"
-                                                style="display: block; width: 440px; height: 220px;"></canvas>
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-light btn-block" data-dismiss="modal" type="button">
-                                            Close
-                                        </button>
-                                    </div>
-                                </div>
+                    <div id="user_box" class="border rounded d-inline float-left "
+                         style="width: auto;height:422;margin-top: 4px;margin-right: 19px;margin-left: 13px;"
+                         onscroll="is_typing = true;" >
+                        <form style="height: 7px;margin-bottom: 23px;width: 205px;" action="{{route('AdminOperator.index')}}">
+                            <div class="form-group" style="width: 305px;"><input class="form-control float-left"
+                                                                                 type="search"
+                                                                                 placeholder="{{__('message.UserName')}}"
+                                                                                 style="width: 163px;height: 33px;margin-bottom: 24px;font-size: 13px;" name="SearchTermUser">
+                                <button class="btn float-left shadow-none" type="button"
+                                        style="width: 1px;margin-right: 16px;margin-bottom: 31px;margin-top: -4px;"><i
+                                        id="visiotr_refresh"
+                                        class="fa fa-cog text-dark"
+                                        style="font-size: 20px;margin-bottom: 16px;margin-right: 19px;"></i></button>
                             </div>
+                        </form>
+                        <div id="Users" class="scroll_box" onscroll="scroll_status = true" onblur="scroll_status = false" style="height: 350px !important;">
+                            @include("user-list-data")
                         </div>
-                        <div class="modal fade" role="dialog" tabindex="-1" id="modal_company">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4>{{__('message.Total')}} {{__('message.Companys')}} {{__('message.Statistics')}}</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div>
-
-                                            <canvas id="chart-area-Company" width="440" height="220"
-                                                    class="chartjs-render-monitor"
-                                                    style="display: block; width: 440px; height: 220px;"></canvas>
-
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-light btn-block" data-dismiss="modal"
-                                                type="button">{{__('message.Close')}}</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal fade" role="dialog" tabindex="-1" id="modal_speaker">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div>
-                                            <table class="table">
-                                                <thead>
-                                                <th>{{__('message.Company')}} {{__('message.Name')}}</th>
-                                                <th>{{__('message.Count')}}</th>
-                                                </thead>
-
-                                                <tbody>
-                                                @foreach($AllCompany as $ac)
-                                                    <tr>
-                                                        <td>{{\App\booth::find($ac->BoothID)->CompanyName}}</td>
-                                                        <td>{{$ac->views}}</td>
-                                                    </tr>
-                                                @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-light btn-block" data-dismiss="modal"
-                                                type="button">{{__('message.Close')}}</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal fade" role="dialog" tabindex="-1" id="modal_gender">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4>{{__('message.WebsiteUsersGenderStatistics')}}</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div style="margin-bottom: 28px;margin-top: -10px;">
-
-                                            <canvas id="chart-area-Gender" width="440" height="220"
-                                                    class="chartjs-render-monitor"
-                                                    style="display: block; width: 440px; height: 220px;"></canvas>
-
-
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-light btn-block" data-dismiss="modal"
-                                                type="button">{{__('message.Close')}}</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal fade" role="dialog" tabindex="-1" id="modal_profession">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4>{{__('message.Profession')}} {{__('message.Statistics')}}</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div style="margin-bottom: 28px;margin-top: -10px;">
-
-                                            <canvas id="chart-area-Profession" width="440" height="220"
-                                                    class="chartjs-render-monitor"
-                                                    style="display: block; width: 440px; height: 220px;"></canvas>
-
-
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-light btn-block" data-dismiss="modal"
-                                                type="button">{{__('message.Close')}}</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal fade" role="dialog" tabindex="-1" id="modal_group">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4>{{__('message.Group')}} {{__('message.Statistics')}}</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <table class="table">
-                                            <thead>
-                                            <th>{{__('message.Group')}} {{__('message.Name')}}</th>
-                                            <th>{{__('message.Member')}} {{__('message.Count')}}</th>
-                                            </thead>
-
-                                            <tbody>
-                                            @foreach($AllGroups as $ag)
-                                                <tr>
-                                                    <td>{{$ag->Name}}</td>
-                                                    <td>{{count(json_decode($ag->Members))}}</td>
-                                                </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-light btn-block" data-dismiss="modal"
-                                                type="button">{{__('message.Close')}}</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
                     </div>
+                    @if(request()->CompanyID || request()->UserID)
+                        <p class="text-left">
+                            <strong>{{__('message.Messages')}}:
+                                @if(request()->CompanyID)
+                                    {{\App\booth::find(request()->CompanyID)->CompanyName}}
+                                @elseif(request()->UserID)
+                                    {{\App\User::find(request()->UserID)->UserName}}
+                                @endif
+                            </strong>
+                        </p>
+                        <div>
+                            <div class="scroll_box ChatsDiv"
+                                 style="height: 264px;margin-bottom: 11px;background-color: #edecec;" id="ChatsDiv" >
+                                @if($Chats->count() == 0)
+                                    {{__('message.NoMessageAvailable')}}
+                                @else
+                                    <p>Loading...</p>
+                                @endif
+                            </div>
+                            @if(request()->CompanyID)
+                                <input type="hidden" id="Mode" value="{{request()->CompanyID}}">
+                            @elseif(request()->UserID)
+                                <input type="hidden" id="Mode" value="{{request()->UserID}}">
+                            @endif
+                            <input class="border rounded border-dark form-control d-inline" type="text"
+                                   style="margin-right: 17px;width: 208px;"
+                                   id="myInput"
+                                   name="Text" value="{{old('Text')}}">
+                            <input type="hidden" name="Mode" id="MOOdee"
+                                   value="@if(request()->CompanyID) Company @else User @endif">
+                            <button class="btn btn-success d-inline" onclick="sendMessage()"
+                                    style="height: 36px;width: 103px;">
+                                {{__('message.Send')}}
+                            </button>
+                        </div>
+                    @else
+                        <p class="text-left"><strong>{{__('message.Messages')}}:</strong></p>
+                        <div class="scroll_box" style="height: 264px;margin-bottom: 11px;background-color: #edecec;">
+                            {{__('message.PleaseSelectaChatFirst')}}
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
