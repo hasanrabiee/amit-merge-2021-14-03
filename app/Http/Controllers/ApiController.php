@@ -104,7 +104,7 @@ class ApiController extends Controller
     {
 
         $Booth = booth::where('Hall', $HallName)->count();
-        if ($Booth > 25) {
+        if ($Booth >= 25) {
             return json_encode('Full');
         }
         return json_encode('NotFull');
@@ -347,7 +347,7 @@ class ApiController extends Controller
         $request->validate([
             'UserID' => 'required|integer',
         ]);
-        $ID = User::where('Rule' , 'Admin')->get()[0]->id;
+        $ID = User::whereIn('Rule', ['Admin', 'Admin-Operator'] )->get()[0]->id;
         $Chats = AdminChat::where('UserID', $ID)->where('ReceiverID', \request()->UserID)->whereIn('Sender' , ['Admin' , 'Admin-Operator'])->latest('id')->first();
 
         return response()->json(
