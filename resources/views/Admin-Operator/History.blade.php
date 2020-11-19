@@ -168,12 +168,12 @@
                     </div>
                     <div class="border rounded d-inline float-left scroll_box"
                          style="width: 224px;height: 420px;margin-top: 4px;margin-right: 19px;margin-left: 13px;">
-                        <form style="height: 7px;margin-bottom: 23px;width: 205px;" action="#srch_visitor">
+                        <form style="height: 7px;margin-bottom: 23px;width: 205px;" action="{{route('AdminOperator.History')}}">
                             <div class="form-group" style="width: 305px;"><input class="form-control float-left"
                                                                                  type="search"
                                                                                  placeholder="Visitory Name"
                                                                                  style="width: 163px;height: 33px;margin-bottom: 24px;font-size: 13px;"
-                                                                                 name="visitor_search">
+                                                                                 name="SearchTermUser">
                                 <button class="btn float-left shadow-none" type="submit"
                                         style="width: 1px;margin-right: 16px;margin-bottom: 31px;margin-top: -4px;"><i
                                         class="fa fa-search"
