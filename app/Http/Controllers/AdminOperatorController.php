@@ -60,12 +60,14 @@ class AdminOperatorController extends Controller
             $ID = booth::find(\request()->CompanyID)->UserID;
             $Chats = AdminChat::where('UserID', Auth::id())->where('ReceiverID', $ID)->get();
             $Chatsssss = AdminChat::where([
-                ['UserID', $ID],
+                ['ReceiverID', $ID],
                 ['Status', 'New'],
             ])->get();
-            foreach ($Chatsssss as $chatsssss) {
-                $chatsssss->Status = 'Viewed';
-                $chatsssss->save();
+            foreach ($Chatsssss as $ch) {
+
+                $ch->Status = 'Viewed';
+
+                $ch->save();
             }
 
             $selected_booth = booth::select('id', "UserID", "CompanyName")->where("id", \request()->CompanyID)->first();
