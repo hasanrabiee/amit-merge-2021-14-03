@@ -222,7 +222,7 @@
                 var ID = document.getElementById('Mode').value;
                 var Mode = document.getElementById('MOOdee').value;
                 read_messages(ID)
-                $.get('{{route('AdminOperat.InboxChatGet')}}', {
+                $.get('{{route('AdminOperator.InboxChatGet')}}', {
                         Mode: Mode,
                         ID: ID,
                         UserID: {{\Illuminate\Support\Facades\Auth::id()}}
