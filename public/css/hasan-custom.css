@@ -1,0 +1,75 @@
+@media only screen and (min-width: 1200px) {
+    .custom-login-margin{
+        margin-top: 20%;
+    }
+
+    .text-title{
+        font-size: 80px;
+        font-weight: bolder;
+        line-height: 64px;
+    }
+    .overflow{
+        overflow: scroll;
+    }
+
+    .margin-register-pc{
+        margin-top: 1000px !important;
+    }
+    .pc-height-visitor-history{
+        height: 570px;
+    }
+    .pc-height-visitor-history-chat{
+        height: 450px;
+    }
+    .booth-btn-height{
+        height: 450px;
+        width: 100%;
+        overflow-y: auto;
+    }
+    .card-inbox-ex-h{
+        height: 630px;
+    }
+    .pc-height-exhibitor-history{
+        height: 630px;
+    }
+    .text-title{
+        font-size: 80px;
+        font-weight: bolder;
+        line-height: 64px;
+    }
+}
+
+
+@media only screen and (max-width: 576px) {
+    .custom-login-margin{
+        margin-top: 60%;
+    }
+
+    .text-title{
+        font-size: 48px;
+        font-weight: bolder;
+        line-height: 40px;
+    }
+    .pc-height-visitor-history-chat{
+        height: 250px;
+    }
+    .text-title{
+        font-size: 48px;
+        font-weight: bolder;
+        line-height: 40px;
+    }
+
+}
+
+
+@media only screen and (min-width: 576px) and (max-width:1199px) {
+    .custom-login-margin{
+        margin-top: 50%;
+    }
+
+    .text-title{
+        font-size: 48px;
+        font-weight: bolder;
+        line-height: 40px;
+    }
+}
