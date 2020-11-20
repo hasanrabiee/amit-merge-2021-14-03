@@ -16,56 +16,58 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminOperatorController extends Controller
 {
-    public function index(Request $request){
 
+
+
+    public function InboxChatGet(Request $request)
+    {
+        $request->validate([
+            'Mode' => ['required'],
+            'ID' => ['required'],
+            'UserID' => ['required'],
+        ]);
+        if ($request->Mode == 'Company') {
+            $ID = booth::find($request->ID)->UserID;
+        } else {
+            $ID = $request->ID;
+        }
+        $Chats = AdminChat::where('ReceiverID', $ID)->get();
+        return response()->json([
+            'Chat' => $Chats
+        ], 200);
+    }
+
+    public function index(Request $request)
+    {
         if ($request->ajax()) {
-
-
-            // prepare bootlist
-
             if ($request->SearchTermBooth)
                 $booth_list = booth::select('id', "UserID", "CompanyName")->where('CompanyName', 'LIKE', '%' . \request()->SearchTermBooth . '%')->paginate(10);
-
             else
                 $booth_list = booth::select('id', "UserID", "CompanyName")->paginate(10);
-
             $booth_list_view = view('company-list-data', compact('booth_list'))->render();
-
-
-            // end prepare boothlist
-
-            // prepare users
 
             if ($request->SearchTermUser)
                 $users_list = User::select("id", "UserName")->where('UserName', 'LIKE', '%' . \request()->SearchTermUser . '%')->whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->paginate(10);
-
             else
                 $users_list = User::select("id", "UserName")->whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->paginate(10);
-
             $users_list_view = view('user-list-data', compact('users_list'))->render();
-
-
-            // end prepare users
-
-
             return response()->json(['booth_list' => $booth_list_view, 'users_list' => $users_list_view]);
 
         }
-
-
-
 
 
         if (\request()->CompanyID) {
             $ID = booth::find(\request()->CompanyID)->UserID;
             $Chats = AdminChat::where('UserID', Auth::id())->where('ReceiverID', $ID)->get();
             $Chatsssss = AdminChat::where([
-                ['UserID', $ID],
+                ['ReceiverID', $ID],
                 ['Status', 'New'],
             ])->get();
-            foreach ($Chatsssss as $chatsssss) {
-                $chatsssss->Status = 'Viewed';
-                $chatsssss->save();
+            foreach ($Chatsssss as $ch) {
+
+                $ch->Status = 'Viewed';
+
+                $ch->save();
             }
 
             $selected_booth = booth::select('id', "UserID", "CompanyName")->where("id", \request()->CompanyID)->first();
@@ -85,9 +87,9 @@ class AdminOperatorController extends Controller
 
         } else {
 
-            if(\request()->SearchTermBooth){
+            if (\request()->SearchTermBooth) {
                 $booth_list = booth::where('CompanyName', 'LIKE', '%' . \request()->SearchTermBooth . '%')->get(['id', "UserID", "CompanyName"]);
-            }else{
+            } else {
                 $booth_list = booth::select('id', "UserID", "CompanyName")->paginate(10);
 
             }
@@ -97,7 +99,10 @@ class AdminOperatorController extends Controller
 
         if (\request()->UserID) {
             $Chats = AdminChat::where('UserID', Auth::id())->where('ReceiverID', \request()->UserID)->get();
-            $Chatsssss = AdminChat::where('ReceiverID', \request()->UserID)->get();
+            $Chatsssss = AdminChat::where([
+                ['ReceiverID', \request()->UserID],
+                ['Status', 'New'],
+            ])->get();
             foreach ($Chatsssss as $chatsssss) {
                 $chatsssss->Status = 'Viewed';
                 $chatsssss->save();
@@ -121,16 +126,15 @@ class AdminOperatorController extends Controller
 
         } else {
 
-            if(\request()->SearchTermUser){
+            if (\request()->SearchTermUser) {
 
                 $users_list = User::where('UserName', 'LIKE', '%' . \request()->SearchTermUser . '%')->whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->get(["id", "UserName"]);
 
 
-            }else{
+            } else {
                 $users_list = User::select("id", "UserName")->whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->paginate(10);
 
             }
-
 
 
         }
@@ -161,8 +165,6 @@ class AdminOperatorController extends Controller
         ],200);
     }
 
-
-
     public function ChangeChatStatus(Request $request)
     {
         if ($request->ID && $request->UserID) {
@@ -182,6 +184,7 @@ class AdminOperatorController extends Controller
 
         }
     }
+
 
 
 
@@ -461,13 +464,33 @@ class AdminOperatorController extends Controller
     public function SuspendBooth($BoothID)
     {
         $Booth = booth::find($BoothID);
+        $User = User::find($Booth->UserID);
 
         if (\request()->has('BoothStatus')) {
-            $Booth->Status = 'Active';
+            $User->AccountStatus = 'Active';
+            if ($User->email_verified_at == null) {
+                $User->sendEmailVerificationNotification();
+            }
         } else {
-            $Booth->Status = 'DeActive';
+            $User->AccountStatus = 'Suspend';
         }
-        $Booth->save();
+        $User->save();
+        Alert::success('User Changed Successful');
+
         return redirect()->back();
     }
+
+
+//    public function SuspendBooth($BoothID)
+//    {
+//        $Booth = booth::find($BoothID);
+//
+//        if (\request()->has('BoothStatus')) {
+//            $Booth->Status = 'Active';
+//        } else {
+//            $Booth->Status = 'DeActive';
+//        }
+//        $Booth->save();
+//        return redirect()->back();
+//    }
 }

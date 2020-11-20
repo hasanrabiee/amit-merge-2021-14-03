@@ -757,7 +757,7 @@ class AdminController extends Controller
                         'Rule' => 'AdminOperator',
                         'ParentID' => Auth::id()
                     ]);
-                    Mail::to($operatorEmail)->send(new InviteOperators(route('OperatorRegister', $Invite->token)));
+                    Mail::to($operatorEmail)->send(new InviteOperators($Invite->token));
 
                 }
             }

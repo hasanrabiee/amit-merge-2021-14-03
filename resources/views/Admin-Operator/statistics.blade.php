@@ -132,6 +132,8 @@
 
                     </div>
                 </div>
+
+
                 <div class="border rounded d-block float-left border"
                      style="width: 861px;height: 452px;background-color: rgba(168,168,168,0.84);padding: 7px;color: #363636;margin-left: 22px;">
                     <div class="table-responsive"

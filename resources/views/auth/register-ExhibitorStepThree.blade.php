@@ -1,7 +1,243 @@
 @extends('layouts.Panel')
+
+@section("Head")
+
+
+    <meta name="_token" content="{{csrf_token()}}"/>
+
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <link href="{{asset("css/bootstrap-limitless.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/layout.min.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/components.min.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/colors.min.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/hasan-custom.css")}}" rel="stylesheet" type="text/css">
+
+    <!-- /global stylesheets -->
+
+    <!-- Core JS files -->
+    <script src="{{asset("js/jquery.min.js")}}"></script>
+    <script src="{{asset("js/bootstrap.bundler.js")}}"></script>
+    <script src="{{asset("js/blockui.min.js")}}"></script>
+    <!-- /core JS files -->
+
+    <!-- Theme JS files -->
+    <script src="{{asset("js/d3.min.js")}}"></script>
+    <script src="{{asset("js/d3tooltip.js")}}"></script>
+    <script src="{{asset("js/switchery.min.js")}}"></script>
+    <script src="{{asset("js/momment.min.js")}}"></script>
+    <script src="{{asset("js/app2.js")}}"></script>
+    <script src="{{asset("js/dashboard.js")}}"></script>
+    <script src="https://use.fontawesome.com/fd423b8d2f.js"></script>
+    <!-- /theme JS files -->
+
+
+
+
+    <style>
+        .hide{
+            display: none !important;
+        }
+
+        input[type=checkbox] {
+            display:none;
+        }
+
+        input#thing1[type=checkbox] + label
+        {
+            background-image: url("BoothA.png");
+            background-size: 150px 70px;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            border-color: transparent;
+            border-radius: 5px;
+            border-style: solid;
+            height: 74px;
+            width: 175px;
+            display:inline-block;
+            padding:10px;
+            cursor: pointer;
+        }
+        input#thing2[type=checkbox] + label
+        {
+            background-image: url("BoothB.png");
+            background-size: 150px 70px;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            border-color: transparent;
+            border-radius: 5px;
+            border-style: solid;
+            height: 74px;
+            width: 175px;
+            display:inline-block;
+            padding: 0 0 0 0px;
+            cursor: pointer;
+        }
+        input#thing3[type=checkbox] + label
+        {
+            background-image: url("BoothC.png");
+            background-size: 150px 70px;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            border-color: transparent;
+            border-radius: 5px;
+            border-style: solid;
+            height: 74px;
+            width: 175px;
+            display:inline-block;
+            padding: 0 0 0 0px;
+            cursor: pointer;
+        }
+        input#thing4[type=checkbox] + label
+        {
+            background-image: url("BoothD.png");
+            background-size: 150px 70px;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            border-radius: 5px;
+            border-color: transparent;
+            border-style: solid;
+            height: 74px;
+            width: 175px;
+            display:inline-block;
+            padding: 0 0 0 0px;
+            cursor: pointer;
+        }
+        input#thing1[type=checkbox]:checked + label
+        {
+            background-size: 250px 106px;
+            background-position: 50% 50%;
+            border-color: green;
+            border-style: solid;
+            border-radius: 5px;
+            height: 111px;
+            width: 262.5px;
+            display:inline-block;
+            padding: 0 0 0 0px;
+            cursor: pointer;
+        }
+        input#thing2[type=checkbox]:checked + label
+        {
+            background-size: 250px 106px;
+            background-position: 50% 50%;
+            border-color: green;
+            border-style: solid;
+            border-radius: 5px;
+            height: 111px;
+            width: 262.5px;
+            display:inline-block;
+            padding: 0 0 0 0px;
+            cursor: pointer;
+        }
+        input#thing3[type=checkbox]:checked + label
+        {
+            background-size: 250px 106px;
+            background-position: 50% 50%;
+            border-color: green;
+            border-style: solid;
+            border-radius: 5px;
+            height: 111px;
+            width: 262.5px;
+            display:inline-block;
+            padding: 0 0 0 0px;
+            cursor: pointer;
+        }
+        input#thing4[type=checkbox]:checked + label
+        {
+            background-size: 250px 106px;
+            background-position: 50% 50%;
+            border-color: green;
+            border-style: solid;
+            border-radius: 5px;
+            height: 111px;
+            width: 262.5px;
+            display:inline-block;
+            padding: 0 0 0 0px;
+            cursor: pointer;
+        }
+
+
+        .selectbooth {
+            background-color: #06E4E8 !important;
+        }
+        .closebooth {
+            background-color: #F900C9 !important;
+        }
+        .openbooth {
+            background-color: #939393;
+            cursor: pointer;;
+        }
+        .Submited {
+            background-color: #1c7430 important;
+        }
+        .activetypes {
+            background-color: #dfdfdf !important;
+        }
+
+        @media only screen and (min-width: 1200px) {
+            .margin{
+                margin-top: 10px !important;
+            }
+        }
+
+    </style>
+
+
+
+
+@endsection
+
+
+
 @section('content')
-    <header class="d-flex masthead"
-            style="background-image: url({{\App\Site::find(1)->SigninBackground}});padding: 45px;padding-top: 31px;padding-right: 0px;padding-left: 0px;">
+
+{{--    test aaagggggaaaaaain--}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <style>
             .selectbooth {
                 background-color: #06E4E8 !important;
@@ -22,94 +258,8 @@
         </style>
 
         <div class="container my-auto text-center" style="margin-top: -30px !important;">
-            <h1 class="d-inline-block mb-1" style="color: #006d60;opacity: 1;font-size: 85px;width: 1110px;">
-                @if(\App\Site::find(1)->Logo1)
-                    <img class="float-right" src="{{\App\Site::find(1)->Logo1}}"
-                         style="width: 113px;margin-right: 34px;">
-                @endif
-                @if(\App\Site::find(1)->Logo2)
-                    <img class="float-right" src="{{\App\Site::find(1)->Logo2}}"
-                         style="width: 113px;margin-right: 34px;">
-                @endif
-                @if(\App\Site::find(1)->Logo3)
-                    <img class="float-right" src="{{\App\Site::find(1)->Logo3}}"
-                         style="width: 113px;margin-right: 34px;">
-                @endif
-            </h1>
-            <h3 class="mb-5"></h3>
-            <div style="width: 354px;height: 45px;background-color: #525252;" class="rounded">
-                <div class="d-inline float-left" style="background-color: transparent;height: 46px;width: 214px;">
-                    <p style="width: 185px;height: 56px;padding: 8px;color: rgb(255,255,255);"
-                       class="text-left">{{auth()->user()->UserName}} <i class="fa fa-language" style="cursor: pointer" onclick="$('#Lang_Modal').modal('show')"></i> </p>
-                </div>
-                <div class="modal fade" role="dialog" tabindex="-1" id="Lang_Modal">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                                                    <h4>{{__('message.ChangeLang')}}</h4>
-<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                            <div class="modal-body">
 
-                                <div class="dropdown">
-
-                                    <a style="text-decoration: none !important" class="" href="{{ url('locale/en') }}"><i class="fa fa-globe"></i>English</a><br>
-                                    <a style="text-decoration: none !important" class="" href="{{ url('locale/de') }}"><i class="fa fa-globe"></i>Germany</a><br>
-                                    <a style="text-decoration: none !important" class="" href="{{ url('locale/al') }}"><i class="fa fa-globe"></i>Albanian</a><br>
-
-
-                                </div>
-                            </div>
-                            <div class="modal-footer"><button class="btn btn-light btn-block" data-dismiss="modal" type="button">Close</button></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="d-inline float-right"
-                     style="background-color: transparent;height: 45px;width: 140px; margin-top: 3px"><a
-                        class="remove_underline" href="{{ route('logout') }}"
-                        style="font-size: 15px;color: #c5c5c5;margin-bottom: 16px;" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">Log Out</a><i
-                        class="icon ion-log-out" style=";margin-left: 8px;color: #c5c5c5;"></i>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-                </div>
-            </div>
-            <div class="amitiss_back d-block rounded"
-                 style="width: 1117px;height: 492px;margin-right: 10px;padding: 27px;">
-                <div class="d-inline-block float-left border rounded" style="height: 144px;width: 635px">
-                    <h5 class="text-left text-light" style="margin-right: 350px;margin-top: 5px;margin-left: 10px;">{{__('message.Chooseyourboothtype')}}</h5>
-                    <div class="d-inline float-left" id="booth_type_a" onclick="highlight_booth('A')"
-                         style="height: 95px !important; cursor:pointer;"><img
-                            class="rounded d-block float-left" src="{{asset('assets/img/booth-01.png')}}" width="130"
-                            height="60"
-                            style="padding-left: -77px;margin-right: 13px;margin-left: 6px;margin-top: 7px;" onclick="openImage('{{asset('assets/img/BoothA.png')}}')" />
-                        <p class="text-center" style="color: rgb(255,255,255);">Type A</p>
-                    </div>
-                    <div class="d-inline float-left" id="booth_type_b" onclick="highlight_booth('B')"
-                         style="height: 95px !important; cursor:pointer;"><img
-                            class="rounded d-block float-left" src="{{asset('assets/img/booth-02.png')}}" width="130"
-                            height="60"
-                            style="padding-left: -77px;margin-right: 13px;margin-left: 6px;margin-top: 7px;" onclick="openImage('{{asset('assets/img/BoothB.png')}}')" />
-                        <p class="text-center" style="color: rgb(255,255,255);">Type B</p>
-                    </div>
-                    <div class="d-inline float-left" id="booth_type_c" onclick="highlight_booth('C')"
-                         style="height: 95px !important; cursor:pointer;"><img
-                            class="rounded d-block float-left" src="{{asset('assets/img/booth-03.png')}}" width="130"
-                            height="60"
-                            style="padding-left: -77px;margin-right: 13px;margin-left: 6px;margin-top: 7px;" onclick="openImage('{{asset('assets/img/BoothC.png')}}')" />
-                        <p class="text-center" style="color: rgb(255,255,255);">Type C</p>
-                    </div>
-                    <div class="d-inline float-left" id="booth_type_d" onclick="highlight_booth('D')"
-                         style="height: 95px !important; cursor:pointer;"><img
-                            class="rounded d-block float-left" src="{{asset('assets/img/booth-04.png')}}" width="130"
-                            height="60"
-                            style="padding-left: -77px;margin-right: 13px;margin-left: 6px;margin-top: 7px;" onclick="openImage('{{asset('assets/img/BoothD.png')}}')">
-                        <p class="text-center" style="color: rgb(255,255,255);">Type D</p>
-                    </div>
-                </div>
-
+            <div>
 
 
                 <div class="modal fade" role="dialog" tabindex="-1" id="BoothImagesModalNmidonmChiCHi">
@@ -126,153 +276,9 @@
                 </div>
 
 
+                <div>
 
-                <div class="d-inline-block rounded float-right" style="height: 410px;">
-                    <div style="margin-bottom: 5px;margin-top: -14px;">
-                        <button disabled="true" onclick="put_hall_id('a')" id="hall_a" class="btn" type="button"
-                                style="background-color: #1fbeb0;color: rgb(255,255,255);margin-right: 7px;height: 36px;">
-                            Hall A
-                        </button>
-                        <button id="hall_b" class="btn" type="button"
-                                style="background-color: #1fbeb0;color: rgb(255,255,255);margin-right: 7px;height: 36px;"
-                                disabled="true" onclick="put_hall_id('b')">Hall B
-                        </button>
-                        <button disabled="true" onclick="put_hall_id('c')" id="hall_c" class="btn" type="button"
-                                style="background-color: #1fbeb0;color: rgb(255,255,255);margin-right: 7px;height: 36px;"
-                                disabled="">Hall C
-                        </button>
-                        <button disabled="true" onclick="put_hall_id('d')" id="hall_d" class="btn" type="button"
-                                style="background-color: #1fbeb0;color: rgb(255,255,255);margin-right: 7px;height: 36px;"
-                                disabled="true">Hall D
-                        </button>
-                    </div>
-                    <div style="background-color: #888686;height: 384px;width: 333px;padding: 14px;padding-top: 27px;">
-                        <div class="float-left" style="margin-right: 22px;">
-                            <div id="booth_17" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;margin-top: 36px;padding-top: 0px;"></div>
-                            <div id="booth_18" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
-                            <div id="booth_19" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
-                        </div>
-                        <div class="float-left" style="margin-right: -17px;">
-                            <div id="booth_25" class="openbooth"
-                                 style="height: 22px;width: 60px;background-color: #939393; cursor: pointer;;margin-bottom: 30px;margin-top: -23px;padding-top: 0px;"></div>
-                            <div id="booth_01" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;margin-top: -23px;padding-top: 0px;"></div>
-                            <div id="booth_12" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;margin-top: 0px;padding-top: 0px;"></div>
-                            <div id="booth_07" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
-                            <div id="booth_03" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
-                            <div id="booth_20" class="openbooth"
-                                 style="height: 24px;width: 70px;background-color: #939393; cursor: pointer;;margin-bottom: 38px;padding-bottom: 15px;margin-top: -12px;"></div>
-                        </div>
-                        <div class="float-left" style="margin-right: 29px;">
-                            <div id="booth_11" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;margin-top: 6px;padding-top: 0px;"></div>
-                            <div id="booth_02" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
-                            <div id="booth_13" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
-                            <div id="booth_08" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
-                        </div>
-                        <div class="float-left" style="margin-right: -17px;margin-left: 10px;">
-                            <div id="booth_24" class="openbooth"
-                                 style="height: 22px;width: 60px;background-color: #939393; cursor: pointer;;margin-bottom: 30px;margin-top: -23px;padding-top: 0px;"></div>
-                            <div id="booth_04" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;margin-top: -23px;padding-top: 0px;"></div>
-                            <div id="booth_15" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;margin-top: 0px;padding-top: 0px;"></div>
-                            <div id="booth_09" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
-                            <div id="booth_06" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
-                            <div id="booth_21" class="openbooth"
-                                 style="height: 24px;width: 70px;background-color: #939393; cursor: pointer;;margin-bottom: 38px;padding-bottom: 15px;margin-top: -12px;"></div>
-                        </div>
-                        <div class="d-inline-block float-left" style="margin-right: 30px;">
-                            <div id="booth_14" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;margin-top: 6px;padding-top: 0px;"></div>
-                            <div id="booth_05" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
-                            <div id="booth_10" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
-                            <div id="booth_16" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
-                        </div>
-                        <div class="d-inline-block float-left" style="margin-right: 0px;">
-                            <div id="booth_23" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: -76px;margin-top: 54px;"></div>
-                            <div id="booth_22" class="openbooth"
-                                 style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;margin-top: 173px;"></div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col" style="transform: rotate(270deg);margin-top: 30px;margin-left: 15px">
-                                <p class="text-light">{{__('message.Entrance')}}</p>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="border rounded" style="height: 50px">
-                        <div class="col " style="margin-top: -30px; float: left ; color: white !important;">
-                            <span
-                                class="text-light"
-                                style="height: 15px;width: 15px;background-color: #06E4E8;border-radius: 50%;display: inline-block;"></span> {{__('message.SelectedBooth')}}
-                            <span
-                                class="text-light"
-                                style="height: 15px;width: 15px;background-color: #F900C9;border-radius: 50%;display: inline-block;"></span>{{__('message.OccupiedBooth')}}
-                            <br>
-                            <span
-                                class="text-light"
-                                style="height: 15px;width: 15px;background-color: #dfdfdf;border-radius: 50%;display: inline-block;"></span> {{__('message.VacentBooth')}}
-
-                        </div>
-                    </div>
-
-                </div>
-                <div class="border rounded float-left overlay"
-                     style="background-color: transparent;width: 635px;">
-                    <h5 class="text-left text-light" style="margin-top: 5px;margin-left: 10px;">
-                        {{__('message.SBL')}} <i style="margin-left: 50px"
-                                                 class="fa fa-arrow-right"></i><i
-                            style="margin-left: 5px" class="fa fa-arrow-right"></i><i style="margin-left: 5px"
-                                                                                      class="fa fa-arrow-right"></i>
-
-                    </h5>
-
-                </div>
-                <div class="border rounded float-left overlay"
-                     style="background-color: transparent;width: 635px;height: 235px;line-height: 26px;">
-                    <div class="text-left d-inline float-left"
-                         style="background-color: #303b3a;width: 302px;height: 230px;">
-                        <h5 style="color: rgb(255,255,255);margin-left: 19px;padding-top: 13px;">{{__('message.BoothOptions')}}</h5>
-                        <p class=" " style="color: rgb(255,255,255);margin-left: 5px;"><i
-                                class="fa fa-star"
-                                style="margin-right: 8px;color: rgb(215,173,25);"></i>{{__('message.Numberofposters')}}:
-                            3</p>
-                        <p class=" " style="color: rgb(255,255,255);margin-left: 5px;"><i
-                                class="fa fa-star"
-                                style="margin-right: 8px;color: rgb(215,173,25);"></i>{{__('message.Numberofinformationdesc')}}
-                            : 1<br></p>
-                        <p class=" " style="color: rgb(255,255,255);margin-left: 5px;"><i
-                                class="fa fa-star"
-                                style="margin-right: 8px;color: rgb(215,173,25);"></i>{{__('message.YoutubeVideoLink')}}
-                            :
-                            1<br>
-                        </p>
-                        <p class=" " style="color: rgb(255,255,255);margin-left: 5px;"><i
-                                class="fa fa-star"
-                                style="margin-right: 8px;color: rgb(215,173,25);"></i>{{__('message.Brochure')}}: 1<br>
-                        </p>
-
-                    </div>
-                    <div class="text-left d-inline float-left"
-                         style="background-color: transparent;width: 302px;height: 273px;">
+                    <div>
                         <form onsubmit="event.preventDefault(); areyousure();" id="mysinsin_form"
                             style="margin-top: 17px;" method="post" enctype="multipart/form-data"
                             action="{{route('Exhibitor-Register-ThreePost')}}">
@@ -288,11 +294,6 @@
 
                             <div class="form-group" style="margin-bottom: 0.4rem">
                                 <div class="col">
-                                    <a class="btn  btn-block" role="button" data-toggle="modal"
-                                       href="#job_vac_modal"
-                                       style="width: 300px;background-color: #a8a8a8;">{{__('message.AdjustBoothColors')}}
-                                        <i class="fa fa-plus"
-                                           style="margin-left: 5px;"></i></a>
                                     <div class="modal fade" role="dialog" tabindex="-1" id="job_vac_modal">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -332,11 +333,6 @@
                             </div>
                             <div class="form-group" style="margin-bottom: 0.4rem">
                                 <div class="col">
-                                    <a class="btn  btn-block" role="button" data-toggle="modal"
-                                       href="#BoothData"
-                                       style="width: 300px;background-color: #a8a8a8;">{{__('message.AdjustBoothData')}}
-                                        <i class="fa fa-plus"
-                                           style="margin-left: 5px;"></i></a>
                                     <div class="modal fade" role="dialog" tabindex="-1" id="BoothData">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -379,16 +375,6 @@
                             </div>
 
 
-                            <div class="form-group" style="margin-bottom: 0.4rem">
-                                <div class="col">
-                                    <a class="btn  btn-block" role="button" data-toggle="modal"
-                                       href="#ImageModal"
-                                       style="width: 300px;background-color: #a8a8a8;">{{__('message.BoothLogo')}} <i
-                                            class="fa fa-plus"
-                                            style="margin-left: 5px;"></i></a>
-                                </div>
-                            </div>
-
 
                             <div class="modal fade" role="dialog" tabindex="-1" id="ImageModal">
                                 <div class="modal-dialog" role="document">
@@ -406,9 +392,11 @@
                                                     <p class="d-inline"
                                                        style="color: rgb(255,255,255);margin-top: 13px;margin-left: 8px;">
                                                         {{__('message.UploadCompanyLogofortheBooth')}} </p>
-                                                    <input type="file" style="margin-top: 13px;margin-left: 17px;"
+                                                    <input id="test" type="file" style="margin-top: 13px;margin-left: 17px;"
+
+                                                           value="{{$Booth->Logo}}"
                                                            name="Logo"
-                                                           @if($Booth->Logo == null)  @endif accept="image/*">
+                                                           accept="image/*">
                                                 </div>
 
                                             </div>
@@ -428,36 +416,9 @@
                             </div>
 
 
-                            <div class="form-group">
-                                <div class="col-6" style="margin-bottom: 4px">
-                                    <button id="my_jafar_01" onclick="document.getElementById('my_mode').value = 'Test'"
-                                            class="btn  btn-block" style="display: none; width: 300px;background-color: #a8a8a8;"
-                                            onmouseover="this.style.backgroundColor='#363636'"
-                                            onmouseleave="this.style.backgroundColor='#a8a8a8'"
-                                            type="submit">
-                                        {{__('message.Save')}} & {{__('message.SeeBoothin3D')}}
 
-                                        <i class="fa fa-check" style="margin-left: 6px;"></i>
-                                    </button>
-                                </div>
-                                <div class="col-6" style="margin-bottom: 4px">
-                                    <a onclick="$('#my_jafar_01').trigger('click')" class="btn  btn-block" target="_blank"
-                                       href="/Showroom/" style="width: 300px;background-color: #a8a8a8;margin-top: 30px"
-                                       onmouseover="this.style.backgroundColor='#363636'"
-                                       onmouseleave="this.style.backgroundColor='#a8a8a8'">
-                                        {{__('message.Save')}} & {{__('message.SeeBoothin3D')}}
-                                        <i class="fa fa-eye" style="margin-left: 6px;"></i>
-                                    </a>
-                                </div>
-                            </div>
                             <input type="hidden" name="Mode" id="my_mode">
-                            <button onclick="document.getElementById('my_mode').value = 'Finish'"
-                                    class="btn btn-success float-left" type="submit"
-                                    style="width: 635px;margin-left: -300px;margin-top: 10px">
-                                <i class="fa fa-flag-checkered" style="margin-right: 6px;"></i>
-                                {{__('message.CompleteRegistration')}}
-                                <i class="fa fa-flag-checkered" style="margin-left: 6px;"></i>
-                            </button>
+
 
 
                         </form>
@@ -469,8 +430,326 @@
         </div>
 
 
-    </header>
-@endsection
+
+
+
+    {{--    Hasan start Here !!!!--}}
+
+
+
+<div class="h-100 w-100 overflow" style="width:100% !important ; height:100% !important;background-size: cover;background-repeat:no-repeat;background-image: url(@if(\App\Site::find(1)->SigninBackground != null) {{asset(\App\Site::find(1)->SigninBackground)}}   @else {{asset('assets/img/poster.jpg')}}@endif">
+
+    <!-- Page content -->
+    <div class="page-content pt-0 mt-3">
+        <!-- Main content -->
+        <div class="content-wrapper" style="overflow-x: hidden">
+
+            <!-- Content area -->
+            <div class="content">
+                <div class="row mt-md-3">
+                    <div class="col-md-10">
+                    </div>
+                    <div class="col-md-2 col-12">
+                        <a class="" href="{{ url('locale/en') }}"><i
+                                class="ml-2"></i>En</a>
+                        <a class="" href="{{ url('locale/de') }}"><i
+                                class="ml-2"></i>Ge</a>
+                        <a class="" href="{{ url('locale/al') }}"><i
+                                class="ml-2"></i>Al</a>
+                    </div>
+                </div>
+                <!-- Main charts -->
+                <div class="row">
+                    <div class="col-xl-12">
+                        <!-- Traffic sources -->
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <div class="row mb-2">
+                                    <div class="col-md-1 mr-md-5">
+                                        <h4 class="">{{\Illuminate\Support\Str::limit(\Illuminate\Support\Facades\Auth::user()->UserName , 18)}}</h4>
+                                    </div>
+                                    <div class="col-md-4 ml-md-2">
+                                        <button data-toggle="tooltip" data-placement="top" title="Logout" onclick="document.getElementById('logout-form').submit()" class="btn btn-danger">
+                                            <i class="fa fa-sign-out"></i>
+                                        </button>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="card" style="background-color:rgba(54,54,54,0.65);color: white">
+                                    <div class="card-header header-elements-inline">
+
+                                        <div class="header-elements">
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <form onsubmit="event.preventDefault(); areyousure();" id="mysinsin_form" method="post" enctype="multipart/form-data"
+                                              action="{{route('Exhibitor-Register-ThreePost')}}">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" id="boothid_value" name="Position"
+                                                   @if(isset($Booth->Position)) value="{{\App\booth::PositionConvertor($Booth->Position)}}" @endif>
+                                            <input type="hidden" id="hall_value" name="Hall"
+                                                   @if(isset($Booth->Position)) value="{{$Booth->Hall}}" @endif>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h4>{{__('message.Chooseyourboothtype')}}</h4>
+                                                    <br>
+                                                    <div class="text-center">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="map-booth" id="booth_type_a" onclick="highlight_booth('A')"
+                                                                     style=""><img
+                                                                        class="w-100 cursor-pointer" src="{{asset('assets/img/booth-01.png')}}" onclick="openImage('{{asset('assets/img/BoothA.png')}}')" />
+                                                                    <p class="text-center" style="color: rgb(255,255,255);">Type A</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="map-booth" id="booth_type_b" onclick="highlight_booth('B')"
+                                                                ><img class="w-100 cursor-pointer"
+                                                                      src="{{asset('assets/img/booth-02.png')}}"
+                                                                      onclick="openImage('{{asset('assets/img/BoothB.png')}}')" />
+                                                                    <p class="text-center" style="color: rgb(255,255,255);">Type B</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="map-booth" id="booth_type_c" onclick="highlight_booth('C')"
+                                                                ><img class="w-100 cursor-pointer"
+                                                                      src="{{asset('assets/img/booth-03.png')}}"
+                                                                      onclick="openImage('{{asset('assets/img/BoothC.png')}}')" />
+                                                                    <p class="text-center" style="color: rgb(255,255,255);">Type C</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="map-booth" id="booth_type_d" onclick="highlight_booth('D')"
+                                                                ><img
+                                                                        class="w-100 cursor-pointer" src="{{asset('assets/img/booth-04.png')}}"
+                                                                        onclick="openImage('{{asset('assets/img/BoothD.png')}}')">
+                                                                    <p class="text-center" style="color: rgb(255,255,255);">Type D</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div style="border: 1px solid white ; border-radius: 5px;" class="col-md-6 ml-md-4 p-2 mt-md-5">
+                                                            <h6>{{__('message.SBL')}} &nbsp;&nbsp;&nbsp; <i class="fa fa-angle-double-right"></i><i class="fa fa-angle-double-right"></i><i class="fa fa-angle-double-right"></i></h6>
+                                                        <script>
+                                                            $(document).ready(function (){
+                                                                $(".map-booth").click(function (){
+                                                                    $(".map-hide").removeClass("hide");
+                                                                });
+                                                            })
+                                                        </script>
+                                                    </div>
+                                                    <div class="col-md-6">
+
+                                                    </div>
+                                                    <div class="col-md-6 ml-md-4" style="border-radius: 5px;border: 1px solid white">
+                                                        <div class="row">
+                                                            <div class="col-md-12" >
+                                                                <h4 class="mt-2">
+                                                                    {{__('message.BoothOptions')}}
+                                                                </h4>
+                                                                <p>
+                                                                    {{__('message.Numberofposters')}} : 3
+                                                                </p>
+                                                                <p>
+                                                                    {{__('message.Numberofinformationdesc')}} : 1
+                                                                </p>
+                                                                <p>
+                                                                    {{__('message.YoutubeVideoLink')}} : 1
+                                                                </p>
+                                                                <p>
+                                                                    {{__('message.Brochure')}} : 1
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-md-12 mt-2">
+
+                                                                <a class="btn btn-info w-100 mb-2" role="button" data-toggle="modal"
+                                                                   href="#job_vac_modal"
+                                                                >{{__('message.AdjustBoothColors')}}
+                                                                </a>
+                                                                <br>
+
+
+                                                                <a class="btn btn-info w-100 mb-2" role="button" data-toggle="modal"
+                                                                   href="#BoothData"
+                                                                >{{__('message.AdjustBoothData')}}
+                                                                </a>
+
+                                                                <br>
+
+
+                                                                <a class="btn btn-info w-100 mb-2" role="button" data-toggle="modal"
+                                                                   href="#ImageModal"
+                                                                >{{__('message.BoothLogo')}}
+
+                                                                </a>
+
+
+                                                                <br>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-5 mt-5 mt-md-0 text-center">
+                                                        <div style="margin-bottom: 5px;margin-top: -14px;">
+                                                            <button disabled="true" onclick="put_hall_id('a')" id="hall_a" class="btn" type="button"
+                                                                    style="background-color: #1fbeb0;color: rgb(255,255,255);margin-right: 7px;height: 36px;">
+                                                                Hall A
+                                                            </button>
+                                                            <button id="hall_b" class="btn" type="button"
+                                                                    style="background-color: #1fbeb0;color: rgb(255,255,255);margin-right: 7px;height: 36px;"
+                                                                    disabled="true" onclick="put_hall_id('b')">Hall B
+                                                            </button>
+                                                            <button disabled="true" onclick="put_hall_id('c')" id="hall_c" class="btn" type="button"
+                                                                    style="background-color: #1fbeb0;color: rgb(255,255,255);margin-right: 7px;height: 36px;"
+                                                                    disabled="">Hall C
+                                                            </button>
+                                                            <button disabled="true" onclick="put_hall_id('d')" id="hall_d" class="btn" type="button"
+                                                                    style="background-color: #1fbeb0;color: rgb(255,255,255);margin-right: 7px;height: 36px;"
+                                                                    disabled="true">Hall D
+                                                            </button>
+                                                        </div>
+
+
+
+                                                        <div class="w-100 text-center">
+                                                            <div style="background-color: #888686;height: 384px;width: 333px;padding: 14px;padding-top: 27px;margin: 0 auto" class="hide map-hide">
+                                                                <div class="float-left" style="margin-right: 22px;">
+                                                                    <div id="booth_17" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;margin-top: 36px;padding-top: 0px;"></div>
+                                                                    <div id="booth_18" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
+                                                                    <div id="booth_19" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
+                                                                </div>
+                                                                <div class="float-left" style="margin-right: -17px;">
+                                                                    <div id="booth_25" class="openbooth"
+                                                                         style="height: 22px;width: 60px;background-color: #939393; cursor: pointer;;margin-bottom: 30px;margin-top: -23px;padding-top: 0px;"></div>
+                                                                    <div id="booth_01" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;margin-top: -23px;padding-top: 0px;"></div>
+                                                                    <div id="booth_12" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;margin-top: 0px;padding-top: 0px;"></div>
+                                                                    <div id="booth_07" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
+                                                                    <div id="booth_03" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
+                                                                    <div id="booth_20" class="openbooth"
+                                                                         style="height: 24px;width: 70px;background-color: #939393; cursor: pointer;;margin-bottom: 38px;padding-bottom: 15px;margin-top: -12px;"></div>
+                                                                </div>
+                                                                <div class="float-left" style="margin-right: 29px;">
+                                                                    <div id="booth_11" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;margin-top: 6px;padding-top: 0px;"></div>
+                                                                    <div id="booth_02" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
+                                                                    <div id="booth_13" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
+                                                                    <div id="booth_08" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
+                                                                </div>
+                                                                <div class="float-left" style="margin-right: -17px;margin-left: 10px;">
+                                                                    <div id="booth_24" class="openbooth"
+                                                                         style="height: 22px;width: 60px;background-color: #939393; cursor: pointer;;margin-bottom: 30px;margin-top: -23px;padding-top: 0px;"></div>
+                                                                    <div id="booth_04" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;margin-top: -23px;padding-top: 0px;"></div>
+                                                                    <div id="booth_15" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;margin-top: 0px;padding-top: 0px;"></div>
+                                                                    <div id="booth_09" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
+                                                                    <div id="booth_06" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
+                                                                    <div id="booth_21" class="openbooth"
+                                                                         style="height: 24px;width: 70px;background-color: #939393; cursor: pointer;;margin-bottom: 38px;padding-bottom: 15px;margin-top: -12px;"></div>
+                                                                </div>
+                                                                <div class="d-inline-block float-left" style="margin-right: 30px;">
+                                                                    <div id="booth_14" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;margin-top: 6px;padding-top: 0px;"></div>
+                                                                    <div id="booth_05" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
+                                                                    <div id="booth_10" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
+                                                                    <div id="booth_16" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;"></div>
+                                                                </div>
+                                                                <div class="d-inline-block float-left" style="margin-right: 0px;">
+                                                                    <div id="booth_23" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: -76px;margin-top: 54px;"></div>
+                                                                    <div id="booth_22" class="openbooth"
+                                                                         style="height: 59px;width: 26px;background-color: #939393; cursor: pointer;;margin-bottom: 24px;margin-top: 173px;position: relative"></div>
+                                                                </div>
+                                                                <br>
+                                                                <div class="row">
+                                                                    <div class="col" style="transform: rotate(270deg);margin-top: 30px;margin-left: 15px;position: absolute;top: 320px;left: 140px;">
+                                                                        <p class="text-light">{{__('message.Entrance')}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+
+                                            </div>
+                                            <div class="text-center mt-3">
+
+
+                                                <div class="form-group">
+
+                                                    <button id="my_jafar_01" onclick="document.getElementById('my_mode').value = 'Test'"
+                                                                                               class="btn  btn-block" style="display: none; width: 300px;background-color: #a8a8a8;"
+                                                                                             onmouseover="this.style.backgroundColor='#363636'"
+                                                                                               onmouseleave="this.style.backgroundColor='#a8a8a8'"
+                                                                                         type="submit">
+                                                                                          {{__('message.Save')}} & {{__('message.SeeBoothin3D')}}
+
+                                                                                        <i class="fa fa-check" style="margin-left: 6px;"></i>
+                                                                                      </button>
+
+                                                    <a onclick="$('#my_jafar_01').trigger('click')" class="btn  btn-dark w-100" target="_blank"
+                                                       href="/Showroom/"
+                                                    >
+                                                        {{__('message.Save')}} & {{__('message.SeeBoothin3D')}}
+                                                    </a>
+                                                </div>
+                                                <input type="hidden" name="Mode" id="my_mode">
+                                                <button onclick="document.getElementById('my_mode').value = 'Finish'"
+                                                        class="btn btn-success w-100" type="submit"
+                                                >
+                                                    <i class="fa fa-flag-checkered" style="margin-right: 6px;"></i>
+                                                    {{__('message.CompleteRegistration')}}
+                                                    <i class="fa fa-flag-checkered" style="margin-left: 6px;"></i>
+                                                </button>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /traffic sources -->
+                    </div>
+                </div>
+                <!-- /main charts -->
+            </div>
+            <!-- /content area -->
+        </div>
+        <!-- /main content -->
+    </div>
+    <!-- /page content -->
+
+</div>
+
+
+
+
+    @endsection
 
 @section('js')
     <script>
@@ -771,6 +1050,7 @@
             var c = document.getElementById('WebSiteColor').value;
             var d = document.getElementById('HeaderName').value;
             var e = document.getElementById('Description').value;
+            // var f = document.getElementById('test').value;
 
             if (a == null || a == "", b == null || b == "", c == null || c == "", d == null || d == "" , e == null || e == ""){
                 Swal.fire({

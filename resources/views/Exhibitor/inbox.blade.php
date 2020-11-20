@@ -2,37 +2,39 @@
 @section('Head')
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta name="_token" content="{{csrf_token()}}"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <link href="{{asset("css/bootstrap-limitless.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/layout.min.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/components.min.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/colors.min.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/hasan-custom.css")}}" rel="stylesheet" type="text/css">
+
+    <!-- /global stylesheets -->
+
+    <!-- Core JS files -->
+    <script src="{{asset("js/jquery.min.js")}}"></script>
+    <script src="{{asset("js/bootstrap.bundler.js")}}"></script>
+    <script src="{{asset("js/blockui.min.js")}}"></script>
+    <!-- /core JS files -->
+
+    <!-- Theme JS files -->
+    <script src="{{asset("js/d3.min.js")}}"></script>
+    <script src="{{asset("js/d3tooltip.js")}}"></script>
+    <script src="{{asset("js/switchery.min.js")}}"></script>
+    <script src="{{asset("js/momment.min.js")}}"></script>
+    <script src="{{asset("js/app2.js")}}"></script>
+    <script src="{{asset("js/dashboard.js")}}"></script>
+    <script src="https://use.fontawesome.com/fd423b8d2f.js"></script>
+    <!-- /theme JS files -->
+
 @endsection
 @section('content')
-    <header class="d-flex masthead"
-            style="background-image: url({{\App\Site::ExhibitorBackground()}});padding: 45px;padding-top: 0px;padding-right: 0px;padding-left: 0px;">
-        <div class="container my-auto text-center">
-            <h3 class="mb-5"></h3>
-            <div class="pull-right d-inline m-0">
 
-
-                @if(\App\Site::find(1)->Logo1)
-                    <img class="float-right" src="{{\App\Site::find(1)->Logo1}}"
-                         style="width: 113px;margin-right: 34px;">
-                @endif
-                @if(\App\Site::find(1)->Logo2)
-                    <img class="float-right" src="{{\App\Site::find(1)->Logo2}}"
-                         style="width: 113px;margin-right: 34px;">
-                @endif
-                @if(\App\Site::find(1)->Logo3)
-                    <img class="float-right" src="{{\App\Site::find(1)->Logo3}}"
-                         style="width: 113px;margin-right: 34px;">
-                @endif
-
-            </div>
-
-            <div style="width: 354px;height: 45px;background-color: #525252; margin-top: 70px" class="rounded">
-
-                <div class="pull-right p-1">
-                    <button type="button" data-toggle="tooltip" data-placement="top" title="Change Language"
-                            onclick="$('#Lang_Modal').modal('show')" class="btn btn-warning">
-                        <i class="fa fa-globe"></i>
-                    </button>
                     <div class="modal fade" role="dialog" tabindex="-1" id="Lang_Modal">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -67,41 +69,14 @@
                         </div>
                     </div>
 
-                </div>
 
-                <div class="pull-right p-1 logout_section">
-                    <button data-toggle="tooltip" data-placement="top" title="Logout"
-                            onclick="document.getElementById('logout-form').submit()" class="btn btn-danger">
-                        <i class="fa fa-sign-out"></i>
-                    </button>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
 
 
-                </div>
 
-
-                <div class="d-inline float-left"
-                     style="background-color: transparent;height: 26px;width: 122px;margin-left: 2px;">
-                    <h6 class="text-left"
-                        style="width: 115px;height: 41px;padding: 7px;color: rgb(255,255,255);margin-left: 4px;">
-                        {{\Illuminate\Support\Str::limit(\Illuminate\Support\Facades\Auth::user()->UserName , 18)}} </h6>
-                </div>
-
-
-            </div>
-            <div class="d-inline-block float-left rounded"
-                 style="background-color: rgb(54,54,54,65%);width: 1117px;height: 452px;margin-right: 10px;padding: 1px;padding-top: 0px;padding-right: 3px;">
-                <div class="float-left border rounded"
-                     style="width: 244px;height: 452px;background-color: transparent;"><a
-                        href="#avatar_modal" data-toggle="modal">
-                        <img class="rounded-circle border" src="{{\Illuminate\Support\Facades\Auth::user()->Image}}"
-                             style="width: 76px;height: 74px;margin-top: 8px;">
-                    </a>
-                    <div><a class="btn btn-primary btn-lg make_hidden" role="button" data-toggle="modal"
-                            href="#myModal">Launch Demo Modal</a>
                         <div class="modal fade" role="dialog" tabindex="-1" id="avatar_modal">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -130,130 +105,265 @@
                                 </div>
                             </div>
                         </div>
+
+
+{{--    Hasan start here !!!!--}}
+
+
+
+
+
+<body style="background: url('{{\App\Site::ExhibitorBackground()}}') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100%;
+    ;">
+
+
+
+<!-- Main navbar -->
+<div class="navbar navbar-expand-md">
+    <div class="navbar-brand wmin-200">
+        <a href="profile.php" class="d-inline-block">
+        </a>
+    </div>
+    <div class="d-md-none">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
+
+        </button>
+        <button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
+            <i class="fa fas fa-bars" style="color: white !important;"></i>
+        </button>
+    </div>
+</div>
+<!-- /main navbar -->
+
+
+<div class="page-content pt-0 mt-3">
+    <!-- Main sidebar -->
+    <div class="sidebar sidebar-light sidebar-main sidebar-expand-md align-self-start">
+
+        <!-- Sidebar mobile toggler -->
+        <div class="sidebar-mobile-toggler text-center">
+            <a href="#" class="sidebar-mobile-main-toggle">
+                <i class="fa fas fa-chevron-left"></i>
+            </a>
+            <span class="font-weight-semibold">Main sidebar</span>
+            <a href="#" class="sidebar-mobile-expand">
+                <i class="fa fas fa-expand"></i>
+                <i class="icon-screen-normal"></i>
+            </a>
+        </div>
+        <!-- /sidebar mobile toggler --
+
+        <!-- Sidebar content -->
+        <div class="sidebar-content">
+            <div class="card card-sidebar-mobile">
+
+                <!-- Header -->
+            {{--                    <div class="card-header header-elements-inline">--}}
+            {{--                    </div>--}}
+
+            <!-- User menu -->
+                <div class="sidebar-user">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-4">
+                                <a title="logout" class="btn btn-dark btn-sm " href="{{ route('logout') }}" style="font-size:12px;color: #c5c5c5;" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i></a>
+
+                                <a title="language" type="button" data-toggle="tooltip" data-placement="top" title="Change Language" onclick="$('#Lang_Modal').modal('show')" class="btn btn-warning btn-sm text-dark"><i class="fa fa-globe" style="font-size: 15px;"></i></a>
+
+                            </div>
+                        </div>
+                        <div class="media">
+
+                            <div class="mr-3">
+
+
+                                {{--                            href="#myModal">Launch Demo Modal</a>--}}
+                                {{--                                    <a href="#"><img src="Chrysanthemum.jpg" width="38" height="38" class="rounded-circle" alt=""></a>--}}
+                                <a href="#avatar_modal" role="button" data-toggle="modal"><img class="rounded-circle" width="38" height="38" src="{{asset(\Illuminate\Support\Facades\Auth::user()->Image)}}"></a>
+                            </div>
+
+                            <div class="media-body">
+                                <div class="media-title font-weight-semibold mt-md-2">{{\Illuminate\Support\Facades\Auth::user()->UserName}}     </div>
+
+                                {{--                                    <span class="btn btn-danger btn-sm">Logout</span>--}}
+
+                            </div>
+
+                        </div>
                     </div>
-                    <div>
-                        <div class="text-left"
-                             style="background-color: transparent;height: 35px;margin-top: 8px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;">
-                            <a class="remove_underline" href="{{route('Exhibitor.index')}}"
-                               style="font-size: 19px;color: #ffffff;">{{__('message.Profile')}}</a></div>
-                        <div class="text-left"
-                             style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);">
-                            <a class="text-left remove_underline" href="{{route('Exhibitor.MyBooth')}}"
-                               style="font-size: 20px;color: #ffffff;">{{__('message.Booth')}}</a></div>
-                        <div class="text-left user_active_menu"
-                             style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);">
-                            <a class="text-left remove_underline" href="#"
-                               style="font-size: 20px;color: #000000;">{{__('message.Inbox')}}</a></div>
-                        <div class="text-left"
-                             style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);">
-                            <a class="text-left remove_underline" href="{{route('Exhibitor.Statistics')}}"
-                               style="font-size: 20px;color: #ffffff;">{{__('message.Statistics')}}</a></div>
-                        <div class="text-left"
-                             style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);">
-                            <a class="text-left remove_underline" href="{{route('Exhibitor.History')}}"
-                               style="font-size: 20px;color: #ffffff;">{{__('message.History')}}</a></div>
-                        <div class="text-left"
-                             style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);">
-                            <a class="text-left remove_underline" href="{{route('Exhibitor.Payment')}}"
-                               style="font-size: 20px;color: #ffffff;">{{__('message.Payment')}}</a></div>
-                        <div class="text-left"
-                             style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);">
-                            <a class="text-left remove_underline" href="{{route('Exhibitor.Confirmation')}}"
-                               style="font-size: 20px;color: #ffffff;">{{__('message.ConfirmationStatus')}}</a></div>
-                        <div class="text-left"
-                             style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);">
-                            <a class="text-left remove_underline" href="{{route('Exhibitor.ContactUs')}}"
-                               style="font-size: 20px;color: #ffffff;">{{__('message.ContactUs')}}</a></div>
-                        <div class="text-left"
-                             style="background-color: #00000000;height: 20px;margin-top: -15px;padding: 24px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;">
-                            <a href="/Exhabition/" class="" target="_blank">
-                                <button class="btn btn-block" type="button"
-                                        style="background-color: #149e5c;color: rgb(255,255,255);min-height: 54px;margin-right: 13px;font-size: 18px;text-decoration: none !important">
-                                    {{__('message.EnterExhabition')}}
-                                </button>
+                </div>
+                <!-- /user menu -->
+
+
+                <!-- Main navigation -->
+
+
+
+
+                <div class="card-body p-0">
+                    <ul class="nav nav-sidebar" data-nav-type="accordion" style="height: 500px !important ;">
+                        <!-- Main -->
+                        <li class="nav-item">
+                            <a href="{{route('Exhibitor.index')}}" class="nav-link">
+                                        <span>
+										{{__('message.Profile')}}
+                                </span>
                             </a>
-                        </div>
-                    </div>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('Exhibitor.MyBooth')}}" class="nav-link"><span>{{__('message.Booth')}}</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('Exhibitor.Inbox')}}" class="nav-link active"> <span>{{__('message.Inbox')}}</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('Exhibitor.Statistics')}}" class="nav-link"> <span>{{__('message.Statistics')}}</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('Exhibitor.History')}}" class="nav-link"><span>{{__('message.History')}}</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('Exhibitor.Payment')}}" class="nav-link"><span>{{__('message.Payment')}}</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('Exhibitor.Confirmation')}}" class="nav-link"><span>{{__('message.ConfirmationStatus')}}</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('Exhibitor.ContactUs')}}" class="nav-link"><span>{{__('message.ContactUs')}}</span></a>
+                        </li>
+
+                        <li class="nav-item text-center mt-md-2">
+                            <a href="/Exhabition/" class="" target="_blank"><span class="btn btn-success btn-lg">Enter Exhibition</span></a>
+                        </li>
+                        <!-- /main -->
+                    </ul>
                 </div>
-                <div class="border rounded d-block float-left border"
-                     style="width: 837px;height: 425px;background-color: #a8a8a892;padding: 7px;color: #363636;margin-left: 22px;margin-top: 13px;">
-                    <div class="float-left" style="background-color: #00000000;height: 406px;width: 278px;">
-                        <div class="float-left" style="background-color: #00000000;height: 406px;width: 278px;">
-                            <form onblur="is_typing = false" onfocus="is_typing = true"
-                                  style="height: 7px;margin-bottom: 10px;" method="get"
-                                  action="{{route('Exhibitor.Inbox')}}">
-                                <div class="form-group" style="width: 305px;">
-                                    <input class="form-control float-left" type="search"
-                                           placeholder="{{__('message.Search')}}..."
-                                           style="width: 240px;height: 33px;" name="SearchTerm">
-                                    <button  class="btn float-left shadow-none" type="button"
-                                             style="width: 1px;margin-right: 16px;margin-bottom: 31px;margin-top: -4px;"><i id="visiotr_refresh"
-                                                                                                                            class="fa fa-cog text-dark"
-                                                                                                                            style="font-size: 20px;margin-bottom: 16px;margin-right: 19px;"></i></button>
-                                </div>
-                            </form>
-                                <div id="Users" class="scroll_box" style="height: 350px !important;" onscroll="scroll_status = true">
-                                    @include("Exhibitor.user-list-data")
-                                </div>
-                        </div>
-                    </div>
-                    <div class="float-left"
-                         style="background-color: #00000000;height: 406px;width: 532px;margin-left: 7px;">
-                        <p class="text-left">
-                            <strong>{{__('message.Messages')}}:
-                                @if(request()->UserID)
-                                    {{\App\User::find(request()->UserID)->UserName}}
-                                @endif
-                            </strong>
-                        </p>
-                        <div class="border rounded-0 float-left"
-                             style="width: 407px;margin-right: 1px;margin-left: 63px;margin-bottom: 8px;height: 318px;margin-top: 0px;">
+                <!-- /main navigation -->
 
-                            <div>
-                                <div class="scroll_box ChatsDiv"
-                                     style="height: 264px;margin-bottom: 11px;background-color: #edecec;" id="ChatsDiv">
-
-
-                                    @if(isset($Chat))
-                                        {{__('message.Loading')}}
-                                    @else
-                                        @if(\Illuminate\Support\Facades\Auth::user()->ChatMode == 'Available')
-                                            {{__('message.PleaseSelectaChatFirst')}}
-                                        @else
-                                            {{__('message.MakeChatModeAvailable')}}
-                                        @endif
-                                    @endif
-
-
-                                </div>
-                            </div>
-                            <div
-                                @if(\Illuminate\Support\Facades\Auth::user()->ChatMode != 'Available') style="display: none" @endif>
-                                <input class="border rounded border-dark form-control d-inline" type="text"
-                                       style="margin-right: 17px;width: 208px;"
-                                       id="myInput"
-                                       name="Text" value="{{old('Text')}}">
-                                <button class="btn btn-success d-inline" onclick="sendMessage()"
-                                        style="height: 36px;width: 103px;">
-                                    {{__('message.Send')}}
-                                </button>
-                            </div>
-                        </div>
-                        <button
-                            @if(\Illuminate\Support\Facades\Auth::user()->ChatMode == 'Available')  class="btn btn-dark"
-                            disabled @else class="btn btn-success" @endif><a
-                                href="@if(\Illuminate\Support\Facades\Auth::user()->ChatMode != 'Available') ?Mode=Available @else #  @endif"
-                                class="text-light">{{__('message.ImAvailable')}}</a></button>
-                        <button @if(\Illuminate\Support\Facades\Auth::user()->ChatMode == 'Busy')   class="btn btn-dark"
-                                disabled @else class="btn btn-danger" @endif><a
-                                href=" @if(\Illuminate\Support\Facades\Auth::user()->ChatMode != 'Busy' ) ?Mode=Busy @else #  @endif"
-                                class="text-light">{{__('message.ImBusy')}}</a></button>
-
-                    </div>
-                </div>
             </div>
         </div>
-    </header>
+        <!-- /sidebar content -->
+    </div>
+    <!-- /main sidebar -->
+
+
+        <!-- Main content -->
+        <div class="content-wrapper" style="overflow-x: hidden">
+
+            <!-- Content area -->
+            <div class="content">
+
+                <!-- Main charts -->
+                <div class="row">
+                    <div class="col-xl-12">
+                        <!-- Traffic sources -->
+                        <div class="card p-3 card-inbox-ex-h" style="background-color:rgba(54,54,54,0.65);color: white;">
+                            <div class="card-body py-0">
+                                <div class="row">
+                                    <div class="col-md-4" style="border: 1px solid white;border-radius: 5px; height: 600px;overflow-y: auto">
+                                        <div class="input-group mt-2 mb-2">
+                                            <input type="text" class="form-control" placeholder="Search...">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-success" type="submit">Search</button>
+                                                <button  class="btn shadow-none" type="button"
+                                                         style=""><i id="visiotr_refresh"
+                                                                                                                                        class="fa fa-cog text-dark"
+                                                                                                                                        style="font-size: 20px;"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 scroll_box"  id="Users" style="height: 350px !important;" onscroll="scroll_status = true">
+                                                @include("Exhibitor.user-list-data")
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-7">
+                                        <p class="text-left">
+                                            <strong>{{__('message.Messages')}}:
+                                                @if(request()->UserID)
+                                                    {{\App\User::find(request()->UserID)->UserName}}
+                                                @endif
+                                            </strong>
+                                        </p>
+
+                                            <div>
+                                                <div class="scroll_box ChatsDiv" id="ChatsDiv" style="height: 460px;">
+
+
+                                                    @if(isset($Chat))
+                                                        {{__('message.Loading')}}
+                                                    @else
+                                                        @if(\Illuminate\Support\Facades\Auth::user()->ChatMode == 'Available')
+                                                            {{__('message.PleaseSelectaChatFirst')}}
+                                                        @else
+                                                            {{__('message.MakeChatModeAvailable')}}
+                                                        @endif
+                                                    @endif
+
+
+                                                </div>
+                                            </div>
+                                            <div
+                                                @if(\Illuminate\Support\Facades\Auth::user()->ChatMode != 'Available') style="display: none" @endif>
+
+                                                <div class="input-group mt-1">
+                                                    <textarea type="text" class="form-control" aria-describedby="basic-addon2" id="myInput" rows="1"
+                                                              name="Text" value="{{old('Text')}}"></textarea>
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-success" type="button" onclick="sendMessage()"> {{__('message.Send')}}</button>
+                                                    </div>
+                                                </div>
+
+
+
+{{--                                                <input class="border rounded border-dark form-control d-inline" type="text"--}}
+{{--                                                       style="margin-right: 17px;width: 208px;"--}}
+{{--                                                       id="myInput"--}}
+{{--                                                       name="Text" value="{{old('Text')}}">--}}
+{{--                                                <button class="btn btn-success d-inline" onclick="sendMessage()"--}}
+{{--                                                        style="height: 36px;width: 103px;">--}}
+{{--                                                    {{__('message.Send')}}--}}
+{{--                                                </button>--}}
+                                            </div>
+
+                                        <div class="mt-3">
+                                            <button
+                                                @if(\Illuminate\Support\Facades\Auth::user()->ChatMode == 'Available')  class="btn btn-dark"
+                                                disabled @else class="btn btn-success" @endif><a
+                                                    href="@if(\Illuminate\Support\Facades\Auth::user()->ChatMode != 'Available') ?Mode=Available @else #  @endif"
+                                                    class="text-light">{{__('message.ImAvailable')}}</a></button>
+                                            <button @if(\Illuminate\Support\Facades\Auth::user()->ChatMode == 'Busy')   class="btn btn-dark"
+                                                    disabled @else class="btn btn-danger" @endif><a
+                                                    href=" @if(\Illuminate\Support\Facades\Auth::user()->ChatMode != 'Busy' ) ?Mode=Busy @else #  @endif"
+                                                    class="text-light">{{__('message.ImBusy')}}</a></button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /traffic sources -->
+                    </div>
+                </div>
+                <!-- /main charts -->
+            </div>
+            <!-- /content area -->
+        </div>
+        <!-- /main content -->
+    </div>
+    <!-- /page content -->
+    </body>
+
+
+
 @endsection
 @section('js')
     <script>
@@ -395,9 +505,18 @@
                     }else {
                         for (var i = 0; i < data["Chat"].length; i++) {
                             if (data["Chat"][i]["Sender"] === 'Exhibitor') {
-                                var fieldHTML = '<div class="border rounded border-primary float-right nonoverflow scroll_box" style="height: 52px;width: 210px;margin-bottom: 17px;padding: 5px;background-color: #36ca5c;color: rgb(255,255,255);"><p class="nonoverflow">' + data['Chat'][i]['Text'] + '</p></div>';
+
+
+                                // <div class="col-8 bg-success mt-2 ml-3" style="border-radius: 5px;">
+                                //     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, laudantium, voluptates. Adipisci aspernatur at commodi dolor et hic itaque odio provident quae, unde? Distinctio, est explicabo incidunt pariatur soluta totam.
+                                // </div>
+                                // <div class="col-3"></div>
+
+
+
+                                var fieldHTML = '<div class="row"><div class="col-3"></div><div class="col-8 bg-success mt-2 ml-3" style="border-radius: 5px;"><p class="nonoverflow">' + data['Chat'][i]['Text'] + '</p></div></div>';
                             } else {
-                                var fieldHTML = '<div class="border rounded border-primary float-left nonoverflow scroll_box" style="height: 52px;width: 210px;margin-bottom: 9px;padding: 8px;background-color: #0c82fe;"><p class="nonoverflow" style="color: rgb(255,255,255);">' + data['Chat'][i]['Text'] + '</p></div>';
+                                var fieldHTML = '<div class="row"><div class="col-8 bg-primary mt-2 ml-3" style="border-radius: 5px;"><p class="nonoverflow">' + data['Chat'][i]['Text'] + '</p></div><div class="col-3"></div></div>';
 
                             }
                             $('.ChatsDiv').append(fieldHTML); //Add field html
@@ -432,9 +551,9 @@
                     }else {
                         for (var i = 0; i < data["Chat"].length; i++) {
                             if (data["Chat"][i]["Sender"] === 'Exhibitor') {
-                                var fieldHTML = '<div class="border rounded border-primary float-right nonoverflow scroll_box" style="height: 52px;width: 210px;margin-bottom: 17px;padding: 5px;background-color: #36ca5c;color: rgb(255,255,255);"><p class="nonoverflow">' + data['Chat'][i]['Text'] + '</p></div>';
+                                var fieldHTML = '<div class="row"><div class="col-3"></div><div class="col-8 bg-success mt-2 ml-3 p-1" style="border-radius: 5px;"><p class="">' + data['Chat'][i]['Text'] + '</p></div></div>';
                             } else {
-                                var fieldHTML = '<div class="border rounded border-primary float-left nonoverflow scroll_box" style="height: 52px;width: 210px;margin-bottom: 9px;padding: 8px;background-color: #0c82fe;"><p class="nonoverflow" style="color: rgb(255,255,255);">' + data['Chat'][i]['Text'] + '</p></div>';
+                                var fieldHTML = '<div class="row"><div class="col-8 bg-primary mt-2 ml-3 p-1" style="border-radius: 5px;"><p class="">' + data['Chat'][i]['Text'] + '</p></div><div class="col-3"></div></div>';
                             }
                             $('.ChatsDiv').append(fieldHTML); //Add field html
                             var objDiv = document.getElementById("ChatsDiv");

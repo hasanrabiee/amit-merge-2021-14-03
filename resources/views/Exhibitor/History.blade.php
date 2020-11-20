@@ -1,32 +1,43 @@
 @extends('layouts.Panel')
+
+@section("Head")
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <link href="{{asset("css/bootstrap-limitless.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/layout.min.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/components.min.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/colors.min.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/hasan-custom.css")}}" rel="stylesheet" type="text/css">
+
+    <!-- /global stylesheets -->
+
+    <!-- Core JS files -->
+    <script src="{{asset("js/jquery.min.js")}}"></script>
+    <script src="{{asset("js/bootstrap.bundler.js")}}"></script>
+    <script src="{{asset("js/blockui.min.js")}}"></script>
+    <!-- /core JS files -->
+
+    <!-- Theme JS files -->
+    <script src="{{asset("js/d3.min.js")}}"></script>
+    <script src="{{asset("js/d3tooltip.js")}}"></script>
+    <script src="{{asset("js/switchery.min.js")}}"></script>
+    <script src="{{asset("js/momment.min.js")}}"></script>
+    <script src="{{asset("js/app2.js")}}"></script>
+    <script src="{{asset("js/dashboard.js")}}"></script>
+    <script src="https://use.fontawesome.com/fd423b8d2f.js"></script>
+    <!-- /theme JS files -->
+
+
+@endsection
+
 @section('content')
-    <header class="d-flex masthead" style="background-image: url({{\App\Site::ExhibitorBackground()}});padding: 45px;padding-top: 0px;padding-right: 0px;padding-left: 0px;">
-        <div class="container my-auto text-center">
-            <h3 class="mb-5"></h3>
-         <div class="pull-right d-inline m-0">
 
-
-                @if(\App\Site::find(1)->Logo1)
-                    <img class="float-right" src="{{\App\Site::find(1)->Logo1}}"
-                         style="width: 113px;margin-right: 34px;">
-                @endif
-                @if(\App\Site::find(1)->Logo2)
-                    <img class="float-right" src="{{\App\Site::find(1)->Logo2}}"
-                         style="width: 113px;margin-right: 34px;">
-                @endif
-                @if(\App\Site::find(1)->Logo3)
-                    <img class="float-right" src="{{\App\Site::find(1)->Logo3}}"
-                         style="width: 113px;margin-right: 34px;">
-                @endif
-
-            </div>
-
-            <div style="width: 354px;height: 45px;background-color: #525252; margin-top: 70px" class="rounded">
-
-                <div class="pull-right p-1">
-                    <button type="button" data-toggle="tooltip" data-placement="top" title="Change Language" onclick="$('#Lang_Modal').modal('show')" class="btn btn-warning">
-                        <i class="fa fa-globe"></i>
-                    </button>
                     <div class="modal fade" role="dialog" tabindex="-1" id="Lang_Modal">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -58,38 +69,14 @@
                         </div>
                     </div>
 
-                </div>
 
-                <div class="pull-right p-1 logout_section">
-                    <button data-toggle="tooltip" data-placement="top" title="Logout" onclick="document.getElementById('logout-form').submit()" class="btn btn-danger">
-                        <i class="fa fa-sign-out"></i>
-                    </button>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
 
 
-                </div>
 
-
-
-
-
-                <div class="d-inline float-left"
-                     style="background-color: transparent;height: 26px;width: 122px;margin-left: 2px;">
-                    <h6 class="text-left"
-                        style="width: 115px;height: 41px;padding: 7px;color: rgb(255,255,255);margin-left: 4px;">
-                        {{\Illuminate\Support\Str::limit(\Illuminate\Support\Facades\Auth::user()->UserName , 18)}} </h6>
-                </div>
-
-
-
-            </div><div class="d-inline-block float-left rounded amitiss_back"  style="width: 1117px;height: 452px;margin-right: 10px;padding: 1px;padding-top: 0px;padding-right: 3px;">
-                <div class="float-left border rounded" style="width: 244px;height: 452px;background-color: transparent;"><a href="#avatar_modal" data-toggle="modal">
-                        <img class="rounded-circle border" src="{{\Illuminate\Support\Facades\Auth::user()->Image}}" style="width: 76px;height: 74px;margin-top: 8px;">
-                    </a>
-                    <div><a class="btn btn-primary btn-lg make_hidden" role="button" data-toggle="modal" href="#myModal">Launch Demo Modal</a>
                         <div class="modal fade" role="dialog" tabindex="-1" id="avatar_modal">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -107,95 +94,332 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <div class="text-left" style="background-color: transparent;height: 35px;margin-top: 8px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;"><a class="remove_underline" href="{{route('Exhibitor.index')}}" style="font-size: 19px;color: #ffffff;">{{__('message.Profile')}}</a></div>
-                        <div class="text-left" style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);"><a class="text-left remove_underline" href="{{route('Exhibitor.MyBooth')}}" style="font-size: 20px;color: #ffffff;">{{__('message.Booth')}}</a></div>
-                        <div class="text-left" style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);"><a class="text-left remove_underline" href="{{route('Exhibitor.Inbox')}}" style="font-size: 20px;color: #ffffff;">{{__('message.Inbox')}}</a></div>
-                        <div class="text-left" style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);"><a class="text-left remove_underline" href="{{route('Exhibitor.Statistics')}}" style="font-size: 20px;color: #ffffff;">{{__('message.Statistics')}}</a></div>
-                        <div class="text-left user_active_menu" style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);"><a class="text-left remove_underline" href="#" style="font-size: 20px;color: #000000;">{{__('message.History')}}</a></div>
-                        <div class="text-left" style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);"><a class="text-left remove_underline" href="{{route('Exhibitor.Payment')}}" style="font-size: 20px;color: #ffffff;">{{__('message.Payment')}}</a></div>
-                        <div class="text-left" style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);"><a class="text-left remove_underline" href="{{route('Exhibitor.Confirmation')}}" style="font-size: 20px;color: #ffffff;">{{__('message.ConfirmationStatus')}}</a></div>
-                        <div class="text-left" style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);"><a class="text-left remove_underline" href="{{route('Exhibitor.ContactUs')}}" style="font-size: 20px;color: #ffffff;">{{__('message.ContactUs')}}</a></div>
-                        <div class="text-left" style="background-color: #00000000;height: 20px;margin-top: -15px;padding: 24px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;"> <a href="/Exhabition/" class="" target="_blank">
-                            <button class="btn btn-block" type="button"
-                                    style="background-color: #149e5c;color: rgb(255,255,255);min-height: 54px;margin-right: 13px;font-size: 18px;text-decoration: none !important" >
-                               {{__('message.EnterExhabition')}}
-                            </button>
-                            </a></div>
-                    </div>
+
+
+
+{{--    Hasan start here !!!!--}}
+
+
+    <body style="background: url('{{\App\Site::ExhibitorBackground()}}') no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        height: 100%;
+        ;">
+    <div>
+
+        <!-- Main navbar -->
+        <div class="navbar navbar-expand-md">
+            <div class="navbar-brand wmin-200">
+                <a href="profile.php" class="d-inline-block">
+                </a>
+            </div>
+            <div class="d-md-none">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
+
+                </button>
+                <button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
+                    <i class="fa fas fa-bars" style="color: white !important;"></i>
+                </button>
+            </div>
+        </div>
+        <!-- /main navbar -->
+
+
+        <div class="page-content pt-0 mt-3">
+            <!-- Main sidebar -->
+            <div class="sidebar sidebar-light sidebar-main sidebar-expand-md align-self-start">
+
+                <!-- Sidebar mobile toggler -->
+                <div class="sidebar-mobile-toggler text-center">
+                    <a href="#" class="sidebar-mobile-main-toggle">
+                        <i class="fa fas fa-chevron-left"></i>
+                    </a>
+                    <span class="font-weight-semibold">Main sidebar</span>
+                    <a href="#" class="sidebar-mobile-expand">
+                        <i class="fa fas fa-expand"></i>
+                        <i class="icon-screen-normal"></i>
+                    </a>
                 </div>
-                <div class="border rounded d-block float-left border" style="width: 837px;height: 425px;background-color: #a8a8a892;padding: 7px;color: #363636;margin-left: 22px;margin-top: 13px;">
-                    <div class="float-left" style="background-color: #00000000;height: 406px;width: 278px;">
-                        <div class="float-left" style="background-color: #00000000;height: 406px;width: 278px;">
-                            <form style="height: 7px;margin-bottom: 10px;"method="get" action="{{route('Exhibitor.History')}}">
-                                <div class="form-group" style="width: 305px;"><input class="form-control float-left" type="search" placeholder="Search..." style="width: 240px;height: 33px;" name="SearchTerm"><button class="btn float-left shadow-none" type="submit" style="width: 1px;margin-right: 16px;margin-bottom: 31px;margin-top: -4px;"><i class="fa fa-search" style="font-size: 20px;margin-bottom: 16px;margin-right: 19px;"></i></button></div>
-                            </form>
-                            <div class="scroll_box" style="background-color: #00000000;height: 351px;margin-top: 18px;width: 276px;">
-                                <div>
-                                    @foreach($Users as $user)
-                                    <div
-                                        @if(request()->UserID == $user->id)
-                                        class="text-left border rounded active_company" style="background-color: #00000000;height: 44px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;"
-                                            @else
-                                            class="text-left border rounded-0" style="background-color: #00000000;height: 44px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;"
-                                            @endif
-                                        >
-                                        <a class="text-left remove_underline" href="?UserID={{$user->id}}" style="font-size: 26px;color: #ffffff;">{{$user->UserName}}</a>
+                <!-- /sidebar mobile toggler --
+
+                <!-- Sidebar content -->
+                <div class="sidebar-content">
+                    <div class="card card-sidebar-mobile">
+
+                        <!-- Header -->
+                    {{--                    <div class="card-header header-elements-inline">--}}
+                    {{--                    </div>--}}
+
+                    <!-- User menu -->
+                        <div class="sidebar-user">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4">
+                                        <a title="logout" class="btn btn-dark btn-sm " href="{{ route('logout') }}" style="font-size:12px;color: #c5c5c5;" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i></a>
+
+                                        <a title="language" type="button" data-toggle="tooltip" data-placement="top" title="Change Language" onclick="$('#Lang_Modal').modal('show')" class="btn btn-warning btn-sm text-dark"><i class="fa fa-globe" style="font-size: 15px;"></i></a>
+
                                     </div>
-                                    @endforeach
+                                </div>
+                                <div class="media">
+
+                                    <div class="mr-3">
+
+                                        {{--                                    <a href="#"><img src="Chrysanthemum.jpg" width="38" height="38" class="rounded-circle" alt=""></a>--}}
+                                        <a href="#avatar_modal" role="button" data-toggle="modal"><img class="rounded-circle" width="38" height="38" src="{{asset(\Illuminate\Support\Facades\Auth::user()->Image)}}"></a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        <div class="media-title font-weight-semibold mt-md-2">{{\Illuminate\Support\Facades\Auth::user()->UserName}}     </div>
+
+                                        {{--                                    <span class="btn btn-danger btn-sm">Logout</span>--}}
+
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="float-left" style="background-color: #00000000;height: 406px;width: 532px;margin-left: 7px;">
-                        @if(isset($User))
-                            <div class="float-left" style="background-color: #00000000;height: 405px;width: 257px;">
-                                <p class="text-left" style="font-size: 19px;"><strong>Visitor Information</strong></p>
-                                <div class="border rounded" style="background-color: #84484800;height: 356px;padding: 8px;"><img src="{{$User->Image}}" style="width: 65px;">
-                                    <p class="text-left" style="margin-top: 15px;">{{__('message.UserName')}}: {{$User->UserName}}</p>
-                                    <p class="text-left">{{__('message.fn')}}: {{$User->FirstName}}</p>
-                                    <p class="text-left">{{__('message.ln')}}: {{$User->LastName}}</p>
-                                    <p class="text-left">{{__('message.Profession')}}: {{$User->Profession}}</p>
-                                    <p class="text-left">{{__('message.Gender')}}: {{$User->Gender}}</p>
-                                    <p class="text-left">{{__('message.Resume')}}: <a href="{{$User->resume}}">Download</a></p>
-                                </div>
-                            </div>
-                            <div class="float-left" style="background-color: #00000000;height: 402px;width: 257px;margin-left: 11px;">
-                                <p class="text-left" style="font-size: 19px;"><strong>{{__('message.ChatHistory')}}</strong></p>
-                                <div style="background-color: #00000000;height: 351px;">
-                                    <div class="scroll_box" style="height: 356px;padding: 0px;width: 261px;background-color: #ffffff;">
-                                        @if(\App\Chat::where('UserID' , $User->id)->where('BoothID' , $Booth->id)->count() <= 0)
-                                            {{__('message.NoMessageAvailable')}}
-
-                                        @else
-                                            @foreach(\App\Chat::where('UserID' , $User->id)->where('BoothID' , $Booth->id)->get() as $chat)
-
-                                                <p @if($chat->Sender == 'Exhibitor')
-                                                   class="text-right border rounded" style="padding: 9px;background-color: #36ca5c;color: rgb(255,255,255);"
-                                                    @else
-                                                    class="text-left border rounded" style="padding: 9px;background-color: #0c82fe;color: rgb(255,255,255);"
-                                                    @endif
-                                                >{{$chat->Text}}
-                                                </p>
-
-                                            @endforeach
-                                            @endif
-
-                                         </div>
-                                </div>
+                        <!-- /user menu -->
 
 
-                            </div>
+                        <!-- Main navigation -->
 
-                        @else
-                            {{__('message.PleaseSelectaChatFirst')}}
-                        @endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <div class="card-body p-0">
+                            <ul class="nav nav-sidebar" data-nav-type="accordion" style="height: 500px !important ;">
+                                <!-- Main -->
+                                <li class="nav-item">
+                                    <a href="{{route('Exhibitor.index')}}" class="nav-link">
+                                        <span>
+										{{__('message.Profile')}}
+                                </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('Exhibitor.MyBooth')}}" class="nav-link"><span>{{__('message.Booth')}}</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('Exhibitor.Inbox')}}" class="nav-link"> <span>{{__('message.Inbox')}}</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('Exhibitor.Statistics')}}" class="nav-link"> <span>{{__('message.Statistics')}}</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('Exhibitor.History')}}" class="nav-link active"><span>{{__('message.History')}}</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('Exhibitor.Payment')}}" class="nav-link"><span>{{__('message.Payment')}}</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('Exhibitor.Confirmation')}}" class="nav-link"><span>{{__('message.ConfirmationStatus')}}</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('Exhibitor.ContactUs')}}" class="nav-link"><span>{{__('message.ContactUs')}}</span></a>
+                                </li>
+
+                                <li class="nav-item text-center mt-md-2">
+                                    <a href="/Exhabition/" class="" target="_blank"><span class="btn btn-success btn-lg">Enter Exhibition</span></a>
+                                </li>
+                                <!-- /main -->
+                            </ul>
+                        </div>
+                        <!-- /main navigation -->
 
                     </div>
                 </div>
+                <!-- /sidebar content -->
             </div>
+            <!-- /main sidebar -->
+
+
+
+
+
+            <!-- Main content -->
+            <div class="content-wrapper" style="overflow-x: hidden">
+
+                <!-- Content area -->
+                <div class="content">
+
+                    <!-- Main charts -->
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <!-- Traffic sources -->
+                            <div class="card p-3 pc-height-exhibitor-history" style="background-color:rgba(54,54,54,0.65);color: white;">
+                                <div class="card-body py-0">
+                                    <div class="row">
+                                        <div class="col-md-4" style="">
+                                            <div class="input-group mt-2 mb-2">
+                                                <input type="text" class="form-control" placeholder="Visitor Name">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-success" type="submit">Search</button>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="booth-btn booth-btn-height w-100">
+
+
+
+{{--                                                    @foreach($Users as $User)--}}
+{{--                                                        <div class="col-12">--}}
+{{--                                                            <a href="?CompanyID={{$User->id}}" type="button" @if(request()->UserID == $user->id) class="text-left btn btn-primary mb-2 w-100" @else class="text-left btn btn-dark mb-2 w-100" @endif>--}}
+{{--                                                                {{$user->UserName}}--}}
+{{--                                                            </a>--}}
+{{--                                                        </div>--}}
+{{--                                                    @endforeach--}}
+
+                                                        @foreach($Users as $user)
+                                                            <div class="col-12">
+                                                                <a @if(request()->UserID == $user->id) class="text-left btn btn-primary mb-2 w-100" @else class="text-left btn btn-outline-dark mb-2 w-100" @endif href="?UserID={{$user->id}}">{{$user->UserName}}</a>
+                                                            </div>
+                                                        @endforeach
+
+
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        @if(isset($User))
+
+{{--                                            <div class="float-left" style="background-color: #00000000;height: 405px;width: 257px;">--}}
+{{--                                                <p class="text-left" style="font-size: 19px;"><strong>Visitor Information</strong></p>--}}
+{{--                                                <div class="border rounded" style="background-color: #84484800;height: 356px;padding: 8px;"><img src="{{$User->Image}}" style="width: 65px;">--}}
+{{--                                                    <p class="text-left" style="margin-top: 15px;">{{__('message.UserName')}}: {{$User->UserName}}</p>--}}
+{{--                                                    <p class="text-left">{{__('message.fn')}}: {{$User->FirstName}}</p>--}}
+{{--                                                    <p class="text-left">{{__('message.ln')}}: {{$User->LastName}}</p>--}}
+{{--                                                    <p class="text-left">{{__('message.Profession')}}: {{$User->Profession}}</p>--}}
+{{--                                                    <p class="text-left">{{__('message.Gender')}}: {{$User->Gender}}</p>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+
+
+
+                                            <div class="col-md-4 mt-md-0 mt-2" style="border: 1px solid white;border-radius: 5px;">
+                                                <h3 class="text-dark mb-4">Visitor Information</h3>
+                                                <div class="text-center">
+                                                    <img src="{{$User->Image}}" style="width: 65px;margin: 0 auto" class="text-center" >
+
+                                                </div>
+                                                <p>{{__('message.UserName')}}: {{$User->UserName}}</p>
+                                                <p>{{__('message.fn')}}: {{$User->FirstName}}</p>
+                                                <p>{{__('message.ln')}}: {{$User->LastName}}</p>
+                                                <p>{{__('message.Profession')}}: {{$User->Profession}}</p>
+                                                <p>{{__('message.Gender')}}: {{$User->Gender}}</p>
+                                                <p><p class="text-left">Download CV : <a class="btn btn-primary" href="{{$User->resume}}">Download</a></p></p>
+
+                                            </div>
+
+
+                                            <div class="col-md-4 mt-md-0 mt-2">
+                                                <h4>Chat History</h4>
+                                                <div class="pc-height-visitor-history-chat" style="background-color:transparent;border: 1px solid transparent ;border-radius: 5px;overflow-y: auto;overflow-x:hidden ">
+
+
+
+                                                    <div>
+                                                        @if(\App\Chat::where('UserID' , $User->id)->where('BoothID' , $Booth->id)->count() <= 0)
+                                                            {{__('message.NoMessageAvailable')}}
+
+                                                        @else
+                                                            @foreach(\App\Chat::where('UserID' , $User->id)->where('BoothID' , $Booth->id)->get() as $chat)
+
+                                                                 @if($chat->Sender == 'Exhibitor')
+                                                                    <div class="row">
+                                                                        <div class="col-3"></div>
+                                                                        <div class="col-8 bg-success mt-2 ml-3 p-2" style="border-radius: 5px;">{{$chat->Text}}</div>
+                                                                    </div>
+                                                                 @else
+
+                                                                    <div class="row">
+                                                                        <div class="col-8 bg-primary mt-2 ml-3 p-2" style="border-radius: 5px;">{{$chat->Text}}</div>
+
+                                                                        <div class="col-3"></div>
+                                                                    </div>
+                                                                @endif
+
+
+
+                                                            @endforeach
+                                                        @endif
+
+                                                    </div>
+
+
+{{--                                                @if(\App\Chat::where('UserID' , $User->id)->where('BoothID' , $Booth->id)->count() <= 0)--}}
+{{--                                                    {{__('message.NoMessageAvailable')}}--}}
+
+{{--                                                @else--}}
+
+{{--                                                    @foreach(\App\Chat::where('UserID' , $User->id)->where('BoothID' , $Booth->id)->get() as $chat)--}}
+
+{{--                                                        @if($chat->Sender == 'Exhibitor')--}}
+{{--                                                            <div class="row">--}}
+{{--                                                                <div class="col-3"></div>--}}
+{{--                                                                <div class="col-8 bg-success mt-2 ml-3 p-2" style="border-radius: 5px;">{{$Chat->Text}}</div>--}}
+{{--                                                            </div>--}}
+{{--                                                        @else--}}
+
+{{--                                                            <div class="row">--}}
+{{--                                                                <div class="col-8 bg-primary mt-2 ml-3 p-2" style="border-radius: 5px;">{{$Chat->Text}}</div>--}}
+
+{{--                                                                <div class="col-3"></div>--}}
+{{--                                                            </div>--}}
+{{--                                                        @endif--}}
+
+{{--                                                    @endforeach--}}
+
+{{--                                                @endif--}}
+
+
+                                                </div>
+                                            </div>
+
+
+                                        @endif
+
+
+                                    </div>
+
+
+                                </div>
+                                <div class="chart position-relative" id="traffic-sources"></div>
+                            </div>
+                            <!-- /traffic sources -->
+                        </div>
+                    </div>
+                    <!-- /main charts -->
+                </div>
+                <!-- /content area -->
+            </div>
+            <!-- /main content -->
         </div>
-    </header>
+        <!-- /page content -->
+    </body>
+
+
+
+
+
+
 @endsection

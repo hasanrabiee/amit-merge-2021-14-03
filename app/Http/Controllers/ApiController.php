@@ -104,7 +104,7 @@ class ApiController extends Controller
     {
 
         $Booth = booth::where('Hall', $HallName)->count();
-        if ($Booth > 25) {
+        if ($Booth >= 25) {
             return json_encode('Full');
         }
         return json_encode('NotFull');
@@ -301,20 +301,7 @@ class ApiController extends Controller
         }
     }
 
-    public function ChatGet(Request $request)
-    {
-        //chats for exhibitors
 
-
-        $request->validate([
-            'UserID' => 'required|integer',
-            'BoothID' => 'required|integer',
-        ]);
-        $Chat = Chat::where('UserID', $request->UserID)->where('BoothID', $request->BoothID)->where('Sender' , 'Exhibitor')->latest('id')->first();
-        return response()->json(
-            ['Chat' => $Chat]
-            , 200);
-    }
 
 
     public function ChatStoreAdmin(Request $request)
@@ -347,21 +334,30 @@ class ApiController extends Controller
 
     public function ChatGetAdmin(Request $request)
     {
-
-        //Chats for Admin OR Admin-operator
-
         $request->validate([
-            'UserID' => 'required',
+            'UserID' => 'required|integer',
         ]);
 
-
-        $ID = User::whereIn('Rule' , ['Admin', 'Admin-Operator'])->get()[0]->id;
-        $Chats = AdminChat::where('UserID', $ID)->where('ReceiverID', \request()->UserID)->whereIn('Sender' , ['Admin' , 'Admin-Operator'])->latest('id')->first();
+        $Chats = AdminChat::where('ReceiverID', \request()->UserID)->where('Sender' , 'Admin')->latest('id')->first();
 
         return response()->json(
             ['Chat' => $Chats]
             , 200);
     }
+
+
+    public function ChatGet(Request $request)
+    {
+        $request->validate([
+            'UserID' => 'required|integer',
+            'BoothID' => 'required|integer',
+        ]);
+        $Chat = Chat::where('UserID', $request->UserID)->where('BoothID', $request->BoothID)->where('Sender' , 'Exhibitor')->latest('id')->first();
+        return response()->json(
+            ['Chat' => $Chat]
+            , 200);
+    }
+
 
 
 
