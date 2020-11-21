@@ -103,7 +103,7 @@ class ExhibitorController extends Controller
             'Title' => 'required|string',
             'Description' => 'required|string',
             'Number' => 'required|integer',
-            'Salary' => 'string',
+            'Salary' => 'nullable',
             'ID' => 'required|integer'
         ]);
 
@@ -124,7 +124,7 @@ class ExhibitorController extends Controller
             'Title' => 'required|string',
             'Description' => 'required|string',
             'Number' => 'required|integer',
-            'Salary' => 'string',
+            'Salary' => 'nullable',
         ]);
         Jobs::create([
             'Title' => $request->Title,
