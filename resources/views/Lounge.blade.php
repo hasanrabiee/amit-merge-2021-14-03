@@ -186,10 +186,15 @@
 
 <script>
 
+
+    var $div = $("#messages");
+
+
     window.setInterval(function() {
-        var elem = document.getElementById('test1');
-        elem.scrollDown = elem.scrollHeight;
-        console.log('aaa')
+
+        $div.scrollTop($div[0].scrollHeight);
+
+
     }, 3000);
 
 
