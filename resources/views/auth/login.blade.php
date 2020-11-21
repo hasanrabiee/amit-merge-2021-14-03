@@ -99,9 +99,9 @@
 
     <div class="h-100 w-100 overflow" style="width:100% !important ; height:100% !important;background-size: cover;background-repeat:no-repeat;background-image: url(@if(\App\Site::find(1)->SigninBackground != null) {{asset(\App\Site::find(1)->SigninBackground)}}   @else {{asset('assets/img/poster.jpg')}}@endif">
         <div class="row mt-md-3">
-            <div class="col-10">
+            <div class="col-7 col-md-10">
             </div>
-            <div class="col-2">
+            <div class="col-5 col-md-2">
                 <a class="" href="{{ url('locale/en') }}"><i
                         class="ml-2"></i>En</a>
                 <a class="" href="{{ url('locale/de') }}"><i
@@ -144,7 +144,7 @@
                     </div>
                     <form class="col-sm-12 col-md-4" method="POST" action="{{ route('login') }}">
                         @csrf
-                        <h6 class="text-left text-black">{{__('message.LoginText')}}</h6>
+                        <p class="text-left text-black">{{__('message.LoginText')}}</p>
                         <div class="form-group">
                             <input class="form-control @error('email') border border-danger @enderror"
                                    type="text" placeholder="{{__('message.EOU')}}" autofocus=""

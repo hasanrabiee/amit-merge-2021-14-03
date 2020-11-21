@@ -545,14 +545,14 @@
                             <div class="card p-3" style="background-color:rgba(54,54,54,0.65);color: white">
                                 <div class="card-body py-0">
                                     <div class="row">
-                                        <div class="col-6 font-size-lg">
+                                        <div class="col-md-6 col-12 font-size-lg">
                                             <p>{{__('message.Position')}}: {{\Illuminate\Support\Facades\Auth::user()->PositionUser}}</p>
                                             <p>{{__('message.WebSite')}}: {{$Booth->WebSite}}</p>
                                             <p>{{__('message.Company')}} {{__('message.Representative')}}: {{$Booth->Representative}}</p>
                                             <p>{{__('message.Company')}} {{__('message.email')}}: {{$Booth->User->email }}</p>
                                             <p>{{__('message.Company')}} {{__('message.Name')}}: {{$Booth->CompanyName}}</p>
                                         </div>
-                                        <div class="col-6 font-size-lg">
+                                        <div class="col-md-6 col-12 font-size-lg">
                                             <div class="btn-group w-100">
 
                                                 <a class="btn btn-dark w-100"  data-toggle="modal" href="#job_vac_modal">

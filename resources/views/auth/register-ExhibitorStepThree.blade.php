@@ -470,7 +470,7 @@
                                         <h4 class="">{{\Illuminate\Support\Str::limit(\Illuminate\Support\Facades\Auth::user()->UserName , 18)}}</h4>
                                     </div>
                                     <div class="col-md-4 ml-md-2">
-                                        <button data-toggle="tooltip" data-placement="top" title="Logout" onclick="document.getElementById('logout-form').submit()" class="btn btn-danger">
+                                        <button data-toggle="tooltip" data-placement="top" title="Logout" onclick="document.getElementById('logout-form').submit()" class="btn btn-danger ml-md-5">
                                             <i class="fa fa-sign-out"></i>
                                         </button>
 

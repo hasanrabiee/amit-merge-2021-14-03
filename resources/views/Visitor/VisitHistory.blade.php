@@ -260,7 +260,7 @@
                                                 <div class="booth-btn booth-btn-height">
                                                     @foreach($Booths as $booth)
                                                         <div class="col-12">
-                                                            <a href="?CompanyID={{$booth->id}}" type="button" @if(request()->CompanyID == $booth->id) class="text-left btn btn-primary mb-2 w-100" @else class="text-left btn btn-outline-dark mb-2 w-100" @endif>
+                                                            <a href="?CompanyID={{$booth->id}}" type="button" @if(request()->CompanyID == $booth->id) class="text-left btn btn-primary mb-2 w-100" @else class="text-white text-left btn btn-outline-dark mb-2 w-100" @endif>
                                                                 {{$booth->CompanyName}}
                                                             </a>
                                                         </div>
@@ -280,7 +280,6 @@
                                             <p>{{__('message.Booth')}} {{__('message.number')}}: {{$Booth->Position}} </p>
                                             <p>{{__('message.AboutCompany')}} :{{$Booth->Description}}</p>
                                             <p>{{__('message.WebSite')}}: <a class="text-dark" href="{{$Booth->WebSite}}">{{$Booth->WebSite}}</a></p>
-                                            <p class="text-left">{{__('message.Resume')}}: <a href="{{$User->resume}}">Download</a></p>
 
                                         </div>
 

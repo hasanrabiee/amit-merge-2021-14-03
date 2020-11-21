@@ -376,13 +376,10 @@
                                             <hr>
                                             <div class="form-group mt-2">
                                                 <div class="row">
-                                                    <div class="col-6">
+                                                    <div class="col-12">
                                                         <label for="">
                                                             Upload PDF (max:20MB)
                                                         </label>
-                                                    </div>
-
-                                                    <div class="col-6">
                                                         <input type="file" class="form-control-file" name="PdfFile">
                                                     </div>
                                                 </div>
@@ -406,23 +403,23 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4>{{__('message.SelectBoothColor')}}</h4>
+                                                            <h4 class="text-dark">{{__('message.SelectBoothColor')}}</h4>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">×</span></button>
                                                         </div>
                                                         <div class="modal-body">
                                                             <div class="form-group">
-                                                                <p class="text-left">{{__('message.BoothBodyColor')}}<br></p>
+                                                                <p class="text-left text-dark">{{__('message.BoothBodyColor')}}<br></p>
                                                                 <input class="form-control" type="color" name="Color2"
                                                                        value="{{$Booth->Color2}}" id="Color2">
                                                             </div>
                                                             <div class="form-group">
-                                                                <p class="text-left">{{__('message.BoothHeaderColor')}}<br></p>
+                                                                <p class="text-left text-dark">{{__('message.BoothHeaderColor')}}<br></p>
                                                                 <input class="form-control" type="color" name="Color1"
                                                                        value="{{$Booth->Color1}}" id="Color1">
                                                             </div>
                                                             <div class="form-group">
-                                                                <p class="text-left">{{__('message.BoothTextColor')}}</p>
+                                                                <p class="text-left text-dark">{{__('message.BoothTextColor')}}</p>
                                                                 <input class="form-control" type="color" name="WebSiteColor"
                                                                        value="{{$Booth->WebSiteColor}}" id="WebSiteColor">
                                                             </div>

@@ -9,9 +9,9 @@
 
     <div class="h-100 w-100 overflow" style="width:100% !important ; height:100% !important;background-size: cover;background-repeat:no-repeat;background-image: url(@if(\App\Site::find(1)->SigninBackground != null) {{asset(\App\Site::find(1)->SigninBackground)}}   @else {{asset('assets/img/poster.jpg')}}@endif">
         <div class="row mt-md-3">
-            <div class="col-md-10">
+            <div class="col-9 col-md-10">
             </div>
-            <div class="col-md-2 col-12">
+            <div class="col-3 col-md-2">
                 <a class="" href="{{ url('locale/en') }}"><i
                         class="ml-2"></i>En</a>
                 <a class="" href="{{ url('locale/de') }}"><i
@@ -386,11 +386,11 @@
                                                                             <div class="form-group">
                                                                                 <div class="row">
                                                                                     <div class="col-4">
-                                                                                        <select class="form-control w-100" style="width: 91px;" name="CountryCode" required="">
+                                                                                        <select class="form-control w-100" style="width: 91px;" name="CountryCode">
                                                                                             @if(old('CountryCode'))
                                                                                                 <option selected value="{{old('CountryCode')}}">{{old('CountryCode')}}</option>
                                                                                             @else
-                                                                                                <option selected disabled>Code *</option>
+                                                                                                <option selected disabled>Code </option>
                                                                                             @endif
                                                                                             <option data-countryCode="DE" value="49">Germany (+49)</option>
                                                                                             <option data-countryCode="GB" value="44" >UK (+44)</option>
@@ -614,7 +614,7 @@
                                                                                     </div>
                                                                                     <div class="col-8">
                                                                                         <input class="form-control w-100" type="number"
-                                                                                               placeholder="Phone Number *" name="PhoneNumber" required="" id="PhoneNumber" value="{{old('PhoneNumber')}}">
+                                                                                               placeholder="Phone Number" name="PhoneNumber" id="PhoneNumber" value="{{old('PhoneNumber')}}">
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="form-group">

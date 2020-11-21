@@ -16,9 +16,9 @@
 
     <!-- Page content -->
     <div class="row mt-md-3">
-        <div class="col-10">
+        <div class="col-9 col-md-10">
         </div>
-        <div class="col-2">
+        <div class="col-3 col-md-2">
             <a class="" href="{{ url('locale/en') }}"><i
                     class="ml-2"></i>En</a>
             <a class="" href="{{ url('locale/de') }}"><i

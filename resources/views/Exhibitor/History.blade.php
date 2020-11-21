@@ -286,7 +286,7 @@
 
                                                         @foreach($Users as $user)
                                                             <div class="col-12">
-                                                                <a @if(request()->UserID == $user->id) class="text-left btn btn-primary mb-2 w-100" @else class="text-left btn btn-outline-dark mb-2 w-100" @endif href="?UserID={{$user->id}}">{{$user->UserName}}</a>
+                                                                <a @if(request()->UserID == $user->id) class="text-left btn btn-primary mb-2 w-100" @else class="text-white text-left btn btn-outline-dark mb-2 w-100" @endif href="?UserID={{$user->id}}">{{$user->UserName}}</a>
                                                             </div>
                                                         @endforeach
 

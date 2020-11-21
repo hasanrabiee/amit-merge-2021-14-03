@@ -285,7 +285,7 @@
                                         <h3 class="">{{\Illuminate\Support\Str::limit(\Illuminate\Support\Facades\Auth::user()->UserName , 18)}}</h3>
                                     </div>
                                     <div class="col-md-4">
-                                        <button data-toggle="tooltip" data-placement="top" title="Logout" onclick="document.getElementById('logout-form').submit()" class="btn btn-danger ml-md-2">
+                                        <button data-toggle="tooltip" data-placement="top" title="Logout" onclick="document.getElementById('logout-form').submit()" class="btn btn-danger ml-md-5">
                                             <i class="fa fa-sign-out"></i>
                                         </button>
 
@@ -321,11 +321,11 @@
                                                         <div class="col-md-5">
                                                             <p class="text-left" style="color: rgb(255,255,255);font-size: 20px;">{{__('message.Pleaseaddyourstaffinformation')}} <i
                                                                     onclick="show_info('{{__('message.ModalStepTwoNum1')}}')"
-                                                                    class="fa fa-info-circle" style="color: white;margin-left: 20px"
+                                                                    class="fa fa-info-circle" style="color: white;"
                                                                     data-toggle="tooltip"></i></p>
                                                             <div class="form-group">
                                                                 <div class="field_wrapper w-100">
-                                                                    <div onclick="$('#op_email').removeAttr('disabled'); $('#op_email').focus()" class="w-100">
+                                                                    <div onclick="$('#op_email').removeAttr('disabled'); $('#op_email').focus()" class="w-100 mt-md-2 mb-md-2">
 
                                                                         <a href="javascript:void(0);" class="btn btn-dark add_button w-100" title="Add field" >
                                                                             <p style="font-size: 20px">{{__('message.AddOperators')}} <i style=";color: #000000;margin-left: 8px"
