@@ -209,7 +209,7 @@
 
 
                     $('#messages').append(message)
-                    $div.scrollTop($div[0].scrollHeight);
+
 
 
 
@@ -222,6 +222,8 @@
 
                 }
 
+
+                scroll_down()
 
             }
 
@@ -260,8 +262,8 @@
 
                 getMessages()
 
-                var objDiv = document.getElementById("messages");
-                objDiv.scrollTop = objDiv.scrollHeight;
+
+
 
 
             }
@@ -297,18 +299,20 @@
     });
 
 
+    function scroll_down(){
+
+
+        $div.scrollTop($div[0].scrollHeight);
+
+    }
+
     $(document).ready(function () {
 
         getMessages()
         ChangeSpanCount()
 
 
-        window.setInterval(function () {
 
-            $div.scrollTop($div[0].scrollHeight);
-
-
-        }, 6000);
         setInterval(getMessages, 10000)
         setInterval(ChangeSpanCount, 6000)
 
