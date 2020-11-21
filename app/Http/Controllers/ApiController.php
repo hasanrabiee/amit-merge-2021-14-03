@@ -69,15 +69,17 @@ class ApiController extends Controller
                 'ID' => $request->LoungeID
         ]);
     }
-    public function LoungeGet(LoungeChat $lounge){
+    public function LoungeGet($id){
 
-        $Chats = $lounge->get(["Text", "UserID", "Username"]);
+
+        $lounge_Chats = LoungeChat::where('LoungeID', $id)->get(["Text", "UserID", "Username"]);
+
 
 
 
 
         return response()->json([
-            'Chat' => $Chats
+            'Chat' => $lounge_Chats
         ]);
     }
 
