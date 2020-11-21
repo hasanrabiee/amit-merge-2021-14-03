@@ -186,7 +186,10 @@
 
 <script>
 
-
+    window.setInterval(function() {
+        var elem = document.getElementById('messages');
+        elem.scrollDown = elem.scrollHeight;
+    }, 3000);
 
 
 
