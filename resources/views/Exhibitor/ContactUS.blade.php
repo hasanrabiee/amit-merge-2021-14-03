@@ -397,7 +397,7 @@
                                 <div class="mt-3 mt-md-0">
                                     <div class="card" style="background-color:rgba(168,168,168,0.5);color: white;height: 620px !important">
                                         <div class="card-body">
-                                            <h3>{{__("ContactUs")}}</h3>
+                                            <h3>{{__("message.ContactUs")}}</h3>
                                             <h4 class="ml-md-3 ml-2" style="">{{\App\Site::find(1)->Name}}</h4>
                                             <div class="row mt-md-5">
                                                 <div class="col-md-3"></div>
