@@ -34,7 +34,7 @@ Route::group(['prefix' => 'v1' , 'as' => 'Api.'],function (){
     Route::group(['prefix' => 'Lounge'] , function (){
         Route::get('Get/{id?}' , 'ApiController@LoungeGet')->name('LoungeGet');
         Route::post('Post' , 'ApiController@LoungePost')->name('LoungePost');
-        Route::get('Count' , 'ApiController@LoungeCount')->name('LoungeCount');
+        Route::get('Count/{id?}' , 'ApiController@LoungeCount')->name('LoungeCount');
            });
     Route::get('WhatIsUserName/{user_id?}' , 'ApiController@WhatIsUserName')->name('WhatIsUserName');
     Route::post('Login' , 'ApiController@Login');

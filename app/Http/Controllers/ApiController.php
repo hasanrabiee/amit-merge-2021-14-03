@@ -55,18 +55,19 @@ class ApiController extends Controller
     }
 
 
-    public function LoungeCount(Request $request){
+    public function LoungeCount($id){
 
 
-        $array =  Lounge::where('id', "1")->get(["Members"])->first()->Members;
+        $array =  Lounge::where('id', $id)->get(["Members"])->first()->Members;
         eval("\$myarray = $array;");
 
         $count = count($myarray);
 
 
+
         return response()->json([
                 'Count' => $count,
-                'ID' => $request->LoungeID
+                'ID' => $id
         ]);
     }
     public function LoungeGet($id){
