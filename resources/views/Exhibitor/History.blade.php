@@ -272,7 +272,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="booth-btn booth-btn-height w-100">
+                                                <div class="booth-btn booth-btn-height w-100" style="overflow-y: scroll ;height: 450px;">
 
 
 

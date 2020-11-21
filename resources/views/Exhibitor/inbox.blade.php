@@ -279,7 +279,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-12 scroll_box"  id="Users" style="height: 350px !important;" onscroll="scroll_status = true">
+                                            <div class="col-12 scroll_box"  id="Users" style="height: 450px !important;overflow-y: scroll" onscroll="scroll_status = true">
                                                 @include("Exhibitor.user-list-data")
                                             </div>
                                         </div>

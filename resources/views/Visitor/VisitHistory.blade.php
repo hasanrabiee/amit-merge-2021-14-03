@@ -257,7 +257,7 @@
                                             </div>
                                         </form>
                                         <div class="row">
-                                                <div class="booth-btn booth-btn-height">
+                                                <div class="booth-btn booth-btn-height" style="overflow-y: scroll ;height: 450px;">
                                                     @foreach($Booths as $booth)
                                                         <div class="col-12">
                                                             <a href="?CompanyID={{$booth->id}}" type="button" @if(request()->CompanyID == $booth->id) class="text-left btn btn-primary mb-2 w-100" @else class="text-white text-left btn btn-outline-dark mb-2 w-100" @endif>
