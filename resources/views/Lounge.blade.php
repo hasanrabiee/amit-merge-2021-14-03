@@ -187,7 +187,7 @@
 <script>
 
     window.setInterval(function() {
-        var elem = document.getElementById('messages');
+        var elem = document.getElementById('test1');
         elem.scrollDown = elem.scrollHeight;
         console.log('aaa')
     }, 3000);
