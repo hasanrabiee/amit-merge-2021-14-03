@@ -285,9 +285,7 @@
 
     function ChangeSpanCount(){
         $('.hoseinSpan').each(function() {
-            $.get('{{route('Api.LoungeCount')}}',{
-                    LoungeID: this.id
-                },
+            $.get('{{route('Api.LoungeCount', \request()->GroupID)}}',
                 function (data) {
                     var id = data['ID'];
                     document.getElementById(id).innerHTML = data['Count'];
