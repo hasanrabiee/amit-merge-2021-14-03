@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{asset('assets/fonts/font-awesome.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/fonts/ionicons.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/styles.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/hasan-custom.css')}}">
 
 </head>
 <body id="page-top">
