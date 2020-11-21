@@ -182,31 +182,16 @@
 <script src="{{asset('assets/js/Table-With-Search-1.js')}}"></script>
 
 
-
-
 <script>
 
 
     var $div = $("#messages");
 
 
-    window.setInterval(function() {
-
-        $div.scrollTop($div[0].scrollHeight);
-
-
-    }, 3000);
-
-
-
-
     function getMessages() {
 
 
-
         $('#messages').empty()
-
-
 
 
         $.get("{{route("Api.LoungeGet", \request()->GroupID)}}", function (data, status) {
@@ -224,6 +209,8 @@
 
 
                     $('#messages').append(message)
+                    $div.scrollTop($div[0].scrollHeight);
+
 
 
                 } else {
@@ -242,13 +229,7 @@
         })
 
 
-
-
-
-
     }
-
-
 
 
     function sendMessage() {
@@ -283,21 +264,17 @@
                 objDiv.scrollTop = objDiv.scrollHeight;
 
 
-
             }
 
 
         });
 
 
-
-
     }
 
 
-
-    function ChangeSpanCount(){
-        $('.hoseinSpan').each(function() {
+    function ChangeSpanCount() {
+        $('.hoseinSpan').each(function () {
             $.get('{{route('Api.LoungeCount', \request()->GroupID)}}',
                 function (data) {
                     var id = data['ID'];
@@ -310,7 +287,6 @@
     var current_UserID = {{Auth::id() ?? 0}};
 
 
-
     myInput.addEventListener("keyup", function (event) {
         // Number 13 is the "Enter" key on the keyboard
         if (event.keyCode === 13) {
@@ -321,30 +297,23 @@
     });
 
 
+    $(document).ready(function () {
 
-    $(document).ready(function (){
-
-getMessages()
+        getMessages()
         ChangeSpanCount()
 
 
+        window.setInterval(function () {
 
-        setInterval(getMessages, 6000)
+            $div.scrollTop($div[0].scrollHeight);
+
+
+        }, 6000);
+        setInterval(getMessages, 10000)
         setInterval(ChangeSpanCount, 6000)
 
 
-
-
-
     })
-
-
-
-
-
-
-
-
 
 
 </script>
