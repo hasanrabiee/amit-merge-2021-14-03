@@ -45,7 +45,6 @@ Route::group(['prefix' => 'v1' , 'as' => 'Api.'],function (){
     Route::get('color/{Color}' , 'ApiController@hexToRgb');
     Route::get('ContactUs' , 'ApiController@ContactUs');
     Route::get('Statistics' , 'ApiController@Statistics');
-    Route::get('Test' , 'ApiController@test');
     Route::get('hall/full/{HallName}' , 'ApiController@HallIsFull');
     Route::get('booth/occupied/{HallName}/{Position}' , 'ApiController@PositionIsAvailable');
     Route::get('JobDetails/{JobID}' , 'ApiController@JobDetails');

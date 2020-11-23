@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ApiController extends Controller
 {
@@ -356,6 +357,8 @@ class ApiController extends Controller
             'BoothID' => 'required|integer',
         ]);
         $Chat = Chat::where('UserID', $request->UserID)->where('BoothID', $request->BoothID)->where('Sender' , 'Exhibitor')->latest('id')->first();
+
+
         return response()->json(
             ['Chat' => $Chat]
             , 200);
@@ -382,7 +385,13 @@ class ApiController extends Controller
         foreach ($BoothA as $item) {
             if (booth::where('Position' , $item)->where('Hall' , 1)->count() > 0){
                 if (booth::where('Position' , $item)->where('Hall' , 1)->first()->User->AccountStatus == 'Active'){
-                    $BoothAFinal[] = booth::where('Position' , $item)->where('Hall' , 1)->get()[0];
+                    $temp_booth = booth::where('Position' , $item)->where('Hall' , 1)->get()[0];
+                    if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
+
+                        $temp_booth->WebSite = "http://". $temp_booth;
+
+                    }
+                    $BoothAFinal[] = $temp_booth;
                 }else{
                     $BoothAFinal[] = null;
                 }
@@ -397,7 +406,16 @@ class ApiController extends Controller
         foreach ($BoothB as $item) {
             if (booth::where('Position' , $item)->where('Hall' , 2)->count() > 0){
                 if (booth::where('Position' , $item)->where('Hall' , 2)->first()->User->AccountStatus == 'Active') {
-                    $BoothBFinal[] = booth::where('Position', $item)->where('Hall', 2)->get()[0];
+                    $temp_booth = booth::where('Position' , $item)->where('Hall' , 2)->get()[0];
+                    if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
+                        $temp_booth->WebSite = "http://". $temp_booth;
+                    }
+                    $BoothBFinal[] = $temp_booth;
+
+
+
+
+
                 }else{
                     $BoothBFinal[] = null;
                 }
@@ -412,7 +430,12 @@ class ApiController extends Controller
         foreach ($BoothC as $item) {
             if (booth::where('Position' , $item)->where('Hall' , 3)->count() > 0){
                 if (booth::where('Position' , $item)->where('Hall' , 3)->first()->User->AccountStatus == 'Active') {
-                    $BoothCFinal[] = booth::where('Position', $item)->where('Hall', 3)->get()[0];
+                    $temp_booth = booth::where('Position' , $item)->where('Hall' , 3)->get()[0];
+                    if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
+                        $temp_booth->WebSite = "http://". $temp_booth;
+                    }
+                    $BoothCFinal[] = $temp_booth;
+
                 }else{
                     $BoothCFinal[] = null;
 
@@ -428,7 +451,12 @@ class ApiController extends Controller
         foreach ($BoothD as $item) {
             if (booth::where('Position' , $item)->where('Hall' , 4)->count() > 0){
                 if (booth::where('Position' , $item)->where('Hall' , 4)->first()->User->AccountStatus == 'Active') {
-                    $BoothDFinal[] = booth::where('Position', $item)->where('Hall', 4)->get()[0];
+                    $temp_booth = booth::where('Position' , $item)->where('Hall' , 4)->get()[0];
+                    if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
+                        $temp_booth->WebSite = "http://". $temp_booth;
+                    }
+                    $BoothDFinal[] = $temp_booth;
+
                 }else{
                     $BoothDFinal[] = null;
                 }
@@ -449,35 +477,6 @@ class ApiController extends Controller
             , 200);
     }
 
-
-    public function test(Request $request)
-    {
-        $Test = 'https://www.youtube.com/watch?v=cyVJyAEgfbY';
-
-
-
-        if (preg_match('/.*embed.*/',$Test)){
-            $Url = $Test;
-        }else{
-            $Url = preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i","https://www.youtube.com/embed/$1",$Test);
-        }
-        dd($Url);
-
-        $User = User::latest()->get();
-
-        return response()->json(
-            ['Data' => $User]
-            , 200);
-
-        return response()->json(
-            ['Data' => 'test']
-            , 200);
-
-
-        $User = User::find(2);
-        dd($User->Company->Booth);
-        return $request->all();
-    }
 
 
     public function ContactUs(Request $request)
