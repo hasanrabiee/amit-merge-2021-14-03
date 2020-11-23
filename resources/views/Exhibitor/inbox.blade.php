@@ -267,9 +267,14 @@
                         <div class="card p-3 card-inbox-ex-h" style="background-color:rgba(54,54,54,0.65);color: white;">
                             <div class="card-body py-0">
                                 <div class="row">
+
                                     <div class="col-md-4" style="border: 1px solid white;border-radius: 5px; height: 600px;overflow-y: auto">
+
+
+                                        <form action="{{route("Exhibitor.Inbox")}}" method="GET" class="w-100">
                                         <div class="input-group mt-2 mb-2">
-                                            <input type="text" class="form-control" placeholder="Search...">
+
+                                            <input name="SearchTerm" type="text" class="form-control" placeholder="Search...">
                                             <div class="input-group-append">
                                                 <button class="btn btn-success" type="submit">Search</button>
                                                 <button  class="btn shadow-none" type="button"
@@ -277,7 +282,13 @@
                                                                                                                                         class="fa fa-cog text-dark"
                                                                                                                                         style="font-size: 20px;"></i></button>
                                             </div>
+
                                         </div>
+
+                                        </form>
+
+
+
                                         <div class="row">
                                             <div class="col-12 scroll_box"  id="Users" style="height: 450px !important;overflow-y: scroll" onscroll="scroll_status = true">
                                                 @include("Exhibitor.user-list-data")
