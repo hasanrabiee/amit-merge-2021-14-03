@@ -350,6 +350,9 @@ class ExhibitorController extends Controller
 
             if ($UserName->count() <= 0) {
                 return redirect()->back();
+            }else{
+                return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $UserName]);
+
             }
             $Statistic = Statistics::where('UserID', $UserName[0]->id)->where('BoothID', $Booth->id)->get();
         } else {
@@ -368,7 +371,7 @@ class ExhibitorController extends Controller
             $User = User::find(\request()->UserID);
             return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $Users, 'User' => $User]);
         }
-        return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $UserName]);
+        return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $Users]);
 
 
     }
