@@ -388,7 +388,7 @@ class ApiController extends Controller
                     $temp_booth = booth::where('Position' , $item)->where('Hall' , 1)->get()[0];
                     if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
 
-                        $temp_booth->WebSite = "http://". $temp_booth;
+                        $temp_booth->WebSite = "http://". $temp_booth->WebSite;
 
                     }
                     $BoothAFinal[] = $temp_booth;
@@ -408,7 +408,7 @@ class ApiController extends Controller
                 if (booth::where('Position' , $item)->where('Hall' , 2)->first()->User->AccountStatus == 'Active') {
                     $temp_booth = booth::where('Position' , $item)->where('Hall' , 2)->get()[0];
                     if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
-                        $temp_booth->WebSite = "http://". $temp_booth;
+                        $temp_booth->WebSite = "http://". $temp_booth->WebSite;
                     }
                     $BoothBFinal[] = $temp_booth;
 
@@ -432,7 +432,7 @@ class ApiController extends Controller
                 if (booth::where('Position' , $item)->where('Hall' , 3)->first()->User->AccountStatus == 'Active') {
                     $temp_booth = booth::where('Position' , $item)->where('Hall' , 3)->get()[0];
                     if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
-                        $temp_booth->WebSite = "http://". $temp_booth;
+                        $temp_booth->WebSite = "http://". $temp_booth->WebSite;
                     }
                     $BoothCFinal[] = $temp_booth;
 
@@ -453,7 +453,7 @@ class ApiController extends Controller
                 if (booth::where('Position' , $item)->where('Hall' , 4)->first()->User->AccountStatus == 'Active') {
                     $temp_booth = booth::where('Position' , $item)->where('Hall' , 4)->get()[0];
                     if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
-                        $temp_booth->WebSite = "http://". $temp_booth;
+                        $temp_booth->WebSite = "http://". $temp_booth->WebSite;
                     }
                     $BoothDFinal[] = $temp_booth;
 
