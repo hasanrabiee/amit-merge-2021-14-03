@@ -347,6 +347,7 @@ class ExhibitorController extends Controller
         $Booth = $this->Booth();
         if (\request()->SearchTerm) {
             $UserName = User::where('UserName', 'LIKE', '%' . \request()->SearchTerm . '%')->get();
+
             if ($UserName->count() <= 0) {
                 return redirect()->back();
             }
@@ -367,7 +368,7 @@ class ExhibitorController extends Controller
             $User = User::find(\request()->UserID);
             return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $Users, 'User' => $User]);
         }
-        return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $Users]);
+        return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $UserName]);
 
 
     }

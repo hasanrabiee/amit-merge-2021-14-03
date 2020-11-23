@@ -275,8 +275,8 @@
                             <!-- Traffic sources -->
                             <div class="card p-3 pc-height-exhibitor-history"
                                  style="background-color:rgba(54,54,54,0.65);color: white;">
-                                <div class="card-body py-0">
-                                    <form action="{{route("Exhibitor.History")}}" method="GET" class="w-100">
+                                <div class="card-body py-0">Exhibitor
+                                    <form action="{{route("Exhibitor.History")}}" method="get" class="w-100">
                                         <div class="row">
                                             <div class="col-md-4" style="">
                                                 <div class="input-group mt-2 mb-2">
