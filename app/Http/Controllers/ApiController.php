@@ -403,7 +403,7 @@ class ApiController extends Controller
                     $BoothAFinal[] = null;
                 }
             }else{
-                $BoothAFinal[] = booth::where('Position' , $item)->where('Hall' , 1)->first();
+                $BoothAFinal[] = booth::where('Position' , $item)->where('Hall' , 1)->count();
             }
         }
         $BoothAFinal = array_values($BoothAFinal);
