@@ -388,7 +388,6 @@ class ApiController extends Controller
         $BoothA = range(1,25);
         $BoothAFinal = [];
         foreach ($BoothA as $item) {
-            if (booth::where('Position' , $item)->where('Hall' , 1)->count() > 0){
                 if (booth::where('Position' , $item)->where('Hall' , 1)->first()->User->AccountStatus == 'Active'){
                     $temp_booth = booth::where('Position' , $item)->where('Hall' , 1)->get()[0];
                     if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
@@ -400,9 +399,7 @@ class ApiController extends Controller
                 }else{
                     $BoothAFinal[] = 1;
                 }
-            }else{
-                $BoothAFinal[] = "jafar $item";
-            }
+
         }
         $BoothAFinal = array_values($BoothAFinal);
         //---------------------
