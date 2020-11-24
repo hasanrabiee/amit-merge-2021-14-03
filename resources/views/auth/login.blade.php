@@ -203,10 +203,10 @@
                                        class="text text-danger" style="cursor: pointer"><i class="fa fa-user" style="margin: 5px"></i>{{__('message.signupasvisitor')}}</p>
                                 </div>
                                 <div class="col-md-4 mt-2 mt-md-1 d-none d-md-block">
-                                    <a href="" class="w-md-100 logo-login-mob mt-2 mt-md-1 mt-2 text-center"><img class="w-75 logo-login-mob" src="{{asset("assets/img/icon10.png")}}" alt=""></a>
+                                    <a href="/Xhafa-exhibition.exe" class="w-md-100 logo-login-mob mt-2 mt-md-1 mt-2 text-center"><img class="w-75 logo-login-mob" src="{{asset("assets/img/icon10.png")}}" alt=""></a>
                                 </div>
                                 <div class="col-md-4 mt-2 mt-md-1">
-                                    <a href="" class="w-100 mt-2 mt-md-1 mt-2 icon-android-mob text-center"><img class="icon-android-mob w-75" src="{{asset("assets/img/androidicon.png")}}" alt=""></a>
+                                    <a href="/XhafaExhibition.apk" class="w-100 mt-2 mt-md-1 mt-2 icon-android-mob text-center"><img class="icon-android-mob w-75" src="{{asset("assets/img/androidicon.png")}}" alt=""></a>
                                 </div>
                             </div>
                         </div>
