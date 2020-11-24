@@ -24,10 +24,7 @@ Route::group(['prefix' => 'Auditorium' , 'as' => 'Auditorium.'],function (){
 });
 Route::get('/password/changed','WebController@PassChanged')->name('PassChanged');
 Route::get('Verify','WebController@Verify')->name('Verify');
-Route::get('Auditorium','WebController@Auditorium')->name('Auditorium');
-Route::get('AuditoriumPlay/{ID}','WebController@AuditoriumPlay')->name('AuditoriumPlay');
-Route::get('Lounge','LoungeController@index')->name('Lounge');
-Route::post('LoungeChat','LoungeController@Chat')->name('LoungeChat')->middleware(['auth']);
+
 Route::get('ActiveAccount','WebController@ActiveAccount')->name('ActiveAccount');
 Route::get('Exhibitor-Register','BoothController@Register')->name('Exhibitor-Register')->middleware('guest');
 Route::post('Exhibitor-Register-One','BoothController@RegisterOne')->name('Exhibitor-Register-One')->middleware('guest');
@@ -44,6 +41,14 @@ Route::get('/Install', 'WebController@Install');
 
 Route::group(['middleware' => ['auth']] , function (){
     Route::group(['prefix' => 'Admin', 'as' => 'Admin.' , 'middleware' => ['Admin']], function () {
+
+
+
+        Route::get('Auditorium','WebController@Auditorium')->name('Auditorium');
+        Route::get('AuditoriumPlay/{ID}','WebController@AuditoriumPlay')->name('AuditoriumPlay');
+        Route::get('Lounge','LoungeController@index')->name('Lounge');
+        Route::post('LoungeChat','LoungeController@Chat')->name('LoungeChat')->middleware(['auth']);
+
         Route::get('/', 'AdminController@index');
         Route::get('Auditorium', 'AdminController@Auditorium')->name('Auditorium');
         Route::get('AuditoriumExport', 'AdminController@AuditoriumExport')->name('AuditoriumExport');
