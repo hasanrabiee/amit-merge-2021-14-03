@@ -389,6 +389,7 @@ class ApiController extends Controller
         $BoothAFinal = [];
         foreach ($BoothA as $item) {
 
+
             if (booth::where('Position' , $item)->where('Hall' , 1)->count() > 0){
                 if (booth::where('Position' , $item)->where('Hall' , 1)->first()->User->AccountStatus == 'Active'){
                     $temp_booth = booth::where('Position' , $item)->where('Hall' , 1)->get()[0];
@@ -399,10 +400,10 @@ class ApiController extends Controller
                     }
                     $BoothAFinal[] = $temp_booth;
                 }else{
-                    $BoothAFinal[] = 1;
+                    $BoothAFinal[] = null;
                 }
             }else{
-                $BoothAFinal[] = booth::where('Position' , $item)->where('Hall' , 1)->get()->first();
+                $BoothAFinal[] = booth::where('Position' , $item)->where('Hall' , 1)->first();
             }
         }
         $BoothAFinal = array_values($BoothAFinal);
