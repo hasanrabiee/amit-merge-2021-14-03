@@ -315,6 +315,8 @@ class ExhibitorController extends Controller
             foreach ($UsersAll as $user) {
                 $Users[] = User::find($user->id);
             }
+            return view('Exhibitor.inbox')->with(['Booth' => $Booth, 'Users' => $Users]);
+
         }
         return view('Exhibitor.inbox')->with(['Booth' => $Booth, 'Users' => $Users]);
     }
