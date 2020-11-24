@@ -107,7 +107,7 @@ class WebController extends Controller
 
 
     public function Auditorium(){
-        $List = Auditorium::all();
+        $List = Auditorium::orderBy( 'Day', 'ASC')->orderBy('Start', 'ASC')->get();
 
 
 

@@ -11,7 +11,7 @@
                         <th>Date</th>
                         <th>Speaker Name</th>
                         <th>Title</th>
-                        <th>Start Time</th>
+                        <th>Time</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -21,7 +21,7 @@
                             <td>{{$item->Day}}</td>
                             <td>{{\App\Speaker::find($item->SpeakerID)->Name}}</td>
                             <td>{{\App\Speaker::find($item->SpeakerID)->SpeechTitle}}</td>
-                            <td>{{\Carbon\Carbon::parse($item->Start)->format('H:i')}}</td>
+                            <td>{{\Carbon\Carbon::parse($item->Start)->format('H:i')}} - {{\Carbon\Carbon::parse($item->End)->format('H:i')}}</td>
 
                             <td>
 
