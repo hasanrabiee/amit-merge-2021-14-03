@@ -59,6 +59,16 @@
         line-height: 40px;
     }
 
+
+    .logo-login-mob{
+        width: 25% !important;
+    }
+
+    .icon-android-mob{
+        width: 50% !important;
+    }
+
+
 }
 
 

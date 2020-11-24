@@ -97,7 +97,7 @@
 
 
 
-    <div class="h-100 w-100 overflow" style="width:100% !important ; height:100% !important;background-size: cover;background-repeat:no-repeat;background-image: url(@if(\App\Site::find(1)->SigninBackground != null) {{asset(\App\Site::find(1)->SigninBackground)}}   @else {{asset('assets/img/poster.jpg')}}@endif">
+    <div class="h-100 w-100 overflow" style="overflow-x:hidden !important;width:100% !important ; height:100% !important;background-size: cover;background-repeat:no-repeat;background-image: url(@if(\App\Site::find(1)->SigninBackground != null) {{asset(\App\Site::find(1)->SigninBackground)}}   @else {{asset('assets/img/poster.jpg')}}@endif">
         <div class="row mt-md-3">
             <div class="col-7 col-md-10">
             </div>
@@ -124,7 +124,7 @@
                         <div class="ml-md-5">
 
                             @if(\App\Site::find(1)->Logo1)
-                                <img class="w-50 ml-md-5 mt-md-5" src="{{\App\Site::find(1)->Logo1}}">
+                                <img class="w-50 ml-md-5 mt-md-5 logo-login-mob" src="{{\App\Site::find(1)->Logo1}}">
                             @endif
 
                         </div>
@@ -153,7 +153,7 @@
                             @error('email')
                             <span class="text text-danger" role="alert">
                                         <strong>{{ $message }}</strong>
-                                    </span>
+                            </span>
                             @enderror
 
                         </div>
@@ -202,9 +202,16 @@
                                     <p onclick="window.open('{{route('register')}}', '_self')"
                                        class="text text-danger" style="cursor: pointer"><i class="fa fa-user" style="margin: 5px"></i>{{__('message.signupasvisitor')}}</p>
                                 </div>
+                                <div class="col-md-4 mt-2 mt-md-1 d-none d-md-block">
+                                    <a href="" class="w-md-100 logo-login-mob mt-2 mt-md-1 mt-2 text-center"><img class="w-75 logo-login-mob" src="{{asset("assets/img/icon10.png")}}" alt=""></a>
+                                </div>
+                                <div class="col-md-4 mt-2 mt-md-1">
+                                    <a href="" class="w-100 mt-2 mt-md-1 mt-2 icon-android-mob text-center"><img class="icon-android-mob w-75" src="{{asset("assets/img/androidicon.png")}}" alt=""></a>
+                                </div>
                             </div>
-
                         </div>
+
+
                     </form>
                 </div>
             </div>
