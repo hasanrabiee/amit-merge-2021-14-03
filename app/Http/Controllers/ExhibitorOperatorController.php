@@ -205,9 +205,8 @@ class ExhibitorOperatorController extends Controller
 
         if (\request()->SearchTerm) {
             $UsersAll = User::where('UserName', 'LIKE', '%' . \request()->SearchTerm . '%')->get();
-            foreach ($UsersAll as $user) {
-                $Users[] = User::find($user->id);
-            }
+            return view('Exhibitor-Operator.Inbox')->with(['Booth' => $Booth, 'Users' => $UsersAll]);
+
         }
         return view('Exhibitor-Operator.Inbox')->with(['Booth' => $Booth, 'Users' => $Users]);
 
@@ -297,14 +296,18 @@ class ExhibitorOperatorController extends Controller
 
     public function History(){
         $Booth = $this->Booth();
-        if (\request()->SearchTerm){
-            $UserName = User::where('UserName' , 'LIKE' , '%' . \request()->SearchTerm  . '%')->get();
-            if ($UserName->count() <= 0){
+        if (\request()->SearchTerm) {
+            $UserName = User::where('UserName', 'LIKE', '%' . \request()->SearchTerm . '%')->get();
+
+            if ($UserName->count() <= 0) {
                 return redirect()->back();
+            }else{
+                return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $UserName]);
+
             }
-            $Statistic = Statistics::where('UserID' , $UserName[0]->id)->where('BoothID' , $Booth->id)->get();
-        }else{
-            $Statistic = Statistics::where('BoothID' , $Booth->id )->get();
+            $Statistic = Statistics::where('UserID', $UserName[0]->id)->where('BoothID', $Booth->id)->get();
+        } else {
+            $Statistic = Statistics::where('BoothID', $Booth->id)->get();
         }
         $Users = [];
         $uniques = array();
@@ -315,10 +318,18 @@ class ExhibitorOperatorController extends Controller
             $Users[] = User::find($item->UserID);
         }
 
+
+
+
         if (\request()->UserID){
             $User = User::find(\request()->UserID);
             return view('Exhibitor-Operator.History')->with(['Booth' => $Booth , 'Users' => $Users , 'User' => $User]);
         }
+
+
+
+
+
         return view('Exhibitor-Operator.History')->with(['Booth' => $Booth , 'Users' => $Users]);
 
 

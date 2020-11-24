@@ -312,9 +312,6 @@ class ExhibitorController extends Controller
 
         if (\request()->SearchTerm) {
             $UsersAll = User::where('UserName', 'LIKE', '%' . \request()->SearchTerm . '%')->get();
-            foreach ($UsersAll as $user) {
-                $Users[] = User::find($user->id);
-            }
             return view('Exhibitor.inbox')->with(['Booth' => $Booth, 'Users' => $UsersAll]);
 
         }
@@ -369,10 +366,17 @@ class ExhibitorController extends Controller
             $Users[] = User::find($item->UserID);
         }
 
+
+
+
+
         if (\request()->UserID) {
             $User = User::find(\request()->UserID);
             return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $Users, 'User' => $User]);
         }
+
+
+
         return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $Users]);
 
 
