@@ -110,7 +110,7 @@ class ApiController extends Controller
     {
 
         $Booth = booth::where('Hall', $HallName)->count();
-        \Log::info('salam');
+        \Log::info($Booth);
         if ($Booth >= 25) {
             return json_encode('Full');
         }
