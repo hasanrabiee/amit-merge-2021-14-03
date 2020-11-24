@@ -40,8 +40,7 @@ Route::post('Operator-Register','OperatorController@Register')->name('Operator-R
 Route::get('/', 'WebController@index')->middleware('auth')->name('home');
 Route::get('Job/{BoothID}', 'WebController@Jobs')->name('Jobs');
 Route::get('/Install', 'WebController@Install');
-Route::post('tests', 'WebController@testPosts')->name('testPosts');
-Route::get('tests', 'WebController@test')->name('test');
+
 
 Route::group(['middleware' => ['auth']] , function (){
     Route::group(['prefix' => 'Admin', 'as' => 'Admin.' , 'middleware' => ['Admin']], function () {

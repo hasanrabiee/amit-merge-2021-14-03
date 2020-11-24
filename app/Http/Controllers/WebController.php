@@ -34,24 +34,11 @@ class WebController extends Controller
         return view('Errors.ActiveAccount');
     }
 
-    public function test()
-    {
-
-        $Booth =  booth::where('UserID', Auth::id())->get()[0];
-        return view('auth.register-ExhibitorStepThree')->with('Booth' , $Booth);
-        dd('test');
-        $PDF = booth::find($BoothID)->Doc1;
-        return view('test')->with(['PDF' => $PDF]);
-    }
 
     public function Verify(){
         return view('Errors.Verified');
     }
 
-    public function testPosts(Request $request)
-    {
-        dd('s');
-    }
 
 
     public function Install()
