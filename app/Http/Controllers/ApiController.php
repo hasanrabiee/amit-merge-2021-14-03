@@ -398,10 +398,10 @@ class ApiController extends Controller
                     }
                     $BoothAFinal[] = $temp_booth;
                 }else{
-                    $BoothAFinal[] = null;
+                    $BoothAFinal[] = 1;
                 }
             }else{
-                $BoothAFinal[] = null;
+                $BoothAFinal[] = 2;
             }
         }
         $BoothAFinal = array_values($BoothAFinal);
