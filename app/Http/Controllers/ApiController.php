@@ -388,6 +388,9 @@ class ApiController extends Controller
         $BoothA = range(1,25);
         $BoothAFinal = [];
         foreach ($BoothA as $item) {
+
+            \Log::info($item);
+
             if (booth::where('Position' , $item)->where('Hall' , 1)->count() > 0){
                 if (booth::where('Position' , $item)->where('Hall' , 1)->first()->User->AccountStatus == 'Active'){
                     $temp_booth = booth::where('Position' , $item)->where('Hall' , 1)->get()[0];
@@ -401,7 +404,7 @@ class ApiController extends Controller
                     $BoothAFinal[] = 1;
                 }
             }else{
-                $BoothAFinal[] = booth::where('Position' , $item)->where('Hall' , 1)->get()[0];
+                $BoothAFinal[] = "jafar $item";
             }
         }
         $BoothAFinal = array_values($BoothAFinal);
