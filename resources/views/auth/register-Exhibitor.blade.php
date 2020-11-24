@@ -656,6 +656,36 @@
 
 
                                                                         </label></div>
+
+
+
+                                                                    <div class="modal fade text-dark" role="dialog" tabindex="-1" id="myModal">
+                                                                        <div class="modal-dialog" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h4>{{__('message.TAC')}}</h4>
+                                                                                    <button type="button" class="close" data-dismiss="modal"
+                                                                                            aria-label="Close"><span aria-hidden="true">×</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="scroll_box">
+                                                                                        <p>
+                                                                                            {{\App\Site::find(1)->Terms}}
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button class="btn btn-success btn-block" data-dismiss="modal"
+                                                                                            type="button">{{__('message.Close')}}
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+
+
                                                                 </div>
                                                             </div>
                                                         </div>
