@@ -401,7 +401,7 @@ class ApiController extends Controller
                     $BoothAFinal[] = 1;
                 }
             }else{
-                $BoothAFinal[] = "jafar $item";
+                $BoothAFinal[] = booth::where('Position' , $item)->where('Hall' , 1)->get()[0];
             }
         }
         $BoothAFinal = array_values($BoothAFinal);
