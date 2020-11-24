@@ -203,22 +203,22 @@
                                     <a href="{{route('Visitor.index')}}" class="nav-link">
                                         <i class="fa fa-home"></i>
                                         <span>
-										Profile
+										{{__('message.Profile')}}
                                 </span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link active"><i class="fa fas fa-history"></i> <span>{{__('message.Visit')}} {{__('message.History')}}</span></a>
+                                    <a href="{{route('Visitor.VisitHistory')}}" class="nav-link active"><i class="fa fas fa-history"></i> <span>{{__('message.History')}}</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{route('Visitor.Payment')}}" class="nav-link"><i class="fa fab fa-paypal"></i> <span>{{__('message.Entrance')}} {{__('message.Payment')}}</span></a>
+                                    <a href="{{route('Visitor.Payment')}}" class="nav-link"><i class="fa fab fa-paypal"></i> <span>{{__('message.Payment')}}</span></a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{route('Visitor.Contact')}}" class="nav-link"><i class="fa fa-phone"></i> <span>{{__('message.ContactSupportTeam')}}</span></a>
                                 </li>
 
                                 <li class="nav-item text-center mt-md-5">
-                                    <a href="/Exhibition/" class="" target="_blank"><span class="btn btn-success btn-lg">Enter Exhibition</span></a>
+                                    <a href="/Exhibition/" class="" target="_blank"><span class="btn btn-success btn-lg">{{__('message.EnterExhabition')}}</span></a>
                                 </li>
                                 <!-- /main -->
                             </ul>
@@ -249,9 +249,9 @@
                                     <div class="col-md-4" style="">
                                         <form onblur="is_typing = false" onfocus="is_typing = true" action="#search_company" class="w-100">
                                             <div class="input-group mt-2 mb-2 w-100">
-                                                    <input type="text" class="form-control" placeholder="Company Name" name="search">
+                                                    <input type="text" class="form-control" placeholder="{{__('message.CompanyName')}}" name="search">
                                                     <div class="input-group-append">
-                                                        <button class="btn btn-success" type="submit">Search</button>
+                                                        <button class="btn btn-success" type="submit">{{__('message.Search')}}</button>
                                                     </div>
 
                                             </div>

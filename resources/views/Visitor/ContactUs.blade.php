@@ -199,7 +199,7 @@
                         <ul class="nav nav-sidebar" data-nav-type="accordion" style="height: 435px !important ;">
                             <!-- Main -->
                             <li class="nav-item">
-                                <a href="{{route('Visitor.index')}}" class="nav-link @if(Request::is('index*')) active @endif">
+                                <a href="{{route('Visitor.index')}}" class="nav-link">
                                     <i class="fa fa-home"></i>
                                     <span>
 										{{__('message.Profile')}}
@@ -207,17 +207,17 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('Visitor.VisitHistory')}}" class="nav-link @if(Request::is('*History*')) active @endif"><i class="fa fas fa-history"></i> <span>{{__('message.Visit')}} {{__('message.History')}}</span></a>
+                                <a href="{{route('Visitor.VisitHistory')}}" class="nav-link"><i class="fa fas fa-history"></i> <span>{{__('message.History')}}</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('Visitor.Payment')}}" class="nav-link @if(Request::is('*Payment*')) active @endif"><i class="fa fab fa-paypal"></i> <span>{{__('message.Entrance')}} {{__('message.Payment')}}</span></a>
+                                <a href="{{route('Visitor.Payment')}}" class="nav-link"><i class="fa fab fa-paypal"></i> <span>{{__('message.Payment')}}</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('Visitor.Contact')}}" class="nav-link @if(Request::is('*Contact*')) active @endif   "><i class="fa fa-phone"></i> <span>{{__('message.ContactSupportTeam')}}</span></a>
+                                <a href="{{route('Visitor.Contact')}}" class="nav-link active"><i class="fa fa-phone"></i> <span>{{__('message.ContactSupportTeam')}}</span></a>
                             </li>
 
                             <li class="nav-item text-center mt-md-5">
-                                <a href="/Exhibition/" class="" target="_blank"><span class="btn btn-success btn-lg">Enter Exhibition</span></a>
+                                <a href="/Exhibition/" class="" target="_blank"><span class="btn btn-success btn-lg">{{__('message.EnterExhabition')}}</span></a>
                             </li>
                             <!-- /main -->
                         </ul>

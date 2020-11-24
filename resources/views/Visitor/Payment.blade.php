@@ -222,22 +222,22 @@
                                     <a href="{{route('Visitor.index')}}" class="nav-link">
                                         <i class="fa fa-home"></i>
                                         <span>
-										Profile
+										{{__('message.Profile')}}
                                 </span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{route('Visitor.VisitHistory')}}" class="nav-link"><i class="fa fas fa-history"></i> <span>{{__('message.Visit')}} {{__('message.History')}}</span></a>
+                                    <a href="{{route('Visitor.VisitHistory')}}" class="nav-link"><i class="fa fas fa-history"></i> <span>{{__('message.History')}}</span></a>
                                 </li>
-                                <li class="nav-item ">
-                                    <a href="{{route('Visitor.Payment')}}" class="nav-link active"><i class="fa fab fa-paypal"></i> <span>{{__('message.Entrance')}} {{__('message.Payment')}}</span></a>
+                                <li class="nav-item">
+                                    <a href="{{route('Visitor.Payment')}}" class="nav-link active"><i class="fa fab fa-paypal"></i> <span>{{__('message.Payment')}}</span></a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{route('Visitor.Contact')}}" class="nav-link"><i class="fa fa-phone"></i> <span>{{__('message.ContactSupportTeam')}}</span></a>
                                 </li>
 
                                 <li class="nav-item text-center mt-md-5">
-                                    <a href="/Exhibition/" class="" target="_blank"><span class="btn btn-success btn-lg">Enter Exhibition</span></a>
+                                    <a href="/Exhibition/" class="" target="_blank"><span class="btn btn-success btn-lg">{{__('message.EnterExhabition')}}</span></a>
                                 </li>
                                 <!-- /main -->
                             </ul>
@@ -282,7 +282,7 @@
                                                 <div class="alert alert-danger">
 
                                                     <p>
-                                                        <strong>{{__('message.attend')}} {{__('message.fee')}}: <span id="price_id">{{\App\Site::find(1)->VisitorPayment}}</span>
+                                                        <strong>{{__('message.Paid')}}: <span id="price_id">{{\App\Site::find(1)->VisitorPayment}}</span>
                                                             $</strong>
                                                     </p>
                                                     <p class="nonoverflow" style="margin-top: 24px;padding: 16px;">
@@ -359,7 +359,7 @@
 
             document.getElementById('price_id').innerText = 'Free'
             $('#paypal_btn').prop('disabled', true)
-            $('#paypal_btn').text('Exhibition is free')
+            $('#paypal_btn').text('{{__('message.ExFree')}}')
 
         }
 

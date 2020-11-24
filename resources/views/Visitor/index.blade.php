@@ -255,25 +255,25 @@
                             <ul class="nav nav-sidebar" data-nav-type="accordion" style="height: 435px !important ;">
                                 <!-- Main -->
                                 <li class="nav-item">
-                                    <a href="profile_visitor.php" class="nav-link active">
+                                    <a href="{{route('Visitor.index')}}" class="nav-link active">
                                         <i class="fa fa-home"></i>
                                         <span>
-										Profile
+										{{__('message.Profile')}}
                                 </span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{route('Visitor.VisitHistory')}}" class="nav-link"><i class="fa fas fa-history"></i> <span>{{__('message.Visit')}} {{__('message.History')}}</span></a>
+                                    <a href="{{route('Visitor.VisitHistory')}}" class="nav-link"><i class="fa fas fa-history"></i> <span>{{__('message.History')}}</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{route('Visitor.Payment')}}" class="nav-link"><i class="fa fab fa-paypal"></i> <span>{{__('message.Entrance')}} {{__('message.Payment')}}</span></a>
+                                    <a href="{{route('Visitor.Payment')}}" class="nav-link"><i class="fa fab fa-paypal"></i> <span>{{__('message.Payment')}}</span></a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{route('Visitor.Contact')}}" class="nav-link"><i class="fa fa-phone"></i> <span>{{__('message.ContactSupportTeam')}}</span></a>
                                 </li>
 
                                 <li class="nav-item text-center mt-md-5">
-                                    <a href="/Exhibition/" class="" target="_blank"><span class="btn btn-success btn-lg">Enter Exhibition</span></a>
+                                    <a href="/Exhibition/" class="" target="_blank"><span class="btn btn-success btn-lg">{{__('message.EnterExhabition')}}</span></a>
                                 </li>
                                 <!-- /main -->
                             </ul>
@@ -316,7 +316,7 @@
 
                             <div class="card" style="background-color:rgba(54,54,54,0.65);color: white">
                                 <div class="card-header header-elements-inline">
-                                    <h6 class="card-title">Profile Information</h6>
+                                    <h6 class="card-title">{{__('message.Profile')}}</h6>
 
                                     @if(\Illuminate\Support\Facades\Auth::user()->AccountStatus == 'Active')
                                         <button class="btn btn-success ml-md-n5">{{__('message.AccountActive')}}</button>
@@ -347,7 +347,7 @@
                                             <p>{{__('message.Email')}}: {{\Illuminate\Support\Facades\Auth::user()->email}}</p>
                                             <button  data-toggle="tooltip" data-placement="top" title="Upload Resume" onclick="$('#Resume_Modal').modal('show')" class="btn btn-dark w-50">
                                                 <span class="fa fa-upload"></span>
-                                                Upload CV</button>
+                                                {{__("message.Upload")}} CV</button>
                                         </div>
                                     </div>
                                 </div>
@@ -361,11 +361,11 @@
                                                 <form action="{{route('Visitor.ChangePassword')}}" method="post" class="w-100">
                                                     @csrf
                                                     <div class="form-group col-12">
-                                                        <input class="form-control" type="password" placeholder="{{__('message.Old')}} {{__('message.password')}}" name="OldPassword">
+                                                        <input class="form-control" type="password" placeholder="{{__('message.OldPass2')}}" name="OldPassword">
                                                     </div>
 
                                                     <div class="form-group col-12">
-                                                        <input class="form-control" type="password" placeholder="{{__('message.New')}} {{__('message.password')}}" name="password">
+                                                        <input class="form-control" type="password" placeholder="{{__('message.NewPass2')}}" name="password">
                                                     </div>
 
                                                     <div class="form-group col-12">
@@ -373,7 +373,7 @@
 
                                                     <div class="form-group text-center">
                                                         {{--                                                    <input type="submit" class="btn btn-success ml-2" value="Update Password">--}}
-                                                        <button class="btn btn-success ml-2" type="submit">{{__('message.Update')}} {{__('message.password')}}</button>
+                                                        <button class="btn btn-success ml-2" type="submit">{{__('message.Update')}}</button>
 
                                                     </div>
                                                 </form>
@@ -390,10 +390,10 @@
                                                 <form method="post" action="{{route('Visitor.VisitExperience')}}" class="w-100">
                                                     @csrf
                                                     <div class="form-group col-12">
-                                                        <textarea type="text" class="form-control" rows="5" style="padding-bottom: 19px;" placeholder="Please Tell Us About Your Visit Experience" maxlength="120" name="VisitExperience">{!! \Illuminate\Support\Facades\Auth::user()->VisitExperience !!}</textarea>
+                                                        <textarea type="text" class="form-control" rows="5" style="padding-bottom: 19px;" placeholder="{{__('message.VisitExp')}}..." maxlength="120" name="VisitExperience">{!! \Illuminate\Support\Facades\Auth::user()->VisitExperience !!}</textarea>
                                                     </div>
                                                     <div class="form-group text-center">
-                                                        <button class="btn btn-success ml-2" type="submit">{{__('message.Send')}} {{__('message.FeedBack')}}</button>
+                                                        <button class="btn btn-success ml-2" type="submit">{{__('message.Send')}}</button>
                                                     </div>
                                                 </form>
                                             </div>
