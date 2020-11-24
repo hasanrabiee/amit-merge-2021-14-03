@@ -155,7 +155,7 @@
 {{--                        <div class="text-left" style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);"><a class="text-left remove_underline" href="{{route('Exhibitor.Payment')}}" style="font-size: 20px;color: #ffffff;">{{__('message.Payment')}}</a></div>--}}
 {{--                        <div class="text-left" style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);"><a class="text-left remove_underline" href="{{route('Exhibitor.Confirmation')}}" style="font-size: 20px;color: #ffffff;">{{__('message.ConfirmationStatus')}}</a></div>--}}
 {{--                        <div class="text-left user_active_menu" style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);"><a class="text-left remove_underline" href="#" style="font-size: 20px;color: #000000;">{{__('message.ContactUs')}}</a></div>--}}
-{{--                        <div class="text-left" style="background-color: #00000000;height: 20px;margin-top: -15px;padding: 24px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;"> <a href="/Exhabition/" class="" target="_blank">--}}
+{{--                        <div class="text-left" style="background-color: #00000000;height: 20px;margin-top: -15px;padding: 24px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;"> <a href="/Exhibition/" class="" target="_blank">--}}
 {{--                            <button class="btn btn-block" type="button"--}}
 {{--                                    style="background-color: #149e5c;color: rgb(255,255,255);min-height: 54px;margin-right: 13px;font-size: 18px;text-decoration: none !important" >--}}
 {{--                               {{__('message.EnterExhabition')}}--}}
@@ -329,7 +329,7 @@
                             </li>
 
                             <li class="nav-item text-center mt-md-2">
-                                <a href="/Exhabition/" class="" target="_blank"><span class="btn btn-success btn-lg">Enter Exhibition</span></a>
+                                <a href="/Exhibition/" class="" target="_blank"><span class="btn btn-success btn-lg">Enter Exhibition</span></a>
                             </li>
                             <!-- /main -->
                         </ul>

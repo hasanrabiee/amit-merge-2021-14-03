@@ -241,7 +241,7 @@
                                 </li>
 
                                 <li class="nav-item text-center mt-md-2">
-                                    <a href="/Exhabition/" class="" target="_blank"><span class="btn btn-success btn-lg">Enter Exhibition</span></a>
+                                    <a href="/Exhibition/" class="" target="_blank"><span class="btn btn-success btn-lg">Enter Exhibition</span></a>
                                 </li>
                                 <!-- /main -->
                             </ul>

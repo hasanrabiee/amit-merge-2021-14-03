@@ -148,7 +148,7 @@
                                style="font-size: 20px;color: #ffffff;">{{__('message.ContactUs')}}</a></div>
                         <div class="text-left"
                              style="background-color: #00000000;height: 20px;margin-top: -15px;padding: 24px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;">
-                            <a href="/Exhabition/" class="" target="_blank">
+                            <a href="/Exhibition/" class="" target="_blank">
                                 <button class="btn btn-block" type="button"
                                         style="background-color: #149e5c;color: rgb(255,255,255);min-height: 54px;margin-right: 13px;font-size: 20px;">{{__('message.EnterExhabition')}}</button>
                             </a></div>
