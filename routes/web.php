@@ -44,11 +44,6 @@ Route::group(['middleware' => ['auth']] , function (){
 
 
 
-        Route::get('Auditorium','WebController@Auditorium')->name('Auditorium');
-        Route::get('AuditoriumPlay/{ID}','WebController@AuditoriumPlay')->name('AuditoriumPlay');
-        Route::get('Lounge','LoungeController@index')->name('Lounge');
-        Route::post('LoungeChat','LoungeController@Chat')->name('LoungeChat')->middleware(['auth']);
-
         Route::get('/', 'AdminController@index');
         Route::get('Auditorium', 'AdminController@Auditorium')->name('Auditorium');
         Route::get('AuditoriumExport', 'AdminController@AuditoriumExport')->name('AuditoriumExport');
@@ -213,6 +208,14 @@ Route::group(['middleware' => ['auth']] , function (){
         Route::get('ChangeChatStatus','ExhibitorOperatorController@ChangeChatStatus')->name('ChangeChatStatus');
 
     });
+
+
+
+    Route::get('Auditorium','WebController@Auditorium')->name('Auditorium');
+    Route::get('AuditoriumPlay/{ID}','WebController@AuditoriumPlay')->name('AuditoriumPlay');
+    Route::get('Lounge','LoungeController@index')->name('Lounge');
+    Route::post('LoungeChat','LoungeController@Chat')->name('LoungeChat')->middleware(['auth']);
+
 
 });
 
