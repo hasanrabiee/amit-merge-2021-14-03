@@ -346,7 +346,7 @@
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                     <div>
-                                                                                        <div class="modal fade" role="dialog" tabindex="-1" id="myModal">
+                                                                                        <div class="modal fade text-dark" role="dialog" tabindex="-1" id="myModal">
                                                                                             <div class="modal-dialog" role="document">
                                                                                                 <div class="modal-content">
                                                                                                     <div class="modal-header">
