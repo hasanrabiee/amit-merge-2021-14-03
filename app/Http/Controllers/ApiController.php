@@ -109,7 +109,7 @@ class ApiController extends Controller
     public function HallIsFull($HallName)
     {
 
-        $Booth = booth::where('Hall', $HallName)->count();
+        $Booth = booth::where('Hall', $HallName)->where('CompanyName', '<>', '')->count();
 
 
         \Log::info($Booth);
