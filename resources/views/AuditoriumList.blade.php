@@ -28,7 +28,7 @@
 
 
 
-                                @if(\Carbon\Carbon::now()->format('Y-m-d') == $item->Day && \Carbon\Carbon::now()->format('H:i') >=  \Carbon\Carbon::parse($item->Start)->format('H:i')  &&  \Carbon\Carbon::parse($item->End)->format('H:i') <= \Carbon\Carbon::now()->format('H:i') )
+                                @if(\Carbon\Carbon::now()->format('Y-m-d') == $item->Day && \Carbon\Carbon::now()->format('H:i') >=  \Carbon\Carbon::parse($item->Start)->format('H:i')  &&  \Carbon\Carbon::parse($item->End)->format('H:i') >= \Carbon\Carbon::now()->format('H:i') )
                                     <a class="btn btn-success btn-block" role="button"
                                        href="{{route('AuditoriumPlay',$item->id)  }}">Join</a>
                                 @else
