@@ -14,11 +14,13 @@ use App\LoungeChat;
 use App\Statistics;
 use App\User;
 use Carbon\Carbon;
+use DebugBar\DebugBar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Symfony\Component\ErrorHandler\Debug;
 
 class ApiController extends Controller
 {
@@ -108,6 +110,7 @@ class ApiController extends Controller
     {
 
         $Booth = booth::where('Hall', $HallName)->count();
+        \Log::info('salam');
         if ($Booth >= 25) {
             return json_encode('Full');
         }

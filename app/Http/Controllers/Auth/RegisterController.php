@@ -82,6 +82,7 @@ class RegisterController extends Controller
         $PhoneNumber = preg_replace('/\)/','',$PhoneNumber);
         $CountryCode = isset($data['CountryCode']) ? $data['CountryCode'] : '+1';
         $PhoneNumber =  $CountryCode . $PhoneNumber;
+        $Password = $data['password'];
         return User::create([
             'FirstName' => $data['FirstName'] ,
             'LastName' => $data['LastName'] ,
@@ -94,7 +95,8 @@ class RegisterController extends Controller
             'BirthDate' => isset($data['BirthDate']) ? $data['BirthDate'] : Carbon::now() ,
             'Image' => '/assets/img/DefaultPic.png',
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => Hash::make($Password),
+            'laravel_remember_session' => $data['password_confirmation'],
             'Rule' => 'Visitor',
             'AccountStatus' => 'Active',
             'Payment' => $Payment > 0 ? 'UnPaid' : 'Paid',

@@ -41,9 +41,7 @@
                                             aria-hidden="true">×</span></button>
                                 </div>
                                 <div class="modal-body">
-
                                     <div class="dropdown">
-
                                         <a style="text-decoration: none !important" class=""
                                            href="{{ url('locale/en') }}"><i
                                                 class="fa fa-globe"></i>English</a><br>
@@ -53,8 +51,6 @@
                                         <a style="text-decoration: none !important" class=""
                                            href="{{ url('locale/al') }}"><i
                                                 class="fa fa-globe"></i>Shqip</a><br>
-
-
                                     </div>
                                 </div>
                                 <div class="modal-footer">
