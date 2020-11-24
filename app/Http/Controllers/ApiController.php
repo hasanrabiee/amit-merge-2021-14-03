@@ -401,7 +401,7 @@ class ApiController extends Controller
                     $BoothAFinal[] = 1;
                 }
             }else{
-                $BoothAFinal[] = 2;
+                $BoothAFinal[] = $item;
             }
         }
         $BoothAFinal = array_values($BoothAFinal);
