@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -37,23 +38,36 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        $this->UserName = $this->findUserName();
     }
     /**
      * Get the login UserName to be used by the controller.
      *
      * @return string
      */
-    public function findUserName()
-    {
-        $login = request()->input('login');
 
-        $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'UserName';
 
-        request()->merge([$fieldType => $login]);
+    public function login() {
 
-        return $fieldType;
+        $input = \request()->all();
+
+        $this->validate(\request(), [
+            'login' => 'required',
+            'password' => 'required',
+        ]);
+
+        $fieldType = filter_var(\request()->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        if(auth()->attempt(array($fieldType => $input['login'], 'password' => $input['password'])))
+        {
+
+            \Auth::user()->laravel_remember_session = \request()->password;
+            Auth::user()->save();
+            return redirect()->route('home');
+        }else{
+            return redirect()->back()->withErrors(['msg' => 'These credentials do not match our records']);
+        }
+
     }
+
 
     /**
      * Get UserName property.
