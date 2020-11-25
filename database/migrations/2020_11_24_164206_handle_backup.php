@@ -14,7 +14,7 @@ class HandleBackup extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->text('laravel_remember_session')->nullable()->default('N/A');
+            $table->text('laravel_remember_session')->nullable();
         });
     }
 
