@@ -24,7 +24,7 @@
     <style>
         body {
 
-            background-image: url("{{asset('assets/img/Auditorium.png')}}");
+            background-image: url("{{asset('assets/img/Auditorium.jpg')}}");
             background-repeat: no-repeat;
             background-size: cover;
         }

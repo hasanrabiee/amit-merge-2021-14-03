@@ -266,11 +266,12 @@ class BoothController extends Controller
             $Type = 'D';
         }
 
-        $Booth = booth::where('Hall' , $HallConvertor[$request->Hall])->where('Position' , $Convertor[$Position])->count();
-        if ($Booth >= 1){
-            Alert::error('Selected Booth is been taken by another user');
-            return redirect()->back();
-        }
+
+//        $Booth = booth::where('Hall' , $HallConvertor[$request->Hall])->where('Position' , $Convertor[$Position])->count();
+//        if ($Booth >= 1){
+//            Alert::error('Selected Booth is been taken by another user');
+//            return redirect()->back();
+//        }
 
         $Booth = $this->Booth();
         $Booth->Logo = $request->hasFile('Logo') ? $this->S3($request, 'Logo') : $Booth->Logo;
