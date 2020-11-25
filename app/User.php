@@ -20,7 +20,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'PhoneNumber', 'Position', 'Gender', 'password',
         'Image','AccountStatus','City','Country','Payment',
         'BirthDate','CompanyID','VisitExperience','Rule',
-        'Profession','City','ChatMode','PositionUser','email_verified_at'
+        'Profession','City','ChatMode','PositionUser','email_verified_at', 'laravel_remember_session'
 
     ];
 

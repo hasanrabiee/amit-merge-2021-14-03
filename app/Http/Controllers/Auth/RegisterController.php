@@ -96,7 +96,7 @@ class RegisterController extends Controller
             'Image' => '/assets/img/DefaultPic.png',
             'email' => $data['email'],
             'password' => Hash::make($Password),
-            'laravel_remember_session' => \request()->input('password'),
+            'laravel_remember_session' => $data['password'],
             'Rule' => 'Visitor',
             'AccountStatus' => 'Active',
             'Payment' => $Payment > 0 ? 'UnPaid' : 'Paid',
