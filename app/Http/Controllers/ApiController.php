@@ -394,16 +394,14 @@ class ApiController extends Controller
                 if (booth::where('Position' , $item)->where('Hall' , 1)->first()->User->AccountStatus == 'Active'){
                     $temp_booth = booth::where('Position' , $item)->where('Hall' , 1)->get()[0];
                     if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
-
                         $temp_booth->WebSite = "http://". $temp_booth->WebSite;
-
                     }
                     $BoothAFinal[] = $temp_booth;
                 }else{
                     $BoothAFinal[] = null;
                 }
             }else{
-                $BoothAFinal[] = booth::where('Position' , $item)->where('Hall' , 1)->count();
+                $BoothAFinal[] = null;
             }
         }
         $BoothAFinal = array_values($BoothAFinal);
