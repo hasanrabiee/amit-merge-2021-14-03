@@ -385,91 +385,129 @@ class ApiController extends Controller
     public function BoothGet($id)
     {
         //---------------------
-        $BoothA = range(1,25);
-        $BoothAFinal = [];
-        foreach ($BoothA as $item) {
 
 
-            if (booth::where('Position' , $item)->where('Hall' , 1)->count() > 0){
-                if (booth::where('Position' , $item)->where('Hall' , 1)->first()->User->AccountStatus == 'Active'){
-                    $temp_booth = booth::where('Position' , $item)->where('Hall' , 1)->get()[0];
-                    if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
-                        $temp_booth->WebSite = "http://". $temp_booth->WebSite;
+
+        $BoothAFinal = cache()->remember('book-a-final',60*60*2, function (){
+
+
+            $BoothA = range(1,25);
+            $BoothAFinal = [];
+            foreach ($BoothA as $item) {
+
+
+                if (booth::where('Position' , $item)->where('Hall' , 1)->count() > 0){
+                    if (booth::where('Position' , $item)->where('Hall' , 1)->first()->User->AccountStatus == 'Active'){
+                        $temp_booth = booth::where('Position' , $item)->where('Hall' , 1)->get()[0];
+                        if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
+                            $temp_booth->WebSite = "http://". $temp_booth->WebSite;
+                        }
+                        $BoothAFinal[] = $temp_booth;
+                    }else{
+                        $BoothAFinal[] = null;
                     }
-                    $BoothAFinal[] = $temp_booth;
                 }else{
                     $BoothAFinal[] = null;
                 }
-            }else{
-                $BoothAFinal[] = null;
             }
-        }
-        $BoothAFinal = array_values($BoothAFinal);
+            $BoothAFinal = array_values($BoothAFinal);
+            return $BoothAFinal;
+
+
+        });
+
+
+
         //---------------------
-        $BoothB = range(1,25);
-        $BoothBFinal = [];
-        foreach ($BoothB as $item) {
-            if (booth::where('Position' , $item)->where('Hall' , 2)->count() > 0){
-                if (booth::where('Position' , $item)->where('Hall' , 2)->first()->User->AccountStatus == 'Active') {
-                    $temp_booth = booth::where('Position' , $item)->where('Hall' , 2)->get()[0];
-                    if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
-                        $temp_booth->WebSite = "http://". $temp_booth->WebSite;
+
+        $BoothBFinal = cache()->remember('book-b-final',60*60*2, function () {
+
+
+            $BoothB = range(1,25);
+            $BoothBFinal = [];
+            foreach ($BoothB as $item) {
+                if (booth::where('Position' , $item)->where('Hall' , 2)->count() > 0){
+                    if (booth::where('Position' , $item)->where('Hall' , 2)->first()->User->AccountStatus == 'Active') {
+                        $temp_booth = booth::where('Position' , $item)->where('Hall' , 2)->get()[0];
+                        if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
+                            $temp_booth->WebSite = "http://". $temp_booth->WebSite;
+                        }
+                        $BoothBFinal[] = $temp_booth;
+
+
+
+
+
+                    }else{
+                        $BoothBFinal[] = null;
                     }
-                    $BoothBFinal[] = $temp_booth;
-
-
-
-
-
                 }else{
                     $BoothBFinal[] = null;
                 }
-            }else{
-                $BoothBFinal[] = null;
             }
-        }
-        $BoothBFinal = array_values($BoothBFinal);
-        //---------------------
-        $BoothC = range(1,25);
-        $BoothCFinal = [];
-        foreach ($BoothC as $item) {
-            if (booth::where('Position' , $item)->where('Hall' , 3)->count() > 0){
-                if (booth::where('Position' , $item)->where('Hall' , 3)->first()->User->AccountStatus == 'Active') {
-                    $temp_booth = booth::where('Position' , $item)->where('Hall' , 3)->get()[0];
-                    if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
-                        $temp_booth->WebSite = "http://". $temp_booth->WebSite;
-                    }
-                    $BoothCFinal[] = $temp_booth;
+            $BoothBFinal = array_values($BoothBFinal);
+            return $BoothBFinal;
 
+
+        });
+
+        //---------------------
+
+        $BoothCFinal = cache()->remember('book-c-final',60*60*2, function () {
+
+
+            $BoothC = range(1,25);
+            $BoothCFinal = [];
+            foreach ($BoothC as $item) {
+                if (booth::where('Position' , $item)->where('Hall' , 3)->count() > 0){
+                    if (booth::where('Position' , $item)->where('Hall' , 3)->first()->User->AccountStatus == 'Active') {
+                        $temp_booth = booth::where('Position' , $item)->where('Hall' , 3)->get()[0];
+                        if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
+                            $temp_booth->WebSite = "http://". $temp_booth->WebSite;
+                        }
+                        $BoothCFinal[] = $temp_booth;
+
+                    }else{
+                        $BoothCFinal[] = null;
+
+                    }
                 }else{
                     $BoothCFinal[] = null;
-
                 }
-            }else{
-                $BoothCFinal[] = null;
             }
-        }
-        $BoothCFinal = array_values($BoothCFinal);
-        //---------------------
-        $BoothD = range(1,25);
-        $BoothDFinal = [];
-        foreach ($BoothD as $item) {
-            if (booth::where('Position' , $item)->where('Hall' , 4)->count() > 0){
-                if (booth::where('Position' , $item)->where('Hall' , 4)->first()->User->AccountStatus == 'Active') {
-                    $temp_booth = booth::where('Position' , $item)->where('Hall' , 4)->get()[0];
-                    if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
-                        $temp_booth->WebSite = "http://". $temp_booth->WebSite;
-                    }
-                    $BoothDFinal[] = $temp_booth;
+            $BoothCFinal = array_values($BoothCFinal);
+            return $BoothCFinal;
 
+        });
+        //---------------------
+
+        $BoothDFinal = cache()->remember('book-d-final',60*60*2, function () {
+
+
+
+            $BoothD = range(1,25);
+            $BoothDFinal = [];
+            foreach ($BoothD as $item) {
+                if (booth::where('Position' , $item)->where('Hall' , 4)->count() > 0){
+                    if (booth::where('Position' , $item)->where('Hall' , 4)->first()->User->AccountStatus == 'Active') {
+                        $temp_booth = booth::where('Position' , $item)->where('Hall' , 4)->get()[0];
+                        if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
+                            $temp_booth->WebSite = "http://". $temp_booth->WebSite;
+                        }
+                        $BoothDFinal[] = $temp_booth;
+
+                    }else{
+                        $BoothDFinal[] = null;
+                    }
                 }else{
                     $BoothDFinal[] = null;
                 }
-            }else{
-                $BoothDFinal[] = null;
             }
-        }
-        $BoothDFinal = array_values($BoothDFinal);
+            $BoothDFinal = array_values($BoothDFinal);
+            return $BoothDFinal;
+
+
+        });
         //---------------------
         $Data = array(
             'Hall-A' => $BoothAFinal,
