@@ -47,18 +47,25 @@ class VisitorController extends Controller
     public function leave_meeting(Request $request){
 
 
-        $meeting_id = $request->meeting_id;
+        if(Auth::user()->Rule == 'Exhibitor'){
 
-        $meeting = Meeting::find($meeting_id);
+            $meeting_id = $request->meeting_id;
 
-
-
-        Zoom::meeting()->find($meeting_id)->endMeeting();
-        Zoom::meeting()->find($meeting_id)->delete();
-
-        $meeting->delete();
+            $meeting = Meeting::find($meeting_id);
 
 
+
+            Zoom::meeting()->find($meeting_id)->endMeeting();
+            Zoom::meeting()->find($meeting_id)->delete();
+
+            $meeting->delete();
+
+
+            Alert::success('You left the meeting and, Meeting Has ended for everyone');
+
+        }
+
+        Alert::success('You left the meeting successfully');
 
         return redirect()->back();
 
