@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e5d899c48842942e6c55ed1943d33479",
+    "content-hash": "b0100c04084cce4795a1de8eef01b79c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -142,6 +142,80 @@
                 "sdk"
             ],
             "time": "2020-10-01T18:41:53+00:00"
+        },
+        {
+            "name": "aws/aws-sdk-php-laravel",
+            "version": "3.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aws/aws-sdk-php-laravel.git",
+                "reference": "49bc5d90b1ebfb107d0b650fd49b41b241425a36"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php-laravel/zipball/49bc5d90b1ebfb107d0b650fd49b41b241425a36",
+                "reference": "49bc5d90b1ebfb107d0b650fd49b41b241425a36",
+                "shasum": ""
+            },
+            "require": {
+                "aws/aws-sdk-php": "~3.0",
+                "illuminate/support": "^5.1 || ^6.0 || ^7.0 || ^8.0",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0 || ^5.0",
+                "vlucas/phpdotenv": "^1.0 || ^2.0 || ^3.0 || ^4.0 || ^5.0"
+            },
+            "suggest": {
+                "laravel/framework": "To test the Laravel bindings",
+                "laravel/lumen-framework": "To test the Lumen bindings"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Aws\\Laravel\\AwsServiceProvider"
+                    ],
+                    "aliases": {
+                        "AWS": "Aws\\Laravel\\AwsFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Aws\\Laravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Amazon Web Services",
+                    "homepage": "http://aws.amazon.com"
+                }
+            ],
+            "description": "A simple Laravel 5/6/7/8 service provider for including the AWS SDK for PHP.",
+            "homepage": "http://aws.amazon.com/sdkforphp2",
+            "keywords": [
+                "amazon",
+                "aws",
+                "dynamodb",
+                "ec2",
+                "laravel",
+                "laravel 5",
+                "laravel 6",
+                "laravel 7",
+                "laravel 8",
+                "s3",
+                "sdk"
+            ],
+            "support": {
+                "issues": "https://github.com/aws/aws-sdk-php-laravel/issues",
+                "source": "https://github.com/aws/aws-sdk-php-laravel/tree/3.6.0"
+            },
+            "time": "2020-09-14T17:33:55+00:00"
         },
         {
             "name": "biscolab/laravel-recaptcha",
@@ -679,6 +753,60 @@
                 "trusted proxy"
             ],
             "time": "2020-06-23T01:36:47+00:00"
+        },
+        {
+            "name": "firebase/php-jwt",
+            "version": "v5.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/firebase/php-jwt.git",
+                "reference": "feb0e820b8436873675fd3aca04f3728eb2185cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/feb0e820b8436873675fd3aca04f3728eb2185cb",
+                "reference": "feb0e820b8436873675fd3aca04f3728eb2185cb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=4.8 <=9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Firebase\\JWT\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Neuman Vong",
+                    "email": "neuman+pear@twilio.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anant Narayanan",
+                    "email": "anant@php.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
+            "homepage": "https://github.com/firebase/php-jwt",
+            "keywords": [
+                "jwt",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/firebase/php-jwt/issues",
+                "source": "https://github.com/firebase/php-jwt/tree/master"
+            },
+            "time": "2020-03-25T18:49:23+00:00"
         },
         {
             "name": "fruitcake/laravel-cors",
@@ -1541,6 +1669,76 @@
             "time": "2020-10-18T11:50:25+00:00"
         },
         {
+            "name": "league/oauth2-client",
+            "version": "2.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/oauth2-client.git",
+                "reference": "badb01e62383430706433191b82506b6df24ad98"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/oauth2-client/zipball/badb01e62383430706433191b82506b6df24ad98",
+                "reference": "badb01e62383430706433191b82506b6df24ad98",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.0 || ^7.0",
+                "paragonie/random_compat": "^1 || ^2 || ^9.99",
+                "php": "^5.6 || ^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.3",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
+                "phpunit/phpunit": "^5.7 || ^6.0 || ^9.3",
+                "squizlabs/php_codesniffer": "^2.3 || ^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-2.x": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\OAuth2\\Client\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Bilbie",
+                    "email": "hello@alexbilbie.com",
+                    "homepage": "http://www.alexbilbie.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Woody Gilk",
+                    "homepage": "https://github.com/shadowhand",
+                    "role": "Contributor"
+                }
+            ],
+            "description": "OAuth 2.0 Client Library",
+            "keywords": [
+                "Authentication",
+                "SSO",
+                "authorization",
+                "identity",
+                "idp",
+                "oauth",
+                "oauth2",
+                "single sign on"
+            ],
+            "support": {
+                "issues": "https://github.com/thephpleague/oauth2-client/issues",
+                "source": "https://github.com/thephpleague/oauth2-client/tree/2.6.0"
+            },
+            "time": "2020-10-28T02:03:40+00:00"
+        },
+        {
             "name": "maatwebsite/excel",
             "version": "3.1.23",
             "source": {
@@ -1613,6 +1811,215 @@
                 }
             ],
             "time": "2020-09-29T07:30:12+00:00"
+        },
+        {
+            "name": "macsidigital/laravel-api-client",
+            "version": "3.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MacsiDigital/laravel-api-client.git",
+                "reference": "ec2450072ce05c80cf8d7518e1b1b478fde9e697"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MacsiDigital/laravel-api-client/zipball/ec2450072ce05c80cf8d7518e1b1b478fde9e697",
+                "reference": "ec2450072ce05c80cf8d7518e1b1b478fde9e697",
+                "shasum": ""
+            },
+            "require": {
+                "firebase/php-jwt": "^5.0",
+                "guzzlehttp/guzzle": "~7.0|~6.0|~5.0|~4.0",
+                "illuminate/support": "^7.0|^8.0|^9.0",
+                "macsidigital/laravel-oauth2-client": "^1.2",
+                "nesbot/carbon": "^1.26.3 || ^2.0",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "orchestra/testbench": "^4.0|^5.0|^6.0",
+                "phpunit/phpunit": "^8.0|^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MacsiDigital\\API\\Providers\\APIServiceProvider"
+                    ],
+                    "aliases": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MacsiDigital\\API\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Colin Hall",
+                    "email": "colin@macsi.co.uk"
+                }
+            ],
+            "description": "Laravel API Client Builder package",
+            "homepage": "https://github.com/macsidigital/laravel-api-client",
+            "keywords": [
+                "laravel-api-client",
+                "macsidigital"
+            ],
+            "support": {
+                "issues": "https://github.com/MacsiDigital/laravel-api-client/issues",
+                "source": "https://github.com/MacsiDigital/laravel-api-client/tree/3.3.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/MacsiDigital",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-01-16T10:11:01+00:00"
+        },
+        {
+            "name": "macsidigital/laravel-oauth2-client",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MacsiDigital/laravel-oauth2-client.git",
+                "reference": "bcaba6b76d4e91c6dd79ebab857b4cc960bd1b09"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MacsiDigital/laravel-oauth2-client/zipball/bcaba6b76d4e91c6dd79ebab857b4cc960bd1b09",
+                "reference": "bcaba6b76d4e91c6dd79ebab857b4cc960bd1b09",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^7.0|^8.0",
+                "league/oauth2-client": "^2.0",
+                "nesbot/carbon": "^1.26.3 || ^2.0",
+                "php": "^7.2|^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "orchestra/testbench": "^5.0|^6.0",
+                "phpunit/phpunit": "^8.0|^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MacsiDigital\\OAuth2\\Providers\\OAuth2ServiceProvider"
+                    ],
+                    "aliases": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MacsiDigital\\OAuth2\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Colin Hall",
+                    "email": "colin@macsi.co.uk"
+                }
+            ],
+            "description": "Laravel OAuth2 Client",
+            "homepage": "https://github.com/macsidigital/laravel-oauth2-client",
+            "keywords": [
+                "laravel-oauth2-client",
+                "macsidigital"
+            ],
+            "support": {
+                "issues": "https://github.com/MacsiDigital/laravel-oauth2-client/issues",
+                "source": "https://github.com/MacsiDigital/laravel-oauth2-client/tree/1.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/MacsiDigital",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-01-05T14:25:17+00:00"
+        },
+        {
+            "name": "macsidigital/laravel-zoom",
+            "version": "4.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MacsiDigital/laravel-zoom.git",
+                "reference": "f7aade91f26b3acded04c34bd94314ee561f67ab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MacsiDigital/laravel-zoom/zipball/f7aade91f26b3acded04c34bd94314ee561f67ab",
+                "reference": "f7aade91f26b3acded04c34bd94314ee561f67ab",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^7.0|^8.0",
+                "macsidigital/laravel-api-client": "^3.3",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "orchestra/testbench": "^5.0|^6.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MacsiDigital\\Zoom\\Providers\\ZoomServiceProvider"
+                    ],
+                    "aliases": {
+                        "Zoom": "MacsiDigital\\Zoom\\Facades\\Zoom"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MacsiDigital\\Zoom\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Colin Hall",
+                    "email": "colin@macsi.co.uk",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel Zoom package",
+            "homepage": "https://github.com/MacsiDigital/laravel-zoom",
+            "keywords": [
+                "api",
+                "client",
+                "laravel",
+                "laravel-zoom",
+                "macsidigital",
+                "zoom"
+            ],
+            "support": {
+                "issues": "https://github.com/MacsiDigital/laravel-zoom/issues",
+                "source": "https://github.com/MacsiDigital/laravel-zoom/tree/4.1.5"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/MacsiDigital",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-01-06T11:45:46+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
@@ -3246,6 +3653,67 @@
                 }
             ],
             "time": "2020-09-09T15:24:03+00:00"
+        },
+        {
+            "name": "renatomarinho/laravel-page-speed",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/renatomarinho/laravel-page-speed.git",
+                "reference": "5c807f04831a6ab99fd089c9b83fb3b5a9472d9b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/renatomarinho/laravel-page-speed/zipball/5c807f04831a6ab99fd089c9b83fb3b5a9472d9b",
+                "reference": "5c807f04831a6ab99fd089c9b83fb3b5a9472d9b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^6.0 || ^7.0 || ^8.0",
+                "php": "^7.2.5 || ^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.3.3",
+                "orchestra/testbench": "^4.0 || ^5.0 || ^6.0",
+                "phpunit/phpunit": "^8.5 || ^9.0",
+                "squizlabs/php_codesniffer": "^3.4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RenatoMarinho\\LaravelPageSpeed\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RenatoMarinho\\LaravelPageSpeed\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Renato Marinho",
+                    "email": "renato.marinho@s2move.com"
+                }
+            ],
+            "description": "Laravel Page Speed",
+            "keywords": [
+                "html",
+                "laravel",
+                "minify",
+                "optimize",
+                "page speed"
+            ],
+            "support": {
+                "issues": "https://github.com/renatomarinho/laravel-page-speed/issues",
+                "source": "https://github.com/renatomarinho/laravel-page-speed/tree/2.0.0"
+            },
+            "time": "2021-01-15T21:21:00+00:00"
         },
         {
             "name": "spatie/db-dumper",
@@ -5871,76 +6339,6 @@
         }
     ],
     "packages-dev": [
-        {
-            "name": "aws/aws-sdk-php-laravel",
-            "version": "3.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/aws/aws-sdk-php-laravel.git",
-                "reference": "49bc5d90b1ebfb107d0b650fd49b41b241425a36"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php-laravel/zipball/49bc5d90b1ebfb107d0b650fd49b41b241425a36",
-                "reference": "49bc5d90b1ebfb107d0b650fd49b41b241425a36",
-                "shasum": ""
-            },
-            "require": {
-                "aws/aws-sdk-php": "~3.0",
-                "illuminate/support": "^5.1 || ^6.0 || ^7.0 || ^8.0",
-                "php": ">=5.5.9"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.0 || ^5.0",
-                "vlucas/phpdotenv": "^1.0 || ^2.0 || ^3.0 || ^4.0 || ^5.0"
-            },
-            "suggest": {
-                "laravel/framework": "To test the Laravel bindings",
-                "laravel/lumen-framework": "To test the Lumen bindings"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Aws\\Laravel\\AwsServiceProvider"
-                    ],
-                    "aliases": {
-                        "AWS": "Aws\\Laravel\\AwsFacade"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Aws\\Laravel\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Amazon Web Services",
-                    "homepage": "http://aws.amazon.com"
-                }
-            ],
-            "description": "A simple Laravel 5/6/7/8 service provider for including the AWS SDK for PHP.",
-            "homepage": "http://aws.amazon.com/sdkforphp2",
-            "keywords": [
-                "amazon",
-                "aws",
-                "dynamodb",
-                "ec2",
-                "laravel",
-                "laravel 5",
-                "laravel 6",
-                "laravel 7",
-                "laravel 8",
-                "s3",
-                "sdk"
-            ],
-            "time": "2020-09-14T17:33:55+00:00"
-        },
         {
             "name": "barryvdh/laravel-debugbar",
             "version": "v3.4.1",
@@ -9235,5 +9633,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }

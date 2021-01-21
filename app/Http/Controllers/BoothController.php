@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use MacsiDigital\Zoom\Facades\Zoom;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class BoothController extends Controller
@@ -290,8 +291,27 @@ class BoothController extends Controller
         } elseif ($request->Mode == 'Finish') {
             $Booth->Status = 'Active';
             $Booth->save();
+
+
+
+            Zoom::user()->create([
+                'first_name' => $Booth->CompanyName . '_company',
+                'last_name' => $Booth->CompanyName . '_company',
+                'email' => Auth::user()->email,
+                'password' => '1234@qwe'
+            ]);
+
+
+
+
+
             return redirect()->route('Exhibitor.index');
         }
+
+
+
+
+
     }
 
 

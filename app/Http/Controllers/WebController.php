@@ -44,15 +44,15 @@ class WebController extends Controller
     public function Install()
     {
         User::create([
-            'FirstName' => 'Hosein',
-            'LastName' => 'Normohamadi',
+            'FirstName' => 'admin',
+            'LastName' => 'admin',
             'UserName' => 'Admin',
-            'PhoneNumber' => '09301040145',
+            'PhoneNumber' => '111111111111',
             'Gender' => 'Male',
             'Rule' => 'Admin',
             'Image' => 'assets/img/NoPic.png',
-            'email' => 'admin@system.com',
-            'password' => Hash::make('12345678'),
+            'email' => 'admin@admin.com',
+            'password' => Hash::make('admin'),
             'City' => 'Mellborn',
             'Country' => 'USA',
             'Payment' => 'Paid',
@@ -67,8 +67,8 @@ class WebController extends Controller
 
 
         Site::create([
-            'Name' => 'Amitis',
-            'Description' => 'Amitis',
+            'Name' => 'Amitiss',
+            'Description' => 'Amitiss',
             'Logo1' => '1'
         ]);
 

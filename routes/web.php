@@ -1,6 +1,12 @@
 <?php
 
 use App\Lounge;
+use App\MeetingRequest;
+use App\Site;
+use App\User;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -155,10 +161,20 @@ Route::group(['middleware' => ['auth']] , function (){
         Route::get('ChatGet', 'VisitorController@ChatGet')->name('ChatGet');
 
 
+        Route::get('/MeetingSchedule/{company_id?}', "VisitorController@MeetingScheduleIndex")->name('visitor-meetingSchedule');
+
+        Route::get('/Meetings', 'VisitorController@MeetingsIndex' )->name('visitor-meetings');
+
+
+        Route::get('join-meeting/{meeting}', 'VisitorController@join_meeting')->name('meeting.join');
+        Route::get('leave-meeting', 'VisitorController@leave_meeting')->name('meeting.leave');
 
 
 
     });
+
+
+
     Route::group(['prefix' => 'Exhibitor', 'as' => 'Exhibitor.','middleware' => ['Exhibitor']], function () {
         Route::get('/', 'ExhibitorController@index')->name('index');
         Route::get('/index', 'ExhibitorController@index')->name('index');
@@ -188,7 +204,32 @@ Route::group(['middleware' => ['auth']] , function (){
 
 
 
+        Route::get('/MeetingSchedule', 'ExhibitorController@MeetingScheduleIndex')->name('MeetingSchedule');
+        Route::get('/MeetingActivateTime/{day?}/{time?}', 'ExhibitorController@MeetingActivateTime')->name('MeetingActivateTime');
+        Route::get('/MeetingDeActivate/{day?}/{time?}', 'ExhibitorController@MeetingDeActivateTime')->name('MeetingDeActivateTime');
+        Route::get('/Meeting/RejectUser/{meeting_id?}', 'ExhibitorController@RejectMeeting')->name('MeetingReject');
+        Route::get('/Meeting/AcceptUser/{meeting_id?}', 'ExhibitorController@MeetingAccept')->name('MeetingAccept');
+
+
+
+
+        Route::get('/AddConference', 'ExhibitorController@AddConferenceIndex')->name('AddConference');
+
+
+
+        Route::get('join-meeting/{meeting}', 'ExhibitorController@join_meeting')->name('meeting.join');
+        Route::get('leave-meeting', 'ExhibitorController@leave_meeting')->name('meeting.leave');
+
+
+
+
     });
+
+
+
+
+
+
     Route::group(['prefix' => 'ExhibitorOperator', 'as' => 'ExhibitorOperator.','middleware' => ['ExhibitorOperator']], function () {
         Route::get('/', 'ExhibitorOperatorController@index')->name('index');
         Route::get('/index', 'ExhibitorOperatorController@index')->name('index');

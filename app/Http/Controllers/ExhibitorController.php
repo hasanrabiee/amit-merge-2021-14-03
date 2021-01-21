@@ -8,21 +8,335 @@ use App\Chat;
 use App\Invitation;
 use App\Jobs;
 use App\Mail\InviteOperators;
+use App\Meeting;
+use App\MeetingRequest;
 use App\Site;
 use App\Statistics;
 use App\Traits\Uploader;
 use App\User;
 use Aws\S3\S3Client;
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
+use Carbon\CarbonInterval;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use MacsiDigital\Zoom\Facades\Zoom;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ExhibitorController extends Controller
 {
     use  Uploader;
+
+
+    public function MeetingScheduleIndex(Request $request)
+    {
+        $meeting_email = Auth::user()->email;
+
+
+
+        if(Zoom::user()->find($meeting_email) == null || Zoom::user()->find($meeting_email)->status != 'active'){
+
+
+            Alert::success('Confirm your Zoom Account', "Check your inbox at '$meeting_email' and comeback after confirmation");
+            return redirect()->back();
+
+
+        }
+
+        $StartDate = Site::find(1)->StartDate;
+        $Days = [];
+        for ($i = 0; $i < 10; $i++) {
+            $Days[] = Carbon::parse($StartDate)->format('Y-m-d');
+            $StartDate = Carbon::parse($StartDate)->addDay();
+        }
+
+
+        $intervals = CarbonInterval::minutes(30)->toPeriod('09:00', '17:00');
+        $times = [];
+        foreach ($intervals as $date) {
+            $times[] = $date->format('H:i');
+        }
+
+        $visitor = null;
+        if($request->visitor){
+
+            $visitor = User::where('id', $request->visitor)->first();
+//            $visitor = User::where('id', $request->visitor)->where('Rule', 'Visitor')->first();
+
+
+        }
+
+
+
+        $meeting_requests = MeetingRequest::where('exhibitor_id', Auth::user()->id)
+            ->whereDate( 'request_time', $request->Day )
+            ->get();
+
+
+
+
+
+
+
+        return view('Exhibitor.MeetingSchedule')->with([
+            'Days' => $Days,
+            'times' => $times,
+            'visitor' => $visitor,
+            'meeting_requests' => $meeting_requests
+            ]);
+    }
+
+
+    public function RejectMeeting($meeting_id) {
+
+
+
+        $meet_req = MeetingRequest::where('id', $meeting_id)->where('exhibitor_id', Auth::user()->id)->first();
+
+
+        if ($meet_req->status == 'accepted') {
+
+            $tmp = Meeting::where('reserved_by', $meet_req->user_id)
+                ->whereDate( 'start_time', Carbon::parse($meet_req->request_time)->toDateString() )
+                ->whereTime( 'start_time', Carbon::parse($meet_req->request_time)->toTimeString() )->first();
+
+            $tmp->reserved = false;
+            $tmp->save();
+
+
+        }
+
+
+        $meet_req->status = "rejected";
+        $meet_req->save();
+
+
+
+        Alert::success('User Meeting Request Rejected Successfully');
+        return redirect()->back();
+
+
+    }
+
+
+    public function join_meeting($meeting) {
+
+
+        $meeting = MeetingRequest::where('id',$meeting)->first();
+
+
+        $meeting_exhibitor = Meeting::where('owner_id', Auth::user()->id)
+            ->whereDate('start_time', Carbon::parse($meeting->request_time)->toDateString())
+            ->whereTime('start_time', Carbon::parse($meeting->request_time)->toTimeString())
+            ->first();
+
+
+
+
+
+
+        $meeting_exhibitor->is_started = true;
+        $meeting_exhibitor->save();
+
+
+        $role = 0;
+
+        return view('zoom.start')->with([
+
+            'role' => $role,
+            'meeting' => $meeting_exhibitor
+        ]);
+
+
+
+    }
+
+   public function MeetingAccept($meeting_id) {
+
+
+
+        $meet_req = MeetingRequest::where('id', $meeting_id)->where('exhibitor_id', Auth::user()->id)->first();
+        $meet_req->status = "accepted";
+        $meet_req->save();
+
+
+
+        $temp1 = Meeting::where('owner_id', Auth::user()->id)->whereDate('start_time', '=' , Carbon::parse($meet_req->request_time)->toDateTime())->whereTime('start_time', '=' , Carbon::parse($meet_req->request_time)->toTimeString())->first();
+        $temp1->reserved = true;
+        $temp1->reserved_by = $meet_req->user_id;
+
+
+       $meeting = Zoom::meeting()->make([
+           'topic' => $temp1->title,
+           'type' => 2,
+           'start_time' => Carbon::now(), // best to use a Carbon instance here.
+           'timezone' => 'Asia/Tehran', // best to use a Carbon instance here.
+       ]);
+
+       $meeting->settings()->make([
+           'join_before_host' => false,
+           'approval_type' => 0,
+           'enforce_login' => false,
+           'waiting_room' => false,
+       ]);
+
+       Zoom::user()->find(Auth::user()->email)->meetings()->save($meeting);
+
+
+       $temp1->password = '123456';
+       $temp1->meeting_id = $meeting->id;
+       $temp1->is_finished = false;
+       $temp1->is_started = false;
+       $temp1->is_active = false;
+       $temp1->type = 'meeting';
+       $temp1->save();
+
+
+
+
+
+
+
+
+
+
+
+        Alert::success('User Meeting Request Accepted Successfully');
+        return redirect()->back();
+
+
+    }
+
+    public function MeetingActivateTime($day, $time) {
+
+
+
+        $intervals = CarbonInterval::minutes(30)->toPeriod('09:00', '17:00');
+        $times = [];
+        foreach ($intervals as $date) {
+            $times[] = $date->format('H:i');
+        }
+
+        if(!in_array($time, $times)){
+
+
+            Alert::error('Illegal Time');
+            return redirect()->back();
+
+        }
+
+        $date = Carbon::parse($day . ' ' . $time)->format('Y-m-d H:i:s');
+
+        $meeting_exists = Meeting::where('owner_id', Auth::user()->id)->where('start_time', $date)->first();
+
+        if($meeting_exists != null){
+
+            Alert::error('Meeting Already Exists');
+            return redirect()->back();
+
+        }
+
+
+
+        $meeting = new Meeting();
+
+
+        $meeting->start_time = $date;
+        $meeting->owner_id = Auth::user()->id;
+        $meeting->title = "Meeting with " . Auth::user()->FirstName . ' ' . Auth::user()->LastName;
+        $meeting->password = uniqid('password_');
+        $meeting->meeting_id = '1111111';
+        $meeting->is_finished = false;
+        $meeting->is_started = false;
+        $meeting->is_active = false;
+
+        $meeting->save();
+
+
+
+        Alert::success('Meeting Activated');
+
+        return redirect()->back();
+
+
+
+
+
+
+    }
+
+
+    public function MeetingDeActivateTime($day, $time) {
+
+
+        $intervals = CarbonInterval::minutes(30)->toPeriod('09:00', '17:00');
+        $times = [];
+        foreach ($intervals as $date) {
+            $times[] = $date->format('H:i');
+        }
+
+        if(!in_array($time, $times)){
+
+
+            Alert::error('Illegal Time');
+            return redirect()->back();
+
+        }
+
+        $date = Carbon::parse($day . ' ' . $time)->format('Y-m-d H:i:s');
+
+        $meeting_exists = Meeting::where('owner_id', Auth::user()->id)->where('start_time', $date)->first();
+
+        if(!$meeting_exists->id){
+
+            Alert::error('Meeting Does not to deactivate');
+            return redirect()->back();
+
+        }
+
+
+        $meeting_exists->delete();
+
+        Alert::success('Meeting Deactivated Successfully');
+        return redirect()->back();
+
+
+
+        $meeting = new Meeting();
+
+
+        $meeting->start_time = $date;
+        $meeting->owner_id = Auth::user()->id;
+        $meeting->title = "Meeting with " . Auth::user()->FirstName . ' ' . Auth::user()->LastName;
+        $meeting->password = uniqid('password_');
+        $meeting->meeting_id = '1111111';
+        $meeting->is_finished = false;
+        $meeting->is_started = false;
+        $meeting->is_active = false;
+
+        $meeting->save();
+        dd(1);
+
+
+
+
+
+
+
+    }
+
+    public function AddConferenceIndex(Request $request)
+    {
+
+        return view('Exhibitor.AddConference');
+
+
+    }
+
 
     public function __construct()
     {
@@ -77,7 +391,8 @@ class ExhibitorController extends Controller
     }
 
 
-    public function ChangeChatStatus(Request $request){
+    public function ChangeChatStatus(Request $request)
+    {
         if ($request->BoothID && $request->UserID) {
             $CHatsssss = Chat::where('BoothID', $request->BoothID)->where('UserID', $request->UserID)->get();
             foreach ($CHatsssss as $ch) {
@@ -86,17 +401,18 @@ class ExhibitorController extends Controller
             }
             return response()->json([
                 'msg' => 'Done'
-            ],200);
-        }else{
+            ], 200);
+        } else {
             return response()->json([
                 'msg' => 'Error'
-            ],200);
+            ], 200);
 
         }
 
     }
 
-    public function UpdateJob(Request $request){
+    public function UpdateJob(Request $request)
+    {
 
 
         $request->validate([
@@ -252,31 +568,28 @@ class ExhibitorController extends Controller
         if ($request->ajax()) {
             // prepare users
 
-            if ($request->SearchTerm){
+            if ($request->SearchTerm) {
 
                 $UniqueUser = array();
-                $Chats = Chat::where('BoothID', $Booth->id)->where('Sender', 'Visitor')->where('UserName','LIKE','%'.$request->SearchTerm.'%')->get();
+                $Chats = Chat::where('BoothID', $Booth->id)->where('Sender', 'Visitor')->where('UserName', 'LIKE', '%' . $request->SearchTerm . '%')->get();
                 foreach ($Chats as $obj) {
                     $UniqueUser[$obj->UserID] = $obj->UserID;
                 }
-                $Users = User::whereIn('id',$UniqueUser)->paginate(10);
+                $Users = User::whereIn('id', $UniqueUser)->paginate(10);
 
 
-            }
-
-            else{
+            } else {
                 $UniqueUser = array();
                 $Chats = Chat::where('BoothID', $Booth->id)->where('Sender', 'Visitor')->get();
                 foreach ($Chats as $obj) {
                     $UniqueUser[$obj->UserID] = $obj->UserID;
                 }
-                $Users = User::whereIn('id',$UniqueUser)->paginate(10);
+                $Users = User::whereIn('id', $UniqueUser)->paginate(10);
 
             }
 
 
-
-            $users_list_view = view('Exhibitor.user-list-data', compact('Users' , 'Booth'))->render();
+            $users_list_view = view('Exhibitor.user-list-data', compact('Users', 'Booth'))->render();
 
 
             // end prepare users
@@ -287,15 +600,13 @@ class ExhibitorController extends Controller
         }
 
 
-
-
         if (Auth::user()->ChatMode == 'Available') {
             $UniqueUser = array();
             $Chats = Chat::where('BoothID', $Booth->id)->where('Sender', 'Visitor')->get();
             foreach ($Chats as $obj) {
                 $UniqueUser[$obj->UserID] = $obj->UserID;
             }
-            $Users = User::whereIn('id',$UniqueUser)->paginate(10);
+            $Users = User::whereIn('id', $UniqueUser)->paginate(10);
 
         }
 
@@ -349,7 +660,7 @@ class ExhibitorController extends Controller
 
             if ($UserName->count() <= 0) {
                 return redirect()->back();
-            }else{
+            } else {
                 return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $UserName]);
 
             }
@@ -367,14 +678,10 @@ class ExhibitorController extends Controller
         }
 
 
-
-
-
         if (\request()->UserID) {
             $User = User::find(\request()->UserID);
             return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $Users, 'User' => $User]);
         }
-
 
 
         return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $Users]);
@@ -485,4 +792,6 @@ class ExhibitorController extends Controller
 
         return redirect()->back();
     }
+
+
 }

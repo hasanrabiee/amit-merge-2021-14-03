@@ -23,13 +23,14 @@ $factory->define(User::class, function (Faker $faker) {
         'FirstName' => $faker->firstName,
         'LastName' => $faker->lastName,
         'Username' => $faker->userName,
-        'PhoneNumber' => '09301040145',
+        'PhoneNumber' => '11111111111111111',
         'Rule' => 'Visitor',
         'City' => $faker->city,
         'Country' => $faker->country,
         'Gender' => 'Male',
         'Image' => 'assets/img/NoPic.png',
+        'email_verified_at' => \Carbon\Carbon::now(),
         'email' => $faker->email,
-        'password' => Hash::make('12345678'),
+        'password' => Hash::make('1234@qwe'),
     ];
 });
