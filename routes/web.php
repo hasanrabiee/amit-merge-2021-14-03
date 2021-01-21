@@ -44,7 +44,7 @@ Route::get('/', 'WebController@index')->middleware('auth')->name('home');
 Route::get('Job/{BoothID}', 'WebController@Jobs')->name('Jobs');
 Route::get('/Install', 'WebController@Install');
 
-Route::get('leave-meeting', 'ExhibitorController@leave_meeting')->name('meeting.leave');
+Route::get('/leave-meeting', 'ExhibitorController@leave_meeting')->name('meeting.leave');
 
 
 Route::group(['middleware' => ['auth']] , function (){
