@@ -44,6 +44,8 @@ Route::get('/', 'WebController@index')->middleware('auth')->name('home');
 Route::get('Job/{BoothID}', 'WebController@Jobs')->name('Jobs');
 Route::get('/Install', 'WebController@Install');
 
+Route::get('leave-meeting', 'ExhibitorController@leave_meeting')->name('meeting.leave');
+
 
 Route::group(['middleware' => ['auth']] , function (){
     Route::group(['prefix' => 'Admin', 'as' => 'Admin.' , 'middleware' => ['Admin']], function () {
@@ -218,7 +220,6 @@ Route::group(['middleware' => ['auth']] , function (){
 
 
         Route::get('join-meeting/{meeting}', 'ExhibitorController@join_meeting')->name('meeting.join');
-        Route::get('leave-meeting', 'ExhibitorController@leave_meeting')->name('meeting.leave');
 
 
 

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use MacsiDigital\Zoom\Facades\Zoom;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class VisitorController extends Controller
@@ -43,7 +44,27 @@ class VisitorController extends Controller
     }
 
 
-    public function leave_meeting(){
+    public function leave_meeting(Request $request){
+
+
+        $meeting_id = $request->meeting_id;
+
+        $meeting = Meeting::find($meeting_id);
+
+
+
+        Zoom::meeting()->find($meeting_id)->endMeeting();
+        Zoom::meeting()->find($meeting_id)->delete();
+
+        $meeting->delete();
+
+
+
+        return redirect()->back();
+
+
+
+
 
 
     }
