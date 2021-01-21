@@ -145,7 +145,7 @@ class ExhibitorController extends Controller
 
         $role = 0;
 
-        return view('zoom.start')->with([
+        return view('Zoom.start')->with([
 
             'role' => $role,
             'meeting' => $meeting_exhibitor
