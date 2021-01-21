@@ -14,7 +14,7 @@
 
 
 <input type="hidden" id="role" value="{{ $role }}">
-<input type="hidden" id="user_name" value="{{ \Illuminate\Support\Facades\Auth::User()->name }}">
+<input type="hidden" id="user_name" value="{{ \Illuminate\Support\Facades\Auth::User()->UserName }}">
 <input type="hidden" id="meeting_id" value="{{$meeting->meeting_id}}">
 <input type="hidden" id="meeting_password" value="{{\App\Meeting::where('meeting_id', $meeting->meeting_id)->first()->password}}">
 <input type="hidden" id="zoom_api_key" value="{{env('ZOOM_CLIENT_KEY')}}">
@@ -69,7 +69,7 @@
                 ZoomMtg.join(
                     {
                         meetingNumber: meeting_id.value,
-                        userName: '{{\Illuminate\Support\Facades\Auth::User()->name}}',
+                        userName: '{{\Illuminate\Support\Facades\Auth::User()->UserName}}',
                         signature: signature,
                         apiKey: zoom_api_key.value,
                         passWord: meeting_password.value,
