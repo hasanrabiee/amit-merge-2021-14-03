@@ -35,7 +35,7 @@ class VisitorController extends Controller
             return redirect()->back();
         }
 
-        $role = 1;
+        $role = 0;
 
         return view('zoom.start', compact('meeting', 'role'));
 

@@ -143,7 +143,7 @@ class ExhibitorController extends Controller
         $meeting_exhibitor->save();
 
 
-        $role = 0;
+        $role = 1;
 
         return view('Zoom.start')->with([
 
@@ -178,7 +178,7 @@ class ExhibitorController extends Controller
        ]);
 
        $meeting->settings()->make([
-           'join_before_host' => false,
+           'join_before_host' => true,
            'approval_type' => 0,
            'enforce_login' => false,
            'waiting_room' => false,
