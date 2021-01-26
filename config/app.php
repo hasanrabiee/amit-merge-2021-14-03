@@ -181,6 +181,7 @@ return [
 
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        'Barryvdh\TranslationManager\ManagerServiceProvider',
 
     ],
 

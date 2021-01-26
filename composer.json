@@ -13,6 +13,7 @@
         "ext-json": "*",
         "aws/aws-sdk-php": "^3.158",
         "aws/aws-sdk-php-laravel": "^3.6",
+        "barryvdh/laravel-translation-manager": "^0.5.9",
         "biscolab/laravel-recaptcha": "^4.1",
         "cloudinary/cloudinary_php": "dev-master",
         "fideloper/proxy": "^4.2",
