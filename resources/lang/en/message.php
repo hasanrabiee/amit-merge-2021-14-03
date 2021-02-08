@@ -232,7 +232,7 @@ return array (
   'YourCompanyWebSite' => 'Your Company WebSite',
   'CompanyName' => 'Company Name',
   'CompanyRepresentative' => 'Company Representative',
-  'LoginText' => 'If you are already registered, please write username and password',
+  'LoginText' => 'If you are already registered, please write username and password111',
   'OpeningDate' => 'Opening Date',
   'OldPass2' => 'Old Password',
   'NewPass2' => 'New Password',

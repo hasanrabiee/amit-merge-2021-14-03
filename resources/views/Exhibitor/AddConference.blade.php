@@ -81,12 +81,6 @@
                                                 <input type="text" class="form-control">
                                             </div>
 
-                                            <div class="form-group">
-                                                <label for="">
-                                                    Please Write Speaker Names Which You Like to ShowUp in Auditorium Agenda
-                                                </label>
-                                                <input type="text" class="form-control">
-                                            </div>
 
                                             <div class="form-group">
                                                 <label for="">
@@ -152,7 +146,7 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="text-dark">{{__('message.SelectBoothColor')}}</h4>
+                                                            <h4 class="text-dark">Speaker Information</h4>
                                                             <button type="button" class="close" data-dismiss="modal"
                                                                     aria-label="Close">
                                                                 <span aria-hidden="true">×</span></button>
@@ -161,6 +155,12 @@
                                                             <div class="form-group">
                                                                 <label for="">
                                                                     Username:
+                                                                </label>
+                                                                <input type="text" class="form-control">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="">
+                                                                    Nickname:
                                                                 </label>
                                                                 <input type="text" class="form-control">
                                                             </div>
@@ -243,6 +243,7 @@
                                                     <label for="">Username:</label>
                                                     <input type="text" class="form-control">
                                                 </div>
+
                                                 <div class="form-group">
                                                     <label for="">Email:</label>
                                                     <input type="text" class="form-control">

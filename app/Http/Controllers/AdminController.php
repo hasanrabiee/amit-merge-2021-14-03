@@ -41,6 +41,29 @@ class AdminController extends Controller
     use Uploader;
 
 
+
+
+
+    public function AddConferenceIndex(){
+
+
+
+        return view('Admin.Conference');
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     public function CompanyList()
     {
         if (\request()->SearchTermBooth) {

@@ -70,39 +70,7 @@
                     <li class="nav-item ml-md-3 mb-md-2">
                         {{__('message.Manage')}} {{__('message.Event')}}
                     </li>
-{{--                    <li class="nav-item">--}}
-{{--                        <a href="#" class="nav-link dropdown @if( Request::is("*index*")) active @endif ">--}}
-{{--                            <span>--}}
-{{--                                {{__('message.Inbox')}}--}}
-{{--                            </span>--}}
 
-{{--                            @if (\App\User::where("newmessage","!=",0)->count() > 0)--}}
-{{--                                <span class="badge badge-info ml-3">{{\App\User::where("newmessage","!=",0)->count()}} New Message</span>--}}
-{{--                            @endif--}}
-{{--                        </a>--}}
-
-
-{{--                        <ul class="nav nav-group-sub" data-submenu-title="Layouts" style="display: none;">--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="{{route("Admin.VisitorInbox")}}" class="nav-link">Visitors--}}
-{{--                                    @if (\App\User::where("newmessage","!=",0)->where("rule","Visitor")->count() > 0)--}}
-{{--                                        <span class="badge badge-info ml-3">{{\App\User::where("newmessage","!=",0)->where("rule","Visitor")->count()}} New Message--}}
-{{--                                        </span>--}}
-{{--                                    @endif--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="{{route("Admin.ExhibitorInbox")}}" class="nav-link">Exhibitors--}}
-{{--                                    @if (\App\User::where("newmessage","!=",0)->where("rule","Exhibitor")->count() > 0)--}}
-{{--                                        <span class="badge badge-info ml-3">{{\App\User::where("newmessage","!=",0)->where("rule","Exhibitor")->count()}} New Message--}}
-{{--                                        </span>--}}
-{{--                                    @endif--}}
-
-{{--                                </a>--}}
-{{--                            </li>--}}
-{{--                        </ul>--}}
-
-{{--                    </li>--}}
                     <li class="nav-item">
                             <a href="{{route('Admin.History')}}" class="nav-link @if( Request::is("*History*")) active @endif "><span>{{__('message.History')}}</span></a>
                     </li>
@@ -116,14 +84,14 @@
                         <a href="{{route('Admin.RegisteredVisitor')}}" class="nav-link @if( Request::is("*RegisteredVi*")) active @endif "><span>{{__('message.Registered')}}{{__("message.Visitor")}}</span></a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('Admin.RegisteredExhibitor')}}" class="nav-link @if( Request::is("*RegisteredEx*")) active @endif "><span>{{__('message.Registered')}}{{__("message.Exhibitor")}}</span></a>
+                        <a href="{{route('Admin.RegisteredExhibitor')}}" class="nav-link @if( Request::is("*conference*")) active @endif "><span>{{__('message.Registered')}}{{__("message.Exhibitor")}}</span></a>
                     </li>
                     <li class="nav-item">
                         <a href="{{route('Admin.Auditorium')}}" class="nav-link @if( Request::is("*Auditorium*")) active @endif "><span>{{__('message.Auditorium')}} {{__('message.Schedule')}}</span></a>
                     </li>
-{{--                    <li class="nav-item">--}}
-{{--                        <a href="{{route('Admin.Conference')}}" class="nav-link @if( Request::is("*Conf*")) active @endif "><span>Register Conference</span></a>--}}
-{{--                    </li>--}}
+                    <li class="nav-item">
+                        <a href="{{route('Admin.conference-create')}}" class="nav-link @if( Request::is("*Conf*")) active @endif "><span>Register Conference</span></a>
+                    </li>
                     <li class="nav-item ml-md-3 mb-md-2">
                         {{__('message.Create')}} {{__('message.Event')}}
                     </li>

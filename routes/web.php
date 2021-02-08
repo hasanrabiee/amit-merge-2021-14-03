@@ -50,6 +50,7 @@ Route::get('/leave-meeting', 'ExhibitorController@leave_meeting')->name('meeting
 Route::group(['middleware' => ['auth']] , function (){
     Route::group(['prefix' => 'Admin', 'as' => 'Admin.' , 'middleware' => ['Admin']], function () {
 
+        Route::get('/conference/create', 'AdminController@AddConferenceIndex')->name('conference-create');
 
 
         Route::get('/', 'AdminController@index');
