@@ -56,54 +56,71 @@
                             <div style="position: absolute;bottom: 0px;right: 0px;" class="w-100">
 
 
-                                @if(\Carbon\Carbon::now()->format('Y-m-d') == \Carbon\Carbon::parse($conference->start_date)->format('Y-m-d')  &&  \Carbon\Carbon::now()->format('H:i') >=  \Carbon\Carbon::parse($conference->start_time)->format('H:i')  &&  \Carbon\Carbon::parse($conference->end_time)->format('H:i') >= \Carbon\Carbon::now()->format('H:i') )
+                                @if (\Carbon\Carbon::today() == \Carbon\Carbon::parse($conference->start_date) and  \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($conference->start_time))  )
 
-                                    <div class="col-md-12 text-center">
+                                    <a href="{{route('AuditoriumPlay',$conference->id)  }}" class="btn btn-dark btn-block"
+                                       role="button" disabled="">Not started yet
+                                        <i class="fa fa-hourglass"></i>
+                                    </a>
+
+                                @elseif (\Carbon\Carbon::today() == \Carbon\Carbon::parse($conference->start_date) and  \Carbon\Carbon::now()->gte(Carbon\Carbon::parse($conference->start_time)) and \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($conference->end_time)) )
 
 
 
-                                        <a href="{{route('join-webinar', $conference->id)}}" class="btn btn-success w-75">
-                                            Join
-                                            <i class="fa fa-bullhorn"></i>
+                                    @if ($conference->started)
+                                        <a href="{{route('join-webinar',$conference->id)  }}" class="btn btn-success btn-block"
+                                           role="button" disabled="">Join Conference
+                                            <i class="fa fa-plus"></i>
                                         </a>
 
+                                    @else
 
-                                    </div>
 
-                                @elseif ($conference->recorded_video != null)
+                                        <a href="{{route('join-webinar',$conference->id)  }}" class="btn btn-warning btn-block"
+                                           role="button" disabled="">host has not started the conference yet...
+                                            <i class="fa fa-users"></i>
+                                        </a>
 
-                                    <div class="col-md-12 text-center">
-                                        <a href="{{$conference->recorded_video}}" class="btn btn-primary w-75 mb-md-2">
-                                            Recorded Video
+                                    @endif
+
+
+
+                                @elseif (\Carbon\Carbon::today() > \Carbon\Carbon::parse($conference->start_date) or ( \Carbon\Carbon::today() == \Carbon\Carbon::parse($conference->start_date) and  \Carbon\Carbon::now()->gte(Carbon\Carbon::parse($conference->end_time))  ))
+
+
+                                    @if($conference->recorded_video)
+
+
+
+                                        <a href="{{$conference->recorded_video}}" class="btn btn-danger btn-block"
+                                           role="button" disabled="">Recorded video
                                             <i class="fa fa-film"></i>
                                         </a>
-                                    </div>
+
+
+
+
+                                    @endif
+
+                                    <a href="{{route('AuditoriumPlay',$conference->id)  }}"
+                                       class="btn btn-outline-dark btn-block"
+                                       role="button" disabled="">Conference is over
+                                        <i class="fa fa-cancel"></i>
+                                    </a>
 
 
                                 @else
 
 
-
-                                    <div class="col-md-12 text-center">
-
-
-
-                                        <a href="" class="btn btn-dark w-75">
-                                            No started yet
-                                            <i class="fa fa-hourglass"></i>
-
-                                        </a>
-
-                                    </div>
-
-
-
+                                    <a href="{{route('AuditoriumPlay',$conference->id)  }}"
+                                       class="btn btn-outline-dark btn-block"
+                                       role="button" disabled="">No action
+                                        <i class="fa fa-cancel"></i>
+                                    </a>
 
 
 
                                 @endif
-
-
 
 
 

@@ -10,6 +10,7 @@ use App\Jobs;
 use App\Site;
 use App\Traits\Uploader;
 use App\User;
+use Hamcrest\Core\BothForms;
 use http\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -26,9 +27,21 @@ class WebController extends Controller
     use  Uploader;
 
 
-    public function join_webinar(Conference $conference){
+    public function join_webinar( $conference){
 
         $role = 0;
+
+
+        $conference = Conference::find($conference);
+
+        if (Session::get('Speaker') != null) {
+
+            $role = 1;
+
+        }elseif (Auth::user()->Rule =='Exhibitor' && booth::find($conference->booth)->UserID == Auth::user()->id) {
+            $role = 1;
+        }
+
 
 
         return view('zoom-webinar.start')->with([
