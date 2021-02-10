@@ -935,6 +935,39 @@ class AdminController extends Controller
 
     }
 
+    public function start_webinar(Conference $conference){
+
+
+        $user =  \MacsiDigital\Zoom\Facades\Zoom::user()->find(env('WEBINAR_MAIL'));
+        foreach ($user->webinars as $current_webinar){
+
+            if($current_webinar->id != $conference->webinar_id){
+
+                \MacsiDigital\Zoom\Facades\Zoom::webinar()->find($current_webinar->id)->endWebinar();
+                \MacsiDigital\Zoom\Facades\Zoom::webinar()->find($current_webinar->id)->delete();
+//                $db_webinar = webinar::where('webinar_id', $current_webinar->id)->first();
+//                if($db_webinar != null){
+//                    $db_webinar->delete();
+//                }
+
+            }
+
+
+        }
+
+
+        $role = 1;
+        if (!$conference->started) {
+            $conference->update([
+                'started' => true
+            ]);
+        }
+
+
+
+
+    }
+
     public function AuditoriumPublish()
     {
         $x = Excel::store(new AuditoriumExport(), 'FinalTableExport.xlsx', 'Export');
