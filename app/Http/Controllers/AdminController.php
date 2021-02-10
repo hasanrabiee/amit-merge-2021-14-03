@@ -36,6 +36,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
+use MacsiDigital\Zoom\Facades\Zoom;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminController extends Controller
@@ -894,6 +895,44 @@ class AdminController extends Controller
     public function AuditoriumExport()
     {
         return Excel::download(new AuditoriumExport, 'FinalTable.xlsx');
+    }
+
+
+    public function create_webinar(Conference  $conference) {
+
+        $user =  Zoom::user()->find(env('WEBINAR_MAIL'));
+        $webinar = Zoom::webinar()->make([
+            'topic' => $conference->title,
+            'type' => 5,
+            'password' => '123456',
+            'start_time' => \Carbon\Carbon::now(), // best to use a Carbon instance here.
+            'timezone' => 'Europe/Vienna',
+
+        ]);
+
+        $webinar->settings()->make([
+            'approval_type' => 0,
+            'registration_type' => 2,
+            'enforce_login' => false,
+        ]);
+        $user->webinars()->save($webinar);
+
+
+        $conference->webinar_id = $webinar->id;
+        $conference->webinar_name =   $webinar->topic;
+        $conference->webinar_password =  $webinar->password;
+        $conference->start_url = $webinar->start_url;
+        $conference->save();
+
+
+        $this->start_webinar($conference);
+
+        return view('zoom-webinar.start')->with([
+            'webinar' => $conference,
+            'role' => '1',
+
+        ]);
+
     }
 
     public function AuditoriumPublish()

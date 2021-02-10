@@ -395,16 +395,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
                                             @if (\Carbon\Carbon::today() == \Carbon\Carbon::parse($conference->start_date) and  \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($conference->start_time))  )
 
                                                 <a href="{{route('AuditoriumPlay',$conference->id)  }}" class="btn btn-dark btn-block"

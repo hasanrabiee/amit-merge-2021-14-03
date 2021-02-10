@@ -65,6 +65,9 @@ Route::group(['middleware' => ['auth']] , function (){
         Route::post('/conference/UpdateSpeaker', 'AdminController@UpdateSpeaker')->name('UpdateSpeaker');
 
 
+        Route::get('create-webinar/{conference}', 'AdminController@create_webinar')->name('create-webinar');
+
+
         Route::get('/', 'AdminController@index');
         Route::get('Auditorium', 'AdminController@Auditorium')->name('Auditorium');
         Route::get('AuditoriumExport', 'AdminController@AuditoriumExport')->name('AuditoriumExport');
