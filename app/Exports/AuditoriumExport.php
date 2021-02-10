@@ -3,6 +3,8 @@
 namespace App\Exports;
 
 use App\Auditorium;
+use App\Conference;
+use App\Speaker;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -15,15 +17,14 @@ class AuditoriumExport implements FromCollection , WithHeadings , WithMapping
     */
     public function collection()
     {
-        return Auditorium::all();
+        return Conference::all();
     }
 
     public function headings(): array
     {
         return [
-            'Speaker Name',
-            'Speaker UserName',
-            'Speaker Speech Title',
+            'Speech Title',
+            'Speakers',
             'Conference Date',
             'Start Time',
             'End Time',
@@ -33,13 +34,15 @@ class AuditoriumExport implements FromCollection , WithHeadings , WithMapping
 
     public function map($row): array
     {
+
+
+
         return [
-            $row->Speaker->Name,
-            $row->Speaker->UserName,
-            $row->Speaker->SpeechTitle,
-            $row->Day,
-            Carbon::parse($row->Start)->format('H:i'),
-            Carbon::parse($row->End)->format('H:i'),
+            $row->title,
+            Speaker::where('cid',$row->crid)->get(['email'])->implode('email',' | '),
+            Carbon::parse($row->start_date)->format('Y-m-d'),
+            Carbon::parse($row->start_time)->format('H:i'),
+            Carbon::parse($row->end_time)->format('H:i'),
         ];
     }
 }

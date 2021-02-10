@@ -143,11 +143,15 @@
 
                                     {{--                                    Scheduled Sheet--}}
                                     <div class="col-md-5">
-                                        <h4 class="mt-2 mt-md-0">Schedule Sheet</h4>
+                                        <h4 class="mt-2 mt-md-0">Schedule Sheet
+                                        <i class="fa fa-calendar"></i>
+                                        </h4>
                                         <p>Scheduled Conference : 1</p>
                                         <p>Requested Conference : 1</p>
 
-                                        <button type="button" onclick="$('#AddSpeaker').modal('show')" class="btn btn-primary w-100">Add Conference to Auditorium</button>
+                                        <button type="button" onclick="$('#AddSpeaker').modal('show')" class="btn btn-primary w-100">Add Conference to Auditorium
+                                        <i class="fa fa-plus"></i>
+                                        </button>
 
 
 
@@ -156,7 +160,8 @@
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="text-dark">Add Conference to Auditorium</h4>
+                                                        <h4 class="text-dark">Add Conference to Auditorium
+                                                        <i class="fa fa-plus"></i></h4>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
                                                             <span aria-hidden="true">×</span></button>
@@ -233,8 +238,12 @@
                                             </div>
                                         </div>
 
-                                        <button class="btn btn-primary w-100 mt-2">Publish Sheet</button>
-                                        <a href="{{route('Auditorium')}}" target="_blank" class="btn btn-info w-100 mt-2">View Auditorium Agenda</a>
+                                        <a href="{{route('Admin.AuditoriumPublish')}}" class="btn btn-primary w-100 mt-2">Publish Sheet
+                                        <i class="fa fa-send"></i>
+                                        </a>
+                                        <a href="{{route('Auditorium')}}" target="_blank" class="btn btn-info w-100 mt-2">View Auditorium Agenda
+                                        <i class="fa fa-eye"></i>
+                                        </a>
 
                                         <table class="mt-5 table table-striped table-bordered table-hover table-light">
                                             <thead>

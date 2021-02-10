@@ -727,14 +727,15 @@ class AdminController extends Controller
     }
 
 
-    public function AuditoriumDelete($id = "empty"){
+    public function AuditoriumDelete($id = "empty")
+    {
 
 
-        if($id == "empty")
+        if ($id == "empty")
             return redirect()->back();
 
 
-        $conference = Conference::where('id' , $id)->first();
+        $conference = Conference::where('id', $id)->first();
 
         $conf_req_id = ConferenceRequest::where('id', $conference->crid)->first();
         $conf_req_id->used = 'notselected';
@@ -753,11 +754,11 @@ class AdminController extends Controller
 
         $request->validate([
 
-  "start_time" =>  "required",
-  "day" =>  "required",
-  "end_time" =>  "required",
-  "cid" => "required",
-  "hall" => "required",
+            "start_time" => "required",
+            "day" => "required",
+            "end_time" => "required",
+            "cid" => "required",
+            "hall" => "required",
 
 
         ]);
@@ -897,35 +898,37 @@ class AdminController extends Controller
 
     public function AuditoriumPublish()
     {
-        Excel::store(new AuditoriumExport(), 'FinalTableExport.xlsx', 'Export');
+        $x = Excel::store(new AuditoriumExport(), 'FinalTableExport.xlsx', 'Export');
+
         $Users = User::all();
 
         foreach ($Users as $user) {
             Jobs\SendPublishEmail::dispatch($user->email);
         }
-        $Auditoria = Auditorium::all();
+        $Auditoria = Conference::all();
 
-        foreach ($Auditoria as $user) {
+        foreach ($Auditoria as $conf) {
+
+            $speakers = Speaker::where('cid', $conf->crid)->get();
+
+            foreach ($speakers as $Speaker){
 
 
-            $Speaker = Speaker::find($user->SpeakerID);
-
-            if ($Speaker->email) {
                 $data = [
-                    'Name' => $Speaker->SpeakerName,
-                    'UserName' => $Speaker->SpeakerUserName,
-                    'password' => $Speaker->password,
                     'Speech Title' => $Speaker->SpeechTitle,
-                    'Speaker Name' => $Speaker->SpeakerName,
+                    'Start Date' => $conf->start_date,
+                    'Start Time' => $conf->start_time,
+                    'End Time' => $conf->end_time,
+
+                    'Name' => $Speaker->Name,
+                    'Username' => $Speaker->UserName,
+                    'password' => $Speaker->password,
                     'email' => $Speaker->email,
-                    'Start' => $user->Start,
-                    'End' => $user->End,
-                    'Day' => $user->Day,
+
                 ];
-                Jobs\publishforspeaker::dispatch($data);
+            Jobs\publishforspeaker::dispatch($data);
+
             }
-
-
         }
         Alert::success('Sending emails Started');
         unlink(public_path('Export/FinalTableExport.xlsx'));
