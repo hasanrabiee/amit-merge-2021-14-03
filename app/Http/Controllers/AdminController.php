@@ -894,7 +894,7 @@ class AdminController extends Controller
 
     public function AuditoriumExport()
     {
-        return Excel::download(new AuditoriumExport, 'FinalTable.xlsx');
+        return Excel::download(new AuditoriumExport, 'FinalTableExport.xlsx');
     }
 
 

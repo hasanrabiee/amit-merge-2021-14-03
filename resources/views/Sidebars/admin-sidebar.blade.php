@@ -110,42 +110,59 @@
                     <li class="nav-item">
                         <a href="{{route('Admin.AppAdjustment')}}"class="nav-link @if( Request::is("*AppAdjustment*")) active @endif "><span> {{__('message.Adjustment')}}</span></a>
                     </li>
-{{--                    <li class="nav-item">--}}
-{{--                        <a href="{{route('Admin.Organizers')}}"class="nav-link @if( Request::is("*Organ*")) active @endif "><span>Organizer Information</span></a>--}}
-{{--                    </li>--}}
-
-{{--                    <li class="nav-item">--}}
-{{--                        <a href="#" class="nav-link dropdown @if( Request::is("*index*")) active @endif ">--}}
-{{--                            <span>--}}
-{{--                                Form Adjustment--}}
-{{--                            </span>--}}
-{{--                        </a>--}}
-
-{{--                        <ul class="nav nav-group-sub" data-submenu-title="Layouts" style="display: none;">--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="{{route("Admin.ExhibitorForm")}}" class="nav-link">--}}
-{{--                                    Exhibitors--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="{{route("Admin.VisitorForm")}}" class="nav-link">--}}
-{{--                                    Visitors--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="{{route("Admin.VisitorForm")}}" class="nav-link">Exhibitors--}}
 
 
-{{--                                </a>--}}
-{{--                            </li>--}}
-{{--                        </ul>--}}
-
-{{--                    </li>--}}
+                    <li class="nav-item">
 
 
 
 
-                    <!-- /main -->
+                        @if (\App\Conference::where('booth', '0')->first() != null)
+
+                            @php
+                                $conference = \App\Conference::where('booth', '0')->first();
+                            @endphp
+
+
+
+
+                            @if (\Carbon\Carbon::today() == \Carbon\Carbon::parse($conference->start_date) and  \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($conference->start_time))  )
+
+                                <a href="{{route('AuditoriumPlay',$conference->id)  }}" class="btn btn-dark btn-block"
+                                   role="button" disabled="">Not started yet
+                                    <i class="fa fa-hourglass"></i>
+                                </a>
+
+                            @elseif (\Carbon\Carbon::today() == \Carbon\Carbon::parse($conference->start_date) and  \Carbon\Carbon::now()->gte(Carbon\Carbon::parse($conference->start_time)) and \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($conference->end_time)) )
+
+
+                                @if ($conference->started )
+
+                                    <a href="{{route('join-webinar',$conference->id)  }}" class="btn btn-success btn-block"
+                                       role="button" disabled="">Click to Re-Join the conference
+                                        <i class="fa fa-plus"></i>
+                                    </a>
+
+                                @else
+
+
+
+                                    <a href="{{route('Admin.create-webinar',$conference->id)  }}" class="btn btn-success btn-block"
+                                       role="button" disabled="">Click to Start the conference
+                                        <i class="fa fa-plus"></i>
+                                    </a>
+
+
+                                @endif
+
+
+
+
+
+                    </li>
+
+
+
                 </ul>
             </div>
             <!-- /main navigation -->
