@@ -19,7 +19,7 @@ Route::get('/time', function () {
     dd(Carbon::now()->format('Y-m-d H:i') , date_default_timezone_get());
 });
 
-Route::get('join-webinar/{webinar}', 'WebController@f')->name('join-webinar');
+Route::get('join-webinar/{webinar}', 'WebController@join_webinar')->name('join-webinar');
 
 
 Auth::routes(['verify' => true]);

@@ -17,8 +17,11 @@
     @if(\Illuminate\Support\Facades\Session::get('Speaker') != null )
         <input type="hidden" id="user_name" value="Speaker_{{ \App\Speaker::find(\Illuminate\Support\Facades\Session::get('Speaker')->id)->nickname  }}">
 
+    @elseif (\Illuminate\Support\Facades\Auth::user()->Rule == 'Admin')
+        <input type="hidden" id="user_name" value="Speaker_WebsiteAdmin">
+
     @else
-        <input type="hidden" id="user_name" value="{{ @\Illuminate\Support\Facades\Auth::User()->UserName}}">
+        <input type="hidden" id="user_name" value="Attendee_{{ @\Illuminate\Support\Facades\Auth::User()->UserName}}">
 
 
     @endif
