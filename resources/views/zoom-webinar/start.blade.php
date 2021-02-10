@@ -81,7 +81,7 @@
                     {
                         meetingNumber: meeting_id.value,
                         userName: userName.value,
-                        userEmail : '{{$role == 0 ? env('WEBINAR_MAIL') : \Illuminate\Support\Facades\Auth::user()->email}}',
+                        userEmail : '{{$role == 1 ? env('WEBINAR_MAIL') : \Illuminate\Support\Facades\Auth::user()->email}}',
                         signature: signature,
                         apiKey: zoom_api_key.value,
                         passWord: meeting_password.value,
