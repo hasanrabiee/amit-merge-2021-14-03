@@ -115,8 +115,6 @@
                     <li class="nav-item">
 
 
-
-
                         @if (\App\Conference::where('booth', '0')->first() != null)
 
                             @php
@@ -154,6 +152,73 @@
 
 
                                 @endif
+
+
+
+
+
+
+
+
+
+                            @elseif (\Carbon\Carbon::today() > \Carbon\Carbon::parse($conference->start_date) or ( \Carbon\Carbon::today() == \Carbon\Carbon::parse($conference->start_date) and  \Carbon\Carbon::now()->gte(Carbon\Carbon::parse($conference->end_time))  ))
+
+
+                                @if($conference->recorded_video)
+
+
+
+                                    <a href="{{$conference->recorded_video}}" class="btn btn-danger btn-block"
+                                       role="button" disabled="">Recorded video
+                                        <i class="fa fa-film"></i>
+                                    </a>
+
+
+
+
+                                @endif
+
+                                <a href="{{route('AuditoriumPlay',$conference->id)  }}"
+                                   class="btn btn-outline-dark btn-block"
+                                   role="button" disabled="">Conference is over
+                                    <i class="fa fa-cancel"></i>
+                                </a>
+
+
+                            @else
+
+
+                                <a href="{{route('AuditoriumPlay',$conference->id)  }}"
+                                   class="btn btn-outline-dark btn-block"
+                                   role="button" disabled="">No action
+                                    <i class="fa fa-cancel"></i>
+                                </a>
+
+
+
+                            @endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        @endif
+
+
 
 
 
