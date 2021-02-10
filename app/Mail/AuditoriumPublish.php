@@ -29,7 +29,7 @@ class AuditoriumPublish extends Mailable
     public function build()
     {
         return $this->view('mails.Auditorium')
-            ->attach(public_path('Export/FinalTable.xlsx'), [
+            ->attach(public_path('Export/FinalTableExport.xlsx'), [
                 'as' => 'FinalTable.xlsx',
                 'mime' => 'application/xlsx',
             ]);
