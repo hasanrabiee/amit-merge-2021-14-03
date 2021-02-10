@@ -42,7 +42,7 @@
                     <span aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
-                <form action="{{route('Exhibitor.UpdateAvatar')}}" method="post"
+                <form action="{{route('Auditorium.UpdateAvatar')}}" method="post"
                       enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
@@ -63,30 +63,30 @@
 
 
 <!-- Modal -->
-{{--<div id="myModal" class="modal fade" role="dialog">--}}
-{{--    <div class="modal-dialog">--}}
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
-{{--        <!-- Modal content-->--}}
-{{--        <div class="modal-content">--}}
-{{--            <div class="modal-header">--}}
-{{--                <button type="button" class="close" data-dismiss="modal">&times;</button>--}}
-{{--                <h5 class="modal-title">Exhibitor Panel Tutorial</h5>--}}
-{{--            </div>--}}
-{{--            <div class="modal-body text-center">--}}
-{{--                <div class="text-left mb-2">--}}
-{{--                    <a href="{{\App\Site::first()->exPanelPDF}}" class="btn text-left btn-primary">PDF Guide</a>--}}
-{{--                </div>--}}
-{{--                <iframe width="420" height="315"--}}
-{{--                        src="{{\App\Site::first()->exPanelVideo}}">--}}
-{{--                </iframe>--}}
-{{--            </div>--}}
-{{--            <div class="modal-footer">--}}
-{{--                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h5 class="modal-title">Exhibitor Panel Tutorial</h5>
+            </div>
+            <div class="modal-body text-center">
+                <div class="text-left mb-2">
+                    <a href="{{\App\Site::first()->exPanelPDF}}" class="btn text-left btn-primary">PDF Guide</a>
+                </div>
+                <iframe width="420" height="315"
+                        src="{{\App\Site::first()->exPanelVideo}}">
+                </iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
 
-{{--    </div>--}}
-{{--</div>--}}
+    </div>
+</div>
 
 
 <!-- Main navbar -->
@@ -157,20 +157,27 @@
 
                             </div>
                         </div>
+
+
                         <div class="media">
 
                             <div class="mr-3">
-{{--                                <a href="#avatar_modal" data-toggle="modal" role="button"><img class="rounded-circle" width="38" height="38" src="{{asset(\Illuminate\Support\Facades\Auth::user()->Image)}}"></a>--}}
+                                <a href="#avatar_modal" data-toggle="modal" role="button"><img class="rounded-circle" width="38" height="38" src="{{\App\Speaker::find(\Illuminate\Support\Facades\Session::get('Speaker')->id)->avatar}}"></a>
                             </div>
 
                             <div class="media-body">
-{{--                                <div class="media-title font-weight-semibold mt-md-2">{{\Illuminate\Support\Facades\Auth::user()->UserName}}     </div>--}}
+                                <div class="media-title font-weight-semibold mt-md-2">{{\App\Speaker::find(\Illuminate\Support\Facades\Session::get('Speaker')->id)->UserName}}     </div>
 
                                 {{--                                    <span class="btn btn-danger btn-sm">Logout</span>--}}
 
                             </div>
 
                         </div>
+
+
+
+
+
                     </div>
                 </div>
                 <!-- /user menu -->

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Auditorium;
 use App\booth;
+use App\Conference;
 use App\Hall;
 use App\Jobs;
 use App\Site;
@@ -24,6 +25,20 @@ class WebController extends Controller
 
     use  Uploader;
 
+
+    public function join_webinar(Conference $conference){
+
+        $role = 0;
+
+
+        return view('zoom-webinar.start')->with([
+            'webinar' => $conference,
+            'role' => $role,
+
+        ]);
+
+
+    }
 
     public function PassChanged(){
         Alert::success('Password Changed');
@@ -107,16 +122,21 @@ class WebController extends Controller
 
 
     public function Auditorium(){
-        $List = Auditorium::orderBy( 'Day', 'ASC')->orderBy('Start', 'ASC')->get();
-
-
+        $List = Conference::orderBy( 'start_date', 'ASC')->orderBy('start_time', 'ASC')->get();
 
         return view('AuditoriumList')->with(['List' => $List]);
     }
 
     public function AuditoriumPlay($id){
 
-        return view('Auditorium')->with(['ID' , $id]);
+
+        $conference = Conference::find($id)->first();
+
+        return view('AuditoriumAbstract')->with([
+
+            'conference' => $conference,
+
+        ]);
     }
 
     public function PDF()

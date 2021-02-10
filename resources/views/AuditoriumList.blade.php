@@ -8,6 +8,7 @@
                 <table class="table table-bordered">
                     <thead style="background-color: rgba(168,168,168,0.84);">
                     <tr style="background-color: rgba(168,168,168,0.84);">
+                        <th>Hall</th>
                         <th>Date</th>
                         <th>Speaker Name</th>
                         <th>Title</th>
@@ -17,22 +18,44 @@
                     </thead>
                     <tbody>
                     @foreach($List as $item)
-                        <tr>
-                            <td>{{$item->Day}}</td>
-                            <td>{{\App\Speaker::find($item->SpeakerID)->Name}}</td>
-                            <td>{{\App\Speaker::find($item->SpeakerID)->SpeechTitle}}</td>
-                            <td>{{\Carbon\Carbon::parse($item->Start)->format('H:i')}} - {{\Carbon\Carbon::parse($item->End)->format('H:i')}}</td>
+                        <tr class="@if($item->hall == 'A') bg-primary @endif" >
 
-                            <td>
+                            <td style="vertical-align: middle !important">
+                                <h3>{{$item->hall}}</h3>
+                            </td>
+                            <td style="vertical-align: middle !important">{{$item->start_date}}</td>
+                            <td style="vertical-align: middle !important">
+
+                                @foreach(\App\Speaker::where('cid', $item->crid)->get() as $sp)
+
+                                    {{$sp->Name}},
+
+
+                                    @endforeach
+
+
+                            </td>
+                            <td style="vertical-align: middle !important">{{$item->title}}</td>
+                            <td style="vertical-align: middle !important">{{\Carbon\Carbon::parse($item->start_time)->format('H:i')}} - {{\Carbon\Carbon::parse($item->end_time)->format('H:i')}}</td>
+
+                            <td style="vertical-align: middle !important">
 
 
 
 
-                                @if(\Carbon\Carbon::now()->format('Y-m-d') == $item->Day && \Carbon\Carbon::now()->format('H:i') >=  \Carbon\Carbon::parse($item->Start)->format('H:i')  &&  \Carbon\Carbon::parse($item->End)->format('H:i') >= \Carbon\Carbon::now()->format('H:i') )
+                                @if(\Carbon\Carbon::now()->format('Y-m-d') >= \Carbon\Carbon::parse($item->start_date)->format('Y-m-d')  && \Carbon\Carbon::now()->format('H:i') >=  \Carbon\Carbon::parse($item->start_time)->format('H:i')  &&  \Carbon\Carbon::parse($item->end_time)->format('H:i') >= \Carbon\Carbon::now()->format('H:i') )
+
+
+
                                     <a class="btn btn-success btn-block" role="button"
                                        href="{{route('AuditoriumPlay',$item->id)  }}">Join</a>
+
+
+
                                 @else
-                                    <a class="btn btn-dark btn-block" role="button" disabled="">No Action</a>
+                                    <a href="{{route('AuditoriumPlay',$item->id)  }}" class="btn btn-dark btn-block" role="button" disabled="">Not started yet
+                                    <i class="fa fa-hourglass"></i>
+                                    </a>
                                 @endif
                             </td>
                         </tr>

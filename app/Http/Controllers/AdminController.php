@@ -7,6 +7,8 @@ use App\Auditorium;
 use App\AuditoriumChat;
 use App\booth;
 use App\Chat;
+use App\Conference;
+use App\ConferenceRequest;
 use App\Exports\AuditoriumExport;
 use App\Hall;
 use App\Invitation;
@@ -41,27 +43,213 @@ class AdminController extends Controller
     use Uploader;
 
 
+    public function AddConferenceIndex(Request $request)
+    {
+
+        $speakers = "";
+        $current_speakers = "";
 
 
+        if ($request->has('sid')) {
 
-    public function AddConferenceIndex(){
+            $current_speakers = Speaker::where('id', \request()->sid)->first();
+
+            if ($request->action == 'delete') {
+
+                Alert::success('Speaker Deleted Successfully');
+                $current_speakers->delete();
+                return redirect()->route('Admin.conference-create');
+            }
 
 
+        }
+        if ($request->has('cid')) {
 
-        return view('Admin.Conference');
+
+            $speakers = Speaker::where('booth', '0')->where('cid', $request->cid)->get();
+
+
+        }
+
+
+        $StartDate = Site::find(1)->StartDate;
+        $days = [];
+        for ($i = 0; $i < 10; $i++) {
+            $days[] = Carbon::parse($StartDate)->format('Y-m-d');
+            $StartDate = Carbon::parse($StartDate)->addDay();
+        }
+
+
+        $conferences = "";
+
+        if ($request->has('day')) {
+            $conferences = ConferenceRequest::where('booth', '0')->where('date1', $request->day)->get();
+        }
+
+
+        $current_conference = \request()->has('cid') ? ConferenceRequest::where('id', \request()->cid)->first() : "";
+
+        return view('Admin.Conference')->with([
+
+            'speakers' => $speakers,
+            'current_conference' => $current_conference,
+            'days' => $days,
+            'conferences' => $conferences,
+            'current_speakers' => $current_speakers,
+        ]);
+
+
+    }
+
+    public function AddConferenceAction(Request $request)
+    {
+
+        $request->validate([
+
+            'date' => 'required|date',
+            'title' => 'required|string',
+            'abstract' => 'required|string',
+
+        ]);
+        $current_booth = 0;
+
+        ConferenceRequest::create([
+
+            "booth" => '0',
+            "date1" => $request->date,
+            "date2" => $request->date,
+            "date3" => $request->date,
+            "title" => $request->title,
+            "abstract" => $request->abstract,
+
+
+        ]);
+
+        Alert::success('Conference created successfully, you can now add speakers');
+        return redirect()->back();
 
 
     }
 
 
+    public function UpdateSpeaker(Request $request)
+    {
+
+        $request->validate([
+            'Name' => 'required|string',
+            'email' => 'required|string',
+            'UserName' => 'required|string',
+            'sid' => 'required|string',
+
+        ]);
+
+        $speaker = Speaker::where('id', $request->sid)->first();
 
 
+        $speaker->Name = $request->Name;
+        $speaker->email = $request->email;
+        $speaker->UserName = $request->UserName;
 
 
+        if ($request->has('password') && $request->password != null) {
+            $speaker->password = Hash::make($request->password);
+
+        }
+
+        $speaker->save();
+
+        Alert::success('Speaker Updated Successfully');
+        return redirect()->route('Admin.conference-create');
+
+    }
+
+    public function AddSpeaker(Request $request)
+    {
 
 
+        $request->validate([
+            'Name' => 'required|string',
+            'email' => 'required|string|unique:speakers',
+            'UserName' => 'required|string|unique:speakers',
+            'password' => 'required|string|min:8|confirmed|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!@#$%^&*]).*$/',
+            'cid' => 'required|string',
+
+        ]);
+
+        $current_conference = ConferenceRequest::where('id', \request()->cid)->first();
 
 
+        $Speaker = Speaker::create([
+            'Name' => $request->Name,
+            'email' => $request->email,
+            'UserName' => $request->UserName,
+            'password' => $request->password,
+            'SpeechTitle' => $current_conference->title,
+            'PreferredDate1' => $current_conference->date1,
+            'PreferredDate2' => $current_conference->date1,
+            'PreferredDate3' => $current_conference->date1,
+            'cid' => \request()->cid,
+            'booth' => '0',
+        ]);
+
+
+        $data = [
+            'Name' => $request->Name,
+            'email' => $request->email,
+            'UserName' => $request->UserName,
+            'password' => $request->password,
+            'Speech Title' => 'Account Registered Waiting for Verification',
+        ];
+        //Mail::to($Speaker->email)->send(new SpeakerRegister($data));
+
+        Alert::success('Speaker Registered Successfully');
+
+        return redirect()->back();
+
+
+    }
+
+
+    public function AddConferenceFinalize(Request $request)
+    {
+
+
+        $request->validate([
+
+            'date1' => 'required|date',
+            'date2' => 'required|date',
+            'date3' => 'required|date',
+            'title' => 'required|string',
+            'abstract' => 'required|string',
+
+        ]);
+
+        $current_booth = $this->Booth();
+
+
+        ConferenceRequest::create([
+
+            "booth" => $current_booth->id,
+            "date1" => $request->date1,
+            "date2" => $request->date2,
+            "date3" => $request->date3,
+            "title" => $request->title,
+            "abstract" => $request->abstract,
+
+
+        ]);
+
+
+        $user = Auth::user();
+        $user->finalize_conference = 'yes';
+        $user->save();
+
+        Alert::success('Conference submitted successfully');
+
+        return redirect()->back();
+
+
+    }
 
 
     public function CompanyList()
@@ -327,11 +515,11 @@ class AdminController extends Controller
     }
 
 
-    public function Export(){
+    public function Export()
+    {
 
 
         return Excel::download(new UsersExport, 'users.xlsx');
-
 
 
     }
@@ -538,6 +726,70 @@ class AdminController extends Controller
         ]);
     }
 
+
+    public function AuditoriumDelete($id = "empty"){
+
+
+        if($id == "empty")
+            return redirect()->back();
+
+
+        $conference = Conference::where('id' , $id)->first();
+
+        $conf_req_id = ConferenceRequest::where('id', $conference->crid)->first();
+        $conf_req_id->used = 'notselected';
+        $conf_req_id->save();
+
+        $conference->delete();
+
+        Alert::success('Conference deleted from Auditorium');
+        return redirect()->back();
+
+
+    }
+
+    public function AuditoriumCreate(Request $request)
+    {
+
+        $request->validate([
+
+  "start_time" =>  "required",
+  "day" =>  "required",
+  "end_time" =>  "required",
+  "cid" => "required",
+  "hall" => "required",
+
+
+        ]);
+
+
+        $conference_request = ConferenceRequest::where('id', $request->cid)->first();
+        $conference_request->used = 'selected';
+        $conference_request->save();
+
+
+        Conference::create([
+
+
+            "booth" => $conference_request->booth,
+            "start_date" => $request->day,
+            "start_time" => $request->start_time,
+            "end_time" => $request->end_time,
+            "title" => $conference_request->title,
+            "abstract" => $conference_request->title,
+            "hall" => $request->hall,
+            "crid" => $conference_request->id,
+
+
+        ]);
+
+        Alert::success('Conference added to Auditorium successfully');
+
+        return redirect()->back();
+
+
+    }
+
     public function Auditorium()
     {
 
@@ -547,16 +799,38 @@ class AdminController extends Controller
             $Days[] = Carbon::parse($StartDate)->format('Y-m-d');
             $StartDate = Carbon::parse($StartDate)->addDay();
         }
-        if (\request()->Day) {
-            $Day = \request()->Day;
+        if (\request()->day) {
+            $Day = \request()->day;
             $Speakers = Speaker::where('Status', 'None')->get();
             $Speakers2 = Speaker::where('Status', 'None')->where('PreferredDate1', $Day)
                 ->orWhere('PreferredDate2', $Day)
                 ->orWhere('PreferredDate3', $Day)->get();
             $RegisteredSpeakers = Auditorium::where('Day', $Day)->get();
-            return view('Admin.Auditorium')->with(['Speakers2' => $Speakers2 ,'Days' => $Days, 'Day' => $Day, 'Speakers' => $Speakers, 'RegisteredSpeakers' => $RegisteredSpeakers]);
+            $current_day_confs = ConferenceRequest::where('used', 'notselected')->where('date1', $Day)->orWhere('date2', $Day)
+                ->orWhere('date3', $Day)->get();
+
+
+            $all_conf_reqs = ConferenceRequest::where('used', 'notselected')->get();
+
+            return view('Admin.Auditorium')->with([
+
+                'current_day_confs' => $current_day_confs,
+                'all_conf_reqs' => $all_conf_reqs,
+
+                'Speakers2' => $Speakers2,
+                'Days' => $Days,
+                'Day' => $Day,
+                'Speakers' => $Speakers,
+                'RegisteredSpeakers' => $RegisteredSpeakers
+            ]);
         }
-        return view('Admin.Auditorium')->with(['Days' => $Days]);
+
+
+        return view('Admin.Auditorium')->with([
+            'Days' => $Days
+
+
+        ]);
     }
 
     public function SpeakerPost(Request $request)

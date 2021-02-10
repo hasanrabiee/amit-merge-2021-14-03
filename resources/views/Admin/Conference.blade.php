@@ -3,7 +3,8 @@
 
 @section("Head")
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+          type="text/css">
     <link href="{{asset("css/style-icon.css")}}" rel="stylesheet" type="text/css">
     <link href="{{asset("css/bootstrap.min.css")}}" rel="stylesheet" type="text/css">
     <link href="{{asset("css/bootstrap-limitless.css")}}" rel="stylesheet" type="text/css">
@@ -33,11 +34,82 @@
 
 
 @endsection
+
+{{--Modals --}}
+
+<div class="modal fade" role="dialog" tabindex="-1" id="AddSpeaker">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-dark">Speaker Information</h4>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+            </div>
+            <form action="{{route('Admin.AddSpeaker')}}" method="post">
+                <div class="modal-body text-dark">
+
+                    @csrf
+
+                    <div class="form-group">
+                        <label for="">
+                            Username:
+                        </label>
+                        <input name="UserName" type="text" class="form-control">
+                        <input name="cid" type="hidden" value="{{\request()->has('cid') ? \request()->cid : ''}}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="">
+                            Nickname:
+                        </label>
+                        <input name="Name" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="">
+                            Email:
+                        </label>
+                        <input name="email" type="email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="">
+                            Password
+                        </label>
+                        <input name="password" type="password" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="">
+                            Password Confirmation
+                        </label>
+                        <input name="password_confirmation" type="password" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button class="btn btn-success w-100">Save</button>
+                    <button class="btn btn-light btn-block"
+                            data-dismiss="modal" type="button">
+                        {{__('message.Close')}}
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+{{--End Modals--}}
+
 <!-- Page content -->
 
 <div class="page-content pt-0 mt-3">
 
+
+    {{--    INCLUDE SIDE BAR HERE !!!!--}}
+
     @include("Sidebars.admin-sidebar")
+
+    {{--    INCLUDE SIDE BAR HERE !!!!--}}
 
 
 
@@ -64,204 +136,263 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="" class="w-100">
-                                    <div class="row">
 
 
-                                        {{--                            Dates--}}
+                                @if (\request()->has('action') && \request()->action == 'edit')
 
 
-                                        <div class="col-md-2" style="height: 530px; border: 2px solid white;border-radius: 5px">
-                                            <a href="" class="btn btn-primary text-white w-100 mt-md-2">2020-11-21</a>
-                                            <a href="" class="btn btn-outline-dark text-white w-100 mt-md-2">2020-11-22</a>
-                                            <a href="" class="btn btn-outline-dark text-white w-100 mt-md-2">2020-11-23</a>
-                                            <a href="" class="btn btn-outline-dark text-white w-100 mt-md-2">2020-11-24</a>
-                                            <a href="" class="btn btn-outline-dark text-white w-100 mt-md-2">2020-11-25</a>
-                                            <a href="" class="btn btn-outline-dark text-white w-100 mt-md-2">2020-11-26</a>
-                                            <a href="" class="btn btn-outline-dark text-white w-100 mt-md-2">2020-11-27</a>
-                                            <a href="" class="btn btn-outline-dark text-white w-100 mt-md-2">2020-11-28</a>
-                                            <a href="" class="btn btn-outline-dark text-white w-100 mt-md-2">2020-11-29</a>
-                                            <a href="" class="btn btn-outline-dark text-white w-100 mt-md-2">2020-11-30</a>
-                                            <a href="" class="btn btn-outline-dark text-white w-100 mt-md-2">2020-11-31</a>
+
+                                    <form action="{{route('Admin.UpdateSpeaker')}}" method="post" class="w-100">
+                                        @csrf
+
+                                        <input type="hidden" name="sid" value="{{\request()->sid}}">
+
+                                        <h4 class="text-dark">Edit Speaker Information</h4>
+
+                                        <row>
+
+
+                                            <div class="">
+
+
+
+
+                                                        <div class="form-group">
+                                                            <label for="">
+                                                                Username:
+                                                            </label>
+                                                            <input name="UserName" value="{{$current_speakers->UserName ?? ''}}" type="text" class="form-control">
+                                                            <input name="cid" type="hidden" value="{{\request()->has('cid') ? \request()->cid : ''}}" class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">
+                                                                Nickname:
+                                                            </label>
+                                                            <input name="Name" value="{{$current_speakers->Name ?? ''}}" type="text" class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">
+                                                                Email:
+                                                            </label>
+                                                            <input name="email" value="{{$current_speakers->email ?? ''}}" type="email" class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">
+                                                                Password
+                                                            </label>
+                                                            <input name="password" placeholder="Optional: leave empty to have the current password" type="password" class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">
+                                                                Password Confirmation
+                                                            </label>
+                                                            <input name="password_confirmation" placeholder="confirm password if filled" type="password" class="form-control">
+                                                        </div>
+
+                                                        <button class="btn btn-success w-100">Update</button>
+                                                        <button class="btn btn-light btn-block"
+                                                                data-dismiss="modal" type="button">
+                                                            {{__('message.Close')}}
+                                                        </button>
+
+
+
+
+                                            </div>
+
+
+                                        </row>
+
+
+
+                                    </form>
+
+
+                                @else
+
+                                    <form action="{{route('Admin.conference-create')}}" method="post" class="w-100">
+                                        @csrf
+                                        <div class="row">
+
+
+                                            {{--                            Dates--}}
+
+
+                                            <div class="col-md-2"
+                                                 style="height: 530px; border: 2px solid white;border-radius: 5px">
+
+
+
+                                                @foreach($days as $day)
+
+
+
+                                                    <a href="?day={{$day}}" class="btn @if(\request()->has('day') && \request()->day == $day) btn-primary @else btn-outline-dark @endif text-white w-100 mt-md-2">{{$day}}</a>
+
+
+
+                                                @endforeach
+
+
+
+
+                                            </div>
+
+
+                                            {{--                            /Dates--}}
+
+
+                                            {{--                            Conference name input--}}
+
+
+                                            @if(\request()->has('day'))
+
+                                                <div class="col-md-10">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="">
+
+
+
+                                                                <div class="form-group">
+                                                                    <label for=""><h3>Conference Title</h3></label>
+                                                                    <input name="title" value="{{isset($current_conference->title) ? $current_conference->title : ''}}" type="text" class="form-control">
+                                                                    <input name="date" type="hidden" value="{{\request()->day}}" class="form-control">
+                                                                </div>
+
+
+                                                                <div class="form-group mt-2">
+                                                                    <label for="">
+                                                                        <h3>
+                                                                            Add Conference Abstract
+                                                                        </h3>
+                                                                    </label>
+                                                                    <textarea name="abstract" type="text" class="form-control"
+                                                                              rows="5">{{isset($current_conference->abstract) ? $current_conference->abstract : ''}}</textarea>
+                                                                </div>
+
+
+
+
+
+                                                                @if(\request()->has('cid'))
+
+
+
+                                                                    <h4 class="mt-md-3">Selected Conference Speakers</h4>
+                                                                    <div class=" w-100" style="height: 238px;overflow-y: auto">
+                                                                        <table
+                                                                            class="table table-hover table-bordered table-light text-center">
+                                                                            <thead>
+                                                                            <th>Speaker Email</th>
+                                                                            <th>Edit</th>
+                                                                            <th>Delete</th>
+                                                                            </thead>
+                                                                            <tbody>
+
+                                                                            @foreach($speakers as $sp)
+
+
+                                                                                <tr>
+                                                                                    <td>{{$sp->email}}</td>
+                                                                                    <td><a href="{{\request()->fullUrlWithQuery(['sid' => $sp->id, 'action' => 'edit'])}}" class="btn btn-info"><i
+                                                                                                class="fa fa-edit"></i></a></td>
+                                                                                    <td><a href="{{\request()->fullUrlWithQuery(['sid' => $sp->id, 'action' => 'delete'])}}" class="btn btn-danger"><i
+                                                                                                class="fa fa-trash"></i></a></td>
+                                                                                </tr>
+
+
+                                                                            @endforeach
+
+
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+
+
+
+
+
+
+
+
+
+                                                                    <button type="button"
+                                                                            onclick="$('#AddSpeaker').modal('show')"
+                                                                            class="btn btn-primary w-100" data-toggle="modal"
+                                                                            data-target="#myModal">Add Speaker To List
+                                                                    </button>
+
+
+                                                                @endif
+
+
+                                                            </div>
+                                                        </div>
+
+
+                                                        {{--                                    Requested Conference--}}
+
+                                                        <div class="col-md-6">
+                                                            <h4 class="">Requested Conference</h4>
+                                                            <div class="bg-white p-2"
+                                                                 style="height: 270px;margin-top:22px;overflow-y: auto">
+
+                                                                @foreach($conferences as $conf)
+
+                                                                    <a href="{{\request()->fullUrlWithQuery(['cid' => $conf->id])}}" class="w-100 btn  @if(\request()->has('cid') && \request()->cid == $conf->id ) btn-primary @else btn-outline-dark @endif  mb-2">{{$conf->title}}</a>
+
+
+
+                                                                @endforeach
+
+
+
+
+                                                            </div>
+
+
+
+                                                        </div>
+
+
+                                                        {{--                                    /Requested Conference--}}
+
+
+                                                    </div>
+                                                </div>
+
+                                            @endif
                                         </div>
 
+                                        @if (\request()->has('cid'))
+                                            <button type="submit" class="btn btn-success w-100 mt-2">
 
-                                        {{--                            /Dates--}}
+                                                Update Conference Information
+                                                <i class="fa fa-pencil"></i>
 
+                                            </button>
+                                        @else
+                                            <button type="submit" class="btn btn-success w-100 mt-2">
 
-                                        {{--                            Conference name input--}}
+                                                Create Conference
+                                                <i class="fa fa-plus"></i>
 
-
-                                        @if (\request()->has('day'))
-                                            <div class="col-md-10">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="">
-                                                            <div class="form-group">
-                                                                <label for=""><h6>Conference Title</h6></label>
-                                                                <input type="text" class="form-control">
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label for=""><h6>Speakers Name</h6></label>
-                                                                <input type="text" class="form-control">
-                                                            </div>
-
-
-
-                                                            {{--                            Conference name input--}}
-
-
-
-
-                                                            {{--                                          Added Speakers--}}
-
-
-                                                            <h4>Added Speakers</h4>
-                                                            <div style="overflow-y: auto;height: 200px;">
-                                                                <table class="table table-light table-hover table-bordered text-center" style="">
-                                                                    <thead>
-                                                                    <th>id</th>
-                                                                    <th>SpeakerName</th>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                    <tr>
-                                                                        <td>1</td>
-                                                                        <td>name1</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>2</td>
-                                                                        <td>name2</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>3</td>
-                                                                        <td>name3</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>4</td>
-                                                                        <td>name4</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>5</td>
-                                                                        <td>name5</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>6</td>
-                                                                        <td>name6</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>7</td>
-                                                                        <td>name7</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>8</td>
-                                                                        <td>name8</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>9</td>
-                                                                        <td>name9</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>10</td>
-                                                                        <td>name10</td>
-                                                                    </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-
-
-                                                            <button type="button" onclick="$('#AddSpeaker').modal('show')" class="btn btn-primary w-100" data-toggle="modal" data-target="#myModal">Add Speaker To List</button>
-
-
-
-
-                                                            <div class="form-group mt-2">
-                                                                <label for="">
-                                                                    <h3>
-                                                                        Add Conference Abstract
-                                                                    </h3>
-                                                                </label>
-                                                                <textarea type="text" class="form-control" rows="5"></textarea>
-                                                            </div>
-                                                            {{--                                          /Added Speakers--}}
-                                                        </div>
-                                                    </div>
-
-
-                                                    {{--                                    Requested Conference--}}
-
-                                                    <div class="col-md-6">
-                                                        <h4 class="">Requested Conference</h4>
-                                                        <div class="bg-white p-2" style="height: 270px;margin-top:22px;overflow-y: auto">
-                                                            <a href="" class="w-100 btn btn-primary mb-2">Conference Name</a>
-                                                            <a href="" class="w-100 btn btn-outline-dark mb-2">Conference Name</a>
-                                                            <a href="" class="w-100 btn btn-outline-dark mb-2">Conference Name</a>
-                                                            <a href="" class="w-100 btn btn-outline-dark mb-2">Conference Name</a>
-                                                            <a href="" class="w-100 btn btn-outline-dark mb-2">Conference Name</a>
-                                                            <a href="" class="w-100 btn btn-outline-dark mb-2">Conference Name</a>
-                                                            <a href="" class="w-100 btn btn-outline-dark mb-2">Conference Name</a>
-                                                        </div>
-
-                                                        <h4 class="mt-md-3">Selected Conference Speakers</h4>
-                                                        <div class=" w-100" style="height: 238px;overflow-y: auto">
-                                                            <table class="table table-hover table-bordered table-light text-center">
-                                                                <thead>
-                                                                <th>SpeakerName</th>
-                                                                <th>Edit</th>
-                                                                <th>Delete</th>
-                                                                </thead>
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td>Speakername</td>
-                                                                    <td><a href="" class="btn btn-info"><i class="fa fa-edit"></i></a></td>
-                                                                    <td><a href="" class="btn btn-danger"><i class="fa fa-xing"></i></a></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Speakername</td>
-                                                                    <td><a href="" class="btn btn-info"><i class="fa fa-edit"></i></a></td>
-                                                                    <td><a href="" class="btn btn-danger"><i class="fa fa-xing"></i></a></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Speakername</td>
-                                                                    <td><a href="" class="btn btn-info"><i class="fa fa-edit"></i></a></td>
-                                                                    <td><a href="" class="btn btn-danger"><i class="fa fa-xing"></i></a></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Speakername</td>
-                                                                    <td><a href="" class="btn btn-info"><i class="fa fa-edit"></i></a></td>
-                                                                    <td><a href="" class="btn btn-danger"><i class="fa fa-xing"></i></a></td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-
-
-
-
-
-                                                    {{--                                    /Requested Conference--}}
-
-
-
-
-
-                                                </div>
-                                            </div>
+                                            </button>
 
                                         @endif
 
 
-                                    </div>
-
-                                    @if (\request()->has('day'))
-
-                                    <input type="submit" class="btn btn-success w-100">
 
 
-                                    @endif
 
-                                </form>
+                                    </form>
+
+
+                                @endif
+
+
+
 
                             </div>
                         </div>

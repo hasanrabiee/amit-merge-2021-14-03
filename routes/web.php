@@ -15,6 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 
 
+Route::get('/time', function () {
+    dd(Carbon::now()->format('Y-m-d H:i') , date_default_timezone_get());
+});
+
+Route::get('join-webinar/{webinar}', 'WebController@join_webinar')->name('join-webinar');
+
 
 Auth::routes(['verify' => true]);
 Route::group(['prefix' => 'Auditorium' , 'as' => 'Auditorium.'],function (){
@@ -26,6 +32,9 @@ Route::group(['prefix' => 'Auditorium' , 'as' => 'Auditorium.'],function (){
     Route::get('Index','AuditoriumController@Index')->name('Index');
     Route::get('Chats/{ID}','AuditoriumController@Chats')->name('Chats');
     Route::get('ChatGet','AuditoriumController@ChatGet')->name('ChatGet');
+    Route::post('/UpdateAvatar', 'AuditoriumController@UpdateAvatar')->name('UpdateAvatar');
+    Route::post('/UpdateProfile', 'AuditoriumController@UpdateProfile')->name('UpdateProfile');
+
 
 });
 Route::get('/password/changed','WebController@PassChanged')->name('PassChanged');
@@ -51,6 +60,9 @@ Route::group(['middleware' => ['auth']] , function (){
     Route::group(['prefix' => 'Admin', 'as' => 'Admin.' , 'middleware' => ['Admin']], function () {
 
         Route::get('/conference/create', 'AdminController@AddConferenceIndex')->name('conference-create');
+        Route::post('/conference/create', 'AdminController@AddConferenceAction')->name('conference-create');
+        Route::post('/conference/addSpeaker', 'AdminController@AddSpeaker')->name('AddSpeaker');
+        Route::post('/conference/UpdateSpeaker', 'AdminController@UpdateSpeaker')->name('UpdateSpeaker');
 
 
         Route::get('/', 'AdminController@index');
@@ -59,6 +71,14 @@ Route::group(['middleware' => ['auth']] , function (){
         Route::get('AuditoriumPublish', 'AdminController@AuditoriumPublish')->name('AuditoriumPublish');
         Route::post('AuditoriumPost', 'AdminController@AuditoriumPost')->name('AuditoriumPost');
         Route::post('SpeakerPost', 'AdminController@SpeakerPost')->name('SpeakerPost');
+
+
+        Route::post('/Auditorium/Create', 'AdminController@AuditoriumCreate')->name('AuditoriumCreate');
+        Route::get('/Auditorium/Delete/{id?}', 'AdminController@AuditoriumDelete')->name('AuditoriumDelete');
+
+
+
+
 
         Route::get('index', 'AdminController@index')->name('index');
         Route::get('BackUp', 'AdminController@BackUp')->name('BackUp');
@@ -217,11 +237,15 @@ Route::group(['middleware' => ['auth']] , function (){
 
 
         Route::get('/AddConference', 'ExhibitorController@AddConferenceIndex')->name('AddConference');
+        Route::post('/AddConferenceFinalize', 'ExhibitorController@AddConferenceFinalize')->name('FinalizeConference');
+        Route::post('/AddConferenceSpeaker', 'ExhibitorController@AddConferenceSpeaker')->name('AddSpeaker');
 
 
 
         Route::get('join-meeting/{meeting}', 'ExhibitorController@join_meeting')->name('meeting.join');
 
+
+        Route::get('create-webinar/{conference}', 'ExhibitorController@create_webinar')->name('create-webinar');
 
 
 

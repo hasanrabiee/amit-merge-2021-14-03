@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Speaker extends Model
 {
     protected $fillable = [
-        'email', 'Name', 'UserName', 'password', 'SpeechTitle', 'PreferredDate1', 'PreferredDate2', 'PreferredDate3', 'BoothID', 'StreamUrl', 'StreamID', 'HaveStreamKey'
+        'cid', 'booth','nickname', 'email', 'Name', 'UserName', 'password', 'SpeechTitle', 'PreferredDate1', 'PreferredDate2', 'PreferredDate3', 'BoothID', 'StreamUrl', 'StreamID', 'HaveStreamKey'
     ];
 
     public function Booth()

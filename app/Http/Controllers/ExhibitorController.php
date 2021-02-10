@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\AdminChat;
 use App\booth;
 use App\Chat;
+use App\Conference;
+use App\ConferenceRequest;
 use App\Invitation;
 use App\Jobs;
 use App\Mail\InviteOperators;
+use App\Mail\SpeakerRegister;
 use App\Meeting;
 use App\MeetingRequest;
 use App\Site;
+use App\Speaker;
 use App\Statistics;
 use App\Traits\Uploader;
 use App\User;
@@ -123,6 +127,76 @@ class ExhibitorController extends Controller
     }
 
 
+    public function create_webinar(Conference  $conference) {
+
+        $user =  Zoom::user()->find(env('WEBINAR_MAIL'));
+        $webinar = Zoom::webinar()->make([
+            'topic' => $conference->title,
+            'type' => 5,
+            'password' => '123456',
+            'start_time' => \Carbon\Carbon::now(), // best to use a Carbon instance here.
+            'timezone' => 'Europe/Vienna',
+
+        ]);
+
+        $webinar->settings()->make([
+            'approval_type' => 0,
+            'registration_type' => 2,
+            'enforce_login' => false,
+        ]);
+        $user->webinars()->save($webinar);
+
+
+        $conference->webinar_id = $webinar->id;
+        $conference->webinar_name =   $webinar->topic;
+        $conference->webinar_password =  $webinar->password;
+        $conference->start_url = $webinar->start_url;
+        $conference->save();
+
+
+        $this->start_webinar($conference);
+
+        return view('zoom-webinar.start')->with([
+            'webinar' => $conference,
+            'role' => '1',
+
+        ]);
+
+    }
+
+    public function start_webinar(Conference $conference){
+
+
+        $user =  \MacsiDigital\Zoom\Facades\Zoom::user()->find(env('WEBINAR_MAIL'));
+        foreach ($user->webinars as $current_webinar){
+
+            if($current_webinar->id != $conference->webinar_id){
+
+                \MacsiDigital\Zoom\Facades\Zoom::webinar()->find($current_webinar->id)->endWebinar();
+                \MacsiDigital\Zoom\Facades\Zoom::webinar()->find($current_webinar->id)->delete();
+//                $db_webinar = webinar::where('webinar_id', $current_webinar->id)->first();
+//                if($db_webinar != null){
+//                    $db_webinar->delete();
+//                }
+
+            }
+
+
+        }
+
+
+        $role = 1;
+        if (!$conference->started) {
+            $conference->update([
+                'started' => true
+            ]);
+        }
+
+
+
+
+    }
+
     public function join_meeting($meeting) {
 
 
@@ -174,7 +248,7 @@ class ExhibitorController extends Controller
            'topic' => $temp1->title,
            'type' => 2,
            'start_time' => Carbon::now(), // best to use a Carbon instance here.
-           'timezone' => 'Asia/Tehran', // best to use a Carbon instance here.
+           'timezone' => 'Europe/Vienna', // best to use a Carbon instance here.
        ]);
 
        $meeting->settings()->make([
@@ -329,13 +403,161 @@ class ExhibitorController extends Controller
 
     }
 
+
+
+
+    // Add Conference Starts HERE
+
+
     public function AddConferenceIndex(Request $request)
     {
 
-        return view('Exhibitor.AddConference');
+        $current_booth = $this->Booth();
+
+        $speakers = Speaker::where('booth', $current_booth->id)->get();
+
+        $can_submit = "yes";
+        $current_conference = (object)[];
+
+        if(Auth::user()->finalize_conference == 'yes'){
+
+
+
+
+            $can_submit = "no";
+            $current_conference = ConferenceRequest::where('booth', $current_booth->id)->first();
+
+            if(\App\Conference::where('booth', $current_conference->booth)->first() != null) {
+                Alert::success("You're conference has been approved");
+
+            }
+
+            else{
+                Alert::success('You have a submitted conference');
+
+            }
+
+
+
+
+        }
+
+
+        return view('Exhibitor.AddConference')->with([
+            'speakers' => $speakers,
+            'can_submit' => $can_submit,
+            'current_conference' => $current_conference,
+        ]);
 
 
     }
+
+    public function AddConferenceSpeaker(Request $request) {
+
+
+
+        $request->validate([
+            'Name' => 'required|string',
+            'email' => 'required|string|unique:speakers',
+            'UserName' => 'required|string|unique:speakers',
+            'password' => 'required|string|min:8|confirmed|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!@#$%^&*]).*$/',
+
+        ]);
+
+        $current_booth = $this->Booth();
+
+
+
+        $Speaker = Speaker::create([
+            'Name' => $request->Name,
+            'email' => $request->email,
+            'UserName' => $request->UserName,
+            'password' => $request->password,
+            'SpeechTitle' => 'inherit from booth',
+            'PreferredDate1' => Carbon::now(),
+            'PreferredDate2' => Carbon::now(),
+            'PreferredDate3' => Carbon::now(),
+            'booth' => $current_booth->id,
+            'cid' => '0',
+
+        ]);
+
+
+        $data = [
+            'Name' => $request->Name,
+            'email' => $request->email,
+            'UserName' => $request->UserName,
+            'password' => $request->password,
+            'Speech Title' => 'Account Registered Waiting for Verification',
+        ];
+        //Mail::to($Speaker->email)->send(new SpeakerRegister($data));
+
+        Alert::success('Speaker Registered Successfully');
+
+        return redirect()->back();
+
+
+    }
+
+
+    public function AddConferenceFinalize(Request $request){
+
+
+        $request->validate([
+
+            'date1' => 'required|date',
+            'date2' => 'required|date',
+            'date3' => 'required|date',
+            'title' => 'required|string',
+            'abstract' => 'required|string',
+
+        ]);
+
+        $current_booth = $this->Booth();
+
+
+        ConferenceRequest::create([
+
+            "booth" => $current_booth->id,
+            "date1" => $request->date1,
+            "date2" => $request->date2,
+            "date3" => $request->date3,
+            "title" => $request->title,
+            "abstract" => $request->abstract,
+
+
+        ]);
+
+        $conf = ConferenceRequest::where('booth', $current_booth->id)->first();
+
+
+        $speakers = Speaker::where('booth', $current_booth->id)->get();
+
+        foreach ($speakers as $sp){
+            $sp->cid = $conf->id;
+            $sp->save();
+        }
+
+
+
+
+
+
+        $user = Auth::user();
+        $user->finalize_conference = 'yes';
+        $user->save();
+
+        Alert::success('Conference submitted successfully');
+
+        return redirect()->back();
+
+
+
+    }
+
+
+    // Add Conference Ends HERE
+
 
 
     public function __construct()
@@ -361,7 +583,7 @@ class ExhibitorController extends Controller
 
     public function Booth()
     {
-        return booth::where('UserID', Auth::id())->get()[0];
+        return booth::where('UserID', Auth::id())->first();
 
     }
 

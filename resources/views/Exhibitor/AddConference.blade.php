@@ -7,8 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Global stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <link href="{{asset("css/bootstrap-limitless.css")}}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+          type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="{{asset("css/bootstrap-limitless.css")}}" rel="stylesheet" type="text/css">
     <link href="{{asset("css/layout.min.css")}}" rel="stylesheet" type="text/css">
     <link href="{{asset("css/components.min.css")}}" rel="stylesheet" type="text/css">
     <link href="{{asset("css/colors.min.css")}}" rel="stylesheet" type="text/css">
@@ -71,14 +74,48 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="" class="w-100">
-                                     <div class="row">
+                                <form action="{{route('Exhibitor.FinalizeConference')}}" method="post" class="w-100">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h4>Speaker Name Table</h4>
+                                            <div style="overflow-y: auto;height: 450px;">
+                                                <table class="table table-light table-hover table-bordered text-center"
+                                                       style="">
+                                                    <thead>
+                                                    <th>id</th>
+                                                    <th>SpeakerName</th>
+                                                    </thead>
+                                                    <tbody>
+
+
+                                                    @foreach($speakers as $speaker)
+
+                                                        <tr>
+                                                            <td>{{$loop->index + 1}}</td>
+                                                            <td>{{$speaker->email}}</td>
+                                                        </tr>
+
+                                                    @endforeach
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+
+                                            @if($can_submit == 'yes')
+                                            <button type="button" onclick="$('#AddSpeaker').modal('show')"
+                                                    class="btn btn-primary w-100">Add Speaker To List
+                                            </button>
+                                                @endif
+                                        </div>
+
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">
                                                     Please Write Your Conference Title
                                                 </label>
-                                                <input type="text" class="form-control">
+                                                <input name="title" value="{{isset($current_conference->title) ? $current_conference->title : ''}}" type="text" class="form-control" @if(isset($current_conference->title)) disabled @endif>
                                             </div>
 
 
@@ -86,208 +123,161 @@
                                                 <label for="">
                                                     Please Write Abstract Your Conference
                                                 </label>
-                                                <textarea type="text" class="form-control" rows="10"></textarea>
+                                                <textarea name="abstract" type="text" class="form-control"
+                                                          rows="10" @if(isset($current_conference->abstract)) disabled @endif>{{isset($current_conference->abstract) ? $current_conference->abstract : ''}}</textarea>
                                             </div>
                                         </div>
 
                                         <div class="col-md-4">
-                                            <h4>Speaker Name Table</h4>
-                                                <div style="overflow-y: auto;height: 450px;">
-                                                    <table class="table table-light table-hover table-bordered text-center" style="">
-                                                        <thead>
-                                                        <th>id</th>
-                                                        <th>SpeakerName</th>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>name1</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>2</td>
-                                                                <td>name2</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3</td>
-                                                                <td>name3</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>4</td>
-                                                                <td>name4</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>5</td>
-                                                                <td>name5</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>6</td>
-                                                                <td>name6</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>7</td>
-                                                                <td>name7</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>8</td>
-                                                                <td>name8</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>9</td>
-                                                                <td>name9</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-
-
-
-
-                                            <div class="modal fade" role="dialog" tabindex="-1" id="AddSpeaker">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h4 class="text-dark">Speaker Information</h4>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                    aria-label="Close">
-                                                                <span aria-hidden="true">×</span></button>
-                                                        </div>
-                                                        <div class="modal-body text-dark">
-                                                            <div class="form-group">
-                                                                <label for="">
-                                                                    Username:
-                                                                </label>
-                                                                <input type="text" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="">
-                                                                    Nickname:
-                                                                </label>
-                                                                <input type="text" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="">
-                                                                    Email:
-                                                                </label>
-                                                                <input type="email" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="">
-                                                                    Password
-                                                                </label>
-                                                                <input type="password" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="">
-                                                                   Password Confirmation
-                                                                </label>
-                                                                <input type="password" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-
-
-                                                            <button class="btn btn-success w-100">Save</button>
-                                                            <button class="btn btn-light btn-block"
-                                                                    data-dismiss="modal" type="button">
-                                                                {{__('message.Close')}}
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            <h4 class="mt-3 mt-md-0">Please Suggest Three Dates Which You Prefer For
+                                                Your Conference</h4>
+                                            <div class="form-group">
+                                                <label for="">Prefer Date1 :</label>
+                                                <input name="date1" value="{{isset($current_conference->date1)  ? $current_conference->date1 : ''}}" @if (isset($current_conference->date1))
+                                                    disabled="disabled"
+                                                @endif type="date" class="form-control">
                                             </div>
-
-
-                                            <button type="button" onclick="$('#AddSpeaker').modal('show')" class="btn btn-primary w-100">Add Speaker To List</button>
+                                            <div class="form-group">
+                                                <label for="">Prefer Date2 :</label>
+                                                <input name="date2" value="{{isset($current_conference->date2)  ? $current_conference->date2 : ''}}" @if (isset($current_conference->date2))
+                                                disabled="disabled"
+                                                       @endif type="date" class="form-control">                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Prefer Date3 :</label>
+                                                <input name="date3" value="{{isset($current_conference->date3)  ? $current_conference->date3 : ''}}" @if (isset($current_conference->date3))
+                                                disabled="disabled"
+                                                       @endif type="date" class="form-control">                                            </div>
                                         </div>
-                                         <div class="col-md-4">
-                                             <h4 class="mt-3 mt-md-0">Please Suggest Three Dates Which You Prefer For Your Conference</h4>
-                                             <div class="form-group">
-                                                 <label for="">Prefer Date1 :</label>
-                                                 <input type="date" class="form-control">
-                                             </div>
-                                             <div class="form-group">
-                                                 <label for="">Prefer Date2 :</label>
-                                                 <input type="date" class="form-control">
-                                             </div>
-                                             <div class="form-group">
-                                                 <label for="">Prefer Date3 :</label>
-                                                 <input type="date" class="form-control">
-                                             </div>
-                                         </div>
                                     </div>
-                                    <input type="text" class="mt-3 btn btn-success w-100" value="Submit Your Request">
+                                    @if($can_submit == 'yes')
+
+                                    <input type="submit" class="mt-3 btn btn-success w-100" value="Submit Your Request">
+
+                                        @endif
+
+
+
+
+                                    @if (\App\Conference::where('booth', $current_conference->booth)->first() != null)
+
+                                        @php
+                                        $conference = \App\Conference::where('booth', $current_conference->booth)->first();
+                                        @endphp
+
+                                        @if(\Carbon\Carbon::now()->format('Y-m-d') == \Carbon\Carbon::parse($conference->start_date)->format('Y-m-d')  &&  \Carbon\Carbon::now()->format('H:i') >=  \Carbon\Carbon::parse($conference->start_time)->format('H:i')  &&  \Carbon\Carbon::parse($conference->end_time)->format('H:i') >= \Carbon\Carbon::now()->format('H:i') )
+
+
+                                            <a href="{{route('Exhibitor.create-webinar', $conference->id)}}" class="btn btn-warning btn-block mt-3">
+
+                                                    Click to start your conference
+
+
+                                                <i class="fa fa-bullhorn"></i>
+
+                                            </a>
+                                        @else
+
+                                        <button class="btn btn-block btn-dark mt-3">
+
+                                            Your conference has not started yet
+                                            <i class="fa fa-hourglass"></i>
+
+                                        </button>
+
+                                            @endif
+
+
+
+                                    @endif
+
                                 </form>
 
-
-
-
-{{--                                Boot strap Modal Start Here !!!--}}
-
-
-
-                            <!-- Trigger the modal with a button -->
-{{--                                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>--}}
-
-                                <!-- Modal -->
-                                <div id="myModal" class="modal fade" role="dialog">
-                                    <div class="modal-dialog text-dark">
-
-                                        <!-- Modal content-->
+                                <div class="modal fade" role="dialog" tabindex="-1" id="AddSpeaker">
+                                    <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title">Please Fill Your Speaker Information</h4>
+                                                <h4 class="text-dark">Speaker Information</h4>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">×</span></button>
                                             </div>
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <label for="">Username:</label>
-                                                    <input type="text" class="form-control">
-                                                </div>
+                                            <form action="{{route('Exhibitor.AddSpeaker')}}" method="post">
+                                                <div class="modal-body text-dark">
 
-                                                <div class="form-group">
-                                                    <label for="">Email:</label>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Password:</label>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="">Password Confirmation:</label>
-                                                    <input type="text" class="form-control">
-                                                </div>
+                                                    @csrf
 
-                                                <input type="submit" value="Add to List" class="btn btn-success w-100">
+                                                    <div class="form-group">
+                                                        <label for="">
+                                                            Username:
+                                                        </label>
+                                                        <input name="UserName" type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">
+                                                            Nickname:
+                                                        </label>
+                                                        <input name="Name" type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">
+                                                            Email:
+                                                        </label>
+                                                        <input name="email" type="email" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">
+                                                            Password
+                                                        </label>
+                                                        <input name="password" type="password" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">
+                                                            Password Confirmation
+                                                        </label>
+                                                        <input name="password_confirmation" type="password" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
 
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default w-100" data-dismiss="modal">Close</button>
-                                            </div>
+                                            <button class="btn btn-success w-100">Save</button>
+                                            <button class="btn btn-light btn-block"
+                                                    data-dismiss="modal" type="button">
+                                                {{__('message.Close')}}
+                                            </button>
                                         </div>
+                                            </form>
 
-                                    </div>
+                                        </div>
                                 </div>
-
-
-
-{{--                                Bootstrap Modal End Here !!! --}}
-
-
-
-
                             </div>
+
+
+                        {{--                                Boot strap Modal Start Here !!!--}}
+
+
+
+                        <!-- Trigger the modal with a button -->
+                        {{--                                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>--}}
+
+                        <!-- Modal -->
+
+
+
+                            {{--                                Bootstrap Modal End Here !!! --}}
+
+
                         </div>
-                        <!-- /traffic sources -->
                     </div>
+                    <!-- /traffic sources -->
                 </div>
-                <!-- /main charts -->
             </div>
-            <!-- /content area -->
+            <!-- /main charts -->
         </div>
+        <!-- /content area -->
+    </div>
 
 
-
-        <!--/Main Content  -->
+    <!--/Main Content  -->
     </div>
 
 

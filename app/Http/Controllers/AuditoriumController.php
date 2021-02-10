@@ -4,17 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Auditorium;
 use App\AuditoriumChat;
+use App\Conference;
 use App\Jobs\FinishStream;
 use App\Site;
 use App\Speaker;
+use App\Traits\Uploader;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class AuditoriumController extends Controller
 {
+    use  Uploader;
 
 
     public function ChangePassword(Request $request){
@@ -39,54 +43,34 @@ class AuditoriumController extends Controller
 
     }
 
-    public function StreamKey(Request $request){
-        /*$Speaker = Speaker::find($request->SpeakerID);
-        $Slug = $Speaker->Name . rand(10000,99999);
-        $Data = array (
-            'title' => "$Speaker->SpeechTitle",
-            'slug' => "$Slug",
-            'fps' => '30',
-            'convert_info' =>
-                array (
-                    0 => array(
-                        'audio_bitrate' => '32',
-                        'video_bitrate' => '100',
-                        'resolution_width' => '480',
-                        'resolution_height' => '480',
-                    ),
-                    1 => array(
-                        'audio_bitrate' => '64',
-                        'video_bitrate' => '200',
-                        'resolution_width' => '720',
-                        'resolution_height' => '720',
-                    ),
-                    2 => array(
-                        'audio_bitrate' => '128',
-                        'video_bitrate' => '400',
-                        'resolution_width' => '1080',
-                        'resolution_height' => '1080',
-                    )
-                ),
-            'mode' => 'push',
-            'type' => 'low_latency',
-        );
-        $ch = curl_init();
-        $headers = array();
-        $headers[] = 'Authorization: Apikey 8df667a1-a1ed-46b1-9005-6a43237f0715';
-        $headers[] = 'Content-Type: application/json';
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_URL, 'https://napi.arvancloud.com/live/2.0/streams');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($Data));
-        $result = curl_exec($ch);
-        if (curl_errno($ch)) {
-            echo 'Error:' . curl_error($ch);
-        }
-        curl_close($ch);
+    public function UpdateAvatar(Request $request)
+    {
+        $request->validate([
+            'Avatar' => 'image|required'
+        ]);
+        $User = Speaker::find(Session::get('Speaker')->id);
+        $User->avatar = $this->UploadPic($request, 'Avatar', 'UserProfiles', 'Profile');
+        $User->save();
+        return redirect()->back();
+    }
+    public function UpdateProfile(Request $request)
+    {
+        $request->validate([
+            'PdfFile' => 'nullable',
+            'abstract' => 'nullable'
+        ]);
+        $User = Speaker::find(Session::get('Speaker')->id);
+        $User->pdf = $request->hasFile('PdfFile') ? $this->S3Doc($request, 'PdfFile') : $User->pdf;
+        $User->abstract = $request->has('abstract') ? $request->abstract : $User->abstract;
 
-        $Res = json_decode($result,true);
-*/
+        $User->save();
+        Alert::success('Profile updated successfully');
+        return redirect()->back();
+    }
+
+
+    public function StreamKey(Request $request){
+
         $Speaker = Speaker::find($request->SpeakerID);
         $Site = Site::find(1);
             $Speaker->StreamID = $Site->StreamKey;
@@ -132,7 +116,16 @@ class AuditoriumController extends Controller
     }
     public function Index(){
         if (Session::get('Speaker') != null){
-            return view('Auditorium.main');
+
+            $speaker = Speaker::find(Session::get('Speaker')->id);
+            $conference = Conference::where('booth', $speaker->booth)->first();
+            return view('Auditorium.main')->with([
+                'conference' => $conference,
+            ]);
+
+
+
+
         }else{
             return redirect()->route('Auditorium.Login');
         }
