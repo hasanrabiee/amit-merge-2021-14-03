@@ -16,7 +16,7 @@ class FixTableSpeakkkers extends Migration
         Schema::table('speakers', function (Blueprint $table) {
             $table->string('avatar')->nullable();
             $table->string('pdf')->nullable();
-            $table->string('abstract')->nullable();
+            $table->text('abstract')->nullable();
         });
     }
 

@@ -115,7 +115,7 @@
                                                 <label for="">
                                                     Please Write Your Conference Title
                                                 </label>
-                                                <input name="title" value="{{isset($current_conference->title) ? $current_conference->title : ''}}" type="text" class="form-control" @if(isset($current_conference->title)) disabled @endif>
+                                                <input name="title" value="{{\request()->old('title')}} {{isset($current_conference->title) ? $current_conference->title : ''}}" type="text" class="form-control" @if(isset($current_conference->title)) disabled @endif>
                                             </div>
 
 
@@ -124,7 +124,7 @@
                                                     Please Write Abstract Your Conference
                                                 </label>
                                                 <textarea name="abstract" type="text" class="form-control"
-                                                          rows="10" @if(isset($current_conference->abstract)) disabled @endif>{{isset($current_conference->abstract) ? $current_conference->abstract : ''}}</textarea>
+                                                          rows="10" @if(isset($current_conference->abstract)) disabled @endif>{{\request()->old('abstract')}} {{isset($current_conference->abstract) ? $current_conference->abstract : ''}}</textarea>
                                             </div>
                                         </div>
 

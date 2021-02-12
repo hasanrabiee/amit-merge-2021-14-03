@@ -20,6 +20,7 @@ Route::get('/time', function () {
 });
 
 Route::get('join-webinar/{webinar}', 'WebController@join_webinar')->name('join-webinar');
+Route::get('leave-meeting', 'WebController@leave_meeting')->name('leave-meeting');
 
 
 Auth::routes(['verify' => true]);

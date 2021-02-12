@@ -26,6 +26,15 @@ class WebController extends Controller
 
     use  Uploader;
 
+    public function leave_meeting(Request $request) {
+
+
+        Alert::success('Successfully left the meeting');
+        return redirect()->to('/');
+
+
+
+    }
 
     public function join_webinar( $conference){
 
@@ -143,7 +152,7 @@ class WebController extends Controller
     public function AuditoriumPlay($id){
 
 
-        $conference = Conference::find($id)->first();
+        $conference = Conference::where('id',$id)->first();
 
         return view('AuditoriumAbstract')->with([
 

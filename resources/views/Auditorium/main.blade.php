@@ -163,15 +163,14 @@
                                 <div class="mt-3">
                                     <div class="row bg-white text-dark p-2 m-1" style="border-radius: 5px;">
                                         <div class="col-md-6">
-                                            <p>Speaker Name: sani speaker</p>
-                                            <p>Speaker Username: sani test</p>
-                                            <p>Speaker Title: test</p>
+                                            <p>Speaker Name: {{\App\Speaker::find(\Illuminate\Support\Facades\Session::get('Speaker')->id)->Name}}</p>
+                                            <p>Speaker Username: {{\App\Speaker::find(\Illuminate\Support\Facades\Session::get('Speaker')->id)->UserName}}</p>
+                                            <p>Speaker Title: {{$conference->title}}</p>
                                         </div>
                                         <div class="col-md-6">
-                                            <p>Conference Date: 2020-12-24</p>
-                                            <p>Start Time: 09:00</p>
-                                            <p>End Time: 22:00</p>
-                                            <p>Conference Time: 780 Minutes</p>
+                                            <p>Conference Date: {{$conference->start_date}}</p>
+                                            <p>Start Time: {{$conference->start_time}}</p>
+                                            <p>End Time: {{$conference->end_time}}</p>
                                         </div>
                                     </div>
                                     <div class="row">
