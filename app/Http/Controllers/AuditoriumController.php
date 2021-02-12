@@ -117,8 +117,8 @@ class AuditoriumController extends Controller
     public function Index(){
         if (Session::get('Speaker') != null){
 
-            $speaker = Speaker::find(Session::get('Speaker')->id);
-            $conference = Conference::where('booth', $speaker->booth)->first();
+            $speaker = Speaker::where('id',Session::get('Speaker')->id)->first();
+            $conference = Conference::where('crid', $speaker->cid)->first();
             return view('Auditorium.main')->with([
                 'conference' => $conference,
             ]);

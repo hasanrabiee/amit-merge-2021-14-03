@@ -44,39 +44,6 @@ class VisitorController extends Controller
     }
 
 
-    public function leave_meeting(Request $request){
-
-
-        if(Auth::user()->Rule == 'Exhibitor'){
-
-            $meeting_id = $request->meeting_id;
-
-            $meeting = Meeting::find($meeting_id);
-
-
-
-            Zoom::meeting()->find($meeting_id)->endMeeting();
-            Zoom::meeting()->find($meeting_id)->delete();
-
-            $meeting->delete();
-
-
-            Alert::success('You left the meeting and, Meeting Has ended for everyone');
-
-        }
-
-        Alert::success('You left the meeting successfully');
-
-        return redirect()->back();
-
-
-
-
-
-
-    }
-
-
 
 
     public function MeetingScheduleIndex($company_id){
@@ -270,11 +237,8 @@ class VisitorController extends Controller
 
     public function leave_meeting(Request $request) {
 
-
         Alert::success('Successfully left the meeting');
         return redirect()->to('/');
-
-
 
     }
 

@@ -51,6 +51,22 @@ class AdminController extends Controller
         $current_speakers = "";
 
 
+        if ($request->has('update')) {
+
+            $current_conference = \request()->has('cid') ? ConferenceRequest::where('id', \request()->cid)->first() : "";
+
+            $current_conference->title = $request->title ?? '';
+            $current_conference->abstract = $request->abstract ?? '';
+
+            $current_conference->save();
+
+            Alert::success('Conference Updated Successfully');
+
+            return redirect()->back();
+
+
+        }
+
         if ($request->has('sid')) {
 
             $current_speakers = Speaker::where('id', \request()->sid)->first();
