@@ -778,7 +778,7 @@ class AdminController extends Controller
             "start_time" => $request->start_time,
             "end_time" => $request->end_time,
             "title" => $conference_request->title,
-            "abstract" => $conference_request->title,
+            "abstract" => $conference_request->abstract,
             "hall" => $request->hall,
             "crid" => $conference_request->id,
 
