@@ -158,7 +158,7 @@
 
 
 
-                                    @if (\App\Conference::where('booth', $current_conference->booth)->first() != null)
+                                    @if (isset($current_conference->booth) && \App\Conference::where('booth', $current_conference->booth)->first() != null)
 
                                         @php
                                         $conference = \App\Conference::where('booth', $current_conference->booth)->first();
