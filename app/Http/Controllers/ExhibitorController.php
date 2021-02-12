@@ -451,7 +451,15 @@ class ExhibitorController extends Controller
 
 
     }
+    public function leave_meeting(Request $request) {
 
+
+        Alert::success('Successfully left the meeting');
+        return redirect()->to('/');
+
+
+
+    }
     public function AddConferenceSpeaker(Request $request) {
 
 
