@@ -268,6 +268,15 @@ class VisitorController extends Controller
 
     }
 
+    public function leave_meeting(Request $request) {
+
+
+        Alert::success('Successfully left the meeting');
+        return redirect()->to('/');
+
+
+
+    }
 
     public function index()
     {
