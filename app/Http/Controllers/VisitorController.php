@@ -128,7 +128,7 @@ class VisitorController extends Controller
 
 
         $exhibi = User::where('id', $company_id)->first();
-        $company = booth::where('id', $exhibi->CompanyID);
+        $company = booth::where('id', $exhibi->CompanyID)->first();
 
         return view('Visitor.requestMeeting')->with([
             'company' => $company,
