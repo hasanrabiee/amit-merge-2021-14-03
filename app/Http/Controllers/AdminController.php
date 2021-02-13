@@ -50,23 +50,9 @@ class AdminController extends Controller
         $speakers = "";
         $current_speakers = "";
 
-        dd($request->all());
-
-        if ($request->has('update')) {
-
-            $current_conference = \request()->has('cid') ? ConferenceRequest::where('id', \request()->cid)->first() : "";
-
-            $current_conference->title = $request->title ?? '';
-            $current_conference->abstract = $request->abstract ?? '';
-
-            $current_conference->save();
-
-            Alert::success('Conference Updated Successfully');
-
-            return redirect()->back();
 
 
-        }
+
 
         if ($request->has('sid')) {
 
@@ -129,6 +115,26 @@ class AdminController extends Controller
             'abstract' => 'required|string',
 
         ]);
+
+
+
+        if ($request->has('update')) {
+
+            $current_conference = \request()->has('cid') ? ConferenceRequest::where('id', \request()->cid)->first() : "";
+
+            $current_conference->title = $request->title ?? '';
+            $current_conference->abstract = $request->abstract ?? '';
+
+            $current_conference->save();
+
+            Alert::success('Conference Updated Successfully');
+
+            return redirect()->back();
+
+
+        }
+
+
         $current_booth = 0;
 
         ConferenceRequest::create([
