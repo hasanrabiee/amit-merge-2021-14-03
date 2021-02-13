@@ -234,9 +234,31 @@
                                                                 <td>
                                                                     <div class="btn-group w-100">
 
-                                                                        <a  class="btn btn-primary w-100" href="{{route('Exhibitor.meeting.join', $meet_req->id )}}">
-                                                                            Enter Meeting
-                                                                        </a>
+                                                                        @if (\Carbon\Carbon::today() == \Carbon\Carbon::parse($conference->start_date) and  \Carbon\Carbon::now()->gte(Carbon\Carbon::parse($conference->start_time)) and \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($conference->end_time)) )
+
+                                                                            <a  class="btn btn-primary w-100" href="{{route('Exhibitor.meeting.join', $meet_req->id )}}">
+                                                                                Enter Meeting
+
+                                                                            </a>
+
+                                                                            @elseif (\Carbon\Carbon::today() == \Carbon\Carbon::parse($conference->start_date) and  \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($conference->start_time))  )
+                                                                            <button disabled=""  class="btn btn-dark w-100">
+                                                                                Meeting not started yet
+                                                                            </button>
+
+
+                                                                        @else
+
+                                                                            <button disabled=""  class="btn btn-dark w-100">
+                                                                                Meeting is over
+                                                                            </button>
+
+
+
+                                                                        @endif
+
+
+
                                                                         <a class="btn btn-danger w-100" href="{{route('Exhibitor.MeetingReject',$meet_req->id )}}">
                                                                             Reject
                                                                         </a>

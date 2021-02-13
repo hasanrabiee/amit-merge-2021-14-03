@@ -50,6 +50,7 @@ class AdminController extends Controller
         $speakers = "";
         $current_speakers = "";
 
+        dd($request->all());
 
         if ($request->has('update')) {
 
