@@ -42,7 +42,7 @@
                 <div>
                     <br>
                     <p style="font-size: 36px;color: white" class="">
-                        Request For Meeting to Company Name
+                        Request For Meeting to {{$company->CompanyName}}
                     </p>
                 </div>
             </div>
