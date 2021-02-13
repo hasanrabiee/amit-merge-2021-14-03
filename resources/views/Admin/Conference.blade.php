@@ -367,6 +367,7 @@
 
                                         @if (\request()->has('cid'))
                                             <input type="hidden" name="update" value="1">
+                                            <input type="hidden" name="cid" value="{{\request()->cid}}">
                                             <button type="submit" class="btn btn-success w-100 mt-2">
 
                                                 Update Conference Information
