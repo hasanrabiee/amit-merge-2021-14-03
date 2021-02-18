@@ -218,7 +218,7 @@
                                                             @else
 
                                                                 <button disabled=""  class="btn btn-dark w-100">
-                                                                    Meeting is over
+                                                                    No Action
                                                                 </button>
 
 
