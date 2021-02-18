@@ -62,7 +62,16 @@
             },
         });
         ZoomMtg.init({
+            @if (\Illuminate\Support\Facades\Auth::user()->Rule = 'Visitor')
+            leaveUrl: `{{route('Visitor.meeting.leave')}}`,
+
+            @else
+
             leaveUrl: `/leave-meeting?meeting_id=${meeting_id.value}`,
+
+
+
+            @endif
             isSupportAV: true,
             isSupportChat: true,
             success: function (res) {

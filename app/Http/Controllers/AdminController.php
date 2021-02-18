@@ -963,7 +963,6 @@ class AdminController extends Controller
 
     public function leave_meeting(Request $request) {
 
-        dd('admin controller');
 
         Alert::success('Successfully left the meeting');
         return redirect()->to('/');

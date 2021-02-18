@@ -454,7 +454,6 @@ class ExhibitorController extends Controller
     public function leave_meeting(Request $request) {
 
 
-        dd('exihibitr controller');
         Alert::success('Successfully left the meeting');
         return redirect()->to('/');
 
