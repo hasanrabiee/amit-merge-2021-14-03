@@ -121,7 +121,7 @@
 
 
 
-                                @if (\Carbon\Carbon::parse($time->start_time)->toTimeString() > \Carbon\Carbon::now()->toTimeString())
+                                @if (\Carbon\Carbon::parse($time->start_time)->gte(\Carbon\Carbon::now()) )
 
 
 
