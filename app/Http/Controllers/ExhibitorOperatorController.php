@@ -204,7 +204,7 @@ class ExhibitorOperatorController extends Controller
                 $ch->Status = 'Viewed';
                 $ch->save();
             }
-            return view('Exhibitor-Operator.inbox')->with(['Booth' => $Booth, 'Users' => $Users, 'Chat' => $Chat]);
+            return view('Exhibitor-Operator.Inbox')->with(['Booth' => $Booth, 'Users' => $Users, 'Chat' => $Chat]);
         }
 
 
@@ -216,7 +216,7 @@ class ExhibitorOperatorController extends Controller
                 $Users[] = User::find($user->id);
             }
         }
-        return view('Exhibitor-Operator.inbox')->with(['Booth' => $Booth, 'Users' => $Users]);
+        return view('Exhibitor-Operator.Inbox')->with(['Booth' => $Booth, 'Users' => $Users]);
     }
 
 
