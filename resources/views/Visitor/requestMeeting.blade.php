@@ -121,12 +121,25 @@
 
 
 
+                                @if (\Carbon\Carbon::parse($time->start_time)->toTimeString() > \Carbon\Carbon::now()->toTimeString())
+
+
+                                    <a href=""  class="btn btn-secondary mb-2 w-100">
+                                        {{                            \Carbon\Carbon::parse($time->start_time)->toTimeString() }}
+                                    </a>
+
+                                @else
 
 
 
                                     <a href="{{\request()->fullUrlWithQuery(['Day' => \request()->Day, 'time' => \Carbon\Carbon::parse($time->start_time)->toTimeString()])}}"  class="btn btn-success mb-2 w-100">
                                         {{                            \Carbon\Carbon::parse($time->start_time)->toTimeString() }}
                                     </a>
+
+
+                                @endif
+
+
 
 
 
