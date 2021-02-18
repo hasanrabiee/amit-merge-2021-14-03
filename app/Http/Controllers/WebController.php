@@ -31,7 +31,7 @@ class WebController extends Controller
     use  Uploader;
 
     public function leave_meeting(Request $request) {
-
+dd('in web controller');
 
         Alert::success('Successfully left the meeting');
         return redirect()->to('/');

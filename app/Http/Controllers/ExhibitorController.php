@@ -454,6 +454,7 @@ class ExhibitorController extends Controller
     public function leave_meeting(Request $request) {
 
 
+        dd('exihibitr controller');
         Alert::success('Successfully left the meeting');
         return redirect()->to('/');
 
@@ -575,10 +576,7 @@ class ExhibitorController extends Controller
 
         $this->middleware(function ($request, $next) {
 
-            if (Auth::user()->Rule == "Visitor") {
-                return $next($request);
 
-            }
 
             if (booth::where('UserID', Auth::id())->get()[0]->StepTwo == 'Passed') {
                 return $next($request);
