@@ -121,7 +121,7 @@
 
 
 
-                                @if (\Carbon\Carbon::parse($time->start_time)->lt(\Carbon\Carbon::now()) )
+                                @if ( \Carbon\Carbon::parse($time->start_time)->toDateString() == \Carbon\Carbon::today() && \Carbon\Carbon::parse($time->start_time)->toTimeString() < \Carbon\Carbon::now()->toTimeString())
 
 
 
