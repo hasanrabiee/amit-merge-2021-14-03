@@ -574,6 +574,12 @@ class ExhibitorController extends Controller
 
 
         $this->middleware(function ($request, $next) {
+
+            if (Auth::user()->Rule == "Visitor") {
+                dd(1);
+
+            }
+
             if (booth::where('UserID', Auth::id())->get()[0]->StepTwo == 'Passed') {
                 return $next($request);
             }
