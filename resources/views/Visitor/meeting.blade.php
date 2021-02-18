@@ -199,30 +199,29 @@
                                                                 Your Meeting Request has been Accepted</h4>
 
 
-                                                            @if($meeting_exhibitor->is_started == true)
+                                                            @if (\Carbon\Carbon::today()->toDateString() == \Carbon\Carbon::parse($meeting_exhibitor->request_time)->toDateString() and  \Carbon\Carbon::now()->gte(Carbon\Carbon::parse($meeting_exhibitor->request_time)) and \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($meeting_exhibitor->request_time)->addMinutes(30)) )
 
                                                                 <a href="{{route('Visitor.meeting.join', $meeting_exhibitor->meeting_id )}}" class="btn btn-block btn-primary">
                                                                     <i class="fa fa-bullhorn"></i>
                                                                     Enter Meeting
                                                                 </a>
 
-
-                                                            @else
-
-
-                                                                <button class="btn btn-block btn-primary" disabled>
-                                                                    <i class="fa fa-hourglass"></i>
-                                                                    Meeting Has not Been Started Yet
+                                                            @elseif (\Carbon\Carbon::today()->toDateString() == \Carbon\Carbon::parse($meeting_exhibitor->request_time)->toDateString() and  \Carbon\Carbon::now()->toTimeString() < \Carbon\Carbon::parse($meeting_exhibitor->request_time)->toTimeString()  )
+                                                                <button disabled=""  class="btn btn-dark w-100">
+                                                                    Meeting not started yet
                                                                 </button>
 
 
-                                                                @endif
+                                                            @else
 
-
+                                                                <button disabled=""  class="btn btn-dark w-100">
+                                                                    Meeting is over
+                                                                </button>
 
 
 
                                                             @endif
+
 
 
 

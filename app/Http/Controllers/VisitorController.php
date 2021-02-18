@@ -158,7 +158,6 @@ class VisitorController extends Controller
 
     public function MeetingsIndex(Request $request){
 
-        dd(1);
 
         $meetings_request = [];
 

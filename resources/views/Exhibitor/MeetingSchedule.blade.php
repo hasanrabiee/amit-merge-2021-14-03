@@ -277,86 +277,8 @@
 
 
                                                     @endforeach
-                                                    {{--                                                      <tr>--}}
-                                                    {{--                                                          <td><a href="">Visitor2</a></td>--}}
-                                                    {{--                                                          <td>11:00</td>--}}
-                                                    {{--                                                          <td>Rejected</td>--}}
-                                                    {{--                                                          <td><a href="" class="btn btn-success w-100">Accept</a></td>--}}
-                                                    {{--                                                      </tr>--}}
-                                                    {{--                                                      <tr>--}}
-                                                    {{--                                                          <td><a href="">Visitor3</a></td>--}}
-                                                    {{--                                                          <td>12:00</td>--}}
-                                                    {{--                                                          <td>pending</td>--}}
-                                                    {{--                                                          <td>--}}
-                                                    {{--                                                              <div class="btn-group w-100">--}}
 
-                                                    {{--                                                                  <a class="btn btn-success w-100" href="">--}}
-                                                    {{--                                                                      Accept--}}
-                                                    {{--                                                                  </a>--}}
-                                                    {{--                                                                  <a  class="btn btn-danger w-100" href="">--}}
-                                                    {{--                                                                      Reject--}}
-                                                    {{--                                                                  </a>--}}
 
-                                                    {{--                                                              </div>--}}
-                                                    {{--                                                          </td>--}}
-                                                    {{--                                                      </tr>--}}
-                                                    {{--                                                      <tr>--}}
-                                                    {{--                                                          <td><a href="">Visitor4</a></td>--}}
-                                                    {{--                                                          <td>10:00</td>--}}
-                                                    {{--                                                          <td>Accepted</td>--}}
-                                                    {{--                                                          <td>--}}
-
-                                                    {{--                                                              <div class="btn-group w-100">--}}
-
-                                                    {{--                                                                  <a class="btn btn-info w-100" href="">--}}
-                                                    {{--                                                                      Enter to Meeting--}}
-                                                    {{--                                                                  </a>--}}
-                                                    {{--                                                                  <a  class="btn btn-danger w-100" href="">--}}
-                                                    {{--                                                                      Reject--}}
-                                                    {{--                                                                  </a>--}}
-
-                                                    {{--                                                              </div>--}}
-
-                                                    {{--                                                          </td>--}}
-                                                    {{--                                                      </tr>--}}
-                                                    {{--                                                      <tr>--}}
-                                                    {{--                                                          <td><a href="">Visitor5</a></td>--}}
-                                                    {{--                                                          <td>10:00</td>--}}
-                                                    {{--                                                          <td>Accepted</td>--}}
-                                                    {{--                                                          <td>--}}
-
-                                                    {{--                                                              <div class="btn-group w-100">--}}
-
-                                                    {{--                                                                  <a class="btn btn-info w-100" href="">--}}
-                                                    {{--                                                                      Enter to Meeting--}}
-                                                    {{--                                                                  </a>--}}
-                                                    {{--                                                                  <a  class="btn btn-danger w-100" href="">--}}
-                                                    {{--                                                                      Reject--}}
-                                                    {{--                                                                  </a>--}}
-
-                                                    {{--                                                              </div>--}}
-
-                                                    {{--                                                          </td>--}}
-                                                    {{--                                                      </tr>--}}
-                                                    {{--                                                      <tr>--}}
-                                                    {{--                                                          <td><a href="">Visitor6</a></td>--}}
-                                                    {{--                                                          <td>10:00</td>--}}
-                                                    {{--                                                          <td>Accepted</td>--}}
-                                                    {{--                                                          <td>--}}
-
-                                                    {{--                                                              <div class="btn-group w-100">--}}
-
-                                                    {{--                                                                  <a class="btn btn-info w-100" href="">--}}
-                                                    {{--                                                                      Enter to Meeting--}}
-                                                    {{--                                                                  </a>--}}
-                                                    {{--                                                                  <a  class="btn btn-danger w-100" href="">--}}
-                                                    {{--                                                                      Reject--}}
-                                                    {{--                                                                  </a>--}}
-
-                                                    {{--                                                              </div>--}}
-
-                                                    {{--                                                          </td>--}}
-                                                    {{--                                                      </tr>--}}
                                                     </tbody>
                                                 </table>
                                             </div>
