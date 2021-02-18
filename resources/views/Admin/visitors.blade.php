@@ -128,6 +128,10 @@
                                                     <p>
                                                         <strong>{{__('message.email')}}:&nbsp;</strong><span>{{$User->email}}</span>
                                                     </p>
+
+                                                    <p>
+                                                        <strong>Phone Number:&nbsp;</strong><span>{{$User->PhoneNumber}}</span>
+                                                    </p>
                                                     <p>
                                                         <strong>Feedback:&nbsp;</strong><span>{{$User->VisitExperience}}</span>
                                                     </p>
