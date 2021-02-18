@@ -1898,9 +1898,9 @@ class AdminController extends Controller
 
         if (isset($Chats))
 
-            return view('Admin.ExhibitorInbox', compact('booth_list', 'Chats'));
+            return view('Admin.exhibitorInbox', compact('booth_list', 'Chats'));
         else
-            return view('Admin.ExhibitorInbox', compact('booth_list'));
+            return view('Admin.exhibitorInbox', compact('booth_list'));
     }
 
     public function SuspendUncompletedBooths()
