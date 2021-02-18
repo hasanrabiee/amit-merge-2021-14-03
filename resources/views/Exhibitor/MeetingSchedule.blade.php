@@ -241,7 +241,7 @@
 
                                                                         @if (\Carbon\Carbon::today()->toDateString() == \Carbon\Carbon::parse($meet_req->request_time)->toDateString() and  \Carbon\Carbon::now()->gte(Carbon\Carbon::parse($meet_req->request_time)) and \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($meet_req->request_time)->addMinutes(30)) )
 
-                                                                            <a  class="btn btn-primary w-100" href="{{route('Exhibitor.meeting.join', $meet_req->id )}}">
+                                                                            <a target="_blank" class="btn btn-primary w-100" href="{{route('Exhibitor.meeting.join', $meet_req->id )}}">
                                                                                 Enter Meeting
 
                                                                             </a>

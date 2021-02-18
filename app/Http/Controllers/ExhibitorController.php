@@ -213,9 +213,6 @@ class ExhibitorController extends Controller
 
 
 
-
-
-
         $meeting_exhibitor->is_started = true;
         $meeting_exhibitor->save();
 
