@@ -246,7 +246,7 @@
 
                                                                             </a>
 
-                                                                            @elseif (\Carbon\Carbon::today() == \Carbon\Carbon::parse($meet_req->request_time)->toDateString() and  \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($meet_req->request_time))  )
+                                                                            @elseif (\Carbon\Carbon::today()->toDateString() == \Carbon\Carbon::parse($meet_req->request_time)->toDateString() and  \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($meet_req->request_time)->toTimeString())  )
                                                                             <button disabled=""  class="btn btn-dark w-100">
                                                                                 Meeting not started yet
                                                                             </button>
