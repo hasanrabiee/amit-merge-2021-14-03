@@ -112,6 +112,7 @@
 
                                         <div class="col-md-4">
                                             <div class="form-group">
+                                                <input type="hidden" name="abstract" id="abstract_box" value="">
                                                 <label for="">
                                                     Please Write Your Conference Title
                                                 </label>
@@ -386,16 +387,8 @@
 
     <script>
 
-        my_price_var = document.getElementById('price_id').innerText
-
-        if (my_price_var == '' || my_price_var == '0' || my_price_var == 0) {
 
 
-            document.getElementById('price_id').innerText = 'Free'
-            $('#paypal_btn').prop('disabled', true)
-            $('#paypal_btn').text('{{__('message.ExFree')}}')
-
-        }
 
     </script>
 

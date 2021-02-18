@@ -164,8 +164,8 @@
                                                         <p><strong>Institution Email:&nbsp;</strong><span>{{$Booth->User->institutionEmail}}</span></p>
                                                     @endif
 
-                                                    @if ($Booth->User->phone != null)
-                                                        <p><strong>phone:&nbsp;</strong><span>{{$Booth->User->phone}}</span></p>
+                                                    @if ($Booth->User->PhoneNumber != null)
+                                                        <p><strong>phone:&nbsp;</strong><span>{{$Booth->User->PhoneNumber}}</span></p>
                                                     @endif
 
                                                     @if ($Booth->User->fax != null)
