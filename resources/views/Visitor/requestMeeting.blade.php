@@ -121,7 +121,7 @@
 
 
 
-                                @if ( \Carbon\Carbon::parse($time->start_time)->toDateString() == \Carbon\Carbon::today() && \Carbon\Carbon::parse($time->start_time)->toTimeString() < \Carbon\Carbon::now()->toTimeString())
+                                @if ( \Carbon\Carbon::parse($time->start_time)->gt( \Carbon\Carbon::now()  )  )
 
 
 
@@ -140,9 +140,9 @@
 
 
 
-                                    <a href=""  class="btn btn-secondary mb-2 w-100">
+                                    <button href=""  class="btn btn-dark mb-2 w-100">
                                         {{                            \Carbon\Carbon::parse($time->start_time)->toTimeString() }}
-                                    </a>
+                                    </button>
 
 
 
