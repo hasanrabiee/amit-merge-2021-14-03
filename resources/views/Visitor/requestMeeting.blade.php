@@ -121,16 +121,14 @@
 
 
 
-                                @if (\Carbon\Carbon::parse($time->start_time)->gte(\Carbon\Carbon::now()) )
+                                @if (\Carbon\Carbon::parse($time->start_time)->lt(\Carbon\Carbon::now()) )
 
 
 
 
-
-                                    <a href=""  class="btn btn-secondary mb-2 w-100">
+                                    <a href="{{\request()->fullUrlWithQuery(['Day' => \request()->Day, 'time' => \Carbon\Carbon::parse($time->start_time)->toTimeString()])}}"  class="btn btn-success mb-2 w-100">
                                         {{                            \Carbon\Carbon::parse($time->start_time)->toTimeString() }}
                                     </a>
-
 
 
 
@@ -140,7 +138,9 @@
 
 
 
-                                    <a href="{{\request()->fullUrlWithQuery(['Day' => \request()->Day, 'time' => \Carbon\Carbon::parse($time->start_time)->toTimeString()])}}"  class="btn btn-success mb-2 w-100">
+
+
+                                    <a href=""  class="btn btn-secondary mb-2 w-100">
                                         {{                            \Carbon\Carbon::parse($time->start_time)->toTimeString() }}
                                     </a>
 
