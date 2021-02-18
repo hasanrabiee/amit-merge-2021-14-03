@@ -9,6 +9,7 @@ use Aws\S3\S3Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use League\Flysystem\AwsS3v3\AwsS3Adapter;
 use League\Flysystem\Filesystem;
 
@@ -85,6 +86,32 @@ trait Uploader
         $Url = $this->Upload($file_path, $FileName);
         return $Url;
     }
+
+
+    public function S3Hasan(Request $request,$input)
+    {
+        $request->validate([
+            $input => 'required|image|mimes:jpeg,png,jpg|max:1024',
+        ]);
+
+        $originalImage= \request()->file($input);
+        $thumbnailImage = Image::make(\request()->file($input));
+        $originalPath = public_path().'/images/';
+        $thumbnailPath = public_path().'/thumbnails/';
+        $thumbnailImage->save($originalPath.time().$originalImage->getClientOriginalName());
+        $thumbnailImage->resize(300, 300, function ($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        });
+
+        $final=$thumbnailImage->save($thumbnailPath.time().".".$originalImage->getClientOriginalExtension());
+        $finalPath = $final->dirname."/".$final->basename;
+        $finalName = $final->basename;
+        $Url = $this->Upload($finalPath, $finalName);
+        sleep(1);
+        return $Url;
+    }
+
 
 
     public function UploadPic(Request $request, $name, $folder, $Mode = 'Profile')

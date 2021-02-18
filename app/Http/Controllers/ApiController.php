@@ -11,16 +11,17 @@ use App\Hall;
 use App\Jobs;
 use App\Lounge;
 use App\LoungeChat;
+use App\Mail\offlineBooth;
+use App\Mail\Reminder;
 use App\Statistics;
 use App\User;
 use Carbon\Carbon;
-use DebugBar\DebugBar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Symfony\Component\ErrorHandler\Debug;
 
 class ApiController extends Controller
 {
@@ -43,13 +44,13 @@ class ApiController extends Controller
             'auditoriaID' => 'required|string',
             'Text' => 'required|string'
         ]);
-         AuditoriumChat::create([
+        AuditoriumChat::create([
             'UserID' => $request->UserID,
             'Username' => $request->Username,
             'auditoriaID' => $request->auditoriaID,
             'Text' => $request->Text
         ]);
-         $Chats = AuditoriumChat::where('auditoriaID' , $request->auditoriaID)->get(['UserID', 'Username', 'Text']);
+        $Chats = AuditoriumChat::where('auditoriaID' , $request->auditoriaID)->get(['UserID', 'Username', 'Text']);
         return response()->json([
             'Status' => 'Success',
             'Chat' => $Chats
@@ -62,15 +63,15 @@ class ApiController extends Controller
 
 
         $array =  Lounge::where('id', $id)->get(["Members"])->first()->Members;
-        eval("\$myarray = $array;");
+        eval("\$myarray = $array;"); // should be json_decode($array);
 
         $count = count($myarray);
 
 
 
         return response()->json([
-                'Count' => $count,
-                'ID' => $id
+            'Count' => $count,
+            'ID' => $id
         ]);
     }
     public function LoungeGet($id){
@@ -90,8 +91,8 @@ class ApiController extends Controller
     public function LoungePost(Request $request){
 
 
-         LoungeChat::create($request->all());
-         $Chats = LoungeChat::where('LoungeID' , $request->LoungeID)->get();
+        LoungeChat::create($request->all());
+        $Chats = LoungeChat::where('LoungeID' , $request->LoungeID)->get();
         return response()->json([
             'Status' => 'Success',
             'Chat' => $Chats
@@ -109,10 +110,7 @@ class ApiController extends Controller
     public function HallIsFull($HallName)
     {
 
-        $Booth = booth::whereNotNull('id')->where('Hall', $HallName)->count();
-
-
-        \Log::info($Booth);
+        $Booth = booth::where('Hall', $HallName)->count();
         if ($Booth >= 25) {
             return json_encode('Full');
         }
@@ -195,10 +193,15 @@ class ApiController extends Controller
             $Text[] = $value;
         }
 
+        $LobyLinks=[$Main->lobyLink1,$Main->lobyLink2,$Main->lobyLink3,$Main->lobyLink4,$Main->welcomeVideo];
+
+
+
         return response()->json(
             ['Data' => array(
                 'Login' => $Login,
                 'Loby' => $Loby,
+                'LobyLinks'=>$LobyLinks,
                 'Hall' => array(
                     'WallPoster' => $WallPoster,
                     'Billboard' => $BillBoard,
@@ -210,6 +213,57 @@ class ApiController extends Controller
             )]
             , 200);
     }
+
+
+
+    public function rotation1(){
+        $Main = Hall::find(1);
+        $RotationposterData = [$Main->Rotationposter1,$Main->Rotationposter2,$Main->Rotationposter3,$Main->Rotationposter4];
+        return response()->json(
+            ["1"=>$RotationposterData],200
+        );
+    }
+
+    public function rotation2(){
+        $Main = Hall::find(1);
+        $RotationposterData = [$Main->Rotationposter5,$Main->Rotationposter6,$Main->Rotationposter7,$Main->Rotationposter8];
+        return response()->json(
+            ["2"=>$RotationposterData],200
+        );
+    }
+
+    public function rotation3(){
+        $Main = Hall::find(1);
+        $RotationposterData = [$Main->Rotationposter9,$Main->Rotationposter10,$Main->Rotationposter11,$Main->Rotationposter12];
+        return response()->json(
+            ["3"=>$RotationposterData],200
+        );
+    }
+
+    public function rotation4(){
+        $Main = Hall::find(1);
+        $RotationposterData = [$Main->Rotationposter13,$Main->Rotationposter14,$Main->Rotationposter15,$Main->Rotationposter16];
+        return response()->json(
+            ["4"=>$RotationposterData],200
+        );
+    }
+
+    public function rotation5(){
+        $Main = Hall::find(1);
+        $RotationposterData = [$Main->Rotationposter17,$Main->Rotationposter18,$Main->Rotationposter19,$Main->Rotationposter20];
+        return response()->json(
+            ["5"=>$RotationposterData],200
+        );
+    }
+
+    public function rotation6(){
+        $Main = Hall::find(1);
+        $RotationposterData = [$Main->Rotationposter21,$Main->Rotationposter22,$Main->Rotationposter23,$Main->Rotationposter24];
+        return response()->json(
+            ["6"=>$RotationposterData],200
+        );
+    }
+
 
 
     public function Login(Request $request)
@@ -240,7 +294,7 @@ class ApiController extends Controller
             return response()->json([
                 'Status' => 'Success',
                 'Message' => 'User Logged in',
-                'User' => $User
+                'User' => $User,
             ], 200);
         } else {
             return response()->json([
@@ -252,11 +306,51 @@ class ApiController extends Controller
 
     }
 
+    public function LoginShowroom(Request $request)
+    {
+        $User = User::where('email', $request->email)->orWhere('UserName' , $request->email)->first();
+        if ($User == null || empty($User) || $User->count() <= 0) {
+            return response()->json([
+                'Status' => 'Failed',
+                'Message' => 'User not Found',
+                'User' => null
+            ], 200);
+        }
+        if ($User->AccountStatus == 'Suspend'){
+            return response()->json([
+                'Status' => 'Failed',
+                'Message' => 'Account Suspended',
+                'User' => null
+            ], 200);
+        }
+        if ($User->email_verified_at == null){
+            return response()->json([
+                'Status' => 'Failed',
+                'Message' => 'Please Active Your Account From Email',
+                'User' => null
+            ], 200);
+        }
+        if (Hash::check($request->password, $User->password)) {
+            return response()->json([
+                'Status' => 'Success',
+                'Message' => 'User Logged in',
+                'User' => $User,
+                'Hall'=> $User->Booth->Hall
+            ], 200);
+        } else {
+            return response()->json([
+                'Status' => 'Failed',
+                'Message' => 'Password not match',
+                'User' => null
+            ], 200);
+        }
+
+    }
+
+
+
     public function ChatStore(Request $request)
     {
-
-
-
 
         if (Chat::where('BoothID' , $request->BoothID)->where('UserID' , $request->UserID)->count() > 0){
             $Owner = Chat::where('BoothID' , $request->BoothID)->where('UserID' , $request->UserID)->first()->Owner;
@@ -272,22 +366,13 @@ class ApiController extends Controller
                 $Owner = $Owner->id;
             }
 
-            /*$Users = booth::Oprators($request->BoothID);
-            $Users[10000] = booth::find($request->BoothID)->User;
-            $Chats = Chat::where('BoothID' , $request->BoothID)->where('Sender' , 'Visitor')->get();
-            foreach ($Chats as $obj) {
-                $UniqueUser[$obj->UserID] = $obj->Owner;
-            }
-            $OwnerOFCompany = booth::find($request->BoothID)->User;
-            $UniqueUser[$OwnerOFCompany->id] = $OwnerOFCompany->id;
-            $uniqUsers = array_count_values($UniqueUser);
-            $keys = array_keys($uniqUsers);
-            sort($uniqUsers);
-            $FinallUniqUsers = array_combine($keys, array_values($uniqUsers));
-            $Owner = array_key_first($FinallUniqUsers);*/
         }
 
         $User = User::find($request->UserID);
+
+        Chat::where("BoothID",$request->BoothID)->where("UserID",$request->UserID)->update([
+            "infoUIIndex"=>$request->infoUIIndex
+        ]);
 
         $Chat = Chat::create([
             'UserID' => $User->id,
@@ -295,8 +380,12 @@ class ApiController extends Controller
             'Text' => $request->Text,
             'Sender' => 'Visitor',
             'Owner' => $Owner,
-            'UserName' => $User->UserName
+            'UserName' => $User->UserName,
+            'infoUIIndex'=>$request->infoUIIndex
         ]);
+
+
+
 
 
         if ($Chat->id > 0) {
@@ -327,6 +416,11 @@ class ApiController extends Controller
             'Sender' => 'Visitor',
         ]);
 
+
+
+        User::where("id",$request->UserID)->update([
+            "newmessage" => 1
+        ]);
 
 
 
@@ -371,6 +465,201 @@ class ApiController extends Controller
 
 
 
+    //hasan auto login start here
+
+
+    public function autoLogin(Request $request)
+    {
+        return response()->json([
+            "ip"=>$request->ip,
+            "username"=>$request->username
+        ],200);
+    }
+
+
+
+    //hasan auto login end here
+
+
+
+
+    //hasan chat start here
+
+
+    public function emailSender(Request $request)
+    {
+        $request->validate([
+            "UserID"=>"required"
+        ]);
+
+        $user=User::where("id",$request->UserID)->first();
+        Mail::to($user->email)->send(new offlineBooth($user));
+        return response()->json([
+            "status"=>"success"
+        ]);
+    }
+
+
+
+    public function newChatAdmin(Request $request)
+    {
+        $request->validate([
+            "UserID" => "required|integer"
+        ]);
+
+        $newChats = AdminChat::where("ReceiverID", $request->UserID)->where("Status", "New")->where("Sender", "Admin")->get();
+
+        foreach ($newChats as $newChat) {
+            $text[]=$newChat->Text."INCAHFTRRPCHATHASANREZA".$newChat->id;;
+        }
+
+        if ($newChats->count() > 0 ) {
+            return response()->json(
+                ["data"=>$text]
+            );
+        }else{
+            return response()->json(
+                ["status"=>"failed"]
+            );
+        }
+    }
+
+
+    public function newChatAdminDestroy(Request $request)
+    {
+
+        $request->validate([
+            "ChatID"=>"required",
+        ]);
+
+
+
+        $obj=json_decode($request->ChatID);
+        foreach ($obj->ChatID as $item){
+
+            $chatDestroy=AdminChat::where("id",$item)->where("Status", "New")->get();
+            if ($chatDestroy->count()>0) {
+
+
+                AdminChat::where("id", $item)->where("Status", "New")->update(
+                    [
+                        "Status" => "Viewed",
+                    ]
+                );
+
+            }else {
+                return response()->json([
+                    "status"=>"failed"
+                ]);
+            }
+
+
+
+        }
+        return response()->json([
+            "status"=>"success"
+        ]);
+
+
+    }
+
+
+
+
+
+
+    public function newChat(Request $request)
+    {
+
+
+        $request->validate([
+            "UserID"=>"required|integer"
+        ]);
+
+
+        $CompaniesCount=booth::get()->count();
+
+        for ($i=0;$i<$CompaniesCount;$i++){
+            $booth=booth::skip($i)->first();
+            $newChatText=[];
+            $newChats=Chat::where("UserID",$request->UserID)->where("BoothID",$booth->id)->where("status","New")->where("Sender","Exhibitor")->get();
+            if ($newChats->count() > 0) {
+                $newChats=Chat::where("UserID",$request->UserID)->where("BoothID",$booth->id)->where("status","New")->where("Sender","Exhibitor")->get();
+                foreach ($newChats as $newChat) {
+                    $newChatText[]=$newChat->Text."INCAHFTRRPCHATHASANREZA".$newChat->id;
+                }
+
+            }
+            else {
+                $newChatText=[];
+            }
+
+            $data[]=[
+                "Text"=>$newChatText,
+                "CompanyName"=>$booth->CompanyName,
+                "BoothID"=>$booth->id,
+                "UserID"=>$booth->UserID
+            ];
+
+        }
+
+        $newChats1=[
+            "data"=>$data
+        ]
+
+        ;
+
+
+
+        return response()->json([
+            "newChats"=>$newChats1
+        ],200);
+
+    }
+
+    public function newChatDestroy(Request $request)
+    {
+
+        $request->validate([
+            "UserID"=>"required",
+            "BoothID"=>"required",
+            "ChatID"=>"required",
+        ]);
+
+
+
+        $obj=json_decode($request->ChatID);
+        foreach ($obj->ChatID as $item){
+
+            $chatDestroy=Chat::where("id",$item)->where("UserID",$request->UserID)->where("BoothID", $request->BoothID)->where("Status", "New")->get();
+            if ($chatDestroy->count()>0) {
+
+
+                Chat::where("id", $item)->where("UserID", $request->UserID)->where("BoothID", $request->BoothID)->where("Status", "New")->update(
+                    [
+                        "Status" => "Viewed",
+                    ]
+                );
+
+            }else {
+                return response()->json([
+                    "status"=>"failed"
+                ]);
+            }
+
+
+
+        }
+        return response()->json([
+            "status"=>"success"
+        ]);
+
+
+    }
+
+
+    //
+
 
     public function UserDetails($id)
     {
@@ -385,129 +674,91 @@ class ApiController extends Controller
     public function BoothGet($id)
     {
         //---------------------
+        $BoothA = range(1,25);
+        $BoothAFinal = [];
+        foreach ($BoothA as $item) {
+            if (booth::where('Position' , $item)->where('Hall' , 1)->count() > 0){
+                if (booth::where('Position' , $item)->where('Hall' , 1)->first()->User->AccountStatus == 'Active'){
+                    $temp_booth = booth::where('Position' , $item)->where('Hall' , 1)->get()[0];
+                    if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
 
+                        $temp_booth->WebSite = "http://". $temp_booth->WebSite;
 
-
-        $BoothAFinal = cache()->remember('book-a-final',60*60*2, function (){
-
-
-            $BoothA = range(1,25);
-            $BoothAFinal = [];
-            foreach ($BoothA as $item) {
-
-
-                if (booth::where('Position' , $item)->where('Hall' , 1)->count() > 0){
-                    if (booth::where('Position' , $item)->where('Hall' , 1)->first()->User->AccountStatus == 'Active'){
-                        $temp_booth = booth::where('Position' , $item)->where('Hall' , 1)->get()[0];
-                        if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
-                            $temp_booth->WebSite = "http://". $temp_booth->WebSite;
-                        }
-                        $BoothAFinal[] = $temp_booth;
-                    }else{
-                        $BoothAFinal[] = null;
                     }
+                    $BoothAFinal[] = $temp_booth;
                 }else{
                     $BoothAFinal[] = null;
                 }
+            }else{
+                $BoothAFinal[] = null;
             }
-            $BoothAFinal = array_values($BoothAFinal);
-            return $BoothAFinal;
-
-
-        });
-
-
-
+        }
+        $BoothAFinal = array_values($BoothAFinal);
         //---------------------
-
-        $BoothBFinal = cache()->remember('book-b-final',60*60*2, function () {
-
-
-            $BoothB = range(1,25);
-            $BoothBFinal = [];
-            foreach ($BoothB as $item) {
-                if (booth::where('Position' , $item)->where('Hall' , 2)->count() > 0){
-                    if (booth::where('Position' , $item)->where('Hall' , 2)->first()->User->AccountStatus == 'Active') {
-                        $temp_booth = booth::where('Position' , $item)->where('Hall' , 2)->get()[0];
-                        if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
-                            $temp_booth->WebSite = "http://". $temp_booth->WebSite;
-                        }
-                        $BoothBFinal[] = $temp_booth;
-
-
-
-
-
-                    }else{
-                        $BoothBFinal[] = null;
+        $BoothB = range(1,25);
+        $BoothBFinal = [];
+        foreach ($BoothB as $item) {
+            if (booth::where('Position' , $item)->where('Hall' , 2)->count() > 0){
+                if (booth::where('Position' , $item)->where('Hall' , 2)->first()->User->AccountStatus == 'Active') {
+                    $temp_booth = booth::where('Position' , $item)->where('Hall' , 2)->get()[0];
+                    if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
+                        $temp_booth->WebSite = "http://". $temp_booth->WebSite;
                     }
+                    $BoothBFinal[] = $temp_booth;
+
+
+
+
+
                 }else{
                     $BoothBFinal[] = null;
                 }
+            }else{
+                $BoothBFinal[] = null;
             }
-            $BoothBFinal = array_values($BoothBFinal);
-            return $BoothBFinal;
-
-
-        });
-
+        }
+        $BoothBFinal = array_values($BoothBFinal);
         //---------------------
-
-        $BoothCFinal = cache()->remember('book-c-final',60*60*2, function () {
-
-
-            $BoothC = range(1,25);
-            $BoothCFinal = [];
-            foreach ($BoothC as $item) {
-                if (booth::where('Position' , $item)->where('Hall' , 3)->count() > 0){
-                    if (booth::where('Position' , $item)->where('Hall' , 3)->first()->User->AccountStatus == 'Active') {
-                        $temp_booth = booth::where('Position' , $item)->where('Hall' , 3)->get()[0];
-                        if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
-                            $temp_booth->WebSite = "http://". $temp_booth->WebSite;
-                        }
-                        $BoothCFinal[] = $temp_booth;
-
-                    }else{
-                        $BoothCFinal[] = null;
-
+        $BoothC = range(1,25);
+        $BoothCFinal = [];
+        foreach ($BoothC as $item) {
+            if (booth::where('Position' , $item)->where('Hall' , 3)->count() > 0){
+                if (booth::where('Position' , $item)->where('Hall' , 3)->first()->User->AccountStatus == 'Active') {
+                    $temp_booth = booth::where('Position' , $item)->where('Hall' , 3)->get()[0];
+                    if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
+                        $temp_booth->WebSite = "http://". $temp_booth->WebSite;
                     }
+                    $BoothCFinal[] = $temp_booth;
+
                 }else{
                     $BoothCFinal[] = null;
+
                 }
+            }else{
+                $BoothCFinal[] = null;
             }
-            $BoothCFinal = array_values($BoothCFinal);
-            return $BoothCFinal;
-
-        });
+        }
+        $BoothCFinal = array_values($BoothCFinal);
         //---------------------
-
-        $BoothDFinal = cache()->remember('book-d-final',60*60*2, function () {
-
-
-
-            $BoothD = range(1,25);
-            $BoothDFinal = [];
-            foreach ($BoothD as $item) {
-                if (booth::where('Position' , $item)->where('Hall' , 4)->count() > 0){
-                    if (booth::where('Position' , $item)->where('Hall' , 4)->first()->User->AccountStatus == 'Active') {
-                        $temp_booth = booth::where('Position' , $item)->where('Hall' , 4)->get()[0];
-                        if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
-                            $temp_booth->WebSite = "http://". $temp_booth->WebSite;
-                        }
-                        $BoothDFinal[] = $temp_booth;
-
-                    }else{
-                        $BoothDFinal[] = null;
+        $BoothD = range(1,25);
+        $BoothDFinal = [];
+        foreach ($BoothD as $item) {
+            if (booth::where('Position' , $item)->where('Hall' , 4)->count() > 0){
+                if (booth::where('Position' , $item)->where('Hall' , 4)->first()->User->AccountStatus == 'Active') {
+                    $temp_booth = booth::where('Position' , $item)->where('Hall' , 4)->get()[0];
+                    if (!Str::startsWith($temp_booth->WebSite, ["http://", "https://"])) {
+                        $temp_booth->WebSite = "http://". $temp_booth->WebSite;
                     }
+                    $BoothDFinal[] = $temp_booth;
+
                 }else{
                     $BoothDFinal[] = null;
                 }
+            }else{
+                $BoothDFinal[] = null;
             }
-            $BoothDFinal = array_values($BoothDFinal);
-            return $BoothDFinal;
-
-
-        });
+        }
+        $BoothDFinal = array_values($BoothDFinal);
         //---------------------
         $Data = array(
             'Hall-A' => $BoothAFinal,
@@ -518,6 +769,29 @@ class ApiController extends Controller
         return response()->json(
             ['Data' => $Data]
             , 200);
+    }
+
+
+    public function BoothOnline($id)
+    {
+        $OperatorStatus = null;
+        if (User::where("CompanyID",$id)->count() > 0) {
+            $OperatorStatus = User::where("CompanyID",$id)->first()->userStatus;
+        }
+        $Booth=booth::findOrFail($id);
+
+
+        if ($Booth->user->userStatus == 1 || $OperatorStatus == 1) {
+            return response()->json([
+                "userStatus"=>1
+            ]);
+        }else {
+            return response()->json([
+                "userStatus"=>0
+            ]);
+        }
+
+
     }
 
 
@@ -538,6 +812,10 @@ class ApiController extends Controller
             $Item
             , 200);
     }
+
+
+
+
 
 
     public function Statistics(Request $request)

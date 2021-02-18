@@ -9,20 +9,29 @@ use App\booth;
 use App\Chat;
 use App\Conference;
 use App\ConferenceRequest;
+use App\ExhibitorForms;
 use App\Exports\AuditoriumExport;
+use App\Exports\ExhibitorsExport;
+use App\Exports\FeedbacksExport;
 use App\Hall;
 use App\Invitation;
 use App\Jobs;
 use App\Lounge;
 use App\LoungeChat;
 use App\Mail\AuditoriumPublish;
+use App\Mail\ExhibitorFeedback;
 use App\Mail\InviteOperators;
+use App\Mail\Reminder;
 use App\Mail\SpeakerRegister;
+use App\Mail\SuspendExhibitor;
+use App\Mail\thanks;
+use App\Organizer;
 use App\Site;
 use App\Speaker;
 use App\Statistics;
 use App\Traits\Uploader;
 use App\User;
+use App\VisitorForm;
 use Carbon\Carbon;
 use DB;
 use App\Exports\UsersExport;
@@ -292,8 +301,7 @@ class AdminController extends Controller
     public function ChangeChatStatus(Request $request)
     {
         if ($request->ID && $request->UserID) {
-            $Chatsssss = AdminChat::where('UserID', $request->UserID)->where('ReceiverID', $request->ID)->get();
-
+            $Chatsssss = AdminChat::where('UserID', $request->UserID)->where('ReceiverID', $request->ID)->where('Sender',"!=",'Admin')->get();
             foreach ($Chatsssss as $ch) {
                 $ch->Status = 'Viewed';
                 $ch->save();
@@ -309,35 +317,87 @@ class AdminController extends Controller
         }
     }
 
+
+    public function hasanChatCount(){
+        $newMessage = AdminChat::where("Status","New")->where("Sender","!=","Admin")->count();
+        return $newMessage;
+    }
+
     public static function ChatCount($id)
     {
         $Count = AdminChat::where([
             ['ReceiverID', $id],
             ['Status', 'New'],
+            ['Sender','!=','Admin']
         ])->count();
-        //$Count = AdminChat::where('ReceiverID', $id)->where('Status', 'New')->count();
+
+        User::where("id",$id)->update(["newmessage"=>$Count]);
+
+
+        booth::where("UserID",$id)->update(["newmessage"=>$Count]);
+
         if ($Count > 0) {
             return $Count;
         } else {
             return 0;
         }
-        // return AdminChat::where('ReceiverID', $id)->where('Status', 'New')->count();
+    }
+
+
+    public function ChatCountTest($id)
+    {
+        $Count = AdminChat::where([
+            ['ReceiverID', $id],
+            ['Status', 'New'],
+            ['Sender','!=','Admin']
+        ])->count();
+
+        User::where("id",$id)->update(["newmessage"=>$Count]);
+
+        booth::where("UserID",$id)->update(["newmessage"=>$Count]);
+
+        if ($Count > 0) {
+            return $Count;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public static function ChatCountEx($id)
+    {
+
+        $Booth = booth::where("UserID",\auth()->user()->id)->first();
+
+        $Count = Chat::where([['BoothID' , $Booth->id],['UserID' , $id],['Sender' , 'Visitor'],['Status' , 'New']])->count();
+        User::where("id",$id)->update(["newmessage"=>$Count]);
+
+        if ($Count > 0) {
+            return $Count;
+        } else {
+            return 0;
+        }
     }
 
 
     public function index(Request $request)
     {
+
+        $this->onlineShow();
+
+
+
         if ($request->ajax()) {
             if ($request->SearchTermBooth)
                 $booth_list = booth::select('id', "UserID", "CompanyName")->where('CompanyName', 'LIKE', '%' . \request()->SearchTermBooth . '%')->paginate(10);
             else
-                $booth_list = booth::select('id', "UserID", "CompanyName")->paginate(10);
+                $booth_list = booth::select('id', "UserID", "CompanyName")->orderBy("newmessage","Desc")->paginate(10);
             $booth_list_view = view('company-list-data', compact('booth_list'))->render();
 
             if ($request->SearchTermUser)
                 $users_list = User::select("id", "UserName")->where('UserName', 'LIKE', '%' . \request()->SearchTermUser . '%')->whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->paginate(10);
             else
-                $users_list = User::select("id", "UserName")->whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->paginate(10);
+                $users_list = User::whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->where('id', '!=', \request()->UserID)->orderBy("newmessage","Desc")->paginate(10);
             $users_list_view = view('user-list-data', compact('users_list'))->render();
             return response()->json(['booth_list' => $booth_list_view, 'users_list' => $users_list_view]);
 
@@ -359,7 +419,7 @@ class AdminController extends Controller
             }
 
             $selected_booth = booth::select('id', "UserID", "CompanyName")->where("id", \request()->CompanyID)->first();
-            $booth_list = booth::select('id', "UserID", "CompanyName")->where("id", "!=", \request()->CompanyID)->paginate(10);
+            $booth_list = booth::select('id', "UserID", "CompanyName")->where("id", "!=", \request()->CompanyID)->orderBy("newmessage","Desc")->paginate(10);
 
 
             $collection = collect();
@@ -378,7 +438,7 @@ class AdminController extends Controller
             if (\request()->SearchTermBooth) {
                 $booth_list = booth::where('CompanyName', 'LIKE', '%' . \request()->SearchTermBooth . '%')->get(['id', "UserID", "CompanyName"]);
             } else {
-                $booth_list = booth::select('id', "UserID", "CompanyName")->paginate(10);
+                $booth_list = booth::select('id', "UserID", "CompanyName")->orderBy("newmessage","Desc")->paginate(10);
 
             }
 
@@ -396,8 +456,8 @@ class AdminController extends Controller
                 $chatsssss->save();
             }
 
-
-            $users_list = User::select("id", "UserName")->whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->where('id', '!=', \request()->UserID)->paginate(10);
+//            $users_list = User::where('Rule', 'Visitor')->orderBy("newmessage")->paginate(10);
+            $users_list = User::whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->where('id', '!=', \request()->UserID)->orderBy("newmessage","Desc")->paginate(10);
             $selected_user = User::select("id", "UserName")->where("id", \request()->UserID)->first();
 
 
@@ -420,7 +480,7 @@ class AdminController extends Controller
 
 
             } else {
-                $users_list = User::select("id", "UserName")->whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->paginate(10);
+                $users_list = User::whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->where('id', '!=', \request()->UserID)->orderBy("newmessage","Desc")->paginate(10);
 
             }
 
@@ -434,7 +494,6 @@ class AdminController extends Controller
         else
             return view('Admin.index', compact('booth_list', 'users_list'));
 
-
     }
 
 
@@ -444,10 +503,8 @@ class AdminController extends Controller
 
         if (\request()->SearchTermUser) {
             $Users = User::select("id", "UserName")->where('UserName', 'LIKE', '%' . \request()->SearchTermUser . '%')->whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->get();
-
-
         } else {
-            $Users = User::select("id", "UserName")->whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->get();
+            $Users = User::whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->where('id', '!=', \request()->UserID)->where("newmessage","!=",0)->where("newmessage","!=",0)->orderBy("newmessage","Desc")->all();
         }
         return response()->json([
             'Users' => $Users
@@ -490,9 +547,9 @@ class AdminController extends Controller
             'UserID' => $request->UserID,
             'ReceiverID' => $ID,
             'Sender' => 'Admin',
-            'Status' => 'Viewed'
+            'Status' => 'New'
         ]);
-        $Chats = AdminChat::where('ReceiverID', $ID)->get();
+        $Chats = AdminChat::where('ReceiverID', $ID)->where("Status","New")->get();
         return response()->json([
             'Chat' => $Chats
         ], 200);
@@ -539,12 +596,21 @@ class AdminController extends Controller
     }
 
 
-    public function Export()
-    {
-
+    public function ExportVisitors(){
 
         return Excel::download(new UsersExport, 'users.xlsx');
 
+    }
+
+    public function ExportExhibitors(){
+
+        return Excel::download(new ExhibitorsExport, 'exhibitors.xlsx');
+
+    }
+
+    public function ExportFeedbacks(){
+
+        return Excel::download(new FeedbacksExport, 'feedbacks.xlsx');
 
     }
 
@@ -589,6 +655,12 @@ class AdminController extends Controller
 
     public function History()
     {
+
+        $newMessage = $this->hasanChatCount();
+
+        $this->onlineShow();
+
+
         if (\request()->SearchTermBooth) {
             $Booths = booth::where('CompanyName', 'LIKE', '%' . \request()->SearchTermBooth . '%')->get();
         } else {
@@ -605,24 +677,75 @@ class AdminController extends Controller
         if (\request()->CompanyID) {
             $ID = booth::find(\request()->CompanyID)->UserID;
             $Chats = AdminChat::where('UserID', Auth::id())->where('ReceiverID', $ID)->get();
-            return view('Admin.History')->with(['Booths' => $Booths, 'Chats' => $Chats, 'Users' => $User]);
+            return view('Admin.History')->with(['Booths' => $Booths, 'Chats' => $Chats, 'Users' => $User,'newMessage'=>$newMessage]);
         }
         if (\request()->UserID) {
             $Chats = AdminChat::where('UserID', Auth::id())->where('ReceiverID', \request()->UserID)->get();
 
-            return view('Admin.History')->with(['Booths' => $Booths, 'Chats' => $Chats, 'Users' => $User]);
+            return view('Admin.History')->with(['Booths' => $Booths, 'Chats' => $Chats, 'Users' => $User,'newMessage'=>$newMessage]);
         }
 
-        return view('Admin.History')->with(['Booths' => $Booths, 'Users' => $User]);
+
+        if (\request()->institution) {
+            $booths = null;
+            $Usersf = User::where("institution",\request()->institution)->get();
+            foreach ($Usersf as $Userf){
+                if (booth::where("UserID",$Userf->id)->count() > 0) {
+                    $booths [] = booth::where("UserID",$Userf->id)->first();
+                }else{
+                    $booths = null;
+                }
+            }
+
+            if ($booths != null) {
+                return view('Admin.History')->with(['Booths' => $booths, 'Users' => $User,'newMessage'=>$newMessage]);
+            }else {
+                Alert::error("nothing found");
+                return redirect()->back();
+            }
+
+
+        }
+
+
+        if (\request()->gender) {
+            if (User::where("Gender",\request()->gender)->count() >0) {
+                $Users = User::where("Gender",\request()->gender)->get();
+                return view('Admin.History')->with(['Booths' => $Booths, 'Users' => $Users,'newMessage'=>$newMessage]);
+            }else {
+                Alert::error("nothing found");
+                return redirect()->back();
+            }
+
+        }
+
+        if (\request()->profession) {
+//            dd(User::where("profession","test2")->count());
+            if (User::where("Profession",\request()->profession)->count() >0) {
+                $Users = User::where("Profession",\request()->profession)->get();
+                return view('Admin.History')->with(['Booths' => $Booths, 'Users' => $Users,'newMessage'=>$newMessage]);
+            }else {
+                Alert::error("nothing found");
+                return redirect()->back();
+            }
+
+        }
+
+
+
+
+        return view('Admin.History')->with(['Booths' => $Booths, 'Users' => $User,'newMessage'=>$newMessage]);
     }
 
     public function Lounge()
     {
+        $newMessage = $this->hasanChatCount();
+        $this->onlineShow();
         $Lounges = Lounge::all();
         if (\request()->LoungID) {
             $Lounge = Lounge::find(\request()->LoungID);
             $Chats = LoungeChat::where('LoungeID', \request()->LoungID)->get();
-            return view('Admin.Lounge')->with(['Lounges' => $Lounges, 'Lounge' => $Lounge, 'Chats' => $Chats]);
+            return view('Admin.Lounge')->with(['Lounges' => $Lounges, 'Lounge' => $Lounge, 'Chats' => $Chats,'newMessage'=>$newMessage]);
         }
         if (\request()->RemoveUser) {
             $Lounge = Lounge::find(\request()->LoungeID);
@@ -636,7 +759,7 @@ class AdminController extends Controller
 
             return redirect()->back();
         }
-        return view('Admin.Lounge')->with(['Lounges' => $Lounges]);
+        return view('Admin.Lounge')->with(['Lounges' => $Lounges,'newMessage'=>$newMessage]);
     }
 
 
@@ -666,16 +789,15 @@ class AdminController extends Controller
             'Name' => $request->Name,
             'Members' => json_encode($Members)
         ]);
-        Alert::success('Lounge  Created!!!');
+        Alert::success('Lounge Group Created!!!');
 
         return redirect()->back();
     }
 
     public function RemoveLounge($id)
     {
-        $Lounge = Lounge::find($id);
-        $Lounge->delete();
-        Alert::success('Lounge  Removed!!!');
+        Lounge::whereId($id)->delete();
+        Alert::success('Group Removed!!!');
 
         return redirect()->route('Admin.Lounge');
     }
@@ -707,6 +829,8 @@ class AdminController extends Controller
 
     public function Statistics()
     {
+        $newMessage = $this->hasanChatCount();
+        $this->onlineShow();
         $Date = Statistics::groupBy('date')
             ->orderBy('date', 'ASC')
             ->get(array(
@@ -746,9 +870,31 @@ class AdminController extends Controller
             'Profession' => $Profession,
             'Date' => $Date,
             'AllCompany' => $AllCompany,
-            'AllGroups' => $AllGroups
+            'AllGroups' => $AllGroups,
+            'newMessage'=> $newMessage
         ]);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public function AuditoriumDelete($id = "empty")
@@ -1076,8 +1222,56 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function RegisteredVisitor()
     {
+        $newMessage = $this->hasanChatCount();
         if (\request()->SearchTerm) {
             $Users = User::where('Rule', 'Visitor')->where('UserName', 'LIKE', '%' . \request()->SearchTerm . '%')->get();
 
@@ -1086,14 +1280,15 @@ class AdminController extends Controller
         }
         if (\request()->UserID) {
             $User = User::find(\request()->UserID);
-            return view('Admin.visitors')->with(['Users' => $Users, 'User' => $User]);
+            return view('Admin.visitors')->with(['Users' => $Users, 'User' => $User,'newMessage'=>$newMessage]);
 
         }
-        return view('Admin.visitors')->with(['Users' => $Users]);
+        return view('Admin.visitors')->with(['Users' => $Users,'newMessage'=>$newMessage]);
     }
 
     public function RegisteredExhibitor()
     {
+        $newMessage = $this->hasanChatCount();
         if (\request()->SearchTerm) {
             $Booths = booth::where('CompanyName', 'LIKE', '%' . \request()->SearchTerm . '%')->get();
 
@@ -1102,13 +1297,15 @@ class AdminController extends Controller
         }
         if (\request()->BoothID) {
             $Booth = booth::find(\request()->BoothID);
-            return view('Admin.exhibitors')->with(['Booths' => $Booths, 'Booth' => $Booth]);
+            return view('Admin.exhibitors')->with(['Booths' => $Booths, 'Booth' => $Booth,'newMessage'=>$newMessage]);
         }
-        return view('Admin.exhibitors')->with(['Booths' => $Booths]);
+        return view('Admin.exhibitors')->with(['Booths' => $Booths,'newMessage'=>$newMessage]);
     }
 
     public function Setting()
     {
+        $newMessage = $this->hasanChatCount();
+        $this->onlineShow();
         if (\request()->DeleteOperator) {
             $User = User::find(\request()->DeleteOperator);
             $User->delete();
@@ -1121,7 +1318,7 @@ class AdminController extends Controller
         $Backups = File::allFiles(public_path('BackUp'));
         //dd();
         //dd($Backups[0]->getrelativePathname());
-        return view('Admin.Setting')->with(['Site' => $Site, 'Operators' => $Operators, 'Backups' => $Backups]);
+        return view('Admin.Setting')->with(['Site' => $Site, 'Operators' => $Operators, 'Backups' => $Backups,'newMessage' => $newMessage]);
     }
 
     public function SettingPost(Request $request)
@@ -1129,56 +1326,56 @@ class AdminController extends Controller
 
         $request->validate([
             'Logo1' => 'image',
-            'StartDate' => 'string',
+            'StartDate' => 'string|nullable',
             'Logo2' => 'image',
             'Logo3' => 'image',
-            'AdminBackground' => 'image',
-            'Terms' => 'string',
-            'AdminTel' => 'string',
-            'AdminLocation' => 'string',
-            'AdminAddress' => 'string',
+            'AdminBackground' => 'image|nullable',
+            'AdminTel' => 'string|nullable',
+            'AdminLocation' => 'string|nullable',
+            'AdminAddress' => 'string|nullable',
             'OperatorEmails' => 'array',
-            'SiteName' => 'string'
+            'SiteName' => 'string',
         ]);
-        try {
-            $Site = Site::find(1);
-            $Site->Terms = $request->Terms;
 
-            $Site->Logo1 = $request->hasFile('Logo1') ? $this->S3Setting($request, 'Logo1') : $Site->Logo1;
-            $Site->Logo2 = $request->hasFile('Logo2') ? $this->S3Setting($request, 'Logo2') : $Site->Logo2;
-            $Site->Logo3 = $request->hasFile('Logo3') ? $this->S3Setting($request, 'Logo3') : $Site->Logo3;
-            $Site->AdminBackground = $request->hasFile('AdminBackground') ? $this->S3Setting($request, 'AdminBackground') : $Site->AdminBackground;
-            $Site->AdminTel = $request->AdminTel;
-            $Site->StartDate = $request->StartDate;
-            $Site->AdminLocation = $request->AdminLocation;
-            $Site->AdminAddress = $request->AdminAddress;
-            $Site->Name = $request->SiteName;
-            if ($request->OperatorEmails[0] != null) {
-                foreach ($request->OperatorEmails as $operatorEmail) {
-                    $Invite = Invitation::create([
-                        'email' => $operatorEmail,
-                        'token' => Str::random(20),
-                        'Rule' => 'AdminOperator',
-                        'ParentID' => Auth::id()
-                    ]);
-                    Mail::to($operatorEmail)->send(new InviteOperators($Invite->token));
+        $Site = Site::find(1);
+        $Site->Terms = $request->editor1;
 
-                }
-            }
+        $Site->Logo1 = $request->hasFile('Logo1') ? $this->S3Setting($request, 'Logo1') : $Site->Logo1;
+        $Site->Logo2 = $request->hasFile('Logo2') ? $this->S3Setting($request, 'Logo2') : $Site->Logo2;
+        $Site->Logo3 = $request->hasFile('Logo3') ? $this->S3Setting($request, 'Logo3') : $Site->Logo3;
+        $Site->AdminBackground = $request->hasFile('AdminBackground') ? $this->S3Setting($request, 'AdminBackground') : $Site->AdminBackground;
+        $Site->AdminTel = $request->AdminTel;
+        $Site->StartDate = $request->StartDate;
+        $Site->AdminLocation = $request->AdminLocation;
+        $Site->AdminAddress = $request->AdminAddress;
+        $Site->Name = $request->SiteName;
+//        if ($request->OperatorEmails[0] != null) {
+//            foreach ($request->OperatorEmails as $operatorEmail) {
+//                $Invite = Invitation::create([
+//                    'email' => $operatorEmail,
+//                    'token' => Str::random(20),
+//                    'Rule' => 'AdminOperator',
+//                    'ParentID' => Auth::id()
+//                ]);
+//                Mail::to($operatorEmail)->send(new InviteOperators($Invite->token));
+//
+//            }
+//        }
 
-            $Site->StreamKey = $request->StreamKey;
-            $Site->RtmpAddress = $request->RtmpAddress;
-            $Site->PlaybackUrl = $request->PlaybackUrl;
-            $Site->save();
-            Alert::success('Settings Saved Successful');
+        $Site->StreamKey = $request->StreamKey;
+        $Site->RtmpAddress = $request->RtmpAddress;
+        $Site->PlaybackUrl = $request->PlaybackUrl;
+        $Site->save();
+        Alert::success('Settings Saved Successful');
 
-            return redirect()->back();
-        } catch (\Exception $exception) {
-            Alert::error('Please Try Again');
-
-            return redirect()->back();
-        }
+        return redirect()->back();
     }
+//        } catch (\Exception $exception) {
+//            Alert::error($exception);
+//
+//            return redirect()->back();
+//        }
+
 
     public function Gallery()
     {
@@ -1189,8 +1386,11 @@ class AdminController extends Controller
 
     public function Signin()
     {
+        $newMessage = $this->hasanChatCount();
+        $this->onlineShow();
         $Site = Site::find(1);
-        return view('Admin.Signin')->with(['Site' => $Site]);
+        return view("Admin.signin",compact("Site","newMessage"));
+
     }
 
     public function SigninPost(Request $request)
@@ -1213,31 +1413,42 @@ class AdminController extends Controller
 
     public function VisitorSetting()
     {
+        $newMessage = $this->hasanChatCount();
+        $this->onlineShow();
         $Site = Site::find(1);
-        return view('Admin.VisitorSetting')->with(['Site' => $Site]);
+        return view('Admin.VisitorSetting')->with(['Site' => $Site,'newMessage' =>$newMessage]);
     }
 
     public function VisitorSettingPost(Request $request)
     {
         $request->validate([
             'VisitorBackGround' => 'image',
-            'VisitorWelcome' => 'required|string',
-            'VisitorAbout' => 'required|string',
-            'VisitorProfession' => 'required|string',
-            'VisitorAboutPayment' => 'required|string',
-            'VisitorPayment' => 'required|integer',
-            'VisitorGender' => 'required|string',
-            'MoneyType' => 'required',
+            'VisitorWelcome' => 'string|nullable',
+            'VisitorAbout' => 'string|nullable',
+            'VisitorAboutPayment' => 'string|nullable',
+            'VisitorPayment' => 'integer|nullable',
+            'MoneyType' => 'nullable',
         ]);
         $Site = Site::find(1);
         $Site->VisitorBackGround = $request->hasFile('VisitorBackGround') ? $this->S3Setting($request, 'VisitorBackGround') : $Site->VisitorBackGround;
         $Site->VisitorWelcome = $request->VisitorWelcome;
         $Site->VisitorAbout = $request->VisitorAbout;
-        $Site->VisitorProfession = $request->VisitorProfession;
         $Site->VisitorAboutPayment = $request->VisitorAboutPayment;
         $Site->VisitorPayment = $request->VisitorPayment;
-        $Site->VisitorGender = $request->VisitorGender;
         $Site->MoneyType = $request->MoneyType;
+
+
+        $Site->MoneyType = $request->MoneyType;
+
+        if ($request->visitorRegistrationVideo) {
+            $Site->visitorRegistrationVideo = preg_match('/.*embed.*/', $request->visitorRegistrationVideo) ? $request->visitorRegistrationVideo : preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i", "https://www.youtube.com/embed/$1", $request->visitorRegistrationVideo);
+        }
+        $Site->visitorRegistrationPDF = $request->hasFile('visitorRegistrationPDF') ? $this->S3Doc($request, 'visitorRegistrationPDF') : $Site->visitorRegistrationPDF;
+        if ($request->visitorPanelVideo){
+            $Site->visitorPanelVideo = preg_match('/.*embed.*/', $request->visitorPanelVideo) ? $request->visitorPanelVideo : preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i", "https://www.youtube.com/embed/$1", $request->visitorPanelVideo);
+        }
+        $Site->visitorPanelPDF = $request->hasFile('visitorPanelPDF') ? $this->S3Doc($request, 'visitorPanelPDF') : $Site->visitorPanelPDF;
+
         $Site->save();
         Alert::success('Settings Saved Successful');
 
@@ -1248,20 +1459,22 @@ class AdminController extends Controller
 
     public function ExhibitorSetting()
     {
+        $newMessage = $this->hasanChatCount();
+        $this->onlineShow();
         $Site = Site::find(1);
-        return view('Admin.ExhibitorSetting')->with(['Site' => $Site]);
+        return view('Admin.ExhibitorSetting')->with(['Site' => $Site,'newMessage'=>$newMessage]);
     }
 
     public function ExhibitorSettingPost(Request $request)
     {
         $request->validate([
             'ExhibitorBackGround' => 'image',
-            'ExhibitorWelcome' => 'required|string',
-            'ExhibitorAbout' => 'required|string',
-            'ExhibitorAboutPayment' => 'required|string',
-            'ExhibitorPayment' => 'required|integer',
+            'ExhibitorWelcome' => 'string|nullable',
+            'ExhibitorAbout' => 'string|nullable',
+            'ExhibitorAboutPayment' => 'string|nullable',
+            'ExhibitorPayment' => 'integer|nullable',
             'ExhibitorMaximumOperator' => 'required|integer',
-            'MoneyType' => 'required',
+            'MoneyType' => 'nullable',
         ]);
         $Site = Site::find(1);
         $Site->ExhibitorBackGround = $request->hasFile('ExhibitorBackGround') ? $this->S3Setting($request, 'ExhibitorBackGround') : $Site->ExhibitorBackGround;
@@ -1271,6 +1484,16 @@ class AdminController extends Controller
         $Site->ExhibitorPayment = $request->ExhibitorPayment;
         $Site->ExhibitorMaximumOperator = $request->ExhibitorMaximumOperator;
         $Site->MoneyType = $request->MoneyType;
+
+        if ($request->exRegistrationVideo) {
+            $Site->exRegistrationVideo = preg_match('/.*embed.*/', $request->exRegistrationVideo) ? $request->exRegistrationVideo : preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i", "https://www.youtube.com/embed/$1", $request->exRegistrationVideo);
+        }
+        $Site->exRegistrationPDF = $request->hasFile('exRegistrationPDF') ? $this->S3Doc($request, 'exRegistrationPDF') : $Site->exRegistrationPDF;
+        if ($request->exPanelVideo){
+            $Site->exPanelVideo = preg_match('/.*embed.*/', $request->exPanelVideo) ? $request->exPanelVideo : preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i", "https://www.youtube.com/embed/$1", $request->exPanelVideo);
+        }
+        $Site->exPanelPDF = $request->hasFile('exPanelPDF') ? $this->S3Doc($request, 'exPanelPDF') : $Site->exPanelPDF;
+
         $Site->save();
         Alert::success('Settings Saved Successful');
 
@@ -1281,11 +1504,15 @@ class AdminController extends Controller
 
     public function AppAdjustment()
     {
-        return view('Admin.AppAdjustment');
+        $newMessage = $this->hasanChatCount();
+        $this->onlineShow();
+        return view('Admin.AppAdjustment',compact("newMessage"));
     }
 
     public function AppAdjustmentPost(Request $request)
     {
+
+
         $request->validate([
             'Main1' => 'image',
             'Main2' => 'image',
@@ -1349,73 +1576,85 @@ class AdminController extends Controller
             'Rotationposter22' => 'image',
             'Rotationposter23' => 'image',
             'Rotationposter24' => 'image',
+            'welcomeVideo' => 'string|nullable'
         ]);
 
         $Hall = Hall::find(1);
 
-        $Hall->Main1 = $request->hasFile('Main1') ? $this->S3($request, 'Main1') : $Hall->Main1;
 
-        $Hall->Main2 = $request->hasFile('Main2') ? $this->S3($request, 'Main2') : $Hall->Main2;
-        $Hall->Main3 = $request->hasFile('Main3') ? $this->S3($request, 'Main3') : $Hall->Main3;
-        $Hall->Main4 = $request->hasFile('Main4') ? $this->S3($request, 'Main4') : $Hall->Main4;
-        $Hall->Main5 = $request->hasFile('Main5') ? $this->S3($request, 'Main5') : $Hall->Main5;
-        $Hall->Main6 = $request->hasFile('Main6') ? $this->S3($request, 'Main6') : $Hall->Main6;
-        $Hall->Loby1 = $request->hasFile('Loby1') ? $this->S3($request, 'Loby1') : $Hall->Loby1;
-        $Hall->Loby2 = $request->hasFile('Loby2') ? $this->S3($request, 'Loby2') : $Hall->Loby2;
-        $Hall->Loby3 = $request->hasFile('Loby3') ? $this->S3($request, 'Loby3') : $Hall->Loby3;
-        $Hall->Loby4 = $request->hasFile('Loby4') ? $this->S3($request, 'Loby4') : $Hall->Loby4;
-        $Hall->Auditorium1 = $request->hasFile('Auditorium1') ? $this->S3($request, 'Auditorium1') : $Hall->Auditorium1;
-        $Hall->Auditorium2 = $request->hasFile('Auditorium2') ? $this->S3($request, 'Auditorium2') : $Hall->Auditorium2;
-        $Hall->Lounge1 = $request->hasFile('Lounge1') ? $this->S3($request, 'Lounge1') : $Hall->Lounge1;
-        $Hall->Lounge2 = $request->hasFile('Lounge2') ? $this->S3($request, 'Lounge2') : $Hall->Lounge2;
-        $Hall->Wallposter1 = $request->hasFile('Wallposter1') ? $this->S3($request, 'Wallposter1') : $Hall->Wallposter1;
-        $Hall->Wallposter2 = $request->hasFile('Wallposter2') ? $this->S3($request, 'Wallposter2') : $Hall->Wallposter2;
-        $Hall->Wallposter3 = $request->hasFile('Wallposter3') ? $this->S3($request, 'Wallposter3') : $Hall->Wallposter3;
-        $Hall->Wallposter4 = $request->hasFile('Wallposter4') ? $this->S3($request, 'Wallposter4') : $Hall->Wallposter4;
-        $Hall->Wallposter5 = $request->hasFile('Wallposter5') ? $this->S3($request, 'Wallposter5') : $Hall->Wallposter5;
-        $Hall->Wallposter6 = $request->hasFile('Wallposter6') ? $this->S3($request, 'Wallposter6') : $Hall->Wallposter6;
-        $Hall->Wallposter7 = $request->hasFile('Wallposter7') ? $this->S3($request, 'Wallposter7') : $Hall->Wallposter7;
-        $Hall->Wallposter8 = $request->hasFile('Wallposter8') ? $this->S3($request, 'Wallposter8') : $Hall->Wallposter8;
-        $Hall->Billboard1 = $request->hasFile('Billboard1') ? $this->S3($request, 'Billboard1') : $Hall->Billboard1;
-        $Hall->Billboard2 = $request->hasFile('Billboard2') ? $this->S3($request, 'Billboard2') : $Hall->Billboard2;
-        $Hall->Billboard3 = $request->hasFile('Billboard3') ? $this->S3($request, 'Billboard3') : $Hall->Billboard3;
-        $Hall->Billboard4 = $request->hasFile('Billboard4') ? $this->S3($request, 'Billboard4') : $Hall->Billboard4;
-        $Hall->Billboard5 = $request->hasFile('Billboard5') ? $this->S3($request, 'Billboard5') : $Hall->Billboard5;
-        $Hall->Billboard6 = $request->hasFile('Billboard6') ? $this->S3($request, 'Billboard6') : $Hall->Billboard6;
-        $Hall->Stand1 = $request->hasFile('Stand1') ? $this->S3($request, 'Stand1') : $Hall->Stand1;
-        $Hall->Stand2 = $request->hasFile('Stand2') ? $this->S3($request, 'Stand2') : $Hall->Stand2;
-        $Hall->Stand3 = $request->hasFile('Stand3') ? $this->S3($request, 'Stand3') : $Hall->Stand3;
-        $Hall->Stand4 = $request->hasFile('Stand4') ? $this->S3($request, 'Stand4') : $Hall->Stand4;
-        $Hall->Stand5 = $request->hasFile('Stand5') ? $this->S3($request, 'Stand5') : $Hall->Stand5;
-        $Hall->Stand6 = $request->hasFile('Stand6') ? $this->S3($request, 'Stand6') : $Hall->Stand6;
-        $Hall->Stand7 = $request->hasFile('Stand7') ? $this->S3($request, 'Stand7') : $Hall->Stand7;
-        $Hall->Panposter1 = $request->hasFile('Panposter1') ? $this->S3($request, 'Panposter1') : $Hall->Panposter1;
-        $Hall->Panposter2 = $request->hasFile('Panposter2') ? $this->S3($request, 'Panposter2') : $Hall->Panposter2;
-        $Hall->Panposter3 = $request->hasFile('Panposter3') ? $this->S3($request, 'Panposter3') : $Hall->Panposter3;
-        $Hall->Rotationposter1 = $request->hasFile('Rotationposter1') ? $this->S3($request, 'Rotationposter1') : $Hall->Rotationposter1;
-        $Hall->Rotationposter2 = $request->hasFile('Rotationposter2') ? $this->S3($request, 'Rotationposter2') : $Hall->Rotationposter2;
-        $Hall->Rotationposter3 = $request->hasFile('Rotationposter3') ? $this->S3($request, 'Rotationposter3') : $Hall->Rotationposter3;
-        $Hall->Rotationposter4 = $request->hasFile('Rotationposter4') ? $this->S3($request, 'Rotationposter4') : $Hall->Rotationposter4;
-        $Hall->Rotationposter5 = $request->hasFile('Rotationposter5') ? $this->S3($request, 'Rotationposter5') : $Hall->Rotationposter5;
-        $Hall->Rotationposter6 = $request->hasFile('Rotationposter6') ? $this->S3($request, 'Rotationposter6') : $Hall->Rotationposter6;
-        $Hall->Rotationposter7 = $request->hasFile('Rotationposter7') ? $this->S3($request, 'Rotationposter7') : $Hall->Rotationposter7;
-        $Hall->Rotationposter8 = $request->hasFile('Rotationposter8') ? $this->S3($request, 'Rotationposter8') : $Hall->Rotationposter8;
-        $Hall->Rotationposter9 = $request->hasFile('Rotationposter9') ? $this->S3($request, 'Rotationposter9') : $Hall->Rotationposter9;
-        $Hall->Rotationposter10 = $request->hasFile('Rotationposter10') ? $this->S3($request, 'Rotationposter10') : $Hall->Rotationposter10;
-        $Hall->Rotationposter11 = $request->hasFile('Rotationposter11') ? $this->S3($request, 'Rotationposter11') : $Hall->Rotationposter11;
-        $Hall->Rotationposter12 = $request->hasFile('Rotationposter12') ? $this->S3($request, 'Rotationposter12') : $Hall->Rotationposter12;
-        $Hall->Rotationposter13 = $request->hasFile('Rotationposter13') ? $this->S3($request, 'Rotationposter13') : $Hall->Rotationposter13;
-        $Hall->Rotationposter14 = $request->hasFile('Rotationposter14') ? $this->S3($request, 'Rotationposter14') : $Hall->Rotationposter14;
-        $Hall->Rotationposter15 = $request->hasFile('Rotationposter15') ? $this->S3($request, 'Rotationposter15') : $Hall->Rotationposter15;
-        $Hall->Rotationposter16 = $request->hasFile('Rotationposter16') ? $this->S3($request, 'Rotationposter16') : $Hall->Rotationposter16;
-        $Hall->Rotationposter17 = $request->hasFile('Rotationposter17') ? $this->S3($request, 'Rotationposter17') : $Hall->Rotationposter17;
-        $Hall->Rotationposter18 = $request->hasFile('Rotationposter18') ? $this->S3($request, 'Rotationposter18') : $Hall->Rotationposter18;
-        $Hall->Rotationposter19 = $request->hasFile('Rotationposter19') ? $this->S3($request, 'Rotationposter19') : $Hall->Rotationposter19;
-        $Hall->Rotationposter20 = $request->hasFile('Rotationposter20') ? $this->S3($request, 'Rotationposter20') : $Hall->Rotationposter20;
-        $Hall->Rotationposter21 = $request->hasFile('Rotationposter21') ? $this->S3($request, 'Rotationposter21') : $Hall->Rotationposter21;
-        $Hall->Rotationposter22 = $request->hasFile('Rotationposter22') ? $this->S3($request, 'Rotationposter22') : $Hall->Rotationposter22;
-        $Hall->Rotationposter23 = $request->hasFile('Rotationposter23') ? $this->S3($request, 'Rotationposter23') : $Hall->Rotationposter23;
-        $Hall->Rotationposter24 = $request->hasFile('Rotationposter24') ? $this->S3($request, 'Rotationposter24') : $Hall->Rotationposter24;
+
+
+        $Hall->Main1 = $request->hasFile('Main1') ? $this->S3Hasan($request, 'Main1') : $Hall->Main1;
+        $Hall->Main2 = $request->hasFile('Main2') ? $this->S3Hasan($request, 'Main2') : $Hall->Main2;
+        $Hall->Main3 = $request->hasFile('Main3') ? $this->S3Hasan($request, 'Main3') : $Hall->Main3;
+        $Hall->Main4 = $request->hasFile('Main4') ? $this->S3Hasan($request, 'Main4') : $Hall->Main4;
+        $Hall->Main5 = $request->hasFile('Main5') ? $this->S3Hasan($request, 'Main5') : $Hall->Main5;
+        $Hall->Main6 = $request->hasFile('Main6') ? $this->S3Hasan($request, 'Main6') : $Hall->Main6;
+        $Hall->Loby1 = $request->hasFile('Loby1') ? $this->S3Hasan($request, 'Loby1') : $Hall->Loby1;
+        $Hall->Loby2 = $request->hasFile('Loby2') ? $this->S3Hasan($request, 'Loby2') : $Hall->Loby2;
+        $Hall->Loby3 = $request->hasFile('Loby3') ? $this->S3Hasan($request, 'Loby3') : $Hall->Loby3;
+        $Hall->Loby4 = $request->hasFile('Loby4') ? $this->S3Hasan($request, 'Loby4') : $Hall->Loby4;
+        $Hall->Auditorium1 = $request->hasFile('Auditorium1') ? $this->S3Hasan($request, 'Auditorium1') : $Hall->Auditorium1;
+        $Hall->Auditorium2 = $request->hasFile('Auditorium2') ? $this->S3Hasan($request, 'Auditorium2') : $Hall->Auditorium2;
+        $Hall->Lounge1 = $request->hasFile('Lounge1') ? $this->S3Hasan($request, 'Lounge1') : $Hall->Lounge1;
+        $Hall->Lounge2 = $request->hasFile('Lounge2') ? $this->S3Hasan($request, 'Lounge2') : $Hall->Lounge2;
+        $Hall->Wallposter1 = $request->hasFile('Wallposter1') ? $this->S3Hasan($request, 'Wallposter1') : $Hall->Wallposter1;
+        $Hall->Wallposter2 = $request->hasFile('Wallposter2') ? $this->S3Hasan($request, 'Wallposter2') : $Hall->Wallposter2;
+        $Hall->Wallposter3 = $request->hasFile('Wallposter3') ? $this->S3Hasan($request, 'Wallposter3') : $Hall->Wallposter3;
+        $Hall->Wallposter4 = $request->hasFile('Wallposter4') ? $this->S3Hasan($request, 'Wallposter4') : $Hall->Wallposter4;
+        $Hall->Wallposter5 = $request->hasFile('Wallposter5') ? $this->S3Hasan($request, 'Wallposter5') : $Hall->Wallposter5;
+        $Hall->Wallposter6 = $request->hasFile('Wallposter6') ? $this->S3Hasan($request, 'Wallposter6') : $Hall->Wallposter6;
+        $Hall->Wallposter7 = $request->hasFile('Wallposter7') ? $this->S3Hasan($request, 'Wallposter7') : $Hall->Wallposter7;
+        $Hall->Wallposter8 = $request->hasFile('Wallposter8') ? $this->S3Hasan($request, 'Wallposter8') : $Hall->Wallposter8;
+        $Hall->Billboard1 = $request->hasFile('Billboard1') ? $this->S3Hasan($request, 'Billboard1') : $Hall->Billboard1;
+        $Hall->Billboard2 = $request->hasFile('Billboard2') ? $this->S3Hasan($request, 'Billboard2') : $Hall->Billboard2;
+        $Hall->Billboard3 = $request->hasFile('Billboard3') ? $this->S3Hasan($request, 'Billboard3') : $Hall->Billboard3;
+        $Hall->Billboard4 = $request->hasFile('Billboard4') ? $this->S3Hasan($request, 'Billboard4') : $Hall->Billboard4;
+        $Hall->Billboard5 = $request->hasFile('Billboard5') ? $this->S3Hasan($request, 'Billboard5') : $Hall->Billboard5;
+        $Hall->Billboard6 = $request->hasFile('Billboard6') ? $this->S3Hasan($request, 'Billboard6') : $Hall->Billboard6;
+        $Hall->Stand1 = $request->hasFile('Stand1') ? $this->S3Hasan($request, 'Stand1') : $Hall->Stand1;
+        $Hall->Stand2 = $request->hasFile('Stand2') ? $this->S3Hasan($request, 'Stand2') : $Hall->Stand2;
+        $Hall->Stand3 = $request->hasFile('Stand3') ? $this->S3Hasan($request, 'Stand3') : $Hall->Stand3;
+        $Hall->Stand4 = $request->hasFile('Stand4') ? $this->S3Hasan($request, 'Stand4') : $Hall->Stand4;
+        $Hall->Stand5 = $request->hasFile('Stand5') ? $this->S3Hasan($request, 'Stand5') : $Hall->Stand5;
+        $Hall->Stand6 = $request->hasFile('Stand6') ? $this->S3Hasan($request, 'Stand6') : $Hall->Stand6;
+        $Hall->Stand7 = $request->hasFile('Stand7') ? $this->S3Hasan($request, 'Stand7') : $Hall->Stand7;
+        $Hall->Panposter1 = $request->hasFile('Panposter1') ? $this->S3Hasan($request, 'Panposter1') : $Hall->Panposter1;
+        $Hall->Panposter2 = $request->hasFile('Panposter2') ? $this->S3Hasan($request, 'Panposter2') : $Hall->Panposter2;
+        $Hall->Panposter3 = $request->hasFile('Panposter3') ? $this->S3Hasan($request, 'Panposter3') : $Hall->Panposter3;
+        $Hall->Rotationposter1 = $request->hasFile('Rotationposter1') ? $this->S3Hasan($request, 'Rotationposter1') : $Hall->Rotationposter1;
+        $Hall->Rotationposter2 = $request->hasFile('Rotationposter2') ? $this->S3Hasan($request, 'Rotationposter2') : $Hall->Rotationposter2;
+        $Hall->Rotationposter3 = $request->hasFile('Rotationposter3') ? $this->S3Hasan($request, 'Rotationposter3') : $Hall->Rotationposter3;
+        $Hall->Rotationposter4 = $request->hasFile('Rotationposter4') ? $this->S3Hasan($request, 'Rotationposter4') : $Hall->Rotationposter4;
+        $Hall->Rotationposter5 = $request->hasFile('Rotationposter5') ? $this->S3Hasan($request, 'Rotationposter5') : $Hall->Rotationposter5;
+        $Hall->Rotationposter6 = $request->hasFile('Rotationposter6') ? $this->S3Hasan($request, 'Rotationposter6') : $Hall->Rotationposter6;
+        $Hall->Rotationposter7 = $request->hasFile('Rotationposter7') ? $this->S3Hasan($request, 'Rotationposter7') : $Hall->Rotationposter7;
+        $Hall->Rotationposter8 = $request->hasFile('Rotationposter8') ? $this->S3Hasan($request, 'Rotationposter8') : $Hall->Rotationposter8;
+        $Hall->Rotationposter9 = $request->hasFile('Rotationposter9') ? $this->S3Hasan($request, 'Rotationposter9') : $Hall->Rotationposter9;
+        $Hall->Rotationposter10 = $request->hasFile('Rotationposter10') ? $this->S3Hasan($request, 'Rotationposter10') : $Hall->Rotationposter10;
+        $Hall->Rotationposter11 = $request->hasFile('Rotationposter11') ? $this->S3Hasan($request, 'Rotationposter11') : $Hall->Rotationposter11;
+        $Hall->Rotationposter12 = $request->hasFile('Rotationposter12') ? $this->S3Hasan($request, 'Rotationposter12') : $Hall->Rotationposter12;
+        $Hall->Rotationposter13 = $request->hasFile('Rotationposter13') ? $this->S3Hasan($request, 'Rotationposter13') : $Hall->Rotationposter13;
+        $Hall->Rotationposter14 = $request->hasFile('Rotationposter14') ? $this->S3Hasan($request, 'Rotationposter14') : $Hall->Rotationposter14;
+        $Hall->Rotationposter15 = $request->hasFile('Rotationposter15') ? $this->S3Hasan($request, 'Rotationposter15') : $Hall->Rotationposter15;
+        $Hall->Rotationposter16 = $request->hasFile('Rotationposter16') ? $this->S3Hasan($request, 'Rotationposter16') : $Hall->Rotationposter16;
+        $Hall->Rotationposter17 = $request->hasFile('Rotationposter17') ? $this->S3Hasan($request, 'Rotationposter17') : $Hall->Rotationposter17;
+        $Hall->Rotationposter18 = $request->hasFile('Rotationposter18') ? $this->S3Hasan($request, 'Rotationposter18') : $Hall->Rotationposter18;
+        $Hall->Rotationposter19 = $request->hasFile('Rotationposter19') ? $this->S3Hasan($request, 'Rotationposter19') : $Hall->Rotationposter19;
+        $Hall->Rotationposter20 = $request->hasFile('Rotationposter20') ? $this->S3Hasan($request, 'Rotationposter20') : $Hall->Rotationposter20;
+        $Hall->Rotationposter21 = $request->hasFile('Rotationposter21') ? $this->S3Hasan($request, 'Rotationposter21') : $Hall->Rotationposter21;
+        $Hall->Rotationposter22 = $request->hasFile('Rotationposter22') ? $this->S3Hasan($request, 'Rotationposter22') : $Hall->Rotationposter22;
+        $Hall->Rotationposter23 = $request->hasFile('Rotationposter23') ? $this->S3Hasan($request, 'Rotationposter23') : $Hall->Rotationposter23;
+        $Hall->Rotationposter24 = $request->hasFile('Rotationposter24') ? $this->S3Hasan($request, 'Rotationposter24') : $Hall->Rotationposter24;
+        if ($request->welcomeVideo) {
+            $Hall->welcomeVideo = preg_match('/.*embed.*/', $request->welcomeVideo) ? $request->welcomeVideo : preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i", "https://www.youtube.com/embed/$1", $request->welcomeVideo);
+        }
+
+        $Hall->lobyLink1 = $request->lobyLink1;
+        $Hall->lobyLink2 = $request->lobyLink2;
+        $Hall->lobyLink3 = $request->lobyLink3;
+        $Hall->lobyLink4 = $request->lobyLink4;
+
         $Hall->save();
         Alert::success('Images Saved Successful');
         return redirect()->back();
@@ -1459,15 +1698,403 @@ class AdminController extends Controller
 
         if (\request()->has('BoothStatus')) {
             $User->AccountStatus = 'Active';
+
             if ($User->email_verified_at == null) {
                 $User->sendEmailVerificationNotification();
             }
         } else {
             $User->AccountStatus = 'Suspend';
+            Mail::to($User->email)->send(new SuspendExhibitor($User));
         }
         $User->save();
         Alert::success('User Changed Successful');
 
         return redirect()->back();
     }
+
+    public function Organizers()
+    {
+        $newMessage = $this->hasanChatCount();
+        $this->onlineShow();
+        $Organizers=Organizer::all();
+        $OrganizerID=null;
+        $Organizer=null;
+        if (\request("OrganizerID")) {
+            $OrganizerID = \request("OrganizerID");
+
+        }
+        return view("Admin.OrganizersInformation",compact("Organizers","OrganizerID","newMessage"));
+    }
+
+    public function OrganizersPost(Request $request)
+    {
+
+        $request->validate([
+            "firstname"=>"string|required",
+            "surname"=>"string|required",
+            "phoneNumber"=>"string|required",
+            "email"=>"string|required|unique:organizers",
+
+        ]);
+
+        Organizer::create([
+            "firstname"=>$request->firstname,
+            "surname"=>$request->surname,
+            "phoneNumber"=>$request->phoneNumber,
+            "email"=>$request->email,
+            "profile"=>$request->hasFile('profile') ? $this->S3Hasan($request, 'profile') : null
+
+        ]);
+
+        Alert::success('You Add Your Organizer Successfully');
+        return redirect()->back();
+
+    }
+
+    public function DeleteOrganizer($id)
+    {
+        $Organizer = Organizer::find($id);
+        $Organizer->delete();
+        Alert::success('Organizer Delete Successfully');
+        return redirect(route("Admin.Organizers"));
+    }
+
+
+    public function AddRecord()
+    {
+        return view("Admin.AddRecordConference");
+    }
+
+    public function VisitorInbox(Request $request)
+    {
+
+        if ($request->ajax()) {
+            if ($request->SearchTermUser)
+                $users_list = User::select("id", "UserName")->where('UserName', 'LIKE', '%' . \request()->SearchTermUser . '%')->whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->get();
+            else
+                $users_list = User::whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->where('id', '!=', \request()->UserID)->orderBy("newmessage","Desc")->where("newmessage","!=",0)->get();
+                $users_list_view = view('user-list-data', compact('users_list'))->render();
+            return response()->json(['users_list' => $users_list_view]);
+
+        }
+
+
+        if (\request()->UserID) {
+            $user = User::where("id",\request()->UserID)->first();
+            $user->newmessage = 0 ;
+            $user->save();
+
+            $Chats = AdminChat::where('UserID', Auth::id())->where("Status","New")->where('ReceiverID', \request()->UserID)->get();
+            $Chatsssss = AdminChat::where([
+                ['ReceiverID', \request()->UserID],
+                ['Status', 'New'],
+                ['Sender','Visitor']
+            ])->get()
+            ;
+            foreach ($Chatsssss as $chatsssss) {
+                $chatsssss->Status = 'Viewed';
+                $chatsssss->save();
+            }
+
+
+//            $users_list = User::where('Rule', 'Visitor')->orderBy("newmessage")->paginate(10);
+            $users_list = User::whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->where('id', '!=', \request()->UserID)->where("newmessage","!=",0)->orderBy("newmessage","Desc")->paginate(10);
+            $selected_user = User::select("id", "UserName")->where("id", \request()->UserID)->first();
+
+
+            $collection = collect();
+
+            $collection->push($selected_user);
+
+
+            foreach ($users_list as $ul)
+                $collection->push($ul);
+
+            $users_list = $collection;
+
+
+        } else {
+
+            if (\request()->SearchTermUser) {
+
+                $users_list = User::where('UserName', 'LIKE', '%' . \request()->SearchTermUser . '%')->whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->get(["id", "UserName"]);
+
+
+            } else {
+                $users_list = User::whereIn('Rule', ['Visitor', 'Exhibitor-Operator'])->where('id', '!=', \request()->UserID)->where("newmessage","!=",0)->orderBy("newmessage","Desc")->get();
+
+            }
+
+
+        }
+
+
+        if (isset($Chats))
+
+            return view('Admin.VisitorInbox', compact( 'users_list', 'Chats'));
+        else
+            return view('Admin.VisitorInbox', compact( 'users_list'));
+    }
+
+
+    public function ExhibitorInbox(Request $request)
+    {
+
+        if ($request->ajax()) {
+            if ($request->SearchTermBooth)
+                $booth_list = booth::select('id', "UserID", "CompanyName")->where('CompanyName', 'LIKE', '%' . \request()->SearchTermBooth . '%')->paginate(10);
+            else
+                $booth_list = booth::select('id', "UserID", "CompanyName")->where("newmessage","!=",0)->orderBy("newmessage","Desc")->get();
+            $booth_list_view = view('company-list-data', compact('booth_list'))->render();
+
+            return response()->json(['booth_list' => $booth_list_view]);
+
+        }
+
+
+        if (\request()->CompanyID) {
+            $ID = booth::find(\request()->CompanyID)->UserID;
+            $Chats = AdminChat::where('UserID', Auth::id())->where('ReceiverID', $ID)->get();
+            $Chatsssss = AdminChat::where([
+                ['ReceiverID', $ID],
+                ['Status', 'New'],
+                ['Sender','!=','Admin']
+            ])->get();
+            foreach ($Chatsssss as $ch) {
+
+                $ch->Status = 'Viewed';
+
+                $ch->save();
+            }
+
+            $selected_booth = booth::select('id', "UserID", "CompanyName")->where("id", \request()->CompanyID)->first();
+            $booth_list = booth::select('id', "UserID", "CompanyName")->where("id", "!=", \request()->CompanyID)->where("newmessage","!=",0)->orderBy("newmessage","Desc")->get();
+
+
+            $collection = collect();
+
+            $collection->push($selected_booth);
+
+
+            foreach ($booth_list as $bl)
+                $collection->push($bl);
+
+            $booth_list = $collection;
+
+
+        } else {
+
+            if (\request()->SearchTermBooth) {
+                $booth_list = booth::where('CompanyName', 'LIKE', '%' . \request()->SearchTermBooth . '%')->get(['id', "UserID", "CompanyName"]);
+            } else {
+                $booth_list = booth::select('id', "UserID", "CompanyName")->where("newmessage","!=",0)->orderBy("newmessage","Desc")->get();
+
+            }
+
+        }
+
+
+
+
+        if (isset($Chats))
+
+            return view('Admin.ExhibitorInbox', compact('booth_list', 'Chats'));
+        else
+            return view('Admin.ExhibitorInbox', compact('booth_list'));
+    }
+
+    public function SuspendUncompletedBooths()
+    {
+        $booths=booth::where("Poster1",null)->orWhere("Poster2",null)->orWhere("Poster3",null)->get();
+        foreach ($booths as $booth){
+
+            Mail::to(User::where("id",$booth->UserID)->first()->email)->send(new SuspendExhibitor($booth));
+
+            User::where("id",$booth->UserID)->update([
+                "AccountStatus"=>"Suspend"
+            ]);
+        }
+
+        Alert::success('All Companies without Posters Suspended');
+        return redirect()->back();
+
+    }
+
+    public function ReminderEmail()
+    {
+        $users=User::all();
+        foreach ($users as $user) {
+            Mail::to($user->email)->send(new Reminder($user));
+        }
+
+        Alert::success("Reminder Emails Sent To All Users");
+        return redirect()->back();
+    }
+
+    public function ThanksEmail()
+    {
+        $booths=booth::all();
+        foreach ($booths as $booth) {
+            $boothEmail=User::find($booth->UserID)->email;
+            Mail::to($boothEmail)->send(new thanks($booth));
+        }
+
+        Alert::success("Thanks Emails Sent To All Exhibitors");
+        return redirect()->back();
+    }
+
+    public function ExhibitorsFeedbacksEmail()
+    {
+        $booths=booth::all();
+        foreach ($booths as $booth) {
+            $boothEmail=User::find($booth->UserID)->email;
+            $boothUser=User::find($booth->UserID);
+            Mail::to($boothEmail)->send(new ExhibitorFeedback($boothUser));
+        }
+
+        Alert::success("Feedbacks Emails Sent To All Exhibitors");
+        return redirect()->back();
+    }
+
+    public function SendExhibitorsFeedback()
+    {
+        $user=User::where("password",\request("token"))->first();
+        $Company=booth::where("UserID",$user->id)->first();
+        if ($Company == null || empty($Company)) {
+            abort(404);
+        }
+        return view("SendExhibitorsFeedback",compact("Company"));
+    }
+
+    public function ShowOnlines()
+    {
+        $site=Site::find(1);
+        if ($site->onlinesCountStatus == 0) {
+            $site->onlinesCountStatus = 1;
+            $site->save();
+            Alert::success("Online Users Count Showable now");
+
+
+        }else{
+            $site->onlinesCountStatus = 0;
+            $site->save();
+            Alert::success("Online Users Count Disable Showing now");
+        }
+
+
+        return redirect()->back();
+
+    }
+
+    public function ExhibitorForm()
+    {
+        $newMessage = $this->hasanChatCount();
+        return view("Admin.FormExhibitor",compact("newMessage"));
+    }
+
+    public function ExhibitorFormPost(Request $request){
+
+        ExhibitorForms::whereId(1)->update([
+            "firstName"=>$request->firstName,
+            "lastName"=>$request->lastName,
+            "position"=>$request->position,
+            "companyAddress"=>$request->companyAddress,
+            "city"=>$request->city,
+            "zipCode"=>$request->zipCode,
+            "country"=>$request->country,
+            "website"=>$request->website,
+            "mainCompany"=>$request->mainCompany,
+            "institution"=>$request->institution,
+            "institutionEmail"=>$request->institutionEmail,
+            "phone"=>$request->phone,
+            "mob"=>$request->mob,
+            "fax"=>$request->fax,
+            "institutionItems"=>$request->institutionItems,
+        ]);
+
+        Site::whereId(1)->update([
+            "VisitorGender"=>$request->VisitorGender
+        ]);
+
+        Alert::success("Your Changes Successfully Saved");
+        return redirect()->back();
+    }
+
+
+    public function VisitorForm()
+    {
+        $newMessage = $this->hasanChatCount();
+        return view("Admin.FormVisitor",compact("newMessage"));
+    }
+
+    public function VisitorFormPost(Request $request)
+    {
+
+
+
+
+        VisitorForm::whereId(1)->update([
+            "education"=>$request->education,
+            "countryStudy"=>$request->countryStudy,
+            "InterestedDegree"=>$request->InterestedDegree,
+            "InterestedField"=>$request->InterestedField,
+            "languageOfStudy"=>$request->languageOfStudy,
+            "onlineDegreeProgram"=>$request->onlineDegreeProgram,
+            "interestedScholarShip"=>$request->interestedScholarShip,
+            "educationItems"=>$request->educationItems,
+            "interestedDegreeItems"=>$request->interestedDegreeItems,
+            "interestedFieldItems"=>$request->interestedFieldItems,
+            "gender"=>$request->gender
+        ]);
+
+
+
+        Site::whereId(1)->update([
+            "VisitorProfession" => $request->VisitorProfession,
+            "VisitorGender" => $request->VisitorGender
+        ]);
+
+        Alert::success("Your Changes Successfully Saved");
+        return redirect()->back();
+    }
+
+
+    public static function onlineShow()
+    {
+        $onlines=0;
+        $users_online=User::all();
+
+        foreach ($users_online as $user_online) {
+            if ($user_online->isOnline()){
+                $onlines++;
+                User::where("id",$user_online->id)->update(["userStatus"=>1]);
+                Site::where("id",1)->update(["onlinesCount"=>$onlines]);
+            }else{
+                User::where("id",$user_online->id)->update(["userStatus"=>0]);
+            }
+        }
+        return $onlines;
+    }
+
+
+    public function onlineAjax()
+    {
+        $onlines=0;
+        $users_online=User::all();
+
+        foreach ($users_online as $user_online) {
+            if ($user_online->isOnline()){
+                $onlines++;
+                User::where("id",$user_online->id)->update(["userStatus"=>1]);
+                Site::where("id",1)->update(["onlinesCount"=>$onlines]);
+            }else{
+                User::where("id",$user_online->id)->update(["userStatus"=>0]);
+            }
+        }
+        return response()->json([
+            "onlines" => $onlines
+        ]);
+    }
+
+
 }

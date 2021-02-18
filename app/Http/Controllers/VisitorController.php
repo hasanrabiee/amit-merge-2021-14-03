@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\AdminChat;
 use App\booth;
+use App\Chat;
+use App\Mail\newMessage;
 use App\Meeting;
 use App\MeetingRequest;
 use App\Site;
@@ -16,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use MacsiDigital\Zoom\Facades\Zoom;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -215,8 +218,8 @@ class VisitorController extends Controller
     }
 
 
-    public function Resume(Request $request)
-    {
+
+    public function Resume(Request $request){
 
 
         $this->validate($request,
@@ -224,6 +227,7 @@ class VisitorController extends Controller
                 'resume' => 'required|mimes:pdf'
             ]
         );
+
 
 
         $user = Auth::user();
@@ -235,38 +239,33 @@ class VisitorController extends Controller
         return redirect()->back();
 
 
-    }
-
-    public function leave_meeting(Request $request) {
-
-        Alert::success('Successfully left the meeting');
-        return redirect()->to('/');
 
     }
 
-    public function index()
-    {
+
+
+
+    public function index(){
+//        $this->sendMessage("sssssss","+995557687274");
         return view('Visitor.index');
     }
 
-    public function UpdateAvatar(Request $request)
-    {
+    public function UpdateAvatar(Request $request){
         $request->validate([
             'Avatar' => 'image|required'
         ]);
         $User = Auth::user();
-        $User->Image = $this->UploadPic($request, 'Avatar', 'UserProfiles', 'Profile');
+        $User->Image = $this->UploadPic($request , 'Avatar' , 'UserProfiles' , 'Profile');
         $User->save();
         return redirect()->back();
     }
 
-    public function ChangePassword(Request $request)
-    {
+    public function ChangePassword(Request $request){
         $request->validate([
             'OldPassword' => 'required',
             'password' => 'required|confirmed|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!@#$%^&*]).*$/',
         ]);
-        if (Hash::check($request->OldPassword, Auth::user()->password)) {
+        if (Hash::check($request->OldPassword,Auth::user()->password)){
             Auth::user()->password = Hash::make($request->password);
             Auth::user()->save();
             Auth::logout();
@@ -279,102 +278,236 @@ class VisitorController extends Controller
 
     }
 
-    public function VisitExperience(Request $request)
-    {
+    public function VisitExperience(Request $request){
         $request->validate([
             'VisitExperience' => 'required|string'
         ]);
         Auth::user()->VisitExperience = $request->VisitExperience;
         Auth::user()->save();
+        Alert::success("Your Feedback is Submitted to Admin");
         return redirect()->back();
     }
 
+    public function VisitHistory(){
 
-    public function VisitHistory()
-    {
-        $Statistic = Statistics::where('UserID', Auth::id())->get();
+
+
+        $Statistic = Statistics::where('UserID' , Auth::id())->get();
         $Booths = [];
         $uniques = array();
         foreach ($Statistic as $obj) {
             $uniques[$obj->BoothID] = $obj;
         }
         foreach ($uniques as $item) {
-
-
             $Booths[] = booth::find($item->BoothID);
         }
 
-        if (\request()->CompanyID) {
+
+
+        if (\request()->institution) {
+            $booths = null;
+            $Usersf = User::where("institution",\request()->institution)->get();
+            foreach ($Usersf as $Userf){
+                if (booth::where("UserID",$Userf->id)->count() > 0) {
+                    $booths [] = booth::where("UserID",$Userf->id)->first();
+                }else{
+                    $booths = null;
+                }
+            }
+
+            if ($booths != null) {
+                return view('Visitor.VisitHistory')->with(['Booths' => $booths]);
+            }else {
+                Alert::error("nothing found");
+                return redirect()->back();
+            }
+
+
+        }
+
+
+        if (\request()->CompanyID){
             $Booth = booth::find(\request()->CompanyID);
-            return view('Visitor.VisitHistory')->with(['Booths' => $Booths, 'Booth' => $Booth]);
+            $Booth_id = booth::find(\request()->CompanyID)->user->id;
+            $userInfo=User::where("id",$Booth_id)->first();
+            return view('Visitor.VisitHistory')->with(['Booths' => $Booths , 'Booth' => $Booth,'userInfo'=>$userInfo]);
         }
 
         if (\request()->search) {
-
-            $search_booths = [];
-
-            foreach ($Booths as $one_booth) {
-
-                if (Str::contains($one_booth->CompanyName, \request()->search)) {
-
-                    $search_booths[] = $one_booth;
-
-                }
-
-
+            if (booth::where('CompanyName', 'LIKE', '%' . \request()->search . '%')->count() > 0) {
+                $Booths = booth::where('CompanyName', 'LIKE', '%' . \request()->search . '%')->get();
+            }else {
+                Alert::error("nothing found");
+                return redirect()->back();
             }
-
-            return view('Visitor.VisitHistory')->with(['Booths' => $search_booths]);
-
-
+            return view('Visitor.VisitHistory')->with(['Booths' => $Booths]);
         }
-
 
         return view('Visitor.VisitHistory')->with(['Booths' => $Booths]);
     }
 
 
-    public function Payment()
+//written by hasan
+
+
+    public function VisitInbox(){
+        $Statistic = Statistics::where('UserID' , Auth::id())->get();
+        $Booths = [];
+        $uniques = array();
+        foreach ($Statistic as $obj) {
+            $uniques[$obj->BoothID] = $obj;
+        }
+        foreach ($uniques as $item) {
+            $Booths[] = booth::find($item->BoothID);
+        }
+
+        if (\request()->CompanyID){
+            $Booth = booth::find(\request()->CompanyID);
+            $Booth_id = booth::find(\request()->CompanyID)->user->id;
+            $userInfo=User::where("id",$Booth_id)->first();
+
+            return view('Visitor.inbox')->with(['Booths' => $Booths , 'Booth' => $Booth,'userInfo'=>$userInfo]);
+        }
+        return view('Visitor.inbox')->with(['Booths' => $Booths]);
+    }
+
+
+
+    public function InboxGet(Request $request)
     {
+//        $request->validate([
+//            'UserID' => 'required'
+//        ]);
+        $Chat = Chat::where('BoothID', $request->BoothID)->where('UserID', \auth()->user()->id)->get();
+        return response()->json([
+            'Chat' => $Chat
+        ], 200);
+
+    }
+
+
+    public function InboxPost(Request $request)
+    {
+
+//        dd($request);
+//        if (Chat::where('BoothID', $request->BoothID)->where('UserID', $request->UserID)->get()[0]->Owner != null) {
+//            $Owner = Chat::where('BoothID', $request->BoothID)->where('UserID', $request->UserID)->first()->Owner;
+//        } else {
+//            $Owner = Auth::id();
+//        }
+        $request->validate([
+            'Text' => 'required|string',
+            'UserID' => 'required|integer'
+        ]);
+
+        Chat::create([
+            'UserID' => $request->UserID,
+            'BoothID' => $request->BoothID,
+            'Text' => $request->Text,
+            'Sender' => 'Visitor',
+            'Owner' => 1,
+        ]);
+
+    }
+
+
+
+    public function ChangeChatStatus(Request $request){
+        if ($request->BoothID && $request->UserID) {
+            $CHatsssss = Chat::where('BoothID', $request->BoothID)->where('UserID', $request->UserID)->where('Sender','Exhibitor')->get();
+            foreach ($CHatsssss as $ch) {
+                $ch->Status = 'Viewed';
+                $ch->save();
+            }
+            return response()->json([
+                'msg' => 'Done'
+            ],200);
+        }else{
+            return response()->json([
+                'msg' => 'Error'
+            ],200);
+
+        }
+
+    }
+
+
+    public function ChangeIP(Request $request)
+    {
+        $user = User::find(\auth()->user()->id);
+        $user->UserIP = $request->ip;
+        $user->save();
+    }
+
+
+
+//end-written by hasan
+
+    public function Payment(){
         return view('Visitor.Payment');
     }
 
-    public function Contact()
-    {
-        $Chats = AdminChat::where('ReceiverID', Auth::id())->get();
+    public function Contact(){
+        $Chats = AdminChat::where('ReceiverID' , Auth::id())->get();
+
+
+        if ($users_message=User::where("newmessage",">=",3)->count() != 0) {
+            $users_message=User::where("newmessage",">=",3)->first();
+            Mail::to("test@test.com")->send(new newMessage($users_message));
+
+        }
+        //        dd($users_message);
+        //$Count = AdminChat::where('ReceiverID', $id)->where('Status', 'New')->count();
+
         return view('Visitor.ContactUs')->with(['Chats' => $Chats]);
     }
 
-    public function ChatGet()
+
+    public function visitorContactUsAjax()
     {
-        $Chats = AdminChat::where('ReceiverID', Auth::id())->get();
+
+        $Count = AdminChat::where([
+            ['ReceiverID', auth()->user()->id],
+            ['Status', 'New'],
+            ['sender',"!=","Admin"]
+        ])->count();
+
+        User::where("id",auth()->user()->id)->update(["newmessage"=>$Count]);
+
         return response()->json([
-            'Chat' => $Chats
-        ], 200);
+            'newChat'=>$Count
+        ]);
     }
 
-    public function Chat(Request $request)
-    {
+    public function ChatGet(){
+        $Chats = AdminChat::where('ReceiverID' , Auth::id())->get();
+        return response()->json([
+            'Chat' => $Chats
+        ],200);
+    }
+
+    public function Chat(Request $request){
         $request->validate([
             'Text' => ['required', 'max:255']
         ]);
-        $Owner = User::where(['Rule' => 'Admin-Operator', 'ChatMode' => 'Available'])->orderBy('ActiveSlave', 'ASC')->first();
-        if ($Owner == null) {
-            $Owner = User::where('Rule', 'Admin')->get()[0]->id;
-        } else {
+        $Owner = User::where(['Rule' => 'Admin-Operator' , 'ChatMode' => 'Available'])->orderBy('ActiveSlave', 'ASC')->first();
+        if ($Owner == null){
+            $Owner = User::where('Rule' , 'Admin')->get()[0]->id;
+        }else{
             $Owner->ActiveSlave = $Owner->ActiveSlave + 1;
             $Owner->save();
             $Owner = $Owner->id;
         }
         AdminChat::create([
             'Text' => $request->Text,
-            'UserID' => $Owner,
+            'UserID' => $Owner ,
             'ReceiverID' => Auth::id(),
             'Sender' => 'Visitor',
         ]);
-        $Chats = AdminChat::where('ReceiverID', Auth::id())->get();
+        $Chats = AdminChat::where('ReceiverID' , Auth::id())->get();
         return response()->json([
             'Chat' => $Chats
-        ], 200);
+        ],200);
+
     }
 }

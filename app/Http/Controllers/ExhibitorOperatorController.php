@@ -33,7 +33,8 @@ class ExhibitorOperatorController extends Controller
 
     public function index()
     {
-        return view('Exhibitor-Operator.index')->with(['Booth' => $this->Booth()]);
+        $newMessage = $this->hasanChatCount();
+        return view('Exhibitor-Operator.index')->with(['Booth' => $this->Booth(),'newMessage'=>$newMessage]);
     }
 
 
@@ -66,7 +67,7 @@ class ExhibitorOperatorController extends Controller
 
     public function ChangeChatStatus(Request $request){
         if ($request->BoothID && $request->UserID) {
-            $CHatsssss = Chat::where('BoothID', $request->BoothID)->where('UserID', $request->UserID)->get();
+            $CHatsssss = Chat::where('BoothID', $request->BoothID)->where('UserID', $request->UserID)->where('Sender','Visitor')->get();
             foreach ($CHatsssss as $ch) {
                 $ch->Status = 'Viewed';
                 $ch->save();
@@ -101,6 +102,7 @@ class ExhibitorOperatorController extends Controller
             'Text' => $request->Text,
             'Sender' => 'Exhibitor',
             'Owner' => $Owner,
+            'Status'=>'New'
 
         ]);
     }
@@ -118,16 +120,15 @@ class ExhibitorOperatorController extends Controller
     }
 
 
-    public function inbox(Request $request)
+    public function Inbox(Request $request)
     {
-        if (Auth::user()->AccountStatus != 'Active'){
-            return view('Exhibitor-Operator.Inbox-Deactive')->with(['Booth' => $this->Booth()]);
-        }
 
 
 
-         if (\request()->Mode){
-            switch (\request()->Mode){
+
+
+        if (\request()->Mode) {
+            switch (\request()->Mode) {
                 case 'Available':
                     Auth::user()->ChatMode = 'Available';
                     Auth::user()->save();
@@ -138,12 +139,20 @@ class ExhibitorOperatorController extends Controller
                     break;
             }
         }
-        $Booth = $this->Booth();
+
+
+
+
+
+        $boothID = User::where("id",\auth()->user()->id)->first()->CompanyID;
+        $Booth =booth::where("id",$boothID)->first();
         $Users = [];
 
 
         if ($request->ajax()) {
             // prepare users
+
+
 
             if ($request->SearchTerm){
 
@@ -156,20 +165,16 @@ class ExhibitorOperatorController extends Controller
 
 
             }
-
             else{
                 $UniqueUser = array();
                 $Chats = Chat::where('BoothID', $Booth->id)->where('Sender', 'Visitor')->get();
                 foreach ($Chats as $obj) {
                     $UniqueUser[$obj->UserID] = $obj->UserID;
                 }
-                $Users = User::whereIn('id',$UniqueUser)->paginate(10);
+                $Users = User::whereIn('id',$UniqueUser)->orderBy("newmessage","Desc")->paginate(10);
 
             }
-
-
-
-            $users_list_view = view('Exhibitor.user-list-data', compact('Users' , 'Booth'))->render();
+            $users_list_view = view('Exhibitor-Operator.user-list-data', compact('Users' , 'Booth'))->render();
 
 
             // end prepare users
@@ -184,7 +189,7 @@ class ExhibitorOperatorController extends Controller
 
         if (Auth::user()->ChatMode == 'Available') {
             $UniqueUser = array();
-            $Chats = Chat::where('BoothID' , $Booth->id)->where('Owner',Auth::id())->where('Sender' , 'Visitor')->get();
+            $Chats = Chat::where('BoothID', $Booth->id)->where('Sender', 'Visitor')->get();
             foreach ($Chats as $obj) {
                 $UniqueUser[$obj->UserID] = $obj->UserID;
             }
@@ -193,25 +198,27 @@ class ExhibitorOperatorController extends Controller
         }
 
         if (\request()->UserID) {
-            $Chat = Chat::where('BoothID', $Booth->id)->where('UserID', \request()->UserID)->where('Owner',Auth::id())->get();
-            $Chatssss = Chat::where('BoothID', $Booth->id)->where('UserID', \request()->UserID)->where('Owner',Auth::id())->get();
-            foreach ($Chatssss as $ch) {
+            $Chat = Chat::where('BoothID', $Booth->id)->where('UserID', \request()->UserID)->get();
+            $CHatsssss = Chat::where('BoothID', $Booth->id)->where('UserID', \request()->UserID)->where('Sender','Visitor')->get();
+            foreach ($CHatsssss as $ch) {
                 $ch->Status = 'Viewed';
                 $ch->save();
             }
-            return view('Exhibitor-Operator.Inbox')->with(['Booth' => $Booth, 'Users' => $Users, 'Chat' => $Chat]);
+            return view('Exhibitor-Operator.inbox')->with(['Booth' => $Booth, 'Users' => $Users, 'Chat' => $Chat]);
         }
+
+
 
 
         if (\request()->SearchTerm) {
             $UsersAll = User::where('UserName', 'LIKE', '%' . \request()->SearchTerm . '%')->get();
-            return view('Exhibitor-Operator.Inbox')->with(['Booth' => $Booth, 'Users' => $UsersAll]);
-
+            foreach ($UsersAll as $user) {
+                $Users[] = User::find($user->id);
+            }
         }
-        return view('Exhibitor-Operator.Inbox')->with(['Booth' => $Booth, 'Users' => $Users]);
+        return view('Exhibitor-Operator.inbox')->with(['Booth' => $Booth, 'Users' => $Users]);
+    }
 
-
-        }
 
 
     public function Chat(Request $request)
@@ -272,6 +279,7 @@ class ExhibitorOperatorController extends Controller
 
     public function Statistics()
     {
+        $newMessage = $this->hasanChatCount();
         $Statistic = Statistics::where('BoothID',$this->Booth()->id)->groupBy('date')
             ->orderBy('date', 'ASC')
             ->get(array(
@@ -288,27 +296,19 @@ class ExhibitorOperatorController extends Controller
         return view('Exhibitor-Operator.Statistics')->with([
             'Booth' => $this->Booth(),
             'Statistic' => $Statistic,
-            'Profession', $Profession
+            'newMessage'=>$newMessage
         ])->with('Profession', $Profession);
 
     }
 
 
     public function History(){
+
+        $newMessage = $this->hasanChatCount();
+
+
         $Booth = $this->Booth();
-        if (\request()->SearchTerm) {
-            $UserName = User::where('UserName', 'LIKE', '%' . \request()->SearchTerm . '%')->get();
-
-            if ($UserName->count() <= 0) {
-                return redirect()->back();
-            }else{
-                return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $UserName]);
-
-            }
-            $Statistic = Statistics::where('UserID', $UserName[0]->id)->where('BoothID', $Booth->id)->get();
-        } else {
-            $Statistic = Statistics::where('BoothID', $Booth->id)->get();
-        }
+        $Statistic = Statistics::where('BoothID' , $Booth->id )->get();
         $Users = [];
         $uniques = array();
         foreach ($Statistic as $obj) {
@@ -317,6 +317,32 @@ class ExhibitorOperatorController extends Controller
         foreach ($uniques as $item) {
             $Users[] = User::find($item->UserID);
         }
+
+        foreach ($Users as $User) {
+            $usernamesForSearch[] = $User->UserName;
+        }
+        $UsersSearched = array();
+        if (\request()->search){
+            $User = User::find(\request()->UserID);
+            $input = preg_quote(\request()->search, '~');
+            $data = $usernamesForSearch;
+            $results = preg_grep('~' . $input . '~', $data);
+            foreach ($results as $result){
+                $UsersSearched[] = User::where("UserName","LIKE",$result)->first();
+            }
+
+            if (count($UsersSearched) != 0) {
+                return view('Exhibitor-Operator.History')->with(['Booth' => $Booth , 'Users' => $UsersSearched , 'User' => $User,'newMessage'=>$newMessage]);
+            }else {
+                return redirect()->back();
+            }
+        }
+
+
+
+
+
+
 
 
 
@@ -329,6 +355,60 @@ class ExhibitorOperatorController extends Controller
 
 
 
+        if (\request()->gender) {
+            $final=[];
+            foreach ($Users as $userFiltered) {
+
+                if ($userFiltered->Gender == \request()->gender) {
+                    $final[]=$userFiltered;
+                }
+
+            }
+
+
+            if (count($final) <= 0) {
+                Alert::error("nothing found");
+                return redirect()->back();
+            }else{
+                return view('Exhibitor-Operator.History')->with(['Booth' => $Booth, 'Users' => $final]);
+            }
+
+
+        }
+
+
+        if (\request()->profession) {
+            $final=[];
+            foreach ($Users as $userFiltered) {
+
+                if ($userFiltered->Profession == \request()->profession) {
+                    $final[]=$userFiltered;
+                }
+
+            }
+
+
+            if (count($final) <= 0) {
+                return redirect()->back();
+            }else{
+                return view('Exhibitor-Operator.History')->with(['Booth' => $Booth, 'Users' => $final]);
+            }
+
+
+        }
+
+        if (\request()->search) {
+
+            $UserName = User::where('UserName', 'LIKE', '%' . \request()->search . '%')->get();
+            if ($UserName->count() <= 0) {
+                return redirect()->back();
+            }else{
+                return view('Exhibitor-Operator.History')->with(['Booth' => $Booth, 'Users' => $UserName]);
+
+            }
+
+        }
+
 
         return view('Exhibitor-Operator.History')->with(['Booth' => $Booth , 'Users' => $Users]);
 
@@ -338,9 +418,10 @@ class ExhibitorOperatorController extends Controller
 
 
     public function ContactUs(){
+        $newMessage = $this->hasanChatCount();
         $Chats = AdminChat::where('ReceiverID' , Auth::id())->get();
 
-        return view('Exhibitor-Operator.ContactUS')->with(['Chats' => $Chats, 'Booth' => $this->Booth()]);
+        return view('Exhibitor-Operator.ContactUS')->with(['Chats' => $Chats, 'Booth' => $this->Booth(),'newMessage',$newMessage]);
     }
 
     public function UpdateAvatar(Request $request)
@@ -373,4 +454,51 @@ class ExhibitorOperatorController extends Controller
 
 
     }
+
+    public static function ChatCountEx($id)
+    {
+
+        $user = User::find($id);
+        $myUserID = \auth()->user()->CompanyID;
+        $Booth = booth::where("id",$myUserID)->first();
+
+        $Count = Chat::where([['BoothID' , $Booth->id],['UserID' , $user->id],['Sender' , 'Visitor'],['Status' , 'New']])->count();
+        User::where("id",$id)->update(["newmessage"=>$Count]);
+
+        if ($Count > 0) {
+            return $Count;
+        } else {
+            return 0;
+        }
+    }
+
+
+
+    public function hasanChatCount(){
+        $userID = \auth()->user()->CompanyID;
+        $boothID = booth::where("id",$userID)->first();
+        $newMessage = Chat::where("Status","New")->where("Sender","!=","Exhibitor")->where("BoothID",$boothID)->count();
+        return $newMessage;
+    }
+
+
+
+
+    public function exhibitorOperatorContactUsAjax()
+    {
+
+        $Count = AdminChat::where([
+            ['ReceiverID', auth()->user()->id],
+            ['Status', 'New'],
+            ['sender',"!=","Admin"]
+        ])->count();
+
+        User::where("id",auth()->user()->id)->update(["newmessage"=>$Count]);
+
+        return response()->json([
+            'newChat'=>$Count
+        ]);
+    }
+
+
 }

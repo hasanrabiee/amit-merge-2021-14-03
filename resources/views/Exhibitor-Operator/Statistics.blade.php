@@ -1,218 +1,219 @@
 @extends('layouts.Panel')
+
+@section("Head")
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <link href="{{asset("css/bootstrap-limitless.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/layout.min.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/components.min.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/colors.min.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/hasan-custom.css")}}" rel="stylesheet" type="text/css">
+
+    <!-- /global stylesheets -->
+
+    <!-- Core JS files -->
+    <script src="{{asset("js/jquery.min.js")}}"></script>
+    <script src="{{asset("js/bootstrap.bundler.js")}}"></script>
+    <script src="{{asset("js/blockui.min.js")}}"></script>
+    <!-- /core JS files -->
+
+    <!-- Theme JS files -->
+    <script src="{{asset("js/d3.min.js")}}"></script>
+    <script src="{{asset("js/d3tooltip.js")}}"></script>
+    <script src="{{asset("js/switchery.min.js")}}"></script>
+    <script src="{{asset("js/momment.min.js")}}"></script>
+    <script src="{{asset("js/app2.js")}}"></script>
+    <script src="{{asset("js/dashboard.js")}}"></script>
+    <script src="https://use.fontawesome.com/fd423b8d2f.js"></script>
+    <!-- /theme JS files -->
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+
+        google.charts.load('current', {'packages':['corechart']});
+
+        google.charts.setOnLoadCallback(drawSarahChart);
+
+
+
+        google.charts.setOnLoadCallback(professionChart);
+
+
+
+
+
+
+
+        function drawSarahChart() {
+
+            // Create the data table for Sarah's pizza.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Topping');
+            data.addColumn('number', 'Slices');
+            data.addRows([
+
+                @foreach($Statistic as $item)
+
+                ['{{\Carbon\Carbon::parse($item->date)->format('M-d')}}', {{$item->views}}],
+
+                @endforeach
+            ]);
+
+            // Set options for Sarah's pie chart.
+            var options = {title:'',
+                width:375,
+                height:250
+            };
+
+            // Instantiate and draw the chart for Sarah's pizza.
+            var chart = new google.visualization.PieChart(document.getElementById('Sarah_chart_div'));
+            chart.draw(data, options);
+        }
+
+        // Callback that draws the pie chart for Anthony's pizza.
+
+
+        function professionChart() {
+            var data = google.visualization.arrayToDataTable([
+                ["Element", "Density", { role: "style" } ],
+
+
+                @foreach($Profession as $profession)
+                    ['{{$profession->Profession}}', {{$profession->views}},"#12B0E8"],
+                @endforeach
+
+
+
+
+            ]);
+
+            var view = new google.visualization.DataView(data);
+            view.setColumns([0, 1,
+                { calc: "stringify",
+                    sourceColumn: 1,
+                    type: "string",
+                    role: "annotation" },
+                2]);
+
+            var options = {
+                title: "",
+                width: 350,
+                height: 200,
+                bar: {groupWidth: "95%"},
+                legend: { position: "none" },
+            };
+            var chart = new google.visualization.ColumnChart(document.getElementById("heyyyy"));
+            chart.draw(view, options);
+        }
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+
+@endsection
+
+
 @section('content')
-    <header class="d-flex masthead"
-            style="background-image: url({{\App\Site::ExhibitorBackground()}});padding: 45px;padding-top: 0px;padding-right: 0px;padding-left: 0px;">
-        <div class="container my-auto text-center">
-            <h3 class="mb-5"></h3>
-            <div class="pull-right d-inline m-0">
 
 
-                @if(\App\Site::find(1)->Logo1)
-                    <img class="float-right" src="{{\App\Site::find(1)->Logo1}}"
-                         style="width: 113px;margin-right: 34px;">
-                @endif
-                @if(\App\Site::find(1)->Logo2)
-                    <img class="float-right" src="{{\App\Site::find(1)->Logo2}}"
-                         style="width: 113px;margin-right: 34px;">
-                @endif
-                @if(\App\Site::find(1)->Logo3)
-                    <img class="float-right" src="{{\App\Site::find(1)->Logo3}}"
-                         style="width: 113px;margin-right: 34px;">
-                @endif
-
-            </div>
-
-            <div style="width: 354px;height: 45px;background-color: #525252; margin-top: 70px" class="rounded">
-
-                <div class="pull-right p-1">
-                    <button type="button" data-toggle="tooltip" data-placement="top" title="Change Language" onclick="$('#Lang_Modal').modal('show')" class="btn btn-warning">
-                        <i class="fa fa-globe"></i>
-                    </button>
-                    <div class="modal fade" role="dialog" tabindex="-1" id="Lang_Modal">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                                                        <h4>{{__('message.ChangeLang')}}</h4>
-
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                            aria-hidden="true">×</span></button>
-                                </div>
-                                <div class="modal-body">
-
-                                    <div class="dropdown">
-
-                                        <a style="text-decoration: none !important" class="" href="{{ url('locale/en') }}"><i
-                                                class="fa fa-globe"></i>English</a><br>
-                                        <a style="text-decoration: none !important" class="" href="{{ url('locale/de') }}"><i
-                                                class="fa fa-globe"></i>German</a><br>
-                                        <a style="text-decoration: none !important" class="" href="{{ url('locale/al') }}"><i
-                                                class="fa fa-globe"></i>Shqip</a><br>
 
 
+
+{{--    Hasan start here !!!!--}}
+
+
+        @include("Sidebars.exhibitorOperator-sidebar")
+
+
+        <!-- Main content -->
+
+
+
+
+
+
+
+        <!-- Main content -->
+        <div class="content-wrapper" style="overflow-x: hidden">
+
+            <!-- Content area -->
+            <div class="content">
+
+                <!-- Main charts -->
+                <div class="row">
+                    <div class="col-xl-12">
+                        <!-- Traffic sources -->
+                        <div class="card p-3" style="background-color:rgba(54,54,54,0.65);color: white">
+                            <div class="card-body py-0">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table table-bordered table-hover table-light text-center">
+                                            <thead>
+                                            <th>
+                                                Number of Booth Visits
+                                            </th>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>{{\App\Statistics::where('BoothID' , $Booth->id)->count()}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-light btn-block" data-dismiss="modal" type="button">Close
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="pull-right p-1 logout_section">
-                    <button data-toggle="tooltip" data-placement="top" title="Logout" onclick="document.getElementById('logout-form').submit()" class="btn btn-danger">
-                        <i class="fa fa-sign-out"></i>
-                    </button>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
+                                    <div class="col-md-6 mt-2 mt-md-5">
 
 
-                </div>
-
-
-
-
-
-                <div class="d-inline float-left"
-                     style="background-color: transparent;height: 26px;width: 122px;margin-left: 2px;">
-                    <h6 class="text-left"
-                        style="width: 115px;height: 41px;padding: 7px;color: rgb(255,255,255);margin-left: 4px;">
-                        {{\Illuminate\Support\Str::limit(\Illuminate\Support\Facades\Auth::user()->UserName , 18)}} </h6>
-                </div>
-
-
-
-            </div><div class="d-inline-block float-left rounded"
-                 style="background-color: rgb(54,54,54,65%);width: 1117px;height: 452px;margin-right: 10px;padding: 1px;padding-top: 0px;padding-right: 3px;">
-                <div class="float-left border rounded"
-                     style="width: 244px;height: 452px;background-color: transparent;"><a
-                        href="#avatar_modal" data-toggle="modal">
-                        <img class="rounded-circle border" src="{{\Illuminate\Support\Facades\Auth::user()->Image}}"
-                             style="width: 76px;height: 74px;margin-top: 8px;">
-                    </a>
-                    <div><a class="btn btn-primary btn-lg make_hidden" role="button" data-toggle="modal"
-                            href="#myModal">Launch Demo Modal</a>
-                        <div class="modal fade" role="dialog" tabindex="-1" id="avatar_modal">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4>Change Avatar Photo</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="{{route('ExhibitorOperator.UpdateAvatar')}}" method="post"
-                                              enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="form-group">
-                                                <input type="file" name="Avatar">
+                                        <p>{{__('message.NumberofBoothVisitsByProfession')}}</p>
+                                            <div class="bg-white" style="height: 250px;">
+                                                <div class="w-100 text-center bg-white" style="overflow: hidden">
+                                                    <div id="heyyyy"></div>
+                                                </div>
                                             </div>
-                                            <button class="btn btn-success btn-block" type="submit">Update Avatar<i
-                                                    class="fa fa-save" style="margin-left: 9px;"></i></button>
-                                        </form>
+
                                     </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-light btn-block" data-dismiss="modal" type="button">
-                                            Close
-                                        </button>
+                                    <div class="col-md-6 mt-2 mt-md-5">
+                                        <p>{{__('message.NumberofBoothVisitsPerDay')}}</p>
+                                            <div class="container w-100">
+                                                <div class="w-100 text-center bg-white" style="overflow: hidden">
+                                                    <div id="Sarah_chart_div" class="w-100"></div>
+                                                </div>
+                                            </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <div class="text-left"
-                             style="background-color: transparent;height: 35px;margin-top: 8px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;">
-                            <a class="remove_underline" href="{{route('ExhibitorOperator.index')}}"
-                               style="font-size: 19px;color: #ffffff;">{{__('message.Profile')}}</a>
-                        </div>
-                        <div class="text-left"
-                             style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);">
-                            <a class="text-left remove_underline" href="{{route('ExhibitorOperator.inbox')}}"
-                               style="font-size: 20px;color: #ffffff;">{{__('message.Inbox')}}</a></div>
-                        <div class="text-left user_active_menu"
-                             style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);">
-                            <a class="text-left remove_underline" href="{{route('ExhibitorOperator.Statistics')}}"
-                               style="font-size: 20px;color: #000000;">{{__('message.Statistics')}}</a>
-                        </div>
-                        <div class="text-left"
-                             style="background-color: #00000000;height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);">
-                            <a class="text-left remove_underline" href="{{route('ExhibitorOperator.History')}}"
-                               style="font-size: 20px;color: #ffffff;">{{__('message.History')}}</a>
-                        </div>
-                        <div class="text-left"
-                             style="background-color: #00000000;min-height: 35px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;color: rgb(255,255,255);">
-                            <a class="text-left remove_underline" href="{{route('ExhibitorOperator.ContactUs')}}"
-                               style="font-size: 20px;color: #ffffff;">{{__('message.ContactUs')}}</a></div>
-                        <div class="text-left"
-                             style="background-color: #00000000;height: 20px;margin-top: -15px;padding: 24px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;">
-                            <a href="/Exhibition/" class="" target="_blank">
-                                <button class="btn btn-block" type="button"
-                                        style="background-color: #149e5c;color: rgb(255,255,255);min-height: 54px;margin-right: 13px;font-size: 20px;">{{__('message.EnterExhabition')}}</button>
-                            </a>
-                        </div>
+                        <!-- /traffic sources -->
                     </div>
                 </div>
-                <div class="border rounded d-block float-left border"
-                     style="width: 837px;height: 425px;background-color: #a8a8a892;padding: 7px;color: #363636;margin-left: 22px;margin-top: 13px;">
-                    <div class="table-responsive"
-                         style="background-color: #ffffff;width: 820px;height: 133px;margin-bottom: 54px;">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th class="border rounded-0" style="width: 300px;">Number of Booth Visits</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td class="border rounded-0">{{\App\Statistics::where('BoothID' , $Booth->id)->count()}}</td>
-                            </tr>
-                            <tr></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="float-left"
-                         style="height: 257px;width: 373px;margin-right: 51px;background-color: #ffffff;margin-left: 1px;margin-top: -46px;">
-                        <p>Number of Booth Visits By Profession</p>
-                        <div>
-                            <div class="chartjs-size-monitor">
-                                <div class="chartjs-size-monitor-expand">
-                                    <div class=""></div>
-                                </div>
-                                <div class="chartjs-size-monitor-shrink">
-                                    <div class=""></div>
-                                </div>
-                            </div>
-                            <canvas id="chart-area-Profession" width="440" height="220" class="chartjs-render-monitor"
-                                    style="display: block; width: 440px; height: 220px;"></canvas>
-                        </div>
-                    </div>
-                    <div class="float-left"
-                         style="height: 256px;width: 440px;margin-right: -11px;background-color: #ffffff;min-width: 220px;margin-top: -46px;margin-left: -42px;">
-                        <p>Number of Booth Visits Per Day<br></p>
-                        <div style="margin-bottom: 28px;margin-top: -10px;">
-                            <div class="chartjs-size-monitor">
-                                <div class="chartjs-size-monitor-expand">
-                                    <div class=""></div>
-                                </div>
-                                <div class="chartjs-size-monitor-shrink">
-                                    <div class=""></div>
-                                </div>
-                            </div>
-
-
-                            <canvas id="chart-area" width="440" height="220" class="chartjs-render-monitor"
-                                    style="display: block; width: 440px; height: 220px;"></canvas>
-                        </div>
-                    </div>
-                </div>
+                <!-- /main charts -->
             </div>
+            <!-- /content area -->
         </div>
-    </header>
+        <!-- /main content -->
+    </div>
+    <!-- /page content -->
+    </body>
+
+
+
+
+
 @endsection
 
 

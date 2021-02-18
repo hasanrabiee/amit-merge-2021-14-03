@@ -26,7 +26,14 @@ class UsersExport implements FromCollection, WithHeadings
             'City',
             'Country',
             'BirthDate',
-            'VisitExperience'
+            'VisitExperience',
+            'education',
+            'countryStudy',
+            'InterestedDegree',
+            'InterestedField',
+            'languageOfStudy',
+            'onlineDegreeProgram',
+            'interestedScholarShip',
         ];
     }
 
@@ -34,7 +41,7 @@ class UsersExport implements FromCollection, WithHeadings
     public function collection()
     {
 //        return User::all();
-        return User::select('Rule','FirstName', 'LastName', 'UserName', 'PhoneNumber','Gender','email','City','Country', 'BirthDate','VisitExperience')->whereIn('Rule', ['Visitor', 'Exhibitor'] )->get();
+        return User::select('Rule','FirstName', 'LastName', 'UserName', 'PhoneNumber','Gender','email','City','Country', 'BirthDate','VisitExperience','education','countryStudy','InterestedDegree','InterestedDegree','InterestedField','languageOfStudy','onlineDegreeProgram','interestedScholarShip')->whereIn('Rule', ['Visitor'] )->get();
 
     }
 }

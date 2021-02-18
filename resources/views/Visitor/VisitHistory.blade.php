@@ -40,84 +40,46 @@
 
 @section('content')
 
-                    <div class="modal fade" role="dialog" tabindex="-1" id="Lang_Modal">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                                                        <h4>{{__('message.ChangeLang')}}</h4>
 
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                            aria-hidden="true">×</span></button>
-                                </div>
-                                <div class="modal-body">
-
-                                    <div class="dropdown">
-
-                                        <a style="text-decoration: none !important" class="" href="{{ url('locale/en') }}"><i
-                                                class="fa fa-globe"></i>English</a><br>
-                                        <a style="text-decoration: none !important" class="" href="{{ url('locale/de') }}"><i
-                                                class="fa fa-globe"></i>German</a><br>
-                                        <a style="text-decoration: none !important" class="" href="{{ url('locale/al') }}"><i
-                                                class="fa fa-globe"></i>Shqip</a><br>
-
-
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-light btn-block" data-dismiss="modal" type="button">Close
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-
-
-
-                    <div>
-                        <div class="modal fade" role="dialog" tabindex="-1" id="avatar_modal">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4>{{__('message.ChangeAvatarPhoto')}}</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                                    <div class="modal-body">
-                                        <form action="{{route('Visitor.UpdateAvatar')}}" method="post" enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="form-group">
-                                                <input type="file" name="Avatar">
-                                            </div>
-                                            <button class="btn btn-success btn-block" type="submit">{{__('message.UpdateAvatar')}}<i class="fa fa-save" style="margin-left: 9px;"></i></button></form>
-                                    </div>
-                                    <div class="modal-footer"><button class="btn btn-light btn-block" data-dismiss="modal" type="button">{{__('message.Close')}}</button></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-{{--    Hasan start here !!!--}}
-
-
-
-
-
-    <body style="background: url('{{\App\Site::VisitorBackground()}}') no-repeat center center fixed;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-        height: 100%;
-        ;">
-
-    <div>
 
     @include("Sidebars.visitor-sidebar")
+    {{--           Modals--}}
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="filter">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="text-dark">Please Choose Your Items Which You Like To Be Filtered</h4>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+
+
+
+
+                    <h6>
+                        Institutions
+                    </h6>
+                    @foreach(explode(',' , \App\ExhibitorForms::find(1)->institutionItems) as $item)
+                        <a href="?institution={{$item}}" class="btn btn-dark w-50 mb-2 btn-sm">
+                            {{$item}}
+                        </a>
+                    @endforeach
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-light btn-block"
+                            data-dismiss="modal" type="button">
+                        {{__('message.Close')}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{--           End Modales--}}
 
 
             <!-- Main content -->
@@ -134,17 +96,18 @@
                             <div class="card-body py-0">
                                 <div class="row">
                                     <div class="col-md-4" style="">
-                                        <form onblur="is_typing = false" onfocus="is_typing = true" action="#search_company" class="w-100">
+                                        <form onblur="is_typing = false" onfocus="is_typing = true" action="" class="w-100" method="GET">
                                             <div class="input-group mt-2 mb-2 w-100">
-                                                    <input type="text" class="form-control" placeholder="{{__('message.CompanyName')}}" name="search">
+                                                <button class="btn btn-dark w-100" type="button" onclick="$('#filter').modal('show')">Click to Choose Your Filter</button>
+
+                                                <input type="text" class="form-control" placeholder="{{__('message.CompanyName')}}" name="search">
                                                     <div class="input-group-append">
                                                         <button class="btn btn-success" type="submit">{{__('message.Search')}}</button>
                                                     </div>
-
                                             </div>
                                         </form>
                                         <div class="row">
-                                                <div class="booth-btn booth-btn-height" style="overflow-y: scroll ;height: 450px;">
+                                                <div class="w-100 booth-btn booth-btn-height" style="overflow-y: auto ;height: 450px;">
                                                     @foreach($Booths as $booth)
                                                         <div class="col-12">
                                                             <a href="?CompanyID={{$booth->id}}" type="button" @if(request()->CompanyID == $booth->id) class="text-left btn btn-primary mb-2 w-100" @else class="text-white text-left btn btn-outline-dark mb-2 w-100" @endif>
@@ -159,44 +122,181 @@
 
 
                                     @if(isset($Booth))
-                                        <div class="col-md-4 mt-md-0 mt-2" style="border: 1px solid white;border-radius: 5px;">
+                                        <div class="col-md-4 mt-md-0 mt-2" style="border: 1px solid white;border-radius: 5px;height: 500px;overflow-y: auto">
                                             <h3 class="text-white mb-4">{{__('message.CompanyInformation')}}</h3>
                                             <img src="{{$Booth->Logo}}" style="width: 65px;">
                                             <p>{{__('message.Company')}} {{__('message.Name')}}: {{$Booth->CompanyName}}</p>
                                             <p>{{__('message.Hall')}}: {{$Booth->Hall}}</p>
                                             <p>{{__('message.Booth')}} {{__('message.number')}}: {{$Booth->Position}} </p>
                                             <p>{{__('message.AboutCompany')}} :{{$Booth->Description}}</p>
-                                            <p>{{__('message.WebSite')}}: <a class="text-dark" href="{{$Booth->WebSite}}">{{$Booth->WebSite}}</a></p>
+                                            <p>{{__('message.WebSite')}}: <a class="text-primary" target="_blank" href="{{$Booth->WebSite}}">{{$Booth->WebSite}}</a></p>
+
+                                            @if ($userInfo->companyAddress != null)
+                                                <p>
+                                                    Company Address : {{$userInfo->companyAddress}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->zipCode != null)
+                                                <p>
+                                                    Zip Code : {{$userInfo->zipCode}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->mainCompany != null)
+                                                <p>
+                                                    Main Company : {{$userInfo->mainCompany}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->institutionEmail != null)
+                                                <p>
+                                                    Institution Email : {{$userInfo->institutionEmail}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->phone != null)
+                                                <p>
+                                                    phone : {{$userInfo->phone}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->fax != null)
+                                                <p>
+                                                    Fax : {{$userInfo->fax}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->institution != null)
+                                                <p>
+                                                    Institution : {{$userInfo->institution}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->education != null)
+                                                <p>
+                                                    education : {{$userInfo->institution}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->countryStudy != null)
+                                                <p>
+                                                    countryStudy : {{$userInfo->countryStudy}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->InterestedDegree != null)
+                                                <p>
+                                                    interestedDegree : {{$userInfo->InterestedDegree}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->InterestedField != null)
+                                                <p>
+                                                    interestedField : {{$userInfo->InterestedField}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->languageOfStudy != null)
+                                                <p>
+                                                    languageOfStudy : {{$userInfo->languageOfStudy}}
+                                                </p>
+                                            @endif
+
+
+                                            @if ($userInfo->onlineDegreeProgram != null)
+                                                <p>
+                                                    onlineDegreeProgram : {{$userInfo->onlineDegreeProgram}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->interestedScholarShip != null)
+                                                <p>
+                                                    interestedScholarShip : {{$userInfo->interestedScholarShip}}
+                                                </p>
+                                            @endif
+
 
                                         </div>
 
 
                                         <div class="col-md-4 mt-md-0 mt-2">
-                                            <h4>Chat History</h4>
-                                            <div class="pc-height-visitor-history-chat" style="background-color:transparent;border: 1px solid transparent ;border-radius: 5px;overflow-y: scroll;overflow-x:hidden ">
+                                            <h4 class="mb-3"><span class="fa fa-briefcase"></span> Swag Bag </h4>
 
-                                                @foreach(\App\Chat::where('UserID' , \Illuminate\Support\Facades\Auth::id())->where('BoothID' , $Booth->id)->get() as $Chat)
+                                            <div class="row">
+                                                <div class="col-md-4 mb-2 mb-md-0">
+                                                    <a target="_blank" href="{{$Booth->Poster1}}"><img src="{{$Booth->Poster1}}" alt="" class="w-100 h-100 mb-2 mb-md-0"></a>
+                                                </div>
+                                                <div class="col-md-4 mb-2 mb-md-0">
+                                                    <a target="_blank" href="{{$Booth->Poster2}}"><img src="{{$Booth->Poster2}}" alt="" class="w-100 h-100 mb-2 mb-md-0"></a>
+                                                </div>
+                                                <div class="col-md-4 mb-2 mb-md-0">
+                                                    <a target="_blank" href="{{$Booth->Poster3}}"><img src="{{$Booth->Poster3}}" alt="" class="w-100 h-100 mb-2 mb-md-0"></a>
+                                                </div>
+                                            </div>
 
-                                                    @if($Chat->Sender == 'Visitor')
-                                                        <div class="row">
-                                                            <div class="col-3"></div>
-                                                            <div class="col-8 bg-success mt-2 ml-3 p-2" style="border-radius: 5px;">{{$Chat->Text}}</div>
-                                                        </div>
+                                            <br>
+
+                                            @if ($Booth->Doc1 != "")
+                                                <div class="mb-3">
+                                                    <span class="fa fa-file-pdf-o" style="font-size: 24px;">&nbsp;</span><a href="{{$Booth->Doc1}}" class="text-white" style="font-size: 20px;" target="_blank">Download Company Brochure</a>
+                                                </div>
+                                            @endif
+                                            @if ($Booth->Video != "")
+                                                <div>
+                                                    <span class="fa fa-video-camera" style="font-size: 24px;">&nbsp;</span><a href="{{$Booth->Video}}" class="text-white" style="font-size: 20px;" target="_blank">See Company Movie</a>
+                                                </div>
+                                            @endif
+                                            <h4 class="mt-3">Social Medias Links </h4>
+                                            <div class="row mt-5">
+
+                                                <div class="col-4 text-center">
+                                                    @if (!Str::startsWith($Booth->facebook, ["http://", "https://"]))
+
+                                                        <a target="_blank" href="https://{{$Booth->facebook}}" class="w-75">
+                                                            <img src="{{asset("assets/img/facebook-icon.png")}}" alt="" class="w-75">
+                                                        </a>
                                                     @else
 
-                                                        <div class="row">
-                                                            <div class="col-8 bg-primary mt-2 ml-3 p-2" style="border-radius: 5px;">{{$Chat->Text}}</div>
+                                                        <a target="_blank" href="{{$Booth->facebook}}" class="w-75">
+                                                            <img src="{{asset("assets/img/facebook-icon.png")}}" alt="" class="w-75">
+                                                        </a>
 
-                                                            <div class="col-3"></div>
-                                                        </div>
                                                     @endif
 
-                                                @endforeach
+                                                </div>
+                                                <div class="col-4 text-center">
+                                                    @if (!Str::startsWith($Booth->linkedin, ["http://", "https://"]))
 
+                                                        <a target="_blank" href="https://{{$Booth->linkedin}}" class="w-75">
+                                                            <img src="{{asset("assets/img/linkedin-icon.png")}}" alt="" class="w-75">
+                                                        </a>
+                                                    @else
 
+                                                        <a target="_blank" href="{{$Booth->linkedin}}" class="w-75">
+                                                            <img src="{{asset("assets/img/linkedin-icon.png")}}" alt="" class="w-75">
+                                                        </a>
 
+                                                    @endif
+                                                </div>
+                                                <div class="col-4 text-center">
 
+                                                    @if (!Str::startsWith($Booth->instagram, ["http://", "https://"]))
+
+                                                        <a target="_blank" href="https://{{$Booth->instagram}}" class="w-75">
+                                                            <img src="{{asset("assets/img/instagram-icon.png")}}" alt="" class="w-75">
+                                                        </a>
+                                                    @else
+
+                                                        <a target="_blank" href="{{$Booth->instagram}}" class="w-75">
+                                                            <img src="{{asset("assets/img/instagram-icon.png")}}" alt="" class="w-75">
+                                                        </a>
+
+                                                    @endif
+                                                </div>
                                             </div>
+
+
                                         </div>
 
 

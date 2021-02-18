@@ -20,7 +20,6 @@ Route::get('/time', function () {
 });
 
 Route::get('join-webinar/{webinar}', 'WebController@join_webinar')->name('join-webinar');
-Route::get('leave-meeting', 'WebController@leave_meeting')->name('leave-meeting');
 
 
 Auth::routes(['verify' => true]);
@@ -86,8 +85,9 @@ Route::group(['middleware' => ['auth']] , function (){
 
         Route::get('index', 'AdminController@index')->name('index');
         Route::get('BackUp', 'AdminController@BackUp')->name('BackUp');
-        Route::get('Export', 'AdminController@Export')->name('Export');
-        Route::get('Reset', 'AdminController@Reset')->name('Reset')->middleware(['password.confirm']);
+        Route::get('Export', 'AdminController@ExportVisitors')->name('ExportVisitors'); // export users to excel only a certain columns
+        Route::get('ExportEx', 'AdminController@ExportExhibitors')->name('ExportExhibitors'); // export users to excel only a certain columns
+        Route::get('ExportFeedbacks', 'AdminController@ExportFeedbacks')->name('ExportFeedbacks'); // export users to excel only a certain columns        Route::get('Reset', 'AdminController@Reset')->name('Reset')->middleware(['password.confirm']);
         Route::post('SendMessage', 'AdminController@SendMessage')->name('SendMessage');
         Route::get('InboxChatGet', 'AdminController@InboxChatGet')->name('InboxChatGet');
         Route::get('History', 'AdminController@History')->name('History');
@@ -129,6 +129,33 @@ Route::group(['middleware' => ['auth']] , function (){
         Route::get('ChangeChatStatus','AdminController@ChangeChatStatus')->name('ChangeChatStatus');
 
 
+
+
+        //        Hassan admins routes
+
+
+        Route::get("Forms","FormController@index")->name("Form");
+        Route::post("Forms/{id}","FormController@activate")->name("FormActivate");
+        Route::get("Conference","ConferenceController@index")->name("Conference");
+        Route::get("OrganizersInformation","AdminController@Organizers")->name("Organizers");
+        Route::post("OrganizersInformation","AdminController@OrganizersPost")->name("OrganizersPost");
+        Route::post("deleteOrganizer/{id}","AdminController@DeleteOrganizer")->name("DeleteOrganizer");
+        Route::get("AddRecordedConference","AdminController@AddRecord")->name("AddRecordConference");
+        Route::get("visitorInbox","AdminController@VisitorInbox")->name("VisitorInbox");
+        Route::get("exhibitorInbox","AdminController@ExhibitorInbox")->name("ExhibitorInbox");
+        Route::post("SuspendUncompletedBooths","AdminController@SuspendUncompletedBooths")->name("SuspendUncompletedBooths");
+        Route::post("OpeningDateEmail","AdminController@ReminderEmail")->name("ReminderEmail");
+        Route::post("ThanksEmail","AdminController@ThanksEmail")->name("ThanksEmail");
+        Route::post("ExFeedBacksEmail","AdminController@ExhibitorsFeedbacksEmail")->name("ExhibitorsFeedbacksEmail");
+        Route::post("ShowOnlines","AdminController@ShowOnlines")->name("ShowOnlines");
+        Route::get("ExhibitorForm","AdminController@ExhibitorForm")->name("ExhibitorForm");
+        Route::post("ExhibitorFormPost","AdminController@ExhibitorFormPost")->name("ExhibitorFormPost");
+        Route::get("VisitorForm","AdminController@VisitorForm")->name("VisitorForm");
+        Route::post("VisitorFormPost","AdminController@VisitorFormPost")->name("VisitorFormPost");
+
+
+
+//        Hassan admins routes end here !!!
 
 
 
@@ -198,6 +225,26 @@ Route::group(['middleware' => ['auth']] , function (){
 
 
 
+        //Hasan routes start here ...
+
+
+        Route::get("/inbox","VisitorController@VisitInbox")->name("inbox");
+        Route::post('InboxPost', 'VisitorController@InboxPost')->name('InboxPost');
+        Route::get('InboxGet', 'VisitorController@InboxGet')->name('InboxGet');
+        Route::get('ChangeChatStatus', 'VisitorController@ChangeChatStatus')->name('ChangeChatStatus');
+        Route::get("Meeting","VisitorController@MeetingsIndex")->name("Meeting");
+
+        Route::get('visitorContactUsAjax', 'VisitorController@visitorContactUsAjax')->name('visitorContactUsAjax');
+
+
+
+
+
+        //Hasan routes end here ...
+
+
+
+
     });
 
 
@@ -252,6 +299,22 @@ Route::group(['middleware' => ['auth']] , function (){
         Route::get('create-webinar/{conference}', 'ExhibitorController@create_webinar')->name('create-webinar');
 
 
+        Route::get('/AddConference', 'ExhibitorController@AddConferenceIndex')->name('AddConference');
+        Route::post('/AddConferenceFinalize', 'ExhibitorController@AddConferenceFinalize')->name('FinalizeConference');
+        Route::post('/AddConferenceSpeaker', 'ExhibitorController@AddConferenceSpeaker')->name('AddSpeaker');
+
+
+
+
+
+        //Hasan routes start here
+//        Route::get("AddSpeaker","AddSpeakerController@index")->name("AddSpeaker");
+//        Route::get("MeetingSchedule","MeetingScheduleController@index")->name("MeetingSchedule");
+        Route::get("AddStaff","ExhibitorController@AddStaff")->name("AddStaff");
+        Route::get('exhibitorContactUsAjax', 'ExhibitorController@exhibitorContactUsAjax')->name('exhibitorContactUsAjax');
+        //Hasan routes end here !!!
+
+
 
     });
 
@@ -260,7 +323,8 @@ Route::group(['middleware' => ['auth']] , function (){
 
 
 
-    Route::group(['prefix' => 'ExhibitorOperator', 'as' => 'ExhibitorOperator.','middleware' => ['ExhibitorOperator']], function () {
+
+    Route::group(['prefix' => 'ExhibitorOperator', 'as' => 'ExhibitorOperator.', 'middleware' => ['ExhibitorOperator']], function () {
         Route::get('/', 'ExhibitorOperatorController@index')->name('index');
         Route::get('/index', 'ExhibitorOperatorController@index')->name('index');
         Route::get('/inbox', 'ExhibitorOperatorController@inbox')->name('inbox');
@@ -272,13 +336,16 @@ Route::group(['middleware' => ['auth']] , function (){
         Route::post('/ChatAdmin', 'ExhibitorOperatorController@ChatAdmin')->name('ChatAdmin');
         Route::post('/UpdateAvatar', 'ExhibitorOperatorController@UpdateAvatar')->name('UpdateAvatar');
         Route::post('/ChangePassword', 'ExhibitorOperatorController@ChangePassword')->name('ChangePassword');
-        Route::get('InboxGet' , 'ExhibitorOperatorController@InboxGet')->name('InboxGet');
-        Route::post('InboxPost' , 'ExhibitorOperatorController@InboxPost')->name('InboxPost');
-        Route::get('GetUsers' , 'ExhibitorOperatorController@GetUsers')->name('GetUsers');
-        Route::get('ChatCount' , 'ExhibitorOperatorController@ChatCount')->name('ChatCount');
-        Route::get('ChangeChatStatus','ExhibitorOperatorController@ChangeChatStatus')->name('ChangeChatStatus');
+        Route::get('InboxGet', 'ExhibitorOperatorController@InboxGet')->name('InboxGet');
+        Route::post('InboxPost', 'ExhibitorOperatorController@InboxPost')->name('InboxPost');
+        Route::get('GetUsers', 'ExhibitorOperatorController@GetUsers')->name('GetUsers');
+        Route::get('ChatCount', 'ExhibitorOperatorController@ChatCount')->name('ChatCount');
+        Route::get('ChangeChatStatus', 'ExhibitorOperatorController@ChangeChatStatus')->name('ChangeChatStatus');
+        Route::get('exhibitorOperatorContactUsAjax', 'ExhibitorOperatorController@exhibitorOperatorContactUsAjax')->name('exhibitorOperatorContactUsAjax');
+
 
     });
+
 
 
 
@@ -289,6 +356,25 @@ Route::group(['middleware' => ['auth']] , function (){
 
 
 });
+
+
+//hasan mob
+
+
+Route::get("PassChangeViaMobile","WebController@PassChangeViaMobile")->name("PassChangeViaMobile");
+Route::post("PassChangeCheckMobile","WebController@PassChangeCheckMobile")->name("PassChangeCheckMobile");
+Route::get("changingPassHasan","WebController@phoneCode")->name("ChangingPassHasan");
+Route::post("changingPassHasanPost","WebController@changingPassHasanPost")->name("ChangingPassHasanPost");
+Route::get("finalStep/","WebController@finalStep")->name("finalStep");
+Route::post("finalStepPost/","WebController@finalStepPost")->name("finalStepPost");
+
+Route::get("socialCompany/{id}","WebController@Socials");
+
+//hasan mob end
+
+Route::get("eventOrganizer","WebController@Organizer")->name("eventOrganizer");
+
+
 
 Route::get('video/{ID}', 'WebController@video');
 //change site lang

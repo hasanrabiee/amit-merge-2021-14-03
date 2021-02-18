@@ -116,28 +116,58 @@
 
 
 <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
+<div class="modal fade" role="dialog" tabindex="-1" id="info">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h5 class="modal-title">Visitor Panel Tutorial</h5>
+                <h4>Visitor Panel Tutorial</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
             </div>
-            <div class="modal-body text-center">
+            <div class="modal-body">
                 <div class="text-left mb-2">
-                    <a href="{{\App\Site::first()->visitorPanelPDF}}" class="btn text-left btn-primary">PDF Guide</a>
+                    <a target="_blank" href="{{\App\Site::first()->visitorPanelPDF}}" class="btn text-left btn-primary">PDF Guide</a>
                 </div>
                 <iframe width="420" height="315"
                         src="{{\App\Site::first()->visitorPanelVideo}}">
                 </iframe>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button class="btn btn-light btn-block" data-dismiss="modal" type="button">Close
+                </button>
             </div>
         </div>
+    </div>
+</div>
 
+
+<div class="modal fade" role="dialog" tabindex="-1" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Change Language</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="dropdown">
+
+                    <a style="text-decoration: none !important" class="" href="{{ url('locale/en') }}"><i
+                            class="fa fa-globe"></i>English</a><br>
+                    <a style="text-decoration: none !important" class="" href="{{ url('locale/de') }}"><i
+                            class="fa fa-globe"></i>Germany</a><br>
+                    <a style="text-decoration: none !important" class="" href="{{ url('locale/al') }}"><i
+                            class="fa fa-globe"></i>Albanian</a><br>
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light btn-block" data-dismiss="modal" type="button">Close
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -203,6 +233,9 @@
                     <div class="sidebar-user">
                         <div class="card-body">
                             <div class="row">
+                                <div class="col-md-12 mb-3 mt-n3 text-white">
+                                    @include('Sidebars.time')
+                                </div>
                                 <div class="col-md-6"></div>
                                 <div class="col-md-6">
                                     <a title="logout" class="btn btn-dark btn-sm " href="{{ route('logout') }}" style="font-size:12px;color: #c5c5c5;" onclick="event.preventDefault();
@@ -210,7 +243,9 @@
 
                                     <a title="language" type="button" data-toggle="tooltip" data-placement="top" title="Change Language" onclick="$('#Lang_Modal').modal('show')" class="btn btn-warning btn-sm text-dark"><i class="fa fa-globe" style="font-size: 15px;"></i></a>
 
-                                    <a href="" title="info" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal"><i class="fa fa-info-circle"></i></a>
+                                    <a title="info" type="button" data-toggle="tooltip" data-placement="top" title="Change Language" onclick="$('#info').modal('show')" class="btn btn-info btn-sm"><i class="fa fa-info-circle"></i></a>
+
+{{--                                    <a href="" type="button" title="info" class="btn btn-info btn-sm" data-toggle="tooltip" onclick="$('#info').modal('show')" ><i class="fa fa-info-circle"></i></a>--}}
 
 
                                 </div>
@@ -249,7 +284,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link @if( Request::is("*inbox*")) active @endif">
+                                <a href="{{route("Visitor.inbox")}}" class="nav-link @if( Request::is("*inbox*")) active @endif">
                                     <i class="fa fa-envelope"></i>
                                     <span>
 										{{__('message.Inbox')}}
@@ -257,7 +292,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('Visitor.visitor-meetings')}}" class="nav-link @if( Request::is("*Meeting*")) active @endif"><i class="fa fas fa-bullhorn"></i> <span>Meeting</span></a>
+                                <a href="{{route('Visitor.Meeting')}}" class="nav-link @if( Request::is("*Meeting*")) active @endif"><i class="fa fas fa-camera"></i> <span>Meeting</span></a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{route('Visitor.VisitHistory')}}" class="nav-link @if( Request::is("*History*")) active @endif"><i class="fa fas fa-history"></i> <span>{{__('message.History')}}</span></a>

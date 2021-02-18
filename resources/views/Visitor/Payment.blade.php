@@ -39,108 +39,17 @@
 
 
 @section('content')
-    {{--    <header class="d-flex masthead" style="background-image: url({{\App\Site::VisitorBackground()}});padding: 45px;padding-top: 0px;padding-right: 0px;padding-left: 0px;">--}}
-    {{--        <div class="container my-auto text-center">--}}
-    {{--            <h3 class="mb-5"></h3>--}}
-    {{--            <div class="pull-right d-inline m-0">--}}
-
-
-    {{--                @if(\App\Site::find(1)->Logo1)--}}
-    {{--                    <img class="float-right" src="{{\App\Site::find(1)->Logo1}}"--}}
-    {{--                         style="width: 113px;margin-right: 34px;">--}}
-    {{--                @endif--}}
-    {{--                @if(\App\Site::find(1)->Logo2)--}}
-    {{--                    <img class="float-right" src="{{\App\Site::find(1)->Logo2}}"--}}
-    {{--                         style="width: 113px;margin-right: 34px;">--}}
-    {{--                @endif--}}
-    {{--                @if(\App\Site::find(1)->Logo3)--}}
-    {{--                    <img class="float-right" src="{{\App\Site::find(1)->Logo3}}"--}}
-    {{--                         style="width: 113px;margin-right: 34px;">--}}
-    {{--                @endif--}}
-
-    {{--            </div>--}}
-
-    {{--            <div style="width: 354px;height: 45px;background-color: #525252; margin-top: 70px" class="rounded">--}}
-
-    {{--                <div class="pull-right p-1">--}}
-    {{--                    <button type="button" data-toggle="tooltip" data-placement="top" title="Change Language" onclick="$('#Lang_Modal').modal('show')" class="btn btn-warning">--}}
-    {{--                        <i class="fa fa-globe"></i>--}}
-    {{--                    </button>--}}
-                        <div class="modal fade" role="dialog" tabindex="-1" id="Lang_Modal">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4>Change Language</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                                aria-hidden="true">×</span></button>
-                                    </div>
-                                    <div class="modal-body">
-
-                                        <div class="dropdown">
-
-                                            <a style="text-decoration: none !important" class="" href="{{ url('locale/en') }}"><i
-                                                    class="fa fa-globe"></i>English</a><br>
-                                            <a style="text-decoration: none !important" class="" href="{{ url('locale/de') }}"><i
-                                                    class="fa fa-globe"></i>Germany</a><br>
-                                            <a style="text-decoration: none !important" class="" href="{{ url('locale/al') }}"><i
-                                                    class="fa fa-globe"></i>Albanian</a><br>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-light btn-block" data-dismiss="modal" type="button">Close
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
 
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
+    @include("Sidebars.visitor-sidebar")
+
+
+            <!-- Main content -->
 
 
 
-                        <div>
-                            <div class="modal fade" role="dialog" tabindex="-1" id="avatar_modal">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4>{{__('message.ChangeAvatarPhoto')}}</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                                        <div class="modal-body">
-                                            <form action="{{route('Visitor.UpdateAvatar')}}" method="post" enctype="multipart/form-data">
-                                                @csrf
-                                                <div class="form-group">
-                                                    <input type="file" name="Avatar">
-                                                </div>
-                                                <button class="btn btn-success btn-block" type="submit">{{__('message.UpdateAvatar')}}<i class="fa fa-save" style="margin-left: 9px;"></i></button></form>
-                                        </div>
-                                        <div class="modal-footer"><button class="btn btn-light btn-block" data-dismiss="modal" type="button">Close</button></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-    {{--    Hassan start Here !!! --}}
-
-
-
-
-    <body style="background: url('{{\App\Site::VisitorBackground()}}') no-repeat center center fixed;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-        height: 100%;
-        ;">
-    <div>
-
-        @include("Sidebars.visitor-sidebar")
-
-        <div class="content-wrapper" style="overflow-x: hidden">
+            <div class="content-wrapper" style="overflow-x: hidden">
 
                 <!-- Content area -->
                 <div class="content">
@@ -149,7 +58,7 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <!-- Traffic sources -->
-                            <div class="card" style="background-color:rgba(168,168,168,0.5);color: white;height: 570px">
+                            <div class="card" style="background-color:rgba(54,54,54,0.65);color: white;height: 570px">
                                 <div class="card-header header-elements-inline">
 
                                     <div class="header-elements">

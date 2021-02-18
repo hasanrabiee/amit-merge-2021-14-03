@@ -33,7 +33,15 @@
     <script src="{{asset("js/dashboard.js")}}"></script>
     <script src="https://use.fontawesome.com/fd423b8d2f.js"></script>
     <!-- /theme JS files -->
+    <script>
+        function visitorContactUsAjax(){
+            $.get("{{route('Visitor.visitorContactUsAjax')}}", {
 
+            },function (data){
+            })
+        }
+        setInterval(visitorContactUsAjax,10000)
+    </script>
 
 
 
@@ -41,83 +49,12 @@
 @endsection
 @section('content')
 
-                    <div class="modal fade" role="dialog" tabindex="-1" id="Lang_Modal">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4>{{__('message.ChangeLang')}}</h4>
-
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                            aria-hidden="true">×</span></button>
-                                </div>
-                                <div class="modal-body">
-
-                                    <div class="dropdown">
-
-                                        <a style="text-decoration: none !important" class="" href="{{ url('locale/en') }}"><i
-                                                class="fa fa-globe"></i>English</a><br>
-                                        <a style="text-decoration: none !important" class="" href="{{ url('locale/de') }}"><i
-                                                class="fa fa-globe"></i>German</a><br>
-                                        <a style="text-decoration: none !important" class="" href="{{ url('locale/al') }}"><i
-                                                class="fa fa-globe"></i>Shqip</a><br>
-
-
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-light btn-block" data-dismiss="modal" type="button">Close
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-
-
-<div class="modal fade" role="dialog" tabindex="-1" id="avatar_modal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4>{{__('message.ChangeAvatarPhoto')}}</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-            <div class="modal-body">
-                <form action="{{route('Visitor.UpdateAvatar')}}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-group">
-                        <input type="file" name="Avatar">
-                    </div>
-                    <button class="btn btn-success btn-block" type="submit">{{__('message.UpdateAvatar')}}<i class="fa fa-save" style="margin-left: 9px;"></i></button></form>
-            </div>
-            <div class="modal-footer"><button class="btn btn-light btn-block" data-dismiss="modal" type="button">{{__('message.Close')}}</button></div>
-        </div>
-    </div>
-</div>
-
-
-    {{--    Hasan start Here !!!--}}
-
-
-
-
-    <body class="" style="background: url('{{\App\Site::VisitorBackground()}}') no-repeat center center fixed;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-        height: 100%;
-        ;">
-
 
     @include("Sidebars.visitor-sidebar")
 
 
 
-
-
-    <!-- Main content -->
+        <!-- Main content -->
         <div class="content-wrapper" style="overflow-x: hidden">
 
             <!-- Content area -->
@@ -129,7 +66,7 @@
                         <!-- Traffic sources -->
                         <div class="row">
                             <div class="col-md-6" style="height: 600px !important;">
-                                <div class="card w-100" style="background-color:rgba(168,168,168,0.5);color: white;">
+                                <div class="card w-100" style="background-color:rgba(54,54,54,0.65);color: white;">
                                     <div class="card-body">
                                         <div class="row w-100">
                                             <div class="w-100">
@@ -140,15 +77,7 @@
 
 
                                                     <div class="scroll_box ChatsDiv w-100" id="ChatsDiv" style="background-color:transparent;border: 1px solid transparent ;height: 450px;border-radius: 5px;overflow-y: auto;overflow-x:hidden ">
-{{--                                                        <div class="row">--}}
-{{--                                                            <div class="col-8 bg-primary mt-2 ml-3" style="border-radius: 5px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, laudantium, voluptates. Adipisci aspernatur at commodi dolor et hic itaque odio provident quae, unde? Distinctio, est explicabo incidunt pariatur soluta totam.                                      </div>--}}
 
-{{--                                                            <div class="col-3"></div>--}}
-{{--                                                        </div>--}}
-{{--                                                        <div class="row">--}}
-{{--                                                            <div class="col-3"></div>--}}
-{{--                                                            <div class="col-8 bg-success mt-2 ml-3" style="border-radius: 5px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, laudantium, voluptates. Adipisci aspernatur at commodi dolor et hic itaque odio provident quae, unde? Distinctio, est explicabo incidunt pariatur soluta totam.                                          </div>--}}
-{{--                                                        </div>--}}
                                                     </div>
                                                     <div class="input-group mt-1">
                                                         <textarea id="myInput"  name="Text" type="text" rows="1" class="form-control" aria-describedby="basic-addon2"></textarea>

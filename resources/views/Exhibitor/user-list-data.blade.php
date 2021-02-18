@@ -19,7 +19,6 @@
         </div>
     </div>
 
-
     @else
 
     <div class="row">
@@ -33,7 +32,7 @@
             <button class=" btn @if (\App\Chat::where([['BoothID' , $Booth->id],['UserID' , $user_one->id],['Sender' , 'Visitor'],['Status' , 'New']])->count() > 0) btn-success @else btn-dark @endif text-center border rounded-circle" type="button"
                     style="width: 30px;margin-left: 10px;height: 28px;padding: 1px;margin-top: 3px;">
 
-                {{\App\Chat::where([['BoothID' , $Booth->id],['UserID' , $user_one->id],['Sender' , 'Visitor'],['Status' , 'New']])->count() == 0 ? '0' : \App\Chat::where([['BoothID' , $Booth->id],['UserID' , $user_one->id],['Sender' , 'Visitor'],['Status' , 'New']])->count()}}
+                {{\App\Http\Controllers\AdminController::ChatCountEx($user_one->id) == '' ? '0' : \App\Http\Controllers\AdminController::ChatCountEx($user_one->id)}}
 
             </button>
         </div>

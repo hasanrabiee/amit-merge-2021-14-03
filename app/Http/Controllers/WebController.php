@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use App\Auditorium;
 use App\booth;
 use App\Conference;
+use App\ExhibitorForms;
 use App\Hall;
 use App\Jobs;
+use App\Organizer;
 use App\Site;
 use App\Traits\Uploader;
 use App\User;
+use App\VisitorForm;
+use Carbon\Carbon;
 use Hamcrest\Core\BothForms;
 use http\Url;
 use Illuminate\Http\Request;
@@ -106,8 +110,21 @@ class WebController extends Controller
         Site::create([
             'Name' => 'Amitiss',
             'Description' => 'Amitiss',
-            'Logo1' => '1'
+            'Logo1' => '1',
+            'VisitorGender'=>"test",
+            'VisitorProfession'=>"test"
         ]);
+
+
+        ExhibitorForms::create([
+            "institutionItems"=>"test"
+        ]);
+
+        VisitorForm::create([
+            "education"=>"active"
+        ]);
+
+
 
         return redirect()->route('login');
 
@@ -125,9 +142,10 @@ class WebController extends Controller
     public function index()
     {
 
+        $editedStartDate = Carbon::parse(Site::first()->StartDate);
 
         if (Auth::user()->Rule == 'Admin') {
-            return redirect()->route('Admin.index');
+            return redirect()->route('Admin.History');
         } elseif (Auth::user()->Rule == 'Exhibitor') {
             return redirect()->route('Exhibitor.index');
         } elseif (Auth::user()->Rule == 'Visitor') {
@@ -138,7 +156,7 @@ class WebController extends Controller
             return redirect()->route('AdminOperator.index');
         } else {
             Auth::logout();
-            return redirect()->route('login');
+            return redirect()->route('login',compact("editedStartDate"));
         }
     }
 
@@ -186,5 +204,96 @@ class WebController extends Controller
         Session::put('locale', $locale);
         return redirect()->back();
     }
+
+
+
+//    Mobile Pass Routes
+
+    public function PassChangeViaMobile()
+    {
+        return view("auth.passwords.mobile");
+    }
+
+    public function PassChangeCheckMobile(Request $request)
+    {
+        if (User::where("PhoneNumber",$request->phoneNumber)->get()->count() > 0){
+            User::where("PhoneNumber",$request->phoneNumber)->update([
+                "phoneToken"=>mt_rand(100000,999999)
+            ]);
+//            $api->send("1000596446","09211585538",User::where("PhoneNumber",$request->phoneNumber)->first()->phoneToken);
+
+            $this->sendSMS(User::where("PhoneNumber",$request->phoneNumber)->first()->phoneToken,User::where("PhoneNumber",$request->phoneNumber)->first()->PhoneNumber);
+
+            Alert::success("Message sent !!");
+            return redirect(route("ChangingPassHasan"));
+        }else{
+            Alert::error("There is no user with this phone number");
+            return redirect()->back();
+        }
+    }
+
+    public function phoneCode()
+    {
+        return view("auth.passwords.changingPassHasan");
+    }
+
+    public function ChangingPassHasanPost(Request $request)
+    {
+        if (User::where("phoneToken",$request->phoneToken)->get()->count() > 0){
+            return redirect(route("finalStep",["phoneToken"=>$request->phoneToken]));
+        }else{
+            Alert::error("this code is not exist");
+            return redirect()->back();
+        };
+
+
+    }
+
+    public function finalStep()
+    {
+        return view("auth.passwords.finalstep");
+    }
+
+    public function finalStepPost(Request $request)
+    {
+
+        if ($request->password == $request->passwordConfirmation) {
+            User::where("phoneToken",$request->phoneToken)->update([
+                "password"=>Hash::make($request->password),
+                "phoneToken"=>null
+            ]);
+
+            Alert::Success("Password Change Successfuly");
+            return redirect("/");
+        }else{
+            Alert::error("Passwords Not Match");
+            return redirect()->back();
+        }
+
+
+    }
+
+    public function Organizer()
+    {
+        $Organizers = Organizer::all();
+        $OrganizerID=null;
+        $Organizer=null;
+        if (\request("OrganizerID")) {
+            $OrganizerID = \request("OrganizerID");
+        }
+        return view("eventOrganizer",compact("Organizers","OrganizerID"));
+    }
+
+
+
+    public function socials($id)
+    {
+        $Booth=booth::find($id);
+        return view("socials-company",compact("Booth"));
+    }
+
+
+
+//  Mobile Pass Routes End here
 
 }

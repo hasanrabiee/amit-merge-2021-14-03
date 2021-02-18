@@ -38,70 +38,11 @@
 
 @section('content')
 
-                        <div class="modal fade" role="dialog" tabindex="-1" id="Lang_Modal">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                                                            <h4>{{__('message.ChangeLang')}}</h4>
-
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                                aria-hidden="true">×</span></button>
-                                    </div>
-                                    <div class="modal-body">
-
-                                        <div class="dropdown">
-
-                                            <a style="text-decoration: none !important" class="" href="{{ url('locale/en') }}"><i
-                                                    class="fa fa-globe"></i>English</a><br>
-                                            <a style="text-decoration: none !important" class="" href="{{ url('locale/de') }}"><i
-                                                    class="fa fa-globe"></i>German</a><br>
-                                            <a style="text-decoration: none !important" class="" href="{{ url('locale/al') }}"><i
-                                                    class="fa fa-globe"></i>Shqip</a><br>
 
 
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-light btn-block" data-dismiss="modal" type="button">Close
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                            <div class="modal fade" role="dialog" tabindex="-1" id="avatar_modal">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4>{{__('message.ChangeAvatarPhoto')}}</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="{{route('Exhibitor.UpdateAvatar')}}" method="post"
-                                                  enctype="multipart/form-data">
-                                                @csrf
-                                                <div class="form-group">
-                                                    <input type="file" name="Avatar">
-                                                </div>
-                                                <button class="btn btn-success btn-block" type="submit">{{__('message.UpdateAvatar')}} <i
-                                                        class="fa fa-save" style="margin-left: 9px;"></i></button>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button class="btn btn-light btn-block" data-dismiss="modal" type="button">
-                                                {{__('message.Close')}}
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                                        <div class="modal fade" role="dialog" tabindex="-1" id="EditJob">
+    <div class="modal fade" role="dialog" tabindex="-1" id="EditJob">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <form method="post" action="{{route('Exhibitor.UpdateJob')}}">
@@ -109,9 +50,6 @@
                                                         @csrf
                                                         <div class="modal-header">
                                                             <h4><strong>{{__('message.UpdateJob')}}</strong><br></h4>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                    aria-label="Close"><span aria-hidden="true">×</span>
-                                                            </button>
                                                         </div>
                                                         <div class="modal-body">
                                                             <input type="hidden" name="ID" id="JobID">
@@ -185,7 +123,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="modal fade" role="dialog" tabindex="-1" id="view_jobs">
+                                        <div class="modal fade" role="dialog" tabindex="-1" id="view_jobs" style="height: 500px;overflow-y: auto">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                         <div class="modal-header">
@@ -194,42 +132,46 @@
                                                                     aria-label="Close"><span aria-hidden="true">×</span>
                                                             </button>
                                                         </div>
-                                                        <div class="modal-body" >
-
-                                                            <table class="table">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th>{{__('message.Title')}}</th>
-                                                                    <th>{{__('message.Description')}}</th>
-                                                                    <th>{{__('message.number')}}</th>
-                                                                    <th>{{__('message.Salary')}} €</th>
-                                                                    <th>{{__('message.Action')}}</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                @foreach(\App\Jobs::where('BoothID' , $Booth->id)->get() as $job)
-                                                                    <tr>
-                                                                        <td class="scroll_box" style="max-width: 110px">{{$job->Title}}</td>
-                                                                        <td class="scroll_box" style="max-width: 110px;height: 63px;">{{$job->Description}}</td>
-                                                                        <td>{{$job->Number}}</td>
-                                                                        <td>{{$job->Salary}} €</td>
-                                                                        <td>
-
-
-
-                                                                            <a class="btn btn-light" role="button" style="margin-left: 5px;" onclick="EditJob({{$job->id}})"><i
+                                                        <div class="modal-body">
+                                                            @foreach(\App\Jobs::where('BoothID' , $Booth->id)->get() as $job)
+                                                                <div class="main-modal" style="position:relative;">
+                                                                    <div style="background-color:#b2caeb;" class="p-3">
+                                                                        <h4 style="font-weight: bolder;">
+                                                                            {{$job->Title}}
+                                                                        </h4>
+                                                                        <div class="links" style="position: absolute;top: 17.5px;right: 30px;">
+                                                                            <a class="btn btn-sm btn-light" role="button" style="margin-left: 5px;" onclick="EditJob({{$job->id}})"><i
                                                                                     class="fa fa-pencil" style="font-size: 15px;"></i></a>
 
 
-                                                                            <a class="btn btn-danger" role="button" style="margin-left: 5px;"  href="{{route('Exhibitor.DeleteJob' , $job->id)}}"><i
+                                                                            <a class="btn btn-sm btn-danger" role="button" style="margin-left: 5px;"  href="{{route('Exhibitor.DeleteJob' , $job->id)}}"><i
                                                                                     class="fa fa-trash" style="font-size: 15px;"></i></a>
+                                                                        </div>
 
 
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                                </tbody>
-                                                            </table>
+                                                                    </div>
+
+                                                                    <div>
+                                                                        <p>
+                                                                            {{$job->Description}}
+                                                                        </p>
+                                                                    </div>
+
+                                                                    <div>
+                                                                        <h6 style="font-weight: bolder">Number Of Vacencies :</h6>
+                                                                        <p>
+                                                                            {{$job->Number}}
+                                                                        </p>
+                                                                    </div>
+
+                                                                    <div>
+                                                                        <h6 style="font-weight: bolder">Salary :</h6>
+                                                                        <p>
+                                                                            {{$job->Salary}} €
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
 
 
 
@@ -252,7 +194,6 @@
 
 
 
-
     {{--    Hassan start here !!!!--}}
 
 
@@ -266,21 +207,34 @@
         height: 100%;
         ;">
     <div>
-
-
-    @include("Sidebars.exhibitor-sidebar")
-
+        @include('Sidebars.exhibitor-sidebar')
 
 
 
-
-    <!-- Main content -->
+            <!-- Main content -->
 
             <div class="content-wrapper" style="overflow-x: hidden">
-
-
+            {{--            <div class="row mb-2">--}}
+            {{--                <div class="col-md-10"></div>--}}
+            {{--                <div class="col-md-2">--}}
+            {{--                    <a class="text-white" href="{{ url('locale/en') }}"><i--}}
+            {{--                            class="ml-2"></i>En</a>--}}
+            {{--                    <a class="text-white" href="{{ url('locale/de') }}"><i--}}
+            {{--                            class="ml-2"></i>Ge</a>--}}
+            {{--                    <a class="text-white" href="{{ url('locale/al') }}"><i--}}
+            {{--                            class="ml-2"></i>Al</a>--}}
+            {{--                </div>--}}
+            {{--            </div>--}}
             <!-- Content area -->
                 <div class="content">
+
+                    @if ($Booth->Poster1 == null || $Booth->Poster2 == null || $Booth->Poster3 == null || $Booth->Logo == null )
+                        <div class="alert alert-danger">
+                            <span>Please Compelete Your Booth</span>
+                        </div>
+                    @endif
+
+
 
                     <!-- Main charts -->
                     <div class="row">
@@ -313,6 +267,50 @@
                                             <p>{{__('message.Company')}} {{__('message.Representative')}}: {{$Booth->Representative}}</p>
                                             <p>{{__('message.Company')}} {{__('message.email')}}: {{$Booth->User->email }}</p>
                                             <p>{{__('message.Company')}} {{__('message.Name')}}: {{$Booth->CompanyName}}</p>
+                                            @if ($userInfo->companyAddress != null)
+                                                <p>
+                                                    Company Address : {{$userInfo->companyAddress}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->zipCode != null)
+                                                <p>
+                                                    Zip Code : {{$userInfo->zipCode}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->mainCompany != null)
+                                                <p>
+                                                    Main Company : {{$userInfo->mainCompany}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->institutionEmail != null)
+                                                <p>
+                                                    Institution Email : {{$userInfo->institutionEmail}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->phone != null)
+                                                <p>
+                                                    phone : {{$userInfo->phone}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->fax != null)
+                                                <p>
+                                                    Fax : {{$userInfo->fax}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->institution != null)
+                                                <p>
+                                                    Institution : {{$userInfo->institution}}
+                                                </p>
+                                            @endif
+
+
+
                                         </div>
                                         <div class="col-md-6 col-12 font-size-lg">
                                             <div class="btn-group w-100">
@@ -398,7 +396,7 @@
                                                 <form method="post" action="{{route('Exhibitor.AboutCompany')}}" class="w-100">
                                                     @csrf
                                                     <div class="form-group col-12">
-                                                        <textarea type="text" class="form-control" rows="5" style="padding-bottom: 19px;" placeholder="Please Tell Us About Your Visit Experience" maxlength="120" name="Description">{!! $Booth->Description !!}</textarea>
+                                                        <textarea type="text" class="form-control" rows="5" style="padding-bottom: 19px;" placeholder="Please Tell Us About Your Visit Experience" name="Description">{!! $Booth->Description !!}</textarea>
                                                     </div>
                                                     <div class="form-group text-center">
                                                         <button class="btn btn-success ml-2" type="submit">{{__('message.Update')}}</button>

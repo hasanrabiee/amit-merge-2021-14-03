@@ -31,7 +31,36 @@
     <script src="{{asset("js/app2.js")}}"></script>
     <script src="{{asset("js/dashboard.js")}}"></script>
     <script src="https://use.fontawesome.com/fd423b8d2f.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{{--    <script>--}}
+{{--        $.getJSON("https://api.ipify.org?format=json",--}}
+{{--            function(data) {--}}
+{{--                $("#gfg").html(data.ip);--}}
+{{--                const ip = data.ip;--}}
+
+{{--                function visitorIP(ip){--}}
+{{--                    $.get("{{route('Visitor.ChangeIP')}}", {--}}
+{{--                        ip: ip,--}}
+{{--                    },function (data){--}}
+{{--                    })--}}
+{{--                }--}}
+
+{{--                setInterval(visitorIP(ip),1000)--}}
+
+{{--            })--}}
+
+
+
+{{--    </script>--}}
+
     <!-- /theme JS files -->
+
+
+    <script>
+
+    </script>
+
 
 
 @endsection
@@ -42,143 +71,13 @@
 
 
 
-    <div class="modal fade" role="dialog" tabindex="-1" id="Lang_Modal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4>Change Language</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">×</span></button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="dropdown">
-
-                        <a style="text-decoration: none !important" class="" href="{{ url('locale/en') }}"><i
-                                class="fa fa-globe"></i>English</a><br>
-                        <a style="text-decoration: none !important" class="" href="{{ url('locale/de') }}"><i
-                                class="fa fa-globe"></i>Germany</a><br>
-                        <a style="text-decoration: none !important" class="" href="{{ url('locale/al') }}"><i
-                                class="fa fa-globe"></i>Albanian</a><br>
-
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-light btn-block" data-dismiss="modal" type="button">Close
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-
-
-
-
-
-    <div class="modal fade" role="dialog" tabindex="-1" id="Resume_Modal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="text-dark">{{__('message.Resume')}}</h4>
-
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">×</span></button>
-                </div>
-                <div class="modal-body">
-
-
-                    <div class="container">
-
-
-                        <div class="row">
-
-
-                            <div class="col-12">
-
-                                <form id="resume_form" class="" method="post" action="{{route("Visitor.Resume")}}" enctype="multipart/form-data">
-                                    @csrf
-
-
-                                    <div class="form-group ">
-
-                                        <input name="resume" type="file" class="custom-file-input" id="customFile">
-                                        <label class="custom-file-label" for="customFile">{{__('message.Resume')}}</label>
-
-                                    </div>
-
-
-
-
-
-
-                                </form>
-
-                            </div>
-
-                        </div>
-
-
-                    </div>
-
-
-
-
-
-                </div>
-                <div class="modal-footer">
-                    <button onclick="resume_form.submit()" class="btn btn-success btn-block" type="button">{{__('message.Upload')}}
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                            <div class="modal fade" role="dialog" tabindex="-1" id="avatar_modal">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4>{{__('message.ChangeAvatarPhoto')}}</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                                        <div class="modal-body">
-                                            <form action="{{route('Visitor.UpdateAvatar')}}" method="post" enctype="multipart/form-data">
-                                                @csrf
-                                                <div class="form-group">
-                                                    <input type="file" name="Avatar">
-                                                </div>
-                                                <button class="btn btn-success btn-block" type="submit">{{__('message.UpdateAvatar')}}<i class="fa fa-save" style="margin-left: 9px;"></i></button></form>
-                                        </div>
-                                        <div class="modal-footer"><button class="btn btn-light btn-block" data-dismiss="modal" type="button">{{__('message.Close')}}</button></div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-    {{--    Hassan Start Here !!!--}}
-
-    <body style="background: url('{{\App\Site::VisitorBackground()}}') no-repeat center center fixed;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-        height: 100%;
-        ;">
-    <div>
-
     @include("Sidebars.visitor-sidebar")
 
 
 
 
 
-    <!-- Main content -->
+            <!-- Main content -->
 
             <div class="content-wrapper" style="overflow-x: hidden">
             {{--            <div class="row mb-2">--}}
@@ -225,15 +124,62 @@
                                             <p>{{__('message.ln')}} : {{\Illuminate\Support\Facades\Auth::user()->LastName}}</p>
                                             <p>{{__('message.Profession')}}: {{\Illuminate\Support\Facades\Auth::user()->Profession}}</p>
                                             <p>{{__('message.City')}}: {{\Illuminate\Support\Facades\Auth::user()->City}}</p>
+
+                                            @if (auth()->user()->education != null)
+                                                <p>
+                                                    Education : {{\Illuminate\Support\Facades\Auth::user()->education}}
+                                                </p>
+                                            @endif
+
+                                            @if (auth()->user()->countryStudy != null)
+                                                <p>
+                                                    Country Study : {{\Illuminate\Support\Facades\Auth::user()->countryStudy}}
+                                                </p>
+                                            @endif
+
+                                            @if (auth()->user()->InterestedDegree != null)
+                                                <p>
+                                                    Interested Degree : {{\Illuminate\Support\Facades\Auth::user()->InterestedDegree}}
+                                                </p>
+                                            @endif
+
+                                            @if (auth()->user()->InterestedField != null)
+                                                <p>
+                                                    Interested Field: {{\Illuminate\Support\Facades\Auth::user()->InterestedField}}
+                                                </p>
+                                            @endif
+
+                                            @if (auth()->user()->languageOfStudy != null)
+                                                <p>
+                                                    Language Of Study : {{\Illuminate\Support\Facades\Auth::user()->languageOfStudy}}
+                                                </p>
+                                            @endif
+
+                                            @if (auth()->user()->onlineDegreeProgram != null)
+                                                <p>
+                                                    onlineDegreeProgram : {{\Illuminate\Support\Facades\Auth::user()->onlineDegreeProgram}}
+                                                </p>
+                                            @endif
+
+                                            @if (auth()->user()->interestedScholarShip != null)
+                                                <p>
+                                                    interestedScholarShip : {{\Illuminate\Support\Facades\Auth::user()->interestedScholarShip}}
+                                                </p>
+                                            @endif
+
                                         </div>
                                         <div class="col-6 font-size-lg">
                                             <p>{{__('message.Gender')}}: {{\Illuminate\Support\Facades\Auth::user()->Gender}}</p>
                                             <p>{{__('message.Country')}}: {{\Illuminate\Support\Facades\Auth::user()->Country}}</p>
                                             <p>{{__('message.BirthDate')}}: {{\Illuminate\Support\Facades\Auth::user()->BirthDate}}</p>
                                             <p>{{__('message.Email')}}: {{\Illuminate\Support\Facades\Auth::user()->email}}</p>
-                                            <button  data-toggle="tooltip" data-placement="top" title="Upload Resume" onclick="$('#Resume_Modal').modal('show')" class="btn btn-dark w-50">
+                                            <button  data-toggle="tooltip" data-placement="top" title="Upload Resume" onclick="$('#Resume_Modal').modal('show')" class="btn btn-dark w-md-50">
                                                 <span class="fa fa-upload"></span>
                                                 {{__("message.Upload")}} CV</button>
+                                            @if (auth()->user()->resume != null )
+                                                <a href="{{auth()->user()->resume}}" class="btn btn-info w-md-50 mt-1">Download Resume</a>
+                                            @endif
+
                                         </div>
                                     </div>
                                 </div>
@@ -276,7 +222,7 @@
                                                 <form method="post" action="{{route('Visitor.VisitExperience')}}" class="w-100">
                                                     @csrf
                                                     <div class="form-group col-12">
-                                                        <textarea type="text" class="form-control" rows="5" style="padding-bottom: 19px;" placeholder="{{__('message.VisitExp')}}..." maxlength="120" name="VisitExperience">{!! \Illuminate\Support\Facades\Auth::user()->VisitExperience !!}</textarea>
+                                                        <textarea type="text" class="form-control" rows="5" style="padding-bottom: 19px;" placeholder="{{__('message.VisitExp')}}..."  name="VisitExperience">{!! \Illuminate\Support\Facades\Auth::user()->VisitExperience !!}</textarea>
                                                     </div>
                                                     <div class="form-group text-center">
                                                         <button class="btn btn-success ml-2" type="submit">{{__('message.Send')}}</button>

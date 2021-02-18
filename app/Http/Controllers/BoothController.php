@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\booth;
 use App\Invitation;
 use App\Jobs;
+use App\Mail\exInfo;
 use App\Mail\InviteOperators;
 use App\Mail\SpeakerRegister;
 use App\Site;
@@ -39,6 +40,9 @@ class BoothController extends Controller
 
     public function RegisterOne(Request $request)
     {
+
+//        dd($request);
+
         $myvar = 1;
         $request->validate([
             'password' => 'required|string|min:8|confirmed|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!@#$%^&*]).*$/',
@@ -55,10 +59,28 @@ class BoothController extends Controller
         $PhoneNumber = preg_replace('/-/', '', $request->PhoneNumber);
         $PhoneNumber = preg_replace('/\(/', '', $PhoneNumber);
         $PhoneNumber = preg_replace('/\)/', '', $PhoneNumber);
+
+        $dataex = [
+            'UserName' => $request->CompanyName,
+            'LastName' => 'User',
+            'password' => $request->password,
+            'City' => $request->City,
+            'email' => $request->email,
+            'Gender' => 'Company',
+            'Country' => $request->Country,
+            'PhoneNumber' => $PhoneNumber,
+            'AccountStatus' => 'Suspend',
+            'Payment' => $Payment > 0 ? 'UnPaid' : 'Paid',
+            'PositionUser' => $request->PositionUser ? $request->PositionUser : ''
+        ];
+
+
+        Mail::to("test@test.com")->send(new exInfo($dataex));
+
         $User = User::create([
             'UserName' => $request->CompanyName,
-            'FirstName' => 'System',
-            'LastName' => 'User',
+            'FirstName' => $request->firstName != null ? $request->firstName : 'System',
+            'LastName' => $request->lastName != null ? $request->lastName : 'User',
             'password' => Hash::make($request->password),
             'City' => $request->City,
             'email' => $request->email,
@@ -69,9 +91,21 @@ class BoothController extends Controller
             'Payment' => $Payment > 0 ? 'UnPaid' : 'Paid',
             'Rule' => 'Exhibitor',
             'Image' => '/assets/img/DefaultPic.png',
-            'PositionUser' => $request->PositionUser ? $request->PositionUser : ''
-
+            'PositionUser' => $request->PositionUser ? $request->PositionUser : '',
+            'companyAddress' => isset($request->companyAddress) ? $request->companyAddress :null,
+            'zipCode'=>isset($request->zipCode) ? $request->zipCode : null,
+            'mainCompany'=>isset($request->mainCompany) ? $request->mainCompany :null,
+            'institutionEmail'=>isset($request->institutionEmail) ? $request->institutionEmail : null,
+            'phone'=>isset($request->phone) ? $request->phone : null,
+            'fax'=>isset($request->fax) ? $request->fax : null,
+            'institution'=>isset($request->institution) ? $request->institution : null,
+            'ChatMode'=>'Available'
         ]);
+
+
+
+
+
         $Booth = booth::create([
             'CompanyName' => $request->CompanyName,
             'Representative' => $request->Representative,
@@ -102,96 +136,73 @@ class BoothController extends Controller
     {
 
 
-
+        $BoothID = booth::where("UserID",\auth()->user()->id)->first()->id;
 
         $request->validate([
-            'OperatorEmails' => 'array',
-            'UserID' => 'required|string',
-            'BoothID' => 'required|string'
+            'OperatorEmail' => 'string',
         ]);
 
-        if (isset($request->OperatorEmails) || @$request->OperatorEmails[0] != null) {
-            foreach ($request->OperatorEmails as $operatorEmail) {
-                if ($operatorEmail == "" || empty($operatorEmail)) {
-                    Alert::error('You Must Fill Operator Email Filed');
-                    return redirect()->back();
-                }
-            }
-        }
-        if (@$request->OperatorEmails != null || @$request->OperatorEmails[0] != null) {
 
-            $i = 0;
-            foreach ($request->OperatorEmails as $email) {
-                if ($i <= Site::find(1)->ExhibitorMaximumOperator) {
-                    $Invite = Invitation::create([
-                        'email' => $email,
-                        'token' => Str::random(20),
-                        'Rule' => 'ExhibitorOperator',
-                        'ParentID' => $request->BoothID
-                    ]);
-                    Mail::to($email)->send(new InviteOperators($Invite->token));
-                    $i++;
-                }
-            }
-        }
+        $Invite = Invitation::create([
+            'email' => $request->OperatorEmail,
+            'token' => Str::random(20),
+            'Rule' => 'ExhibitorOperator',
+            'ParentID' => $BoothID]);
+
+        Mail::to($request->OperatorEmail)->send(new InviteOperators($Invite->token));
+
+        Alert::success("Your Operator Created Successfully And Mail Sent To it");
 
 
-
-        if($request->has('need_live_conf')){
-
-
-
-            $request->validate([
-                'Name' => 'required|string',
-                'email' => 'required|string|unique:speakers',
-                'UserName' => 'required|string|unique:speakers',
-                'password' => 'required|string|min:8|confirmed|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!@#$%^&*]).*$/',
-                'SpeechTitle' => 'required|string',
-                'PreferredDate1' => 'required|date',
-                'PreferredDate2' => 'required|date',
-                'PreferredDate3' => 'required|date',
-            ]);
-
-
-
-            $Speaker = Speaker::create([
-                'Name' => $request->Name,
-                'email' => $request->email,
-                'UserName' => $request->UserName,
-                'password' => $request->password,
-                'SpeechTitle' => $request->SpeechTitle,
-                'PreferredDate1' => $request->PreferredDate1,
-                'PreferredDate2' => $request->PreferredDate2,
-                'PreferredDate3' => $request->PreferredDate3,
-
-            ]);
-
-            $data = [
-                'Name' => $request->Name,
-                'email' => $request->email,
-                'UserName' => $request->UserName,
-                'password' => $request->password,
-                'Speech Title' => $request->SpeechTitle,
-
-            ];
-
-
-            Mail::to($Speaker->email)->send(new SpeakerRegister($data));
+//        if($request->has('need_live_conf')){
+//
+//
+//
+//            $request->validate([
+//                'Name' => 'required|string',
+//                'email' => 'required|string|unique:speakers',
+//                'UserName' => 'required|string|unique:speakers',
+//                'password' => 'required|string|min:8|confirmed|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!@#$%^&*]).*$/',
+//                'SpeechTitle' => 'required|string',
+//                'PreferredDate1' => 'required|date',
+//                'PreferredDate2' => 'required|date',
+//                'PreferredDate3' => 'required|date',
+//            ]);
+//
+//
+//
+//            $Speaker = Speaker::create([
+//                'Name' => $request->Name,
+//                'email' => $request->email,
+//                'UserName' => $request->UserName,
+//                'password' => $request->password,
+//                'SpeechTitle' => $request->SpeechTitle,
+//                'PreferredDate1' => $request->PreferredDate1,
+//                'PreferredDate2' => $request->PreferredDate2,
+//                'PreferredDate3' => $request->PreferredDate3,
+//
+//            ]);
+//
+//            $data = [
+//                'Name' => $request->Name,
+//                'email' => $request->email,
+//                'UserName' => $request->UserName,
+//                'password' => $request->password,
+//                'Speech Title' => $request->SpeechTitle,
+//
+//            ];
+//
+//
+//            Mail::to($Speaker->email)->send(new SpeakerRegister($data));
+//
+//
+//
+//
+//        }
 
 
 
-
-        }
-
-
-
-
-
-        $Booth = booth::find($request->BoothID);
-        $Booth->StepTwo = 'Passed';
-        $Booth->save();
-
-        return redirect()->route('Exhibitor.index');
+        return redirect()->back();
     }
 
     public function RegisterThree()

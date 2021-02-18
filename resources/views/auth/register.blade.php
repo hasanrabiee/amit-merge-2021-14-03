@@ -7,19 +7,54 @@
 @endsection
 @section('content')
 
+
     <div class="h-100 w-100 overflow" style="width:100% !important ; height:100% !important;background-size: cover;background-repeat:no-repeat;background-image: url(@if(\App\Site::find(1)->SigninBackground != null) {{asset(\App\Site::find(1)->SigninBackground)}}   @else {{asset('assets/img/poster.jpg')}}@endif">
         <div class="row mt-md-3">
-            <div class="col-9 col-md-10">
+            <div class="col-8 col-md-9">
             </div>
-            <div class="col-3 col-md-2">
+            <div class="col-4 col-md-3">
+
+
+                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#help">Help</button>
+
+                <!-- Modal -->
+                <div id="help" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Visitor Registeration Guide </h5><br>
+                            </div>
+                            <div class="modal-body text-center">
+                                <div class="text-left mb-2">
+                                    <a href="{{\App\Site::first()->visitorRegistrationPDF}}" class="btn text-left btn-primary">PDF Guide</a>
+                                </div>
+                                <iframe width="420" height="315"
+                                        src="{{\App\Site::first()->visitorRegistrationVideo}}">
+                                </iframe>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
                 <a class="" href="{{ url('locale/en') }}"><i
                         class="ml-2"></i>En</a>
                 <a class="" href="{{ url('locale/de') }}"><i
                         class="ml-2"></i>Ge</a>
                 <a class="" href="{{ url('locale/al') }}"><i
                         class="ml-2"></i>Al</a>
+                <br>
+                <span style="font-size: 12px;border-radius: 5px;opacity: 0.7" class="bg-dark p-1 text-white">
+                    Last Activity: {{\Carbon\Carbon::now()->toDayDateTimeString()}}
+                </span>
             </div>
         </div>
+
+
 
 
         <div class="">
@@ -45,14 +80,16 @@
                                         <div class="row">
                                             <div class="col-xl-12">
                                                 <!-- Traffic sources -->
+                                                <h2 class="stroke-title">Visitor Registration</h2>
+
                                                 <div class="card" style="background-color:rgba(54,54,54,0.65);color: white">
 
                                                     <div class="card-body">
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <h1>Welcome</h1>
+                                                                <h1>{{\App\Site::first()->VisitorWelcome}}</h1>
                                                                 <p>
-                                                                    The Purpose Of This Platform is Making a Virtual Environment Looking Like The Real World. According to The New Situation Of The World Since The Existence Of Covid-19 And The Protocol For Social Distancing, Holding Exhibitions has a High Risk for People's Health.
+                                                                    {{\App\Site::first()->VisitorAbout}}
                                                                 </p>
                                                             </div>
                                                             <div class="col-md-8">
@@ -60,10 +97,11 @@
                                                                     @csrf
                                                                     <div class="row">
                                                                         <div class="col-md-6">
-                                                                            <div class="form-group">
-                                                                                <input type="text" class="form-control" placeholder="{{__('message.UserName')}} *"
-                                                                                       required="" name="UserName" value="{{old('UserName')}}">
-                                                                            </div>
+                                                                                    <div class="form-group">
+                                                                                        <input type="text" class="form-control" placeholder="{{__('message.UserName')}} *"
+                                                                                               required="" name="UserName" value="{{old('UserName')}}">
+                                                                                    </div>
+
                                                                             <div class="form-group">
                                                                                 <input type="text" class="form-control" placeholder="{{__('message.fn')}} *"
                                                                                        required="" name="FirstName" value="{{old('FirstName')}}">
@@ -76,20 +114,16 @@
 
 
                                                                             <div class="form-group">
+                                                                                @if (\App\Site::first()->VisitorProfession != null)
+                                                                                    <select class="form-control"  name="Profession">
+                                                                                        <option selected disabled>{{__('message.Select')}} {{__('message.Profession')}}</option>
 
-
-                                                                                <select class="form-control"  name="Profession">
-                                                                                    <option selected disabled>{{__('message.Select')}} {{__('message.Profession')}}</option>
-
-                                                                                    @foreach(explode(',' , \App\Site::find(1)->VisitorProfession) as $profession)
-                                                                                        <option value="{{$profession}}" @if(old('Profession') == $profession) selected @endif>{{$profession}}</option>
-                                                                                    @endforeach
-                                                                                </select>
-
+                                                                                        @foreach(explode(',' , \App\Site::find(1)->VisitorProfession) as $profession)
+                                                                                            <option value="{{$profession}}" @if(old('Profession') == $profession) selected @endif>{{$profession}}</option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                @endif
                                                                             </div>
-
-
-
 
 
                                                                             <div class="form-group">
@@ -376,21 +410,95 @@
                                                                                        name="City" onkeypress="return /[a-z]/i.test(event.key)"  id="City" value="{{old('City')}}"  >
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <select class="form-control" name="Gender" >
-                                                                                    <option selected disabled>{{__('message.Select')}} {{__('message.Gender')}}</option>
-                                                                                    @foreach(explode(',' , \App\Site::find(1)->VisitorGender) as $Gender)
-                                                                                        <option value="{{$Gender}}" @if(old('Gender') == $Gender) selected @endif >{{$Gender}}</option>
-                                                                                    @endforeach
-                                                                                </select>
+
+                                                                                @if (\App\VisitorForm::first()->gender == "active")
+
+                                                                                    <select class="form-control" name="Gender" >
+                                                                                        <option selected disabled>{{__('message.Select')}} {{__('message.Gender')}}</option>
+                                                                                        @foreach(explode(',' , \App\Site::find(1)->VisitorGender) as $Gender)
+                                                                                            <option value="{{$Gender}}" @if(old('Gender') == $Gender) selected @endif >{{$Gender}}</option>
+                                                                                        @endforeach
+                                                                                    </select>
+
+                                                                                @endif
                                                                             </div>
+
+
+                                                                            @if (\App\VisitorForm::first()->education == "active")
+                                                                                <div class="form-group">
+                                                                                    <select name="education" id="" class="form-control">
+                                                                                        <option value="" selected disabled hidden>Current Level Of Education</option>
+                                                                                        @foreach(explode(',' , \App\VisitorForm::find(1)->educationItems) as $educationItem)
+                                                                                            <option value="{{$educationItem}}" @if(old('education') == $educationItem) selected @endif >{{$educationItem}}</option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
+                                                                            @endif
+
+                                                                            @if (\App\VisitorForm::first()->countryStudy == "active")
+                                                                                <div class="form-group">
+                                                                                    <input type="text" class="form-control" name="countryStudy" placeholder="CountryStudy" value="{{old("countryStudy")}}">
+                                                                                </div>
+                                                                            @endif
+
+                                                                            @if (\App\VisitorForm::first()->InterestedDegree == "active")
+                                                                                <div class="form-group">
+                                                                                    <select name="InterestedDegree" id="" class="form-control">
+                                                                                        <option value="" selected disabled hidden>Interested Degree</option>
+                                                                                        @foreach(explode(',' , \App\VisitorForm::find(1)->interestedDegreeItems) as $Degree)
+                                                                                            {{--                                                                                        {{dd($Degree)}}--}}
+                                                                                            <option value="{{$Degree}}" @if(old('InterestedDegree') == $Degree) selected @endif >{{$Degree}}</option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
+                                                                            @endif
+
+
+                                                                            @if (\App\VisitorForm::first()->InterestedField == "active")
+                                                                                <div class="form-group">
+                                                                                    <select name="InterestedField" id="" class="form-control">
+                                                                                        <option value="" selected disabled hidden>Interested Field</option>
+                                                                                        @foreach(explode(',' , \App\VisitorForm::find(1)->interestedFieldItems) as $Field)
+
+                                                                                            <option value="{{$Field}}" @if(old('InterestedField') == $Field) selected @endif >{{$Field}}</option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
+                                                                            @endif
+
+                                                                            @if (\App\VisitorForm::first()->languageOfStudy == "active")
+                                                                                <div class="form-group">
+                                                                                    <input type="text" class="form-control" name="languageOfStudy" placeholder="Language of Study" value="{{old('languageOfStudy')}}">
+                                                                                </div>
+                                                                            @endif
+
+                                                                            @if (\App\VisitorForm::first()->onlineDegreeProgram == "active")
+                                                                                <div class="form-group">
+                                                                                    <input type="text" class="form-control" name="onlineDegreeProgram" placeholder="onlineDegreeProgram" value="{{old('onlineDegreeProgram')}}">
+                                                                                </div>
+                                                                            @endif
+
+                                                                            @if (\App\VisitorForm::first()->interestedScholarShip == "active")
+
+                                                                                <div class="form-group">
+                                                                                    <input type="text" class="form-control" name="interestedScholarShip" placeholder="Interested ScholarShip" value="{{old('interestedScholarShip')}}">
+                                                                                </div>
+
+                                                                            @endif
+
+
                                                                             <div class="form-group">
                                                                                 <div class="row">
                                                                                     <div class="col-4">
                                                                                         <select class="form-control w-100" style="width: 91px;" name="CountryCode">
                                                                                             @if(old('CountryCode'))
+
                                                                                                 <option selected value="{{old('CountryCode')}}">{{old('CountryCode')}}</option>
+
                                                                                             @else
+
                                                                                                 <option selected disabled>Code </option>
+
                                                                                             @endif
                                                                                             <option data-countryCode="DE" value="49">Germany (+49)</option>
                                                                                             <option data-countryCode="GB" value="44" >UK (+44)</option>
@@ -609,6 +717,7 @@
                                                                                                 <option data-countryCode="YE" value="967" >Yemen (South)(+967)</option>
                                                                                                 <option data-countryCode="ZM" value="260" >Zambia (+260)</option>
                                                                                                 <option data-countryCode="ZW" value="263" >Zimbabwe (+263)</option>
+                                                                                                <option data-countryCode="ZW" value="+995" >Gerigia (+995)</option>
                                                                                             </optgroup>
                                                                                         </select>
                                                                                     </div>
@@ -619,9 +728,9 @@
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                     <div>
-                                                                                        <div class="modal fade text-dark" role="dialog" tabindex="-1" id="myModal">
+                                                                                        <div class="modal fade" role="dialog" tabindex="-1" id="myModal">
                                                                                             <div class="modal-dialog" role="document">
-                                                                                                <div class="modal-content">
+                                                                                                <div class="modal-content text-dark">
                                                                                                     <div class="modal-header">
                                                                                                         <h4>{{__('message.TAC')}}</h4>
                                                                                                         <button type="button" class="close" data-dismiss="modal"
@@ -629,9 +738,14 @@
                                                                                                         </button>
                                                                                                     </div>
                                                                                                     <div class="modal-body">
-                                                                                                        <div class="scroll_box">
-                                                                                                            <p>
-                                                                                                                {{\App\Site::find(1)->Terms}}
+                                                                                                        <div class="scroll_box text-dark">
+                                                                                                            <p class="text-dark">
+
+                                                                                                                <?php
+
+                                                                                                                    echo \App\Site::find(1)->Terms
+
+                                                                                                                ?>
                                                                                                             </p>
                                                                                                         </div>
                                                                                                     </div>
@@ -683,6 +797,8 @@
         </div>
     </div>
     </div>
+
+
 
 
 

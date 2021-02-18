@@ -76,13 +76,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+//        dd($data);
         $Payment = Site::find(1)->VisitorPayment;
         $PhoneNumber = preg_replace('/-/','',$data['PhoneNumber']);
         $PhoneNumber = preg_replace('/\(/','',$PhoneNumber);
         $PhoneNumber = preg_replace('/\)/','',$PhoneNumber);
         $CountryCode = isset($data['CountryCode']) ? $data['CountryCode'] : '+1';
         $PhoneNumber =  $CountryCode . $PhoneNumber;
-        $Password = $data['password'];
         return User::create([
             'FirstName' => $data['FirstName'] ,
             'LastName' => $data['LastName'] ,
@@ -95,11 +95,17 @@ class RegisterController extends Controller
             'BirthDate' => isset($data['BirthDate']) ? $data['BirthDate'] : Carbon::now() ,
             'Image' => '/assets/img/DefaultPic.png',
             'email' => $data['email'],
-            'password' => Hash::make($Password),
-            'laravel_remember_session' => $data['password'],
+            'password' => Hash::make($data['password']),
             'Rule' => 'Visitor',
             'AccountStatus' => 'Active',
             'Payment' => $Payment > 0 ? 'UnPaid' : 'Paid',
+            'education'=>isset($data['education']) ? $data["education"] : null,
+            'countryStudy'=>isset($data['countryStudy']) ? $data["countryStudy"] : null,
+            'interestedDegree'=>isset($data['InterestedDegree']) ? $data['InterestedDegree'] : null,
+            'interestedField'=>isset($data['InterestedField']) ? $data['InterestedField'] : null,
+            'languageOfStudy'=>isset($data["languageOfStudy"]) ? $data["languageOfStudy"] : null,
+            'onlineDegreeProgram'=>isset($data['onlineDegreeProgram']) ? $data["onlineDegreeProgram"] :null,
+            'interestedScholarShip'=>isset($data['interestedScholarShip']) ? $data["interestedScholarShip"] : null,
         ]);
     }
 }

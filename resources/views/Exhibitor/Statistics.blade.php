@@ -1,4 +1,5 @@
 @extends('layouts.Panel')
+
 @section("Head")
 
 
@@ -32,79 +33,116 @@
     <script src="https://use.fontawesome.com/fd423b8d2f.js"></script>
     <!-- /theme JS files -->
 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+
+        google.charts.load('current', {'packages':['corechart']});
+
+        google.charts.setOnLoadCallback(drawSarahChart);
+
+
+
+        google.charts.setOnLoadCallback(professionChart);
+
+
+
+
+
+
+
+        function drawSarahChart() {
+
+            // Create the data table for Sarah's pizza.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Topping');
+            data.addColumn('number', 'Slices');
+            data.addRows([
+
+                    @foreach($Statistic as $item)
+
+                ['{{\Carbon\Carbon::parse($item->date)->format('M-d')}}', {{$item->views}}],
+
+                @endforeach
+            ]);
+
+            // Set options for Sarah's pie chart.
+            var options = {title:'',
+                width:375,
+                height:250
+            };
+
+            // Instantiate and draw the chart for Sarah's pizza.
+            var chart = new google.visualization.PieChart(document.getElementById('Sarah_chart_div'));
+            chart.draw(data, options);
+        }
+
+        // Callback that draws the pie chart for Anthony's pizza.
+
+
+        function professionChart() {
+            var data = google.visualization.arrayToDataTable([
+                ["Element", "Density", { role: "style" } ],
+
+
+                    @foreach($Profession as $profession)
+                ['{{$profession->Profession}}', {{$profession->views}},"#12B0E8"],
+                @endforeach
+
+
+
+
+            ]);
+
+            var view = new google.visualization.DataView(data);
+            view.setColumns([0, 1,
+                { calc: "stringify",
+                    sourceColumn: 1,
+                    type: "string",
+                    role: "annotation" },
+                2]);
+
+            var options = {
+                title: "",
+                width: 350,
+                height: 200,
+                bar: {groupWidth: "95%"},
+                legend: { position: "none" },
+            };
+            var chart = new google.visualization.ColumnChart(document.getElementById("heyyyy"));
+            chart.draw(view, options);
+        }
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
 
 @endsection
 
+
 @section('content')
 
-                    <div class="modal fade" role="dialog" tabindex="-1" id="Lang_Modal">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                                                        <h4>{{__('message.ChangeLang')}}</h4>
-
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                            aria-hidden="true">×</span></button>
-                                </div>
-                                <div class="modal-body">
-
-                                    <div class="dropdown">
-
-                                        <a style="text-decoration: none !important" class="" href="{{ url('locale/en') }}"><i
-                                                class="fa fa-globe"></i>English</a><br>
-                                        <a style="text-decoration: none !important" class="" href="{{ url('locale/de') }}"><i
-                                                class="fa fa-globe"></i>German</a><br>
-                                        <a style="text-decoration: none !important" class="" href="{{ url('locale/al') }}"><i
-                                                class="fa fa-globe"></i>Shqip</a><br>
-
-
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-light btn-block" data-dismiss="modal" type="button">Close
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
 
 
 
-                        <div class="modal fade" role="dialog" tabindex="-1" id="avatar_modal">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4>{{__('message.ChangeAvatarPhoto')}}</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="{{route('ExhibitorOperator.UpdateAvatar')}}" method="post"
-                                              enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="form-group">
-                                                <input type="file" name="Avatar">
-                                            </div>
-                                            <button class="btn btn-success btn-block" type="submit">{{__('message.UpdateAvatar')}} <i
-                                                    class="fa fa-save" style="margin-left: 9px;"></i></button>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-light btn-block" data-dismiss="modal" type="button">
-                                            Close
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+    {{--    Hasan start here !!!!--}}
 
 
-{{--    Hasan start here !!!--}}
+    @include("Sidebars.exhibitor-sidebar")
+
+
+    <!-- Main content -->
+
 
 
 
@@ -117,102 +155,85 @@
         background-size: cover;
         height: 100%;
         ;">
-
-
-
-
-    @include("Sidebars.exhibitor-sidebar")
-
-
-
-
-
-
+    <div>
 
     <!-- Main content -->
+    <div class="content-wrapper" style="overflow-x: hidden">
 
+        <!-- Content area -->
+        <div class="content">
 
-
-
-
-
-
-        <!-- Main content -->
-        <div class="content-wrapper" style="overflow-x: hidden">
-
-            <!-- Content area -->
-            <div class="content">
-
-                <!-- Main charts -->
-                <div class="row">
-                    <div class="col-xl-12">
-                        <!-- Traffic sources -->
-                        <div class="card p-3" style="background-color:rgba(54,54,54,0.65);color: white">
-                            <div class="card-body py-0">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <table class="table table-bordered table-hover table-light text-center">
-                                            <thead>
+            <!-- Main charts -->
+            <div class="row">
+                <div class="col-xl-12">
+                    <!-- Traffic sources -->
+                    <div class="card p-3" style="background-color:rgba(54,54,54,0.65);color: white;height: 650px;">
+                        <div class="card-body py-0">
+                            <div class="row">
+                                <div class="col-12">
+                                    <table class="table table-bordered table-hover table-light text-center">
+                                        <thead>
                                             <th>
                                                 Number of Booth Visits
                                             </th>
-                                            </thead>
-                                            <tbody>
+
+                                            <th>
+                                                Number Of Online Users
+                                            </th>
+                                        </thead>
+                                        <tbody>
                                             <tr>
                                                 <td>{{\App\Statistics::where('BoothID' , $Booth->id)->count()}}</td>
+                                                <td>
+
+                                                    @if (\App\Site::first()->onlinesCountStatus)
+                                                        {{\App\Site::first()->onlinesCount}}
+                                                    @else
+                                                        Not Available Now
+                                                    @endif
+
+                                                </td>
                                             </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="col-md-6 mt-2 mt-md-5">
 
 
-                                        <p>{{__('message.NumberofBoothVisitsByProfession')}}</p>
-                                        <div class="bg-white">
-                                            <div class="chartjs-size-monitor">
-                                                <div class="chartjs-size-monitor-expand">
-                                                    <div class=""></div>
-                                                </div>
-                                                <div class="chartjs-size-monitor-shrink">
-                                                    <div class=""></div>
-                                                </div>
-                                            </div>
-                                            <canvas id="chart-area-Profession" width="440" height="220" class="chartjs-render-monitor"
-                                                    style="display: block; width: 440px; height: 220px;"></canvas>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-6 mt-2 mt-md-5">
+
+
+                                    <p>{{__('message.NumberofBoothVisitsByProfession')}}</p>
+                                    <div class="bg-white" style="height: 250px;">
+                                        <div class="w-100 text-center bg-white" style="overflow: hidden">
+                                            <div id="heyyyy"></div>
                                         </div>
-
-
-
                                     </div>
-                                    <div class="col-md-6 mt-2 mt-md-5">
-                                            <p>{{__('message.NumberofBoothVisitsPerDay')}}</p>
-                                            <div style="margin-bottom: 28px;margin-top: -10px;" class="bg-white">
-                                                <div class="chartjs-size-monitor">
-                                                    <div class="chartjs-size-monitor-expand">
-                                                        <div class=""></div>
-                                                    </div>
-                                                    <div class="chartjs-size-monitor-shrink">
-                                                        <div class=""></div>
-                                                    </div>
-                                                </div>
-                                                <canvas id="chart-area" width="440" height="220" class="chartjs-render-monitor"
-                                                        style="display: block; width: 440px; height: 220px;"></canvas>
-                                            </div>
+
+                                </div>
+                                <div class="col-md-6 mt-2 mt-md-5">
+                                    <p>{{__('message.NumberofBoothVisitsPerDay')}}</p>
+                                    <div class="container w-100">
+                                        <div class="w-100 text-center bg-white" style="overflow: hidden">
+                                            <div id="Sarah_chart_div" class="w-100"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- /traffic sources -->
                     </div>
+                    <!-- /traffic sources -->
                 </div>
-                <!-- /main charts -->
             </div>
-            <!-- /content area -->
+            <!-- /main charts -->
         </div>
-        <!-- /main content -->
+        <!-- /content area -->
+    </div>
+    <!-- /main content -->
     </div>
     <!-- /page content -->
     </body>
+
+
 
 
 
@@ -230,7 +251,7 @@
                 @endforeach
             ],
             datasets: [{
-                label: '{{__('message.Profession')}}',
+                label: 'Profession',
                 backgroundColor: [
                     '#4dc9f6',
                     '#f67019',

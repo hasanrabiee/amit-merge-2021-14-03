@@ -702,21 +702,21 @@
 
                                                 <div class="form-group">
 
-                                                    <button id="my_jafar_01" onclick="document.getElementById('my_mode').value = 'Test'"
-                                                                                               class="btn  btn-block" style="display: none; width: 300px;background-color: #a8a8a8;"
-                                                                                             onmouseover="this.style.backgroundColor='#363636'"
-                                                                                               onmouseleave="this.style.backgroundColor='#a8a8a8'"
-                                                                                         type="submit">
-                                                                                          {{__('message.Save')}} & {{__('message.SeeBoothin3D')}}
+{{--                                                    <button id="my_jafar_01" onclick="document.getElementById('my_mode').value = 'Test'"--}}
+{{--                                                                                               class="btn  btn-block" style="display: none; width: 300px;background-color: #a8a8a8;"--}}
+{{--                                                                                             onmouseover="this.style.backgroundColor='#363636'"--}}
+{{--                                                                                               onmouseleave="this.style.backgroundColor='#a8a8a8'"--}}
+{{--                                                                                         type="submit">--}}
+{{--                                                                                          {{__('message.Save')}} & {{__('message.SeeBoothin3D')}}--}}
 
-                                                                                        <i class="fa fa-check" style="margin-left: 6px;"></i>
-                                                                                      </button>
+{{--                                                                                        <i class="fa fa-check" style="margin-left: 6px;"></i>--}}
+{{--                                                                                      </button>--}}
 
-                                                    <a onclick="$('#my_jafar_01').trigger('click')" class="btn  btn-dark w-100" target="_blank"
-                                                       href="/Showroom/"
-                                                    >
-                                                        {{__('message.Save')}} & {{__('message.SeeBoothin3D')}}
-                                                    </a>
+{{--                                                    <a onclick="$('#my_jafar_01').trigger('click')" class="btn  btn-dark w-100" target="_blank"--}}
+{{--                                                       href="/Showroom/"--}}
+{{--                                                    >--}}
+{{--                                                        {{__('message.Save')}} & {{__('message.SeeBoothin3D')}}--}}
+{{--                                                    </a>--}}
                                                 </div>
                                                 <input type="hidden" name="Mode" id="my_mode">
                                                 <button onclick="document.getElementById('my_mode').value = 'Finish'"

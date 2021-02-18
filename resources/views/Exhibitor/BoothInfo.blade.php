@@ -41,72 +41,6 @@
 
 
 @section('content')
-    <div class="modal fade" role="dialog" tabindex="-1" id="Lang_Modal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4>{{__('message.ChangeLang')}}</h4>
-
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">×</span></button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="dropdown">
-
-                        <a style="text-decoration: none !important" class="" href="{{ url('locale/en') }}"><i
-                                class="fa fa-globe"></i>English</a><br>
-                        <a style="text-decoration: none !important" class="" href="{{ url('locale/de') }}"><i
-                                class="fa fa-globe"></i>German</a><br>
-                        <a style="text-decoration: none !important" class="" href="{{ url('locale/al') }}"><i
-                                class="fa fa-globe"></i>Shqip</a><br>
-
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-light btn-block" data-dismiss="modal" type="button">Close
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-        @csrf
-    </form>
-
-
-
-    <div class="modal fade" role="dialog" tabindex="-1" id="avatar_modal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4>{{__('message.ChangeAvatarPhoto')}}</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{route('Exhibitor.UpdateAvatar')}}" method="post"
-                          enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group">
-                            <input type="file" name="Avatar">
-                        </div>
-
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-success btn-block" type="submit">{{__('message.UpdateAvatar')}} <i
-                            class="fa fa-save" style="margin-left: 9px;"></i></button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 
 
 
@@ -124,15 +58,9 @@
         ;">
     <div>
 
-        <!-- Main navbar -->
+        @include("Sidebars.exhibitor-sidebar")
 
-
-    @include("Sidebars.exhibitor-sidebar")
-
-
-
-
-    <!-- Main content -->
+            <!-- Main content -->
             <div class="content-wrapper" style="overflow: hidden">
 
                 <!-- Content area -->
@@ -147,6 +75,9 @@
                             <!-- Traffic sources -->
                                 <div class="card p-3" style="background-color:rgba(54,54,54,0.65);color: white">
                                     <div class="card-body py-0">
+                                        <div class="alert alert-warning">
+                                            Note: When You Make a Change ; Please Click the Save Button to Apply Changes
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-7 font-size-lg">
                                                 <div class="row">
@@ -216,19 +147,26 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <hr>
+                                                <hr style="border: 1px solid white">
                                                 <div class="form-group mt-2">
                                                     <div class="row">
-                                                        <div class="col-12">
+                                                        <div class="col-6">
                                                             <label for="">
                                                                 Upload PDF (max:20MB)
                                                             </label>
+
                                                             <input type="file" class="form-control-file" name="PdfFile">
+                                                        </div>
+                                                        <div class="col-6 mt-md-2">
+                                                            @if ($Booth->Doc1 != null)
+                                                                <a target="_blank" href="{{$Booth->Doc1}}" class="btn btn-primary w-100">View Brochure</a>
+                                                            @endif
                                                         </div>
                                                     </div>
 
 
                                                 </div>
+                                                <hr style="border: 1px solid white">
                                                 <div class="form-group mt-2">
 
                                                     <label for="">
@@ -237,20 +175,66 @@
                                                     <input type="url" class="form-control" name="Video"
                                                            value="{{$Booth->Video}}">
                                                 </div>
-                                                <hr>
+
+                                                <div class="form-group mt-2">
+
+                                                    <label for="">
+                                                        Company Website
+                                                    </label>
+                                                    <input type="text" class="form-control" name="WebSite"
+                                                           value="{{$Booth->WebSite}}">
+                                                </div>
+
                                                 <button class="btn btn-dark w-100 mt-2" type="button"
                                                         onclick="$('#BoothColor').modal('show')">{{__('message.AdjustBoothColors')}}</button>
                                                 <button class="btn btn-info w-100 mt-2" type="button"
                                                         onclick="$('#BoothLogo').modal('show')">{{__('message.BoothLogo')}}</button>
+                                                <button class="btn btn-primary w-100 mt-2" type="button"
+                                                        onclick="$('#Social').modal('show')">Social Medias Links</button>
+
+
+
+                                                <div class="modal fade" role="dialog" tabindex="-1" id="Social">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content text-dark">
+                                                            <div class="modal-header">
+                                                                <h4>Social Media Links</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <h6>Please Add Your Company Social Media Link Which Will be ShowUp in Your Booth</h6>
+                                                                <div class="form-group">
+                                                                    <label for="">Linkedin Link:</label>
+                                                                    <input type="text" class="form-control" name="linkedin" value="{{$Booth->linkedin}}">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="">Facebook Link:</label>
+                                                                    <input type="text" class="form-control" name="facebook" value="{{$Booth->facebook}}">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="">Instagram Link:</label>
+                                                                    <input type="text" class="form-control" name="instagram" value="{{$Booth->instagram}}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+
+                                                                <p class="mb-2">
+                                                                    After Setting Your Media Links Please Click on Save Button to Apply Changes
+                                                                </p>
+
+                                                                <button class="btn btn-success w-100" data-dismiss="modal" type="button">
+                                                                    Set
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
 
 
 
-
-
-
-
-                                                <div class="modal fade" role="dialog" tabindex="-1" id="BoothLogo">
+                                                <div class="modal text-dark fade" role="dialog" tabindex="-1" id="BoothLogo">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -265,15 +249,17 @@
                                                                 <br>
 
                                                                 <div class="form-group">
-                                                                    <p class="text-left">{{__('message.BoothLogo')}}<br></p>
                                                                     <input class="form-control" type="file" name="Logo">
                                                                 </div>
 
 
                                                             </div>
                                                             <div class="modal-footer">
+                                                                <p class="mb-2">
+                                                                    After Selecting Your Logo Please Click On Save Button To Apply Changes
+                                                                </p>
                                                                 <button class="btn btn-success w-100" data-dismiss="modal" type="button">
-                                                                    Save
+                                                                    Select
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -315,9 +301,12 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button class="btn btn-light btn-block"
+                                                                <p class="text-dark mb-2">
+                                                                    After Selecting Your Colors Please Click On Save Button To Apply Changes
+                                                                </p>
+                                                                <button class="btn btn-success btn-block"
                                                                         data-dismiss="modal" type="button">
-                                                                    {{__('message.Close')}}
+                                                                    Select
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -341,6 +330,9 @@
                                                         </p>
                                                         <p>
                                                             {{__('message.Booth')}} Type: {{$Booth->Type}}
+                                                        </p>
+                                                        <p>
+                                                            {{__('message.Booth')}} Number: {{$Booth->Position}}
                                                         </p>
                                                     </div>
                                                     <div class="col-md-6">

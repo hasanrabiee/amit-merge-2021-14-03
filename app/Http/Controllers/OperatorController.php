@@ -78,9 +78,16 @@ class OperatorController extends Controller
             ]);
             $User->markEmailAsVerified();
         }
-        $Invite = Invitation::where('token' , $request->token)->first();
-        $Invite->delete();
+        $Invite = Invitation::where('token' , $request->token)->update([
+            "token"=>"null"
+        ]);
+        if ($Invite == null || empty($Invite) || $Invite == "") {
+            abort(404);
+        }
+
+
+
         Auth::loginUsingId($User->id);
-            return redirect()->route('login');
+        return redirect()->route('login');
     }
 }

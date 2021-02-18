@@ -35,76 +35,58 @@
 @endsection
 @section('content')
 
-                    <div class="modal fade" role="dialog" tabindex="-1" id="Lang_Modal">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4>{{__('message.ChangeLang')}}</h4>
-
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                            aria-hidden="true">×</span></button>
-                                </div>
-                                <div class="modal-body">
-
-                                    <div class="dropdown">
-
-                                        <a style="text-decoration: none !important" class=""
-                                           href="{{ url('locale/en') }}"><i
-                                                class="fa fa-globe"></i>English</a><br>
-                                        <a style="text-decoration: none !important" class=""
-                                           href="{{ url('locale/de') }}"><i
-                                                class="fa fa-globe"></i>German</a><br>
-                                        <a style="text-decoration: none !important" class=""
-                                           href="{{ url('locale/al') }}"><i
-                                                class="fa fa-globe"></i>Shqip</a><br>
-
-
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-light btn-block" data-dismiss="modal" type="button">Close
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
 
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
+{{--Modals--}}
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="filter">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="text-dark">Please Choose Your Items Which You Like To Be Filtered</h4>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
 
 
 
-                        <div class="modal fade" role="dialog" tabindex="-1" id="avatar_modal">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4>{{__('message.ChangeAvatarPhoto')}}</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="{{route('Exhibitor.UpdateAvatar')}}" method="post"
-                                              enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="form-group">
-                                                <input type="file" name="Avatar">
-                                            </div>
-                                            <button class="btn btn-success btn-block"
-                                                    type="submit">{{__('message.UpdateAvatar')}} <i
-                                                    class="fa fa-save" style="margin-left: 9px;"></i></button>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-light btn-block" data-dismiss="modal" type="button">
-                                            {{__('message.Close')}}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                    <h6>
+                        Gender
+                    </h6>
+                    @foreach(explode(',' , \App\Site::find(1)->VisitorGender) as $Gender)
+                        <a href="?gender={{$Gender}}" class="btn btn-dark w-50 mb-2 btn-sm">
+                            {{$Gender}}
+                        </a>
+                    @endforeach
+                    <h6>
+                        Profession
+                    </h6>
+                    @foreach(explode(',' , \App\Site::find(1)->VisitorProfession) as $profession)
+                        <a href="?profession={{$profession}}" class="btn btn-dark w-50 mb-2 btn-sm">
+                            {{$profession}}
+                        </a>
+                    @endforeach
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-light btn-block"
+                            data-dismiss="modal" type="button">
+                        {{__('message.Close')}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{{--    /Modals--}}
+
 
 
 {{--    Hasan start here !!!!--}}
@@ -120,15 +102,10 @@
     background-size: cover;
     height: 100%;
     ;">
+<div>
 
-
-
-
-@include("Sidebars.exhibitor-sidebar")
-
-
-
-<!-- Main content -->
+    @include("Sidebars.exhibitor-sidebar")
+        <!-- Main content -->
         <div class="content-wrapper" style="overflow-x: hidden">
 
             <!-- Content area -->
@@ -146,38 +123,94 @@
 
 
                                         <form action="{{route("Exhibitor.Inbox")}}" method="GET" class="w-100">
-                                        <div class="input-group mt-2 mb-2">
+                                            <button class="btn btn-dark w-100 mt-2" type="button" onclick="$('#filter').modal('show')">Click to Choose Your Filter</button>
+                                            <div class="input-group mt-2 mb-2">
 
-                                            <input name="SearchTerm" type="text" class="form-control" placeholder="Search...">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-success" type="submit">Search</button>
-                                                <button  class="btn shadow-none" type="button"
-                                                         style=""><i id="visiotr_refresh"
-                                                                                                                                        class="fa fa-cog text-dark"
-                                                                                                                                        style="font-size: 20px;"></i></button>
+                                                <input name="SearchTerm" type="text" class="form-control" placeholder="Search...">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-success" type="submit">Search</button>
+                                                    <button  class="btn shadow-none" type="button"
+                                                             style=""><i id="visiotr_refresh" class="fa fa-cog text-dark"
+                                                                         style="font-size: 20px;"></i></button>
+                                                </div>
+
                                             </div>
-
-                                        </div>
-
                                         </form>
 
 
 
                                         <div class="row">
-                                            <div class="col-12 scroll_box"  id="Users" style="height: 450px !important;overflow-y: scroll" onscroll="scroll_status = true">
+                                            <div class="col-12 scroll_box"  id="Users" style="height: 500px !important;overflow-y: auto" onscroll="scroll_status = true">
                                                 @include("Exhibitor.user-list-data")
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-7">
-                                        <p class="text-left">
-                                            <strong>{{__('message.Messages')}}:
-                                                @if(request()->UserID)
-                                                    {{\App\User::find(request()->UserID)->UserName}}
-                                                @endif
-                                            </strong>
-                                        </p>
+
+                                    @if (request("UserID"))
+
+                                        <div class="col-md-4" style="border: 2px solid white;border-radius: 5px;height: 600px;overflow-y: auto">
+                                            <h3 class="text-white mb-2">Visitor Information</h3>
+                                            <div class="text-center">
+                                                <img src="{{\App\User::find(request("UserID"))->Image}}" style="width: 65px;margin: 0 auto"
+                                                     class="text-center">
+
+                                            </div>
+                                            <p>{{__('message.UserName')}}: {{\App\User::find(request("UserID"))->UserName}}</p>
+                                            <p>{{__('message.fn')}}: {{\App\User::find(request("UserID"))->FirstName}}</p>
+                                            <p>{{__('message.ln')}}: {{\App\User::find(request("UserID"))->LastName}}</p>
+                                            <p>{{__('message.Profession')}}: {{\App\User::find(request("UserID"))->Profession}}</p>
+                                            <p>{{__('message.Gender')}}: {{\App\User::find(request("UserID"))->Gender}}</p>
+
+                                            @if (\App\User::find(request("UserID"))->education != null)
+                                                <p>
+                                                    Education : {{\App\User::find(request("UserID"))->education}}
+                                                </p>
+                                            @endif
+
+                                            @if (\App\User::find(request("UserID"))->countryStudy != null)
+                                                <p>
+                                                    Country Study : {{\App\User::find(request("UserID"))->countryStudy}}
+                                                </p>
+                                            @endif
+
+                                            @if (\App\User::find(request("UserID"))->InterestedDegree != null)
+                                                <p>
+                                                    Interested Degree : {{\App\User::find(request("UserID"))->InterestedDegree}}
+                                                </p>
+                                            @endif
+
+                                            @if (\App\User::find(request("UserID"))->languageOfStudy != null)
+                                                <p>
+                                                    Language Of Study : {{\App\User::find(request("UserID"))->languageOfStudy}}
+                                                </p>
+                                            @endif
+
+                                            @if (\App\User::find(request("UserID"))->onlineDegreeProgram != null)
+                                                <p>
+                                                    Online Degree Program : {{\App\User::find(request("UserID"))->onlineDegreeProgram}}
+                                                </p>
+                                            @endif
+
+                                            @if (\App\User::find(request("UserID"))->interestedScholarShip != null)
+                                                <p>
+                                                    Interested Scholar Ship : {{\App\User::find(request("UserID"))->onlineDegreeProgram}}
+                                                </p>
+                                            @endif
+
+                                            <p>
+                                            <p class="text-left">Download CV : <a target="_blank" class="btn btn-primary"
+                                                                                  href="{{\App\User::find(request("UserID"))->resume}}">Download</a>
+                                            </p>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <p class="text-left">
+                                                <strong>{{__('message.Messages')}}:
+                                                    @if(request()->UserID)
+                                                        {{\App\User::find(request()->UserID)->UserName}}
+                                                    @endif
+                                                </strong>
+                                            </p>
 
                                             <div>
                                                 <div class="scroll_box ChatsDiv" id="ChatsDiv" style="height: 460px;">
@@ -206,32 +239,22 @@
                                                         <button class="btn btn-success" type="button" onclick="sendMessage()"> {{__('message.Send')}}</button>
                                                     </div>
                                                 </div>
-
-
-
-{{--                                                <input class="border rounded border-dark form-control d-inline" type="text"--}}
-{{--                                                       style="margin-right: 17px;width: 208px;"--}}
-{{--                                                       id="myInput"--}}
-{{--                                                       name="Text" value="{{old('Text')}}">--}}
-{{--                                                <button class="btn btn-success d-inline" onclick="sendMessage()"--}}
-{{--                                                        style="height: 36px;width: 103px;">--}}
-{{--                                                    {{__('message.Send')}}--}}
-{{--                                                </button>--}}
                                             </div>
 
-                                        <div class="mt-3">
-                                            <button
-                                                @if(\Illuminate\Support\Facades\Auth::user()->ChatMode == 'Available')  class="btn btn-dark"
-                                                disabled @else class="btn btn-success" @endif><a
-                                                    href="@if(\Illuminate\Support\Facades\Auth::user()->ChatMode != 'Available') ?Mode=Available @else #  @endif"
-                                                    class="text-light">{{__('message.ImAvailable')}}</a></button>
-                                            <button @if(\Illuminate\Support\Facades\Auth::user()->ChatMode == 'Busy')   class="btn btn-dark"
-                                                    disabled @else class="btn btn-danger" @endif><a
-                                                    href=" @if(\Illuminate\Support\Facades\Auth::user()->ChatMode != 'Busy' ) ?Mode=Busy @else #  @endif"
-                                                    class="text-light">{{__('message.ImBusy')}}</a></button>
-                                        </div>
+                                            <div class="mt-3">
+                                                <button
+                                                    @if(\Illuminate\Support\Facades\Auth::user()->ChatMode == 'Available')  class="btn btn-dark"
+                                                    disabled @else class="btn btn-success" @endif><a
+                                                        href="@if(\Illuminate\Support\Facades\Auth::user()->ChatMode != 'Available') ?Mode=Available @else #  @endif"
+                                                        class="text-light">{{__('message.ImAvailable')}}</a></button>
+                                                <button @if(\Illuminate\Support\Facades\Auth::user()->ChatMode == 'Busy')   class="btn btn-dark"
+                                                        disabled @else class="btn btn-danger" @endif><a
+                                                        href=" @if(\Illuminate\Support\Facades\Auth::user()->ChatMode != 'Busy' ) ?Mode=Busy @else #  @endif"
+                                                        class="text-light">{{__('message.ImBusy')}}</a></button>
+                                            </div>
 
-                                    </div>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -363,10 +386,13 @@
         function sendMessage() {
 
 
+
             new_message = myInput.value
             myInput.value = ''
             const BoothID = {{$Booth->id}}
             const UserID = {{request()->UserID}};
+            const Status= 'New';
+            console.log(Status)
             const url = '{{route('Exhibitor.InboxPost')}}';
             $.ajaxSetup({
                 headers: {
@@ -380,8 +406,10 @@
                     Text: new_message,
                     BoothID: BoothID,
                     UserID: UserID,
+                    Status: Status
                 },
                 success: function (data) {
+                    console.log(data)
                     $(".ChatsDiv").empty();
                     if (data["Chat"].length <= 0){
                         var fieldhtml = '{{__('message.NoMessageAvailable')}}';
@@ -390,15 +418,6 @@
                     }else {
                         for (var i = 0; i < data["Chat"].length; i++) {
                             if (data["Chat"][i]["Sender"] === 'Exhibitor') {
-
-
-                                // <div class="col-8 bg-success mt-2 ml-3" style="border-radius: 5px;">
-                                //     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, laudantium, voluptates. Adipisci aspernatur at commodi dolor et hic itaque odio provident quae, unde? Distinctio, est explicabo incidunt pariatur soluta totam.
-                                // </div>
-                                // <div class="col-3"></div>
-
-
-
                                 var fieldHTML = '<div class="row"><div class="col-3"></div><div class="col-8 bg-success mt-2 ml-3" style="border-radius: 5px;"><p class="nonoverflow">' + data['Chat'][i]['Text'] + '</p></div></div>';
                             } else {
                                 var fieldHTML = '<div class="row"><div class="col-8 bg-primary mt-2 ml-3" style="border-radius: 5px;"><p class="nonoverflow">' + data['Chat'][i]['Text'] + '</p></div><div class="col-3"></div></div>';
@@ -436,9 +455,17 @@
                     }else {
                         for (var i = 0; i < data["Chat"].length; i++) {
                             if (data["Chat"][i]["Sender"] === 'Exhibitor') {
-                                var fieldHTML = '<div class="row"><div class="col-3"></div><div class="col-8 bg-success mt-2 ml-3 p-1" style="border-radius: 5px;"><p class="">' + data['Chat'][i]['Text'] + '</p></div></div>';
+                                let time=data['Chat'][i]['created_at'];
+                                let timeEdited = new Date(time);
+                                timeEdited =timeEdited.toTimeString()
+                                var sp = timeEdited.split(" ")
+                                var fieldHTML = '<div class="row"><div class="col-3"></div><div class="col-8 bg-success mt-2 ml-3 p-1" style="border-radius: 5px;"><p class="" style="position: relative">' + data['Chat'][i]['Text'] + '<br><span style="position: absolute;right: 10px;bottom:-12px;font-size: 11px;">'+ sp[0] + '</span></p></div></div>';
                             } else {
-                                var fieldHTML = '<div class="row"><div class="col-8 bg-primary mt-2 ml-3 p-1" style="border-radius: 5px;"><p class="">' + data['Chat'][i]['Text'] + '</p></div><div class="col-3"></div></div>';
+                                let time=data['Chat'][i]['created_at'];
+                                let timeEdited = new Date(time);
+                                timeEdited =timeEdited.toTimeString()
+                                var sp = timeEdited.split(" ")
+                                var fieldHTML = '<div class="row"><div class="col-8 bg-primary mt-2 ml-3 p-1" style="border-radius: 5px;"><p class="" style="position: relative">' + data['Chat'][i]['Text'] + '<br><span style="position: absolute;right: 10px;bottom:-12px;font-size: 11px;">'+ sp[0] + '</span></p></div><div class="col-3"></div></div>';
                             }
                             $('.ChatsDiv').append(fieldHTML); //Add field html
                             var objDiv = document.getElementById("ChatsDiv");
@@ -449,9 +476,6 @@
         }
 
         @endif
-
-
-
 
 
 

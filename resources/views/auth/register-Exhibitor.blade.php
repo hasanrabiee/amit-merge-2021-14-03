@@ -10,23 +10,82 @@
 
 
 
+    <div class="modal fade" role="dialog" tabindex="-1" id="myModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>{{__('message.TAC')}}</h4>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="scroll_box">
+                        <p class="text-dark">
+                            <?php
 
+                                echo \App\Site::find(1)->Terms
+
+                            ?>
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-block" data-dismiss="modal"
+                            type="button">{{__('message.Close')}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="h-100 w-100 overflow" style="width:100% !important ; height:100% !important;background-size: cover;background-repeat:no-repeat;background-image: url(@if(\App\Site::find(1)->SigninBackground != null) {{asset(\App\Site::find(1)->SigninBackground)}}   @else {{asset('assets/img/poster.jpg')}}@endif">
 
     <!-- Page content -->
-    <div class="row mt-md-3">
-        <div class="col-9 col-md-10">
+        <div class="row mt-md-3">
+            <div class="col-8 col-md-9">
+            </div>
+            <div class="col-4 col-md-3">
+
+
+                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#help">Help</button>
+
+                <!-- Modal -->
+                <div id="help" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">how to Fill the Information Fields</h5><br>
+                            </div>
+                            <div class="modal-body text-center">
+                                <div class="text-left mb-2">
+                                    <a href="{{\App\Site::first()->exRegistrationPDF}}" class="btn text-left btn-primary" target="_blank">PDF Guide</a>
+                                </div>
+                                <iframe width="420" height="315"
+                                        src="{{\App\Site::first()->exRegistrationVideo}}">
+                                </iframe>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <a class="" href="{{ url('locale/en') }}"><i
+                        class="ml-2"></i>En</a>
+                <a class="" href="{{ url('locale/de') }}"><i
+                        class="ml-2"></i>Ge</a>
+                <a class="" href="{{ url('locale/al') }}"><i
+                        class="ml-2"></i>Al</a>
+                <br>
+                <span style="font-size: 12px;border-radius: 5px;opacity: 0.7" class="bg-dark p-1 text-white">
+                    Last Activity: {{\Carbon\Carbon::now()->toDayDateTimeString()}}
+                </span>
+            </div>
         </div>
-        <div class="col-3 col-md-2">
-            <a class="" href="{{ url('locale/en') }}"><i
-                    class="ml-2"></i>En</a>
-            <a class="" href="{{ url('locale/de') }}"><i
-                    class="ml-2"></i>Ge</a>
-            <a class="" href="{{ url('locale/al') }}"><i
-                    class="ml-2"></i>Al</a>
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8 mt-md-5">
@@ -39,8 +98,9 @@
 
                         <!-- Main charts -->
                         <div class="row">
-                            <div class="col-xl-12 mt-md-5">
+                            <div class="col-xl-12">
                                 <!-- Traffic sources -->
+                                <h2 class="stroke-title">Exhibitor Registration</h2>
 
 
                                 <div class="card" style="background-color:rgba(54,54,54,0.65);color: white;">
@@ -58,9 +118,11 @@
                                             @csrf
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <h1>Welcome</h1>
+                                                    <h1>
+                                                        {{\App\Site::first()->ExhibitorWelcome}}
+                                                    </h1>
                                                     <p>
-                                                        The Purpose Of This Platform is Making a Virtual Environment Looking Like The Real World. According to The New Situation Of The World Since The Existence Of Covid-19 And The Protocol For Social Distancing, Holding Exhibitions has a High Risk for People's Health.
+                                                        {{\App\Site::first()->ExhibitorAbout}}
                                                     </p>
                                                 </div>
                                                 <div class="col-md-8">
@@ -72,18 +134,37 @@
                                                                        required="" name="CompanyName"
                                                                        value="{{old('CompanyName')}}">
                                                             </div>
+
+
                                                             <div class="form-group">
                                                                 <input class="form-control" type="text"
                                                                        placeholder="{{__('message.Company')}} {{__('message.Representative')}} *"
                                                                        required=""
                                                                        name="Representative"
-                                                                       value="{{old('Representative')}}">                                                </div>
-                                                            <div class="form-group">
-                                                                <input class="form-control" type="text"
-                                                                       placeholder="{{__('message.Position')}}"
-                                                                       name="PositionUser"
-                                                                       value="{{old('PositionUser')}}">
+                                                                       value="{{old('Representative')}}">
                                                             </div>
+
+
+                                                            @if (\App\ExhibitorForms::first()->mainCompany == "active")
+                                                                <div class="form-group">
+                                                                    <input class="form-control" type="text"
+                                                                           placeholder="Main Company"
+                                                                           name="mainCompany"
+                                                                           value="{{old('mainCompany')}}">
+                                                                </div>
+                                                            @endif
+
+
+                                                            @if (\App\ExhibitorForms::first()->position == "active")
+                                                                <div class="form-group">
+                                                                    <input class="form-control" type="text"
+                                                                           placeholder="{{__('message.Position')}}"
+                                                                           name="PositionUser"
+                                                                           value="{{old('PositionUser')}}">
+                                                                </div>
+                                                            @endif
+
+
 
                                                             <div class="form-group">
                                                                 <input class="form-control" type="email"
@@ -366,32 +447,61 @@
                                                                     <option value="Zambia">Zambia</option>
                                                                     <option value="Zimbabwe">Zimbabwe</option>
                                                                 </select>
-
-
                                                             </div>
+
+
+
                                                             <div class="form-group">
-
-
                                                                 <input class="form-control" type="text"
                                                                        placeholder="{{__('message.Select')}} {{__('message.City')}}  *"
                                                                        required=""
                                                                        style="background-color: rgb(255,255,255);" name="City"
                                                                        onkeypress="return /[a-z]/i.test(event.key)" id="City"
                                                                        value="{{old('City')}}">
-
                                                             </div>
+
+
+
+                                                            @if (\App\ExhibitorForms::first()->website == "active")
+
                                                             <div class="form-group">
-
-
                                                                 <input class="form-control" maxlength="35" type="text"
                                                                        placeholder="{{__('message.Your')}} {{__('message.Company')}} {{__('message.WebSite')}}"
-                                                                       name="WebSite" id="WebSite"
+                                                                       name="WebSite"
                                                                        value="{{old('WebSite')}}">
-
                                                             </div>
+
+                                                            @endif
+
+                                                            @if (\App\ExhibitorForms::first()->companyAddress == "active")
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" type="text"
+                                                                       placeholder="Company Address"
+                                                                       name="companyAddress"
+                                                                       value="{{old('companyAddress')}}">
+                                                            </div>
+
+                                                            @endif
+
+                                                            @if (\App\ExhibitorForms::first()->zipCode == "active")
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" type="number"
+                                                                       placeholder="ZIP Code"
+                                                                       name="zipCode"
+                                                                       value="{{old('zipCode')}}">
+                                                            </div>
+
+                                                            @endif
+
+
+
+
+
                                                             <div class="form-group">
                                                                 <div class="row">
-                                                                    <div class="col-4">
+                                                                    <div class="col-4 mt-0 pt-0">
                                                                         <select class="form-control"
                                                                                 name="CountryCode" required="">
 
@@ -406,7 +516,7 @@
 
 
 
-                                                                            <option data-countryCode="DE" value="49">Germany (+49)</option>
+                                                                            <option data-countryCode="DE" value="+49">Germany (+49)</option>
                                                                             <option data-countryCode="GB" value="44">UK (+44)</option>
                                                                             <option data-countryCode="US" value="1">USA (+1)</option>
                                                                             <optgroup label="Other countries">
@@ -417,7 +527,7 @@
                                                                                 <option data-countryCode="AG" value="1268">Antigua &amp; Barbuda (+1268)
                                                                                 </option>
                                                                                 <option data-countryCode="AR" value="54">Argentina (+54)</option>
-                                                                                <option data-countryCode="ALB" value="355">Albania (+355)</option>
+                                                                                <option data-countryCode="ALB" value="+355">Albania (+355)</option>
                                                                                 <option data-countryCode="AM" value="374">Armenia (+374)</option>
                                                                                 <option data-countryCode="AW" value="297">Aruba (+297)</option>
                                                                                 <option data-countryCode="AU" value="61">Australia (+61)</option>
@@ -513,7 +623,7 @@
                                                                                 <option data-countryCode="KI" value="686">Kiribati (+686)</option>
                                                                                 <option data-countryCode="KP" value="850">Korea North (+850)</option>
                                                                                 <option data-countryCode="KR" value="82">Korea South (+82)</option>
-                                                                                <option data-countryCode="KS" value="383">Kosovo (+383)</option>
+                                                                                <option data-countryCode="KS" value="+383">Kosovo (+383)</option>
                                                                                 <option data-countryCode="KW" value="965">Kuwait (+965)</option>
                                                                                 <option data-countryCode="KG" value="996">Kyrgyzstan (+996)</option>
                                                                                 <option data-countryCode="LA" value="856">Laos (+856)</option>
@@ -634,60 +744,85 @@
                                                                                 <option data-countryCode="YE" value="967">Yemen (South)(+967)</option>
                                                                                 <option data-countryCode="ZM" value="260">Zambia (+260)</option>
                                                                                 <option data-countryCode="ZW" value="263">Zimbabwe (+263)</option>
+                                                                                <option data-countryCode="ZW" value="+995">Georgia (+995)</option>
                                                                             </optgroup>
                                                                         </select>
                                                                     </div>
-                                                                    <div class="col-8">
+                                                                    <div class="col-8 mt-0 pt-0">
                                                                         <div class="form-group">
-                                                                            <input class="form-control" type="number" placeholder="Phone Number *" name="PhoneNumber" id="PhoneNumber"
+                                                                            <input class="form-control" type="number" placeholder="Mobile Number *" name="PhoneNumber" id="PhoneNumber"
                                                                                    value="{{old('PhoneNumber')}}">
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                            </div>
+
+
+                                                            @if (\App\ExhibitorForms::first()->mob == "active")
+
+                                                                <div class="form-group mt-n3">
+                                                                    <input class="form-control" type="number"
+                                                                           placeholder="Mobile"
+                                                                           name="phone" id=""
+                                                                           value="{{old('phone')}}">
+                                                                </div>
+
+                                                            @endif
+
+
+
+
+
+                                                            @if (\App\ExhibitorForms::first()->fax == "active")
+
+                                                            <div class="form-group">
+                                                                <input class="form-control" type="number"
+                                                                       placeholder="Fax"
+                                                                       name="fax" id="fax"
+                                                                       value="{{old('fax')}}">
+                                                            </div>
+
+                                                            @endif
+
+                                                            @if (\App\ExhibitorForms::first()->institution == "active")
+
                                                                 <div class="form-group">
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="formCheck-1"
-                                                                               required="">
-                                                                        <label
-                                                                            class="custom-control-label" for="formCheck-1">
-                                                                            <a style="color:white;text-decoration:none" role="button"
-                                                                               data-toggle="modal"
-                                                                               href="#myModal">{{__('message.TACI')}}</a>
+                                                                    <select class="form-control mb-2"  name="institution">
+                                                                        <option selected disabled>Select Institution</option>
+
+                                                                        @foreach(explode(',' , \App\ExhibitorForms::find(1)->institutionItems) as $institutionItem)
+                                                                            <option value="{{$institutionItem}}" @if(old('$institutionItem') == $institutionItem) selected @endif>{{$institutionItem}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+
+                                                            @endif
 
 
-                                                                        </label></div>
+                                                            @if (\App\ExhibitorForms::first()->institutionEmail == "active")
 
+                                                                <div class="form-group">
+                                                                    <input class="form-control" type="email"
+                                                                           placeholder="Institution Email"
+                                                                           name="institutionEmail"
+                                                                           value="{{old('institutionEmail')}}">
+                                                                </div>
 
+                                                            @endif
 
-                                                                    <div class="modal fade text-dark" role="dialog" tabindex="-1" id="myModal">
-                                                                        <div class="modal-dialog" role="document">
-                                                                            <div class="modal-content">
-                                                                                <div class="modal-header">
-                                                                                    <h4>{{__('message.TAC')}}</h4>
-                                                                                    <button type="button" class="close" data-dismiss="modal"
-                                                                                            aria-label="Close"><span aria-hidden="true">×</span>
-                                                                                    </button>
-                                                                                </div>
-                                                                                <div class="modal-body">
-                                                                                    <div class="scroll_box">
-                                                                                        <p>
-                                                                                            {{\App\Site::find(1)->Terms}}
-                                                                                        </p>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="modal-footer">
-                                                                                    <button class="btn btn-success btn-block" data-dismiss="modal"
-                                                                                            type="button">{{__('message.Close')}}
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-
-
+                                                            <div class="form-group">
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" id="formCheck-1"
+                                                                           required="">
+                                                                    <label
+                                                                        class="custom-control-label" for="formCheck-1">
+                                                                        <a style="color:white;text-decoration:none" role="button"
+                                                                           data-toggle="modal"
+                                                                           href="#myModal">{{__('message.TACI')}}</a>
+                                                                    </label>
                                                                 </div>
                                                             </div>
+
                                                         </div>
 
                                                     </div>

@@ -1,13 +1,14 @@
 @extends('layouts.app')
 @section('content')
 
+
     <div class="container-fluid mt-3">
 
         <div class="row">
             <div class="col-md-4">
-               <h3>Conference Abstract</h3>
+                <h3>Conference Abstract</h3>
                 <p>
-{{$conference->abstract}}
+                    {{$conference->abstract}}
                 </p>
             </div>
             <div class="col-md-8 p-2" style="background-color:#d0d0d0;height: 768px !important;">
@@ -20,7 +21,7 @@
 
                             <h5>
 
-                            <img src="{{$speaker->avatar}}" alt="" style="width: 40px;height: 40px;border-radius: 50%;margin-right: 10px;">{{$speaker->Name}}
+                                <img src="{{$speaker->avatar}}" alt="" style="width: 40px;height: 40px;border-radius: 50%;margin-right: 10px;">{{$speaker->Name}}
 
                                 <a href="{{$speaker->pdf}}">
 
@@ -28,15 +29,15 @@
 
                                 </a>
 
-                        </h5>
+                            </h5>
 
 
 
 
 
-                        <p>
-{{$speaker->abstract}}
-                        </p>
+                            <p>
+                                {{$speaker->abstract}}
+                            </p>
 
                             <hr>
 

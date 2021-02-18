@@ -23,21 +23,31 @@ Route::group(['prefix' => 'v1' , 'as' => 'Api.'],function (){
         Route::get('Chat' , 'ApiController@ChatGet');
         Route::get('ChatAdmin' , 'ApiController@ChatGetAdmin');
 
+        //hasan start here
 
+        Route::get("newChat","ApiController@newChat");
+        Route::get("newChatAdmin","ApiController@newChatAdmin");
+        Route::get("newChatDestroy","ApiController@newChatDestroy");
+        Route::get("newChatAdminDestroy","ApiController@newChatAdminDestroy");
+        Route::get("emailSender","ApiController@emailSender");
+
+
+        //hasan end here
 
         Route::get('ChatAdminStore' , 'ApiController@ChatStoreAdmin');
     });
     Route::group(['prefix' => 'AuditoriumChat'] , function (){
         Route::get('Get' , 'ApiController@AudituriumChatGet')->name('AudituriumGet');
         Route::post('Post' , 'ApiController@AudituriumChat')->name('AudituriumPost');
-           });
+    });
     Route::group(['prefix' => 'Lounge'] , function (){
         Route::get('Get/{id?}' , 'ApiController@LoungeGet')->name('LoungeGet');
         Route::post('Post' , 'ApiController@LoungePost')->name('LoungePost');
         Route::get('Count/{id?}' , 'ApiController@LoungeCount')->name('LoungeCount');
-           });
+    });
     Route::get('WhatIsUserName/{user_id?}' , 'ApiController@WhatIsUserName')->name('WhatIsUserName');
-    Route::match(['GET', 'POST'],'Login' , 'ApiController@Login');
+    Route::post('Login' , 'ApiController@Login');
+    Route::post('LoginShowroom' , 'ApiController@LoginShowroom');
     Route::get('Images' , 'ApiController@Images');
     Route::get('test' , 'WebController@test');
     Route::get('UserDetails/{ID}' , 'ApiController@UserDetails');
@@ -48,6 +58,19 @@ Route::group(['prefix' => 'v1' , 'as' => 'Api.'],function (){
     Route::get('hall/full/{HallName}' , 'ApiController@HallIsFull');
     Route::get('booth/occupied/{HallName}/{Position}' , 'ApiController@PositionIsAvailable');
     Route::get('JobDetails/{JobID}' , 'ApiController@JobDetails');
+
+    //hasan start here
+
+    Route::get("BoothOnline/{id}","ApiController@BoothOnline");
+    Route::get("autoLogin","ApiController@autoLogin");
+    Route::get("ios/rotation1","ApiController@rotation1");
+    Route::get("ios/rotation2","ApiController@rotation2");
+    Route::get("ios/rotation3","ApiController@rotation3");
+    Route::get("ios/rotation4","ApiController@rotation4");
+    Route::get("ios/rotation5","ApiController@rotation5");
+    Route::get("ios/rotation6","ApiController@rotation6");
+    //hasan end here
+
 });
 
 

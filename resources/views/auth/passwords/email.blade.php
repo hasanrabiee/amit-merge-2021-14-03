@@ -39,6 +39,11 @@
                     </div>
                     <div class="form-group">
                         <div class="form-group">
+                            <a href="{{route("PassChangeViaMobile")}}">
+                                <button class="btn btn-secondary btn-block mb-2" type="button"
+                                        style="background-color: #6c757d !important; border-color: #6c757d !important; color: rgb(255,255,255);">Recover Password Via phoneNumber<i
+                                        class="fa fa-arrow-circle-left" style="margin-left: 5px;"></i></button>
+                            </a>
                             <a href="{{route('login')}}">
                                 <button class="btn btn-secondary btn-block" type="button"
                                         style="background-color: #6c757d !important; border-color: #6c757d !important; color: rgb(255,255,255);">{{__('message.GOBACKLOGIN')}}<i

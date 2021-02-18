@@ -1,237 +1,319 @@
 @extends('layouts.Panel')
-@section('content')
-    <header class="d-flex masthead"
-            style="background-image: url({{\App\Site::AdminBackground()}});padding: 45px;padding-top: 0px;padding-right: 0px;padding-left: 0px;">
-        <div class="container my-auto text-center">
-            <h3 class="mb-5"></h3>
-                      <div class="pull-right d-inline m-0">
+@section("Head")
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/style-icon.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/bootstrap.min.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/bootstrap-limitless.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/layout.min.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/components.min.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/colors.min.css")}}" rel="stylesheet" type="text/css">
+    <link href="{{asset("css/hasan-custom.css")}}" rel="stylesheet" type="text/css">
+
+    <!-- /global stylesheets -->
+
+    <!-- Core JS files -->
+    <script src="{{asset("js/jquery.min.js")}}"></script>
+    <script src="{{asset("js/bootstrap.bundler.js")}}"></script>
+    <script src="{{asset("js/blockui.min.js")}}"></script>
+    <!-- /core JS files -->
+
+    <!-- Theme JS files -->
+    <script src="{{asset("js/d3.min.js")}}"></script>
+    <script src="{{asset("js/d3tooltip.js")}}"></script>
+    <script src="{{asset("js/switchery.min.js")}}"></script>
+    <script src="{{asset("js/momment.min.js")}}"></script>
+    <script src="{{asset("js/app2.js")}}"></script>
+    <script src="{{asset("js/dashboard.js")}}"></script>
+    <script src="https://use.fontawesome.com/fd423b8d2f.js"></script>
+    <!-- /theme JS files -->
+
+    <script src="https://cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
 
 
-                @if(\App\Site::find(1)->Logo1)
-                    <img class="float-right" src="{{\App\Site::find(1)->Logo1}}"
-                         style="width: 113px;margin-right: 34px;">
-                @endif
-                @if(\App\Site::find(1)->Logo2)
-                    <img class="float-right" src="{{\App\Site::find(1)->Logo2}}"
-                         style="width: 113px;margin-right: 34px;">
-                @endif
-                @if(\App\Site::find(1)->Logo3)
-                    <img class="float-right" src="{{\App\Site::find(1)->Logo3}}"
-                         style="width: 113px;margin-right: 34px;">
-                @endif
+@endsection
+<!-- Page content -->
 
-            </div>
 
-            <div style="width: 354px;height: 45px;background-color: #525252; margin-top: 70px" class="rounded">
+<body style="background: url('{{\App\Site::AdminBackground()}}') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100%;
+    ;">
 
-                <div class="pull-right p-1">
-                    <button type="button" data-toggle="tooltip" data-placement="top" title="Change Language" onclick="$('#Lang_Modal').modal('show')" class="btn btn-warning">
-                        <i class="fa fa-globe"></i>
-                    </button>
-                    <div class="modal fade" role="dialog" tabindex="-1" id="Lang_Modal">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                                                        <h4>{{__('message.ChangeLang')}}</h4>
 
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                            aria-hidden="true">×</span></button>
+<div class="page-content pt-0 mt-3">
+
+@include("Sidebars.admin-sidebar")
+
+<!-- Main content -->
+    <div class="content-wrapper">
+
+        <!-- Content area -->
+        <div class="content">
+
+            <!-- Main charts -->
+            <div class="row">
+                <div class="col-xl-12">
+                    <!-- Traffic sources -->
+                    <div class="card card-admin" style="background-color:rgba(168,168,168,0.5);color: white;">
+                        <div class="card-header header-elements-inline">
+
+                            <div class="header-elements">
+                            </div>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="text-center w-100 p-1" style="border-radius: 5px;background-color:#0f151d;">
+                                        <h3 style="margin-top: 10px;">Create New Group</h3>
+                                    </div>
                                 </div>
-                                <div class="modal-body">
+                            </div>
+                            <form action="{{route('Admin.CreateLounge')}}" method="post" class="w-100 mt-2">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="input-group mt-2 mb-2">
+                                            <input type="text" class="form-control" placeholder="Group Name" name="Name">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-success" type="submit">Create</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
 
-                                    <div class="dropdown">
+                                        @if (\App\Site::first()->onlinesCountStatus == 1)
+                                            <div class="alert alert-info">
 
-                                        <a style="text-decoration: none !important" class="" href="{{ url('locale/en') }}"><i
-                                                class="fa fa-globe"></i>English</a><br>
-                                        <a style="text-decoration: none !important" class="" href="{{ url('locale/de') }}"><i
-                                                class="fa fa-globe"></i>German</a><br>
-                                        <a style="text-decoration: none !important" class="" href="{{ url('locale/al') }}"><i
-                                                class="fa fa-globe"></i>Shqip</a><br>
+                                                    <span>
+                                                        {{\App\Site::first()->onlinesCount}} Users is Online Now
+                                                    </span>
 
+                                            </div>
+                                        @endif
 
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-light btn-block" data-dismiss="modal" type="button">Close
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="pull-right p-1 logout_section">
-                    <button data-toggle="tooltip" data-placement="top" title="Logout" onclick="document.getElementById('logout-form').submit()" class="btn btn-danger">
-                        <i class="fa fa-sign-out"></i>
-                    </button>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-
-
-                </div>
-
-
-
-
-
-                <div class="d-inline float-left"
-                     style="background-color: transparent;height: 26px;width: 122px;margin-left: 2px;">
-                    <h6 class="text-left"
-                        style="width: 115px;height: 41px;padding: 7px;color: rgb(255,255,255);margin-left: 4px;">
-                        {{\Illuminate\Support\Str::limit(\Illuminate\Support\Facades\Auth::user()->UserName , 18)}} </h6>
-                </div>
-
-
-
-            </div>            <div class="d-inline-block float-left"
-                 style="background-color: rgba(0,0,0,0);width: 1126px;height: 452px;margin-right: 46px;padding: 2px;padding-top: 0px;padding-right: 3px;">
-                <div class="border rounded d-block float-left border"
-                     style="width: 230px;height: 480px;background-color: rgba(54,54,54,0.77);padding: 7px;color: #363636;padding-top: 7px;">
-                    <div>
-                        <h5 class="text-left" style="color: rgb(255,255,255);">{{__('message.Manage')}} {{__('message.Event')}}</h5>
-                        <div class="text-left"
-                             style="/*background-color: #00000000;*/height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #b3b8b8;">
-                            <a class="text-left" href="{{route('Admin.index')}}" style="color: #b3b8b8;">{{__('message.Inbox')}}</a></div>
-                        <div class="text-left"
-                             style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #363636;">
-                            <a class="text-left" href="{{route('Admin.History')}}" style="color: #b3b8b8;">{{__('message.History')}}</a>
-                        </div>
-                        <div class="text-left active-page"
-                             style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;">
-                            <a class="text-left" href="{{route('Admin.Lounge')}}" style="color: #b3b8b8;">{{__('message.Lounge')}}</a>
-                        </div>
-                        <div class="text-left"
-                             style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;">
-                            <a class="text-left" href="{{route('Admin.Statistics')}}" style="color: #b3b8b8;">{{__('message.Statistics')}}</a></div>
-                        <div class="text-left"
-                             style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;">
-                            <a class="text-left" href="{{route('Admin.RegisteredVisitor')}}" style="color: #b3b8b8;">{{__('message.Registered')}} {{__('message.Visitors')}}</a></div>
-                        <div class="text-left"
-                             style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #b3b8b8;">
-                            <a class="text-left" href="{{route('Admin.RegisteredExhibitor')}}" style="color: #b3b8b8;">{{__('message.Registered')}} {{__('message.Exhibitors')}}<br></a></div>
-                                                <div class="text-left" style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #b3b8b8;"><a class="text-left" href="{{route('Admin.Auditorium')}}" style="color: #b3b8b8;">{{__('message.Auditorium')}} {{__('message.Schedule')}}<br></a></div>
-
-                        <h5 class="text-left" style="color: rgb(255,255,255);">{{__('message.Create')}} {{__('message.Event')}}</h5>
-                        <div class="text-left" style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;"><a class="text-left" href="{{route('Admin.Setting')}}" style="color: #b3b8b8;">{{__('message.Setting')}}</a></div>
-
-                        <div class="text-left" style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;"><a class="text-left" href="{{route('Admin.Signin')}}" style="color: #b3b8b8;">{{__('message.Signin')}} {{__('message.Page')}}</a></div>
-                        <div class="text-left" style="background-color: #00000000;height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #b3b8b8;"><a class="text-left" href="{{route('Admin.VisitorSetting')}}" style="color: #b3b8b8;">{{__('message.Visitor')}} {{__('message.Page')}}</a></div>
-                        <div class="text-left" style="/*background-color: #00000000;*/height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #b3b8b8;"><a class="text-left" href="{{route('Admin.ExhibitorSetting')}}" style="color: #b3b8b8;">{{__('message.Exhibitor')}} {{__('message.Page')}}</a></div>
-                        <div class="text-left" style="/*background-color: #00000000;*/height: 30px;margin-top: 1px;padding: 2px;padding-bottom: -1px;padding-top: -2px;padding-left: 13px;width: 216px;color: #b3b8b8;"><a class="text-left" href="{{route('Admin.AppAdjustment')}}" style="color: #b3b8b8;">{{__('message.App')}} {{__('message.Adjustment')}}<br></a></div>
-                    </div>
-                </div>
-                <div class="border rounded d-block float-left border"
-                     style="width: 861px;height: 452px;background-color: rgba(168,168,168,0.84);padding: 7px;color: #363636;margin-left: 22px;">
-                    <div class="border rounded"
-                         style="color: #c2c5c5;height: 40px;background-color: #363636;width: 222px;padding: 7px;">
-                        <p style="color: #c2c5c5;">{{__('message.ManageGroups')}}</p>
-                    </div>
-                    <div class="border rounded d-inline float-left scroll_box"
-                         style="width: 220px;height: 233px;margin-top: 4px;">
-                        <form style="height: 7px;margin-bottom: 23px;width: 205px;" action="#search_company">
-                            <div class="form-group" style="width: 402px;"><input onblur="is_typing = false" onfocus="is_typing = true" class="form-control float-left"
-                                                                                 type="search" placeholder="Search..."
-                                                                                 style="width: 163px;height: 33px;margin-bottom: 24px;"
-                                                                                 name="search">
-                                <button onblur="is_typing = false" onfocus="is_typing = true" class="btn float-left shadow-none" type="submit" style="width: 1px;margin-right: 16px;margin-bottom: 31px;margin-top: -4px;"><i
-                                        class="fa fa-search"
-                                        style="font-size: 20px;margin-bottom: 16px;margin-right: 19px;"></i></button>
-                            </div>
-                        </form>
-
-
-                        @foreach($Lounges as $loung)
-                            <div
-                                @if(request()->LoungID == $loung->id)
-                                class="border rounded"
-                                style="background-color: #c2c5c5;height: 40px;width: 193px;margin-left: 4px;margin-top: 5px;"
-                                    @else
-                                style="background-color: transparent;height: 40px;width: 193px;margin-left: 4px;margin-top: 5px;"
-                                    @endif
-                                >
-                                <a href="?LoungID={{$loung->id}}">
-                                    <p class="text-left d-inline float-left"
-                                       style="margin-top: 4px;margin-left: 6px;margin-right: 7px;color: rgb(255,255,255);">
-                                        {{\Illuminate\Support\Str::limit($loung->Name,7)}}
-
-                                    </p>
-                                    <a href="{{route('Admin.RemoveLounge' , $loung->id)}}"><i class="fa fa-minus-circle float-right"
-                                                                  style="color: rgb(209,28,28);width: 40px;height: 38px;font-size: 34px;"></i></a>
-                                </a>
-                            </div>
-                        @endforeach
-
-
-
-                    </div>
-
-
-                    @if(request()->LoungID)
-                        <div class="border rounded float-left"
-                             style="width: 607px;height: 389px;margin-top: 4px;margin-left: 12px;background-color: #c2c5c5;">
-                            <p class="text-left" style="margin-left: 11px;">{{__('message.Group')}} {{__('message.Name')}} : {{$Lounge->Name}}</p>
-                            <div class="border rounded float-left scroll_box"
-                                 style="background-color: #6f6d6d;height: 337px;margin-bottom: 9px;">
-                                @foreach(json_decode($Lounge->Members) as $Member)
-                                <div
-                                    style="background-color: transparent;height: 40px;width: 193px;margin-left: 4px;margin-top: 5px;">
-                                    <p class="text-left d-inline float-left" style="margin-top: 4px;margin-left: 6px;margin-right: 7px;color: rgb(255,255,255);">
-                                        {{\App\User::find($Member)->UserName}}
-                                    </p>
-                                    <a href="?RemoveUser={{$Member}}&LoungeID={{$Lounge->id}}">
-                                        <i class="fa fa-minus-circle float-right" style="color: rgb(209,28,28);width: 40px;height: 38px;font-size: 34px;"></i>
-                                    </a>
-
-                                </div>
-                                    @endforeach
-                            </div>
-                            <div class="border rounded-0 float-left"
-                                 style="width: 350px;margin-right: 1px;margin-left: 6px;margin-bottom: 8px;height: 318px;">
-                                <div class="scroll_box" style="height: 264px;margin-bottom: 11px;" id="ChatsDiv">
-
-                                    @foreach($Chats as $chat)
-                                    <div class="border rounded border-primary @if($chat->UserID == \Illuminate\Support\Facades\Auth::id())  float-right @else float-left  @endif  nonoverflow scroll_box"
-                                         style="height: 52px;width: 190px;margin-bottom: 17px;padding: 5px;background-color: @if($chat->UserID == \Illuminate\Support\Facades\Auth::id()) #0c82fe  @else #36ca5c @endif  ;color: rgb(255,255,255);">
-                                        <p class="nonoverflow">{{$chat->Text}}</p>
-                                        <small>Sender: {{\App\User::find($chat->UserID)->UserName}}</small>
+                            </form>
+                            <div class="row mt-3">
+                                <div class="col-md-4 text-center">
+                                    <div class="text-center w-100 p-1" style="border-radius: 5px;background-color:#0f151d;">
+                                        <h3 style="margin-top: 10px;">{{__('message.ManageGroups')}}</h3>
                                     </div>
-                                    @endforeach
+
+                                    <div class="text-left p-2 mt-2" style="border: 2px solid white;height: 550px;border-radius: 5px;">
+                                        <form action="" class="w-100">
+                                            <div class="input-group mt-2 mb-2">
+                                                <input type="text" name="SearchTerm" class="form-control" placeholder="Search...">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-success" type="submit">Search</button>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        @foreach($Lounges as $loung)
+                                                <a href="?LoungID={{$loung->id}}" @if(request()->LoungID == $loung->id) class="text-left btn btn-dark w-100 mb-2" @else class="text-left btn btn-outline-dark w-100 mb-2" @endif>
+                                                        {{$loung->Name}}
+                                                </a>
+                                        @endforeach
+                                    </div>
 
                                 </div>
-                                <form class="form-inline d-inline" method="post" action="{{route('Admin.SendMessagetoLounge' , $Lounge->id)}}">
-                                    @csrf
-                                    <input
-                                        class="border rounded border-dark form-control d-inline" type="text"
-                                        style="margin-right: 17px;width: 208px;" onblur="is_typing = false" onfocus="is_typing = true" name="Text" value="{{old('Text')}}">
-                                    <button class="btn btn-success d-inline" type="submit"
-                                            style="height: 36px;width: 103px;">{{__('message.Send')}}
-                                    </button>
-                                </form>
+
+
+                                @if(request()->LoungID)
+                                    <div class="col-md-8" style="margin-top: 70px;">
+                                        <div class="w-100 p-2" style="border-radius: 5px;border: 2px solid white;">
+                                            <h3>
+                                                {{__('message.Group')}} {{__('message.Name')}} : {{$Lounge->Name}}
+                                            </h3>
+
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        <div class="scroll_box"
+                                                             style="background-color: #6f6d6d;height: 480px;border-radius: 5px;overflow-y: auto">
+                                                            @foreach(json_decode($Lounge->Members) as $Member)
+                                                                <div class="row p-1">
+                                                                    <div class="col-9">
+                                                                        <p class="text-left d-inline float-left" style="margin-top: 4px;margin-left: 6px;margin-right: 7px;color: rgb(255,255,255);">
+                                                                            {{\App\User::find($Member)->UserName}}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="col-3">
+                                                                        <a href="?RemoveUser={{$Member}}&LoungeID={{$Lounge->id}}">
+                                                                            <i class="fa fa-minus-circle float-right" style="color: rgb(209,28,28);width: 40px;height: 38px;font-size: 34px;"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+{{--                                                    <div class="col-md-7">--}}
+{{--                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque maiores, molestiae necessitatibus possimus tempore temporibus tenetur veritatis voluptas. Architecto consequuntur debitis deserunt dolores error id nulla omnis quam, tempore voluptas.--}}
+{{--                                                    </div>--}}
+                                                    <div class="col-md-7 mt-md-0 mt-5">
+                                                            <div class="scroll_box p-2" id="ChatsDiv" style="height: 440px;overflow-y: auto">
+                                                                @foreach($Chats as $chat)
+
+                                                                            <div class="row">
+                                                                                @if($chat->UserID == \Illuminate\Support\Facades\Auth::id())
+                                                                                    <div class="col-3">
+                                                                                    </div>
+                                                                                    <div class="col-9 bg-primary p-1 mt-1 w-100" style="border-radius: 5px;">
+                                                                                        <p>{{$chat->Text}}</p>
+                                                                                        <small>Sender: {{\App\User::find($chat->UserID)->UserName}}</small>
+                                                                                    </div>
+
+                                                                                @else
+                                                                                    <div class="col-9 bg-success p-1 mt-1" style="border-radius: 5px;">
+                                                                                        <p class="nonoverflow">{{$chat->Text}}</p>
+                                                                                        <small>Sender: {{\App\User::find($chat->UserID)->UserName}}</small>
+                                                                                    </div>
+                                                                                    <div class="col-3">
+                                                                                    </div>
+                                                                                @endif
+                                                                            </div>
+
+
+
+                                                                @endforeach
+
+                                                            </div>
+                                                            <form class="w-100" method="post" action="{{route('Admin.SendMessagetoLounge' , $Lounge->id)}}" id="chat">
+                                                                @csrf
+{{--                                                                <input--}}
+{{--                                                                    class="border rounded border-dark form-control d-inline" type="text"--}}
+{{--                                                                    style="margin-right: 17px;width: 208px;" onblur="is_typing = false" onfocus="is_typing = true" name="Text" value="{{old('Text')}}">--}}
+{{--                                                                <button class="btn btn-success d-inline" type="submit"--}}
+{{--                                                                        style="height: 36px;width: 103px;">{{__('message.Send')}}--}}
+{{--                                                                </button>--}}
+
+
+
+                                                                <div class="input-group mt-1">
+                                                                    <input type="text" class="form-control" aria-describedby="basic-addon2" id="myInput" rows="1"
+                                                              name="Text" value="{{old('Text')}}" onblur="is_typing = false" onfocus="is_typing = true">
+                                                                    <div class="input-group-append">
+                                                                        <button class="btn btn-success" type="submit" onclick="sendMessage()"> {{__('message.Send')}}</button>
+                                                                    </div>
+                                                                </div>
+
+                                                            </form>
+                                                    </div>
+                                                </div>
+
+
+
+
+                                        </div>
+                                    </div>
+                                @endif
+
+
+
+                            </div>
+
+                            <div style="height: 200px;overflow-y: auto" class="mt-3 col-12">
+                                <table class="table table-bordered table-hover table-light text-center mb-5">
+                                    <thead>
+                                    <th>
+                                        {{__('message.Name')}}
+                                    </th>
+                                    <th>
+                                        {{__('message.Member')}} {{__('message.Count')}}
+                                    </th>
+                                    <th>
+                                        {{__('message.Create')}} {{__('message.Date')}}
+                                    </th>
+                                    <th>
+                                        {{__('message.Action')}}
+                                    </th>
+                                    </thead>
+                                    <tbody>
+                                    @foreach(\App\Lounge::all() as $lounge)
+                                        <tr>
+                                            <td>{{$lounge->Name}}</td>
+                                            <td>{{count(json_decode($lounge->Members))}}</td>
+                                            <td>{{\Carbon\Carbon::instance($lounge->created_at)->format('Y-m-d')}}</td>
+                                            <td>
+
+                                                <form action="{{route('Admin.RemoveLounge' , $lounge->id)}}" id="mysinsin_form">
+                                                        <button class="btn btn-danger" type="submit">Delete</button>
+                                                </form>
+{{--                                                <a class="btn btn-danger" role="button"--}}
+{{--                                                   href="{{route('Admin.RemoveLoungeWithUrl' , $lounge->id)}}"><i--}}
+{{--                                                        class="fa fa-trash w-100" style="font-size: 15px;"></i></a>--}}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                    @endif
+                    </div>
+                    <!-- /traffic sources -->
                 </div>
             </div>
+            <!-- /main charts -->
         </div>
-    </header>
+        <!-- /content area -->
+    </div>
+    <!-- /main content -->
+</div>
+<!-- /page content -->
+
+</body>
+
+@section("js")
+
+{{--    <script>--}}
+{{--        $(document).ready(function() {--}}
+{{--            $('#myInput').keyup(function(event) {--}}
+{{--                if (event.which === 13) {--}}
+{{--                    event.preventDefault();--}}
+{{--                    $('chat').submit();--}}
+{{--                }--}}
+{{--            });--}}
+{{--        });--}}
+{{--    </script>--}}
+
+
+
+
+<script>
+    function areyousure() {
+        Swal.fire({
+            title: 'By Deleting the Group All Chats And Information Of The Group Will Be Removed, Do You Want To Continue',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: `Delete`,
+            denyButtonText: `Cancel`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                Swal.fire('Deleted!', '', 'success')
+                confirmed_sinsin = true
+                $("#mysinsin_form").removeAttr('onclick')
+                window.location.replace($("#mysinsin_form").attr('href'))
+
+                return true
+            } else if (result.isDenied) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Oops...',
+                    text: 'Group Not Deleted',
+                })
+                confirmed_sinsin = false
+                return false
+            }
+        })
+    };
+</script>
+
+
 @endsection
-@section('js')
-    <script>
-        let is_typing = false;
 
-        setInterval(function(){
-
-            if(is_typing == false)
-                location.reload()
-
-        }, 5000);
-
-    </script>
-    <script>
-        var objDiv = document.getElementById("ChatsDiv");
-        objDiv.scrollTop = objDiv.scrollHeight;
-    </script>
-@endsection
