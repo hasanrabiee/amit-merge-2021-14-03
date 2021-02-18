@@ -201,7 +201,7 @@
 
 
 
-                                                            @if (\Carbon\Carbon::today()->toDateString() == \Carbon\Carbon::parse($meeting_exhibitor->request_time)->toDateString() and  \Carbon\Carbon::now()->gte(Carbon\Carbon::parse($meeting_exhibitor->request_time)) and \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($meeting_exhibitor->request_time)->addMinutes(30)) )
+                                                            @if (\Carbon\Carbon::today()->toDateString() == \Carbon\Carbon::parse($meeting_exhibitor->request_time)->toDateString() || \Carbon\Carbon::now()->gte(Carbon\Carbon::parse($meeting_exhibitor->request_time)) and \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($meeting_exhibitor->request_time)->addMinutes(30)) )
 
                                                                 <a href="{{route('Visitor.meeting.join', $meeting_exhibitor->meeting_id )}}" class="btn btn-block btn-primary">
                                                                     <i class="fa fa-bullhorn"></i>
