@@ -144,6 +144,8 @@ class VisitorController extends Controller
 
         $company = booth::where('UserID', $company_user_id)->first();
 
+        dd(1111111);
+
 
         return view('Visitor.requestMeeting')->with([
             'company' => $company,
