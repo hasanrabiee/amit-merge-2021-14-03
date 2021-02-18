@@ -1831,9 +1831,9 @@ class AdminController extends Controller
 
         if (isset($Chats))
 
-            return view('Admin.VisitorInbox', compact( 'users_list', 'Chats'));
+            return view('Admin.visitorInbox', compact( 'users_list', 'Chats'));
         else
-            return view('Admin.VisitorInbox', compact( 'users_list'));
+            return view('Admin.visitorInbox', compact( 'users_list'));
     }
 
 
