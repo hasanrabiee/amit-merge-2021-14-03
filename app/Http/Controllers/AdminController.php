@@ -1389,7 +1389,7 @@ class AdminController extends Controller
         $newMessage = $this->hasanChatCount();
         $this->onlineShow();
         $Site = Site::find(1);
-        return view("Admin.signin",compact("Site","newMessage"));
+        return view("Admin.Signin",compact("Site","newMessage"));
 
     }
 
