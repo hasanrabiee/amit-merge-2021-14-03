@@ -19,6 +19,11 @@ Route::get('/time', function () {
     dd(Carbon::now()->format('Y-m-d H:i') , date_default_timezone_get());
 });
 
+
+
+Route::get('/leave-meeting', 'WebController@leave_meeting');
+
+
 Route::get('join-webinar/{webinar}', 'WebController@join_webinar')->name('join-webinar');
 
 
