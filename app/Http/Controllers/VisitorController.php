@@ -70,14 +70,18 @@ class VisitorController extends Controller
 
         $already_requested_meeting = MeetingRequest::where('user_id', Auth::user()->id)->where('exhibitor_id', $company_user_id)->orderBy('id','DESC')->first();
 
-        if($already_requested_meeting != null && $already_requested_meeting->status == 'none'){
+        if($already_requested_meeting != null && $already_requested_meeting->status == 'none' &&  Carbon::parse($already_requested_meeting->request_time)->toDateString() == Carbon::now()->toDateString()){
 
             $message = "You're request is being checked by the company ";
 
             return view('Visitor.alreadyRequestedMeeting')->with(['message'=>$message]);
 
         }
-        elseif($already_requested_meeting != null && $already_requested_meeting->status == 'accepted'){
+        elseif($already_requested_meeting != null && $already_requested_meeting->status == 'accepted' && Carbon::parse($already_requested_meeting->request_time)->toDateString() == Carbon::now()->toDateString()){
+
+
+
+
 
             $message = "You've been accepted for your meeting, go to your dashboard";
 
