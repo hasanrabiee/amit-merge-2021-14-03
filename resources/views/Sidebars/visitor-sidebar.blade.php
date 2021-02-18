@@ -306,7 +306,7 @@
                             </li>
 
                             <li class="nav-item text-center mt-md-5">
-                                <a href="/Exhabition/" class="" target="_blank"><span class="btn btn-success btn-lg">{{__('message.EnterExhabition')}}</span></a>
+                                <a href="http://amitisgroup.net/HTML5/" class="" target="_blank"><span class="btn btn-success btn-lg">{{__('message.EnterExhabition')}}</span></a>
                             </li>
 
                             <!-- /main -->
