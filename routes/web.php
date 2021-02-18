@@ -215,7 +215,7 @@ Route::group(['middleware' => ['auth']] , function (){
         Route::get('ChatGet', 'VisitorController@ChatGet')->name('ChatGet');
 
 
-        Route::get('/MeetingSchedule/{company_id?}', "VisitorController@MeetingScheduleIndex")->name('visitor-meetingSchedule');
+        Route::get('/MeetingSchedule/{company_user_id?}', "VisitorController@MeetingScheduleIndex")->name('visitor-meetingSchedule');
 
         Route::get('/Meetings', 'VisitorController@MeetingsIndex' )->name('visitor-meetings');
 

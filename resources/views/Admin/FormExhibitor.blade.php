@@ -80,30 +80,7 @@
                                         </thead>
 
                                         <tbody>
-                                        <tr>
-                                            <td>firstName</td>
-                                            @if (\App\ExhibitorForms::first()->firstName == "active")
-                                                <td>active</td>
-                                            @else
-                                                <td>DeActive</td>
-                                            @endif
 
-                                            <td>
-
-                                                <input type="checkbox" value="active" style="width: 100px !important;" name="firstName"  @if (\App\ExhibitorForms::first()->firstName == "active") checked @endif>
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>lastName</td>
-                                            @if (\App\ExhibitorForms::first()->lastName == "active")
-                                                <td>active</td>
-                                            @else
-                                                <td>DeActive</td>
-                                            @endif                                            <td>
-                                                <input type="checkbox" value="active" style="width: 100px !important;" name="lastName"  @if (\App\ExhibitorForms::first()->lastName == "active") checked @endif>
-                                            </td>
-                                        </tr>
                                         <tr>
                                             <td>position</td>
                                             @if (\App\ExhibitorForms::first()->position == "active")

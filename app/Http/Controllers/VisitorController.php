@@ -49,7 +49,8 @@ class VisitorController extends Controller
 
 
 
-    public function MeetingScheduleIndex($company_id){
+    public function MeetingScheduleIndex($company_user_id){
+
 
 
 
@@ -57,7 +58,7 @@ class VisitorController extends Controller
         $available_meetings = [];
 
 
-        $already_requested_meeting = MeetingRequest::where('user_id', Auth::user()->id)->where('exhibitor_id', $company_id)->orderBy('id','DESC')->first();
+        $already_requested_meeting = MeetingRequest::where('user_id', Auth::user()->id)->where('exhibitor_id', $company_user_id)->orderBy('id','DESC')->first();
 
         if($already_requested_meeting != null && $already_requested_meeting->status == 'none'){
 
@@ -81,10 +82,11 @@ class VisitorController extends Controller
 
 
 
-        $available_meetings = Meeting::where('owner_id', $company_id)
+        $available_meetings = Meeting::where('owner_id', $company_user_id)
             ->where('type','meeting')
             ->whereDate( 'start_time', Carbon::parse(\request()->Day)->format('Y-m-d') )
             ->where('reserved', false)->get(['start_time']);
+
 
 
         }
@@ -97,7 +99,7 @@ class VisitorController extends Controller
             $meet_req->user_id = Auth::user()->id;
             $the_date = Carbon::parse(\request()->Day . ' ' . \request()->time)->format('Y-m-d H:i:s');
             $meet_req->request_time = $the_date;
-            $meet_req->exhibitor_id = (int)$company_id;
+            $meet_req->exhibitor_id = (int)$company_user_id;
             $meet_req->status = 'none';
             $meet_req->save();
 
@@ -126,18 +128,20 @@ class VisitorController extends Controller
 
 
 
+        $company = booth::where('UserID', $company_user_id)->first();
 
-
-
-
-        //$exhibi = User::where('id', $company_id)->first();
-        $company = booth::where('id', $company_id)->first();
 
         return view('Visitor.requestMeeting')->with([
             'company' => $company,
             'Days' => $Days,
             'times' => $available_meetings,
         ]);
+
+
+
+
+
+
     }
 
 

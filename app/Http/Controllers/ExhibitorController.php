@@ -80,7 +80,10 @@ class ExhibitorController extends Controller
             ->whereDate( 'request_time', $request->Day )
             ->get();
 
-
+//        $meet_req = $meeting_requests[0];
+//
+//        $start_date = Carbon::parse($meet_req->request_time)->toDateString();
+//
 
 
 

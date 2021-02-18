@@ -294,6 +294,7 @@
                             <li class="nav-item">
                                 <a href="{{route('Visitor.Meeting')}}" class="nav-link @if( Request::is("*Meeting*")) active @endif"><i class="fa fas fa-camera"></i> <span>Meeting</span></a>
                             </li>
+
                             <li class="nav-item">
                                 <a href="{{route('Visitor.VisitHistory')}}" class="nav-link @if( Request::is("*History*")) active @endif"><i class="fa fas fa-history"></i> <span>{{__('message.History')}}</span></a>
                             </li>
@@ -307,6 +308,7 @@
                             <li class="nav-item text-center mt-md-5">
                                 <a href="/Exhabition/" class="" target="_blank"><span class="btn btn-success btn-lg">{{__('message.EnterExhabition')}}</span></a>
                             </li>
+
                             <!-- /main -->
                         </ul>
                     </div>

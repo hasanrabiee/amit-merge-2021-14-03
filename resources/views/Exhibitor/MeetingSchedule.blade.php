@@ -231,17 +231,22 @@
 
                                                             @elseif ($meet_req->status == "accepted")
 
+
+
+
+
+
                                                                 <td>
                                                                     <div class="btn-group w-100">
 
-                                                                        @if (\Carbon\Carbon::today() == \Carbon\Carbon::parse($conference->start_date) and  \Carbon\Carbon::now()->gte(Carbon\Carbon::parse($conference->start_time)) and \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($conference->end_time)) )
+                                                                        @if (\Carbon\Carbon::today()->toDateString() == \Carbon\Carbon::parse($meet_req->request_time)->toDateString() and  \Carbon\Carbon::now()->gte(Carbon\Carbon::parse($meet_req->start_time)) and \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($meet_req->end_time)) )
 
                                                                             <a  class="btn btn-primary w-100" href="{{route('Exhibitor.meeting.join', $meet_req->id )}}">
                                                                                 Enter Meeting
 
                                                                             </a>
 
-                                                                            @elseif (\Carbon\Carbon::today() == \Carbon\Carbon::parse($conference->start_date) and  \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($conference->start_time))  )
+                                                                            @elseif (\Carbon\Carbon::today() == \Carbon\Carbon::parse($meet_req->start_date) and  \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($meet_req->start_time))  )
                                                                             <button disabled=""  class="btn btn-dark w-100">
                                                                                 Meeting not started yet
                                                                             </button>
