@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use League\Flysystem\AwsS3v3\AwsS3Adapter;
 use League\Flysystem\Filesystem;
+use Twilio\Rest\Client;
 
 trait Uploader
 {
@@ -163,6 +164,17 @@ trait Uploader
         $imageName = 'favicon.ico';
         \request('SiteIcon')->move($path, $imageName);
         return $orginalPath . $imageName;
+    }
+
+
+    public function sendSMS($message, $recipients)
+    {
+        $account_sid = env("TWILIO_SID");
+        $auth_token = env("TWILIO_AUTH_TOKEN");
+        $twilio_number = env("TWILIO_NUMBER");
+        $client = new Client($account_sid, $auth_token);
+        $client->messages->create($recipients,
+            ['from' => $twilio_number, 'body' => $message] );
     }
 
 }
