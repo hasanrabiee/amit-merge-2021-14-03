@@ -165,7 +165,7 @@
                                                     @endif
 
                                                     @if ($Booth->User->PhoneNumber != null)
-                                                        <p><strong>phone:&nbsp;</strong><span>{{$Booth->User->PhoneNumber}}</span></p>
+                                                        <p><strong>phone:</strong><span>{{$Booth->User->PhoneNumber}}</span></p>
                                                     @endif
 
                                                     @if ($Booth->User->fax != null)

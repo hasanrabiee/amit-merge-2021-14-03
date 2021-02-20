@@ -56,6 +56,10 @@ class BoothController extends Controller
         ]);
         $Payment = Site::find(1)->ExhabitorPayment;
 
+
+
+
+
         $PhoneNumber = preg_replace('/-/', '', $request->PhoneNumber);
         $PhoneNumber = preg_replace('/\(/', '', $PhoneNumber);
         $PhoneNumber = preg_replace('/\)/', '', $PhoneNumber);
