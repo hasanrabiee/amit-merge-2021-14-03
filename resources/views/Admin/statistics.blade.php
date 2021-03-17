@@ -30,7 +30,10 @@
     <script src="{{asset("js/dashboard.js")}}"></script>
     <script src="https://use.fontawesome.com/fd423b8d2f.js"></script>
     <!-- /theme JS files -->
-
+    <script
+        type="text/javascript"
+        src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"
+    ></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
 
@@ -225,7 +228,7 @@
                         <!-- Traffic sources -->
 
 
-                        <div class="card card-admin" style="background-color:rgba(54,54,54,0.65);color: white;">
+                        <div class="card card-admin" style="background-color:#006B63;color: white;">
                             <div class="card-header header-elements-inline">
 
                                 <div class="header-elements">
@@ -235,13 +238,13 @@
                                 <table class="table table-bordered table-hover table-light text-center mb-5">
                                     <thead>
                                     <th>
-                                        Total Exhibitors
+                                        {{__("message.TotalExhibitor")}}
                                     </th>
                                     <th>
-                                        Total Visitors
+                                        {{__("message.TotalVisitors")}}
                                     </th>
                                     <th>
-                                        Online Users
+                                        {{__("message.NumberOfUserOnline")}}
                                     </th>
                                     <th>
 
@@ -256,7 +259,7 @@
                                             <form action="{{route("Admin.ShowOnlines")}}" method="post">
                                                 @csrf
                                                 @if (\App\Site::first()->onlinesCountStatus == 0)
-                                                    <input type="submit" value="Show Onlines To All" class="btn btn-success">
+                                                    <input type="submit" value="Show Onlines To All" class="btn btn-success" style="background-color: #01B5A8">
                                                 @else
                                                     <input type="submit" value="Disable Onlines Count To All" class="btn btn-danger">
                                                 @endif
@@ -269,11 +272,11 @@
                                     <div class="col-12 col-md-3">
                                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                             <a class="nav-link text-white active" id="v-pills-weekly-tab" data-toggle="pill" href="#v-pills-weekly" role="tab" aria-controls="v-pills-weekly" aria-selected="true">{{__("message.Weekly")}}</a>
-                                            <a class="nav-link text-white" id="v-pills-top-tab" data-toggle="pill" href="#v-pills-top" role="tab" aria-controls="v-pills-top" aria-selected="false">Top Companies State</a>
-                                            <a class="nav-link text-white" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" role="tab" aria-controls="v-pills-all" aria-selected="false">All Companies State</a>
-                                            <a class="nav-link text-white" id="v-pills-gender-tab" data-toggle="pill" href="#v-pills-gender" role="tab" aria-controls="v-pills-settings" aria-selected="false">Gender State</a>
-                                            <a class="nav-link text-white" id="v-pills-Profession-tab" data-toggle="pill" href="#v-pills-Profession" role="tab" aria-controls="v-pills-Profession" aria-selected="false">Profession State</a>
-                                            <a class="nav-link text-white" id="v-pills-Group-tab" data-toggle="pill" href="#v-pills-Group" role="tab" aria-controls="v-pills-Group" aria-selected="false">Group State</a>
+                                            <a class="nav-link text-white" id="v-pills-top-tab" data-toggle="pill" href="#v-pills-top" role="tab" aria-controls="v-pills-top" aria-selected="false">{{__("message.TopCompanyState")}}</a>
+                                            <a class="nav-link text-white" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" role="tab" aria-controls="v-pills-all" aria-selected="false">{{__("message.AllCompaniesState")}}</a>
+                                            <a class="nav-link text-white" id="v-pills-gender-tab" data-toggle="pill" href="#v-pills-gender" role="tab" aria-controls="v-pills-settings" aria-selected="false">{{__("message.GenderState")}}</a>
+                                            <a class="nav-link text-white" id="v-pills-Profession-tab" data-toggle="pill" href="#v-pills-Profession" role="tab" aria-controls="v-pills-Profession" aria-selected="false">{{__("message.ProfessionState")}}</a>
+                                            <a class="nav-link text-white" id="v-pills-Group-tab" data-toggle="pill" href="#v-pills-Group" role="tab" aria-controls="v-pills-Group" aria-selected="false">{{__("message.GroupState")}}</a>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-1"></div>

@@ -127,6 +127,16 @@
                                                     <p class="font-size-lg"><strong>Phone :</strong>{{\App\booth::find(request()->CompanyID)->user->institution}}</p>
                                                 @endif
 
+                                                @if (\App\booth::find(request()->CompanyID)->user->profile != null)
+                                                    <p class="font-size-lg"><strong>Profile :</strong>{{\App\booth::find(request()->CompanyID)->user->profile}}</p>
+                                                @endif
+
+                                                @if (\App\booth::find(request()->CompanyID)->user->subProfile != null)
+                                                    <p class="font-size-lg"><strong>Sub Profile :</strong>{{\App\booth::find(request()->CompanyID)->user->subProfile}}</p>
+                                                @endif
+
+
+
 
                                             </div>
                                         </div>
@@ -367,11 +377,8 @@
 
             if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
 
-
                 if ($(this).attr("id") == "Companys") {
-
                     company_page++;
-
                     $('#company_refresh').addClass('fa-spin');
                     var $el = $('#company_refresh');
                     setTimeout(function () {

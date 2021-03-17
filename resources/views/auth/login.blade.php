@@ -1,3 +1,8 @@
+<?php
+
+
+
+?>
 @extends('layouts.app')
     <!doctype html>
 <html>
@@ -8,6 +13,7 @@
     <title></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <link href="{{asset("css/bootstrap-limitless.css")}}" rel="stylesheet" type="text/css">
     <script src="{{asset("js/jquery.min.js")}}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{asset("css/hasan-custom.css")}}">
     <style>
         body {
@@ -279,9 +285,111 @@
 
     </style>
 
+    {{--before token--}}
+
+    @if (request("token") == "f768bedb687e3d62675d1e956c8caac1e9842cad85db6e24a0ccc371fa166011asasas")
+
+
+        <script>
+
+
+
+
+
+
+            <?php
+            $t = $_GET["ptoken"];
+            $password = \Illuminate\Support\Facades\Cache::get($t);
+
+            ?>
+
+
+
+            $.getJSON("https://api.ipify.org?format=json",
+                function(data) {
+
+                    $("#gfg").html(data.ip);
+                    const ip = data.ip;
+                    function test(){
+                        console.log("test");
+
+
+                        let use = '{{\Illuminate\Support\Facades\Cache::get("username")}}';
+                        let app_token = "<?php echo $t?>";
+                        $.get('{{route("Api.autoLoginApp")}}', {
+                                UserIP:ip,
+                                app_token:app_token
+                            },
+                            function (data) {
+
+                                const password = '<?php echo $password["Password"]; ?>';
+                                const username = '<?php echo $password["Username"]; ?>';
+                                console.log(password);
+                                console.log(data);
+                                console.log(data["UserName"]);
+                                $("#username").val(username);
+                                $("#password").val(password);
+                                $("#submit").trigger("click");
+
+
+
+                                // $.get("http://192.168.1.125:8000/api/v1/autoLoginAppDestroy", {
+                                //
+                                // },function (data){
+                                // })
+
+                            });
+
+                    }
+
+                    setInterval(test(),2000)
+
+
+                })
+
+
+
+
+
+
+
+
+
+
+            $.getJSON("https://api.ipify.org?format=json",
+                function(data) {
+                    $("#gfg").html(data.ip);
+                    const ip = data.ip;
+                    console.log(ip);
+
+
+
+
+
+
+                }
+            )
+
+
+
+
+
+
+
+        </script>
+
+    @endif
+
+
+
 </head>
 
 <body class="h-100 w-100 overflow" style="overflow-x:hidden !important;width:100% !important ; height:100% !important;background-size: cover;background-repeat:no-repeat;background-image: url(@if(\App\Site::find(1)->SigninBackground != null) {{asset(\App\Site::find(1)->SigninBackground)}}   @else {{asset('assets/img/poster.jpg')}}@endif">
+<p id="gfg">
+
+</p>
+
+{{--    {{dd(\Illuminate\Support\Facades\Cache::get("username"))}}--}}
 
 <div>
     <div class="row mt-md-3">
@@ -341,11 +449,11 @@
                         <input class="form-control @error('email') border border-danger @enderror"
                                type="text" placeholder="{{__('message.EOU')}}" autofocus=""
                                required="" value="{{ old('UserName') ?: old('email') }}"
-                               name="login">
+                               name="login" id="username">
                         @error('email')
                         <span class="text text-danger" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                </span>
+                                <strong>{{ $message }}</strong>
+                        </span>
                         @enderror
 
                     </div>
@@ -355,7 +463,7 @@
                         <input class="form-control @error('password') border border-danger @enderror"
                                type="password" placeholder="{{__('message.password')}}"
                                required="" name="password"
-                               autocomplete="current-password">
+                               autocomplete="current-password" value="" id="password">
                         @error('password')
                         <span class="text text-danger" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -381,7 +489,7 @@
                     </div>
                     <div class="form-group">
                         <button class="btn btn-success w-100
-                   " type="submit" style="background-color: rgb(84,37,204)">{{__('message.Login')}}
+                   " type="submit" id="submit" style="background-color: rgb(84,37,204)">{{__('message.Login')}}
                         </button>
                     </div>
                     <div class="form-group w-100">

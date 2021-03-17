@@ -86,7 +86,7 @@
 
                             @if (isset($newMessage) && $newMessage != 0 || isset($newMessage) && $newMessage != null)
                                 <span class="badge badge-info ml-3">
-                                     new Message
+                                     {{__("message.NewMessage")}}
                                 </span>
                             @endif
                         </a>
@@ -94,12 +94,13 @@
 
                         <ul class="nav nav-group-sub" data-submenu-title="Layouts" style="display: none;">
                             <li class="nav-item">
-                                <a href="{{route("Admin.VisitorInbox")}}" class="nav-link">Visitors
-
+                                <a href="{{route("Admin.VisitorInbox")}}" class="nav-link">
+                                    {{__("message.Visitors")}}
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route("Admin.ExhibitorInbox")}}" class="nav-link">Exhibitors
+                                <a href="{{route("Admin.ExhibitorInbox")}}" class="nav-link">
+                                    {{__("message.Exhibitors")}}
 
 
                                 </a>
@@ -107,8 +108,13 @@
                         </ul>
 
                     </li>
+
                     <li class="nav-item">
-                            <a href="{{route('Admin.History')}}" class="nav-link @if( Request::is("*History*")) active @endif "><span>{{__('message.History')}}</span></a>
+                        <a href="{{route('Admin.AdminMap')}}" class="nav-link @if( Request::is("*map*")) active @endif "><span>{{__("message.ExhibitionVisualMap")}}</span></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('Admin.History')}}" class="nav-link @if( Request::is("*History*")) active @endif "><span>{{__('message.History')}}</span></a>
                     </li>
                     <li class="nav-item">
                         <a href="{{route('Admin.Lounge')}}" class="nav-link @if( Request::is("*Lounge*")) active @endif "> <span>{{__('message.Lounge')}}</span></a>
@@ -126,11 +132,11 @@
                         <a href="{{route('Admin.Auditorium')}}" class="nav-link @if( Request::is("*Auditorium*")) active @endif "><span>{{__('message.Auditorium')}} {{__('message.Schedule')}}</span></a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('Admin.conference-create')}}" class="nav-link @if( Request::is("*conf*")) active @endif "><span>Register Conference</span></a>
+                        <a href="{{route('Admin.conference-create')}}" class="nav-link @if( Request::is("*conference/create*")) active @endif "><span>{{__("message.RegisterConference")}}</span></a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="#" class="nav-link @if( Request::is("*Conf*")) active @endif "><span>Recorded Conference</span></a>
+                        <a href="{{route('Admin.recordings-index')}}" class="nav-link @if( Request::is("*recordings*")) active @endif "><span>{{__("message.RecordedConference")}}</span></a>
                     </li>
 
                     <li class="nav-item ml-md-3 mb-md-2" style="font-weight: bolder;color: black">
@@ -156,7 +162,7 @@
                         <a href="{{route('Admin.AppAdjustment')}}"class="nav-link @if( Request::is("*AppAdjustment*")) active @endif "><span> {{__('message.App')}} {{__('message.Adjustment')}}</span></a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('Admin.Organizers')}}"class="nav-link @if( Request::is("*Organ*")) active @endif "><span>Organizer Information</span></a>
+                        <a href="{{route('Admin.Organizers')}}"class="nav-link @if( Request::is("*Organ*")) active @endif "><span>{{__("message.OrganizerInformation")}}</span></a>
                     </li>
 
                     <li class="nav-item">
@@ -169,12 +175,12 @@
                         <ul class="nav nav-group-sub" data-submenu-title="Layouts" style="display: none;">
                             <li class="nav-item">
                                 <a href="{{route("Admin.ExhibitorForm")}}" class="nav-link">
-                                    Exhibitors
+                                    {{__("message.Exhibitors")}}
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{route("Admin.VisitorForm")}}" class="nav-link">
-                                    Visitors
+                                    {{__("message.Visitors")}}
                                 </a>
                             </li>
 {{--                            <li class="nav-item">--}}

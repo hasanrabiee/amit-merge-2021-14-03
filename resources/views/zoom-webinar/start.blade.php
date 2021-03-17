@@ -3,8 +3,8 @@
     <head>
         <title>Join Zoom Webinar</title>
         <meta charset="utf-8" />
-        <link type="text/css" rel="stylesheet" href="https://source.zoom.us/1.8.5/css/bootstrap.css" />
-        <link type="text/css" rel="stylesheet" href="https://source.zoom.us/1.8.5/css/react-select.css"/>
+        <link type="text/css" rel="stylesheet" href="https://source.zoom.us/1.9.0/css/bootstrap.css" />
+        <link type="text/css" rel="stylesheet" href="https://source.zoom.us/1.9.0/css/react-select.css"/>
         <meta name="format-detection" content="telephone=no">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     </head>
@@ -35,14 +35,14 @@
     <div id="zmmtg-root"></div>
     <div id="aria-notify-area"></div>
       <!-- import ZoomMtg dependencies -->
-    <script src="https://source.zoom.us/1.8.5/lib/vendor/react.min.js"></script>
-    <script src="https://source.zoom.us/1.8.5/lib/vendor/react-dom.min.js"></script>
-    <script src="https://source.zoom.us/1.8.5/lib/vendor/redux.min.js"></script>
-    <script src="https://source.zoom.us/1.8.5/lib/vendor/redux-thunk.min.js"></script>
-    <script src="https://source.zoom.us/1.8.5/lib/vendor/lodash.min.js"></script>
+    <script src="https://source.zoom.us/1.9.0/lib/vendor/react.min.js"></script>
+    <script src="https://source.zoom.us/1.9.0/lib/vendor/react-dom.min.js"></script>
+    <script src="https://source.zoom.us/1.9.0/lib/vendor/redux.min.js"></script>
+    <script src="https://source.zoom.us/1.9.0/lib/vendor/redux-thunk.min.js"></script>
+    <script src="https://source.zoom.us/1.9.0/lib/vendor/lodash.min.js"></script>
 
     <!-- import ZoomMtg -->
-    <script src="https://source.zoom.us/zoom-meeting-1.8.5.min.js"></script>
+    <script src="https://source.zoom.us/zoom-meeting-1.9.0.min.js"></script>
 
     <script src="https://source.zoom.us/1.8.3/lib/vendor/jquery.min.js"></script>
 
@@ -52,7 +52,7 @@
     <script type="text/javascript">
 
     $(document).ready(function(){
-        ZoomMtg.setZoomJSLib('https://dmogdx0jrul3u.cloudfront.net/1.8.5/lib', '/av');
+        ZoomMtg.setZoomJSLib('https://dmogdx0jrul3u.cloudfront.net/1.9.0/lib', '/av');
         ZoomMtg.preLoadWasm();
         ZoomMtg.prepareJssdk();
 
@@ -76,7 +76,11 @@
             },
         });
         ZoomMtg.init({
-            leaveUrl: `/leave-meeting?meeting_id=${meeting_id.value}`,
+
+
+            leaveUrl: `{{\Illuminate\Support\Facades\URL::to('/')}}`,
+
+
             isSupportAV: true,
             isSupportChat: true,
             success: function (res) {

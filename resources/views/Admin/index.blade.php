@@ -52,7 +52,7 @@
         <!-- Content area -->
             <div class="content">
 
-            <h6>Users Online : {{$onlines}}</h6>
+            <h6>Users Online : N/A</h6>
 
             <!-- Main charts -->
                 <div class="row">
@@ -62,23 +62,6 @@
                             <div class="card-body py-0">
                                 <div class="row">
                                     <div class="col-md-4" style="border: 1px solid white;border-radius: 5px;height: 510px;">
-
-
-
-{{--                                        <form action="{{route('Admin.index')}}" method="GET" class="w-100">--}}
-{{--                                            <div class="input-group mt-2 mb-2">--}}
-
-{{--                                                <input name="SearchTerm" type="text" class="form-control" placeholder="Search...">--}}
-{{--                                                <div class="input-group-append">--}}
-{{--                                                    <button class="btn btn-success" type="submit">Search</button>--}}
-{{--                                                    <button  class="btn shadow-none" type="button"--}}
-{{--                                                             style=""><i id="visiotr_refresh"--}}
-{{--                                                                         class="fa fa-cog text-dark"--}}
-{{--                                                                         style="font-size: 20px;"></i></button>--}}
-{{--                                                </div>--}}
-
-{{--                                            </div>--}}
-{{--                                        </form>--}}
 
 
 

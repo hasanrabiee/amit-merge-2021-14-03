@@ -65,10 +65,12 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <!-- Traffic sources -->
-                        <div class="card" style="background-color:rgba(54,54,54,0.65);color: white;height: 630px">
+                        <div class="card" style="background-color:#006B63;color: white;height: 630px">
 
                             <div class="card-body">
-                                <h5>Please Add Your Staff In Order to Manage Your Booth And Answer To Visitors Simply</h5>
+                                <h5>
+                                    {{__("message.PleaseAddYourStaff")}}
+                                </h5>
                                 <div class="row">
                                     <div class="col-md-6">
 
@@ -78,7 +80,7 @@
                                                 @csrf
                                                 <div class="form-group">
                                                     <label for="">
-                                                        Please Enter Operator Email Address
+                                                        {{__("message.PleaseEnterOperatorEmailAddress")}}
                                                     </label>
                                                     <input type="email" class="form-control" name="OperatorEmail">
                                                 </div>
@@ -88,7 +90,9 @@
                                         @else
 
                                             <div class="alert alert-danger mt-3 mt-md-5">
-                                                You Reached The Maximum Operator
+
+                                                {{__("message.YouReachedTheMaxOperator")}}
+
                                             </div>
 
                                         @endif
@@ -101,7 +105,7 @@
                                         <div style="height: 500px;background-color:white;border-radius: 5px;" class="mt-3 mt-md-5">
                                             <div class="w-100 bg-dark" style="height: 75px;border-radius: 5px 5px 0 0 ">
                                                 <br>
-                                                <h3 class="ml-3 mt-n1">Your Staff Email List</h3>
+                                                <h3 class="ml-3 mt-n1">{{__("message.YourStaffEmailList")}}</h3>
                                             </div>
                                             <table class="table table-hover table-bordered table-striped">
 
@@ -114,11 +118,11 @@
 
                                                         @if (\App\User::where("email",$email->email)->get()->count() > 0)
                                                             <button class="btn btn-sm btn-success w-100">
-                                                                Registered
+                                                                {{__("message.Registered")}}
                                                             </button>
                                                         @else
                                                             <button class="btn btn-sm btn-dark w-100">
-                                                                Pending
+                                                                {{__("message.Pending")}}
                                                             </button>
                                                         @endif
                                                     </td>

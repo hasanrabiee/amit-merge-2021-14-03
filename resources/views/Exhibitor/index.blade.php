@@ -241,9 +241,9 @@
                         <div class="col-xl-12">
                             <!-- Traffic sources -->
 
-                            <div class="card" style="background-color:rgba(54,54,54,0.65);color: white">
+                            <div class="card" style="background-color:#006B63;color: white">
                                 <div class="card-header header-elements-inline">
-                                    <h6 class="card-title">Profile Information</h6>
+                                    <h6 class="card-title">{{__("message.ProfileInformation")}}</h6>
 
                                     @if(\Illuminate\Support\Facades\Auth::user()->AccountStatus == 'Active')
                                         <button class="btn btn-success ml-md-n5">{{__('message.AccountActive')}}</button>
@@ -258,61 +258,133 @@
                                 <div class="chart position-relative" id="traffic-sources"></div>
                             </div>
 
-                            <div class="card p-3" style="background-color:rgba(54,54,54,0.65);color: white">
+                            <div class="card p-3" style="background-color:#006B63;color: white">
                                 <div class="card-body py-0">
                                     <div class="row">
                                         <div class="col-md-6 col-12 font-size-lg">
+
+                                            @if ($userInfo->Gender != null)
+                                                <p>
+                                                    {{__("message.Title")}} : {{$userInfo->Gender}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->FirstName != null)
+                                                <p>
+                                                    {{__("message.Name")}} : {{$userInfo->FirstName}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->LastName != null)
+                                                <p>
+                                                    {{__("message.LastName")}} : {{$userInfo->LastName}}
+                                                </p>
+                                            @endif
+
                                             <p>{{__('message.Position')}}: {{\Illuminate\Support\Facades\Auth::user()->PositionUser}}</p>
-                                            <p>{{__('message.WebSite')}}: {{$Booth->WebSite}}</p>
-                                            <p>{{__('message.Company')}} {{__('message.Representative')}}: {{$Booth->Representative}}</p>
                                             <p>{{__('message.Company')}} {{__('message.email')}}: {{$Booth->User->email }}</p>
                                             <p>{{__('message.Company')}} {{__('message.Name')}}: {{$Booth->CompanyName}}</p>
                                             @if ($userInfo->companyAddress != null)
                                                 <p>
-                                                    Company Address : {{$userInfo->companyAddress}}
+                                                    {{__("message.CompanyAddress")}} : {{$userInfo->companyAddress}}
                                                 </p>
                                             @endif
+
+
+                                            @if ($userInfo->City != null)
+                                                <p>
+                                                    {{__("message.City")}} : {{$userInfo->City}}
+                                                </p>
+                                            @endif
+
+
+
 
                                             @if ($userInfo->zipCode != null)
                                                 <p>
-                                                    Zip Code : {{$userInfo->zipCode}}
+                                                    {{__("message.Zipcode")}} : {{$userInfo->zipCode}}
                                                 </p>
                                             @endif
 
-                                            @if ($userInfo->mainCompany != null)
-                                                <p>
-                                                    Main Company : {{$userInfo->mainCompany}}
-                                                </p>
-                                            @endif
+
 
                                             @if ($userInfo->institutionEmail != null)
                                                 <p>
-                                                    Institution Email : {{$userInfo->institutionEmail}}
+                                                    {{__("message.InstitutionEmail")}} : {{$userInfo->institutionEmail}}
                                                 </p>
                                             @endif
 
-                                            @if ($userInfo->phone != null)
-                                                <p>
-                                                    phone : {{$userInfo->phone}}
-                                                </p>
-                                            @endif
 
-                                            @if ($userInfo->fax != null)
-                                                <p>
-                                                    Fax : {{$userInfo->fax}}
-                                                </p>
-                                            @endif
+
+
+
+
 
                                             @if ($userInfo->institution != null)
                                                 <p>
-                                                    Institution : {{$userInfo->institution}}
+                                                    {{__("message.Institution")}} : {{$userInfo->institution}}
                                                 </p>
                                             @endif
+
+
+
+
 
 
 
                                         </div>
                                         <div class="col-md-6 col-12 font-size-lg">
+
+
+
+                                            @if ($userInfo->Country != null)
+                                                <p>
+                                                    {{__("message.Country")}} : {{$userInfo->Country}}
+                                                </p>
+                                            @endif
+                                                <p>{{__('message.WebSite')}}: {{$Booth->WebSite}}</p>
+
+                                            @if ($userInfo->mainCompany != null)
+                                                <p>
+                                                    {{__("message.MainCompany")}} : {{$userInfo->mainCompany}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->phone != null)
+                                                <p>
+                                                    {{__("message.Phone")}} : {{$userInfo->phone}}
+                                                </p>
+                                            @endif
+
+
+                                            @if ($userInfo->tel != null)
+                                                <p>
+                                                    {{__("message.Tel")}} : {{$userInfo->tel}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->fax != null)
+                                                <p>
+                                                    {{__("message.Fax")}} : {{$userInfo->fax}}
+                                                </p>
+                                            @endif
+
+
+                                            @if ($userInfo->profile != null)
+                                                <p>
+                                                    {{__("message.Profile")}} : {{$userInfo->profile}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->subProfile != null)
+                                                <p>
+                                                    {{__("message.SubProfile")}} : {{$userInfo->subProfile}}
+                                                </p>
+                                            @endif
+
+
+
+
                                             <div class="btn-group w-100">
 
                                                 <a class="btn btn-dark w-100"  data-toggle="modal" href="#job_vac_modal">
@@ -337,7 +409,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-xl-6">
-                                    <div class="card p-3" style="background-color:rgba(54,54,54,0.65);;color: white">
+                                    <div class="card p-3" style="background-color:#006B63;color: white">
                                         <div class="card-body py-0">
                                             <div class="row">
                                                 <form action="{{route('Exhibitor.ChangePassword')}}" method="post" class="w-100">
@@ -369,34 +441,14 @@
                                         <div class="chart position-relative" id="traffic-sources"></div>
                                     </div>
                                 </div>
-
                                 <div class="col-xl-6">
-                                    <div class="card p-3" style="background-color:rgba(54,54,54,0.65);color: white">
+                                    <div class="card p-3" style="background-color:#006B63;color: white">
                                         <div class="card-body py-0">
                                             <div class="row">
-
-
-
-
-
-                                                {{--                                                <form method="post" action="{{route('Exhibitor.AboutCompany')}}">--}}
-                                                {{--                                                    @csrf--}}
-                                                {{--                                                    <textarea class="border rounded form-control float-left" style="width: 384px;height: 136px;"--}}
-                                                {{--                                                              placeholder="Please tell us abour your company, this will pop-up in your company booth (120 character alimit)"--}}
-                                                {{--                                                              maxlength="120" name="Description">{!! $Booth->Description !!}</textarea>--}}
-                                                {{--                                                    <button class="btn btn-success float-left" type="submit"--}}
-                                                {{--                                                            style="margin-top: 7px;width: 160px;color: rgb(255,255,255);">{{__('message.Update')}}--}}
-                                                {{--                                                    </button>--}}
-                                                {{--                                                </form>--}}
-
-
-
-
-
                                                 <form method="post" action="{{route('Exhibitor.AboutCompany')}}" class="w-100">
                                                     @csrf
                                                     <div class="form-group col-12">
-                                                        <textarea type="text" class="form-control" rows="5" style="padding-bottom: 19px;" placeholder="Please Tell Us About Your Visit Experience" name="Description">{!! $Booth->Description !!}</textarea>
+                                                        <textarea type="text" class="form-control" rows="5" style="padding-bottom: 19px;" placeholder="Please Tell About Your Company To Show Up to The Visitors" name="Description">{!! $Booth->Description !!}</textarea>
                                                     </div>
                                                     <div class="form-group text-center">
                                                         <button class="btn btn-success ml-2" type="submit">{{__('message.Update')}}</button>
@@ -407,8 +459,6 @@
                                         <div class="chart position-relative" id="traffic-sources"></div>
                                     </div>
                                 </div>
-
-
                             </div>
                             <!-- /traffic sources -->
                         </div>

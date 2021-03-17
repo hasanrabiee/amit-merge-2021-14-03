@@ -71,24 +71,23 @@ class VisitorController extends Controller
 
         $already_requested_meeting = MeetingRequest::where('user_id', Auth::user()->id)->where('exhibitor_id', $userID)->orderBy('id','DESC')->first();
 
-        if($already_requested_meeting != null && $already_requested_meeting->status == 'none' &&   Carbon::now()->toTimeString() <  Carbon::parse($already_requested_meeting->request_time)->addMinutes(30)->toTimeString() &&  Carbon::parse($already_requested_meeting->request_time)->toDateString() == Carbon::now()->toDateString()){
-
-            $message = "You're request is being checked by the company ";
-
-            return view('Visitor.alreadyRequestedMeeting')->with(['message'=>$message]);
-
-        }
-        elseif($already_requested_meeting != null && $already_requested_meeting->status == 'accepted' &&  Carbon::now()->toTimeString() <  Carbon::parse($already_requested_meeting->request_time)->addMinutes(30)->toTimeString() && Carbon::parse($already_requested_meeting->request_time)->toDateString() == Carbon::now()->toDateString()){
-
-
-
-
-
-            $message = "You've been accepted for your meeting, go to your dashboard";
-
-            return view('Visitor.alreadyRequestedMeeting')->with(['message'=>$message]);
-
-        }
+//        if($already_requested_meeting != null && $already_requested_meeting->status == 'none' &&   Carbon::now()->toTimeString() <  Carbon::parse($already_requested_meeting->request_time)->addMinutes(30)->toTimeString() &&  Carbon::parse($already_requested_meeting->request_time)->toDateString() == Carbon::now()->toDateString()){
+//
+//            $message = "You're request is being checked by the company ";
+//
+//            return view('Visitor.alreadyRequestedMeeting')->with(['message'=>$message]);
+//
+//        }
+//        if($already_requested_meeting != null && $already_requested_meeting->status == 'accepted' &&  Carbon::now()->toTimeString() <  Carbon::parse($already_requested_meeting->request_time)->addMinutes(30)->toTimeString() && Carbon::parse($already_requested_meeting->request_time)->toDateString() == Carbon::now()->toDateString()){
+//
+//
+//
+//
+//            $message = "You've been accepted for your meeting, go to your dashboard";
+//
+//            return view('Visitor.alreadyRequestedMeeting')->with(['message'=>$message]);
+//
+//        }
 
 
         if(\request()->has('Day')){
@@ -100,7 +99,7 @@ class VisitorController extends Controller
         $available_meetings = Meeting::where('owner_id', $userID)
             ->where('type','meeting')
             ->whereDate( 'start_time', Carbon::parse(\request()->Day)->format('Y-m-d') )
-            ->where('reserved', false)->get(['start_time']);
+            ->get(['start_time']);
 
 
 
@@ -108,7 +107,6 @@ class VisitorController extends Controller
 
 
         if (\request()->exists('time') && \request()->exists('Day')) {
-
 
             $meet_req = new MeetingRequest();
             $meet_req->user_id = Auth::user()->id;
@@ -118,10 +116,8 @@ class VisitorController extends Controller
             $meet_req->status = 'none';
             $meet_req->save();
 
-
+            Alert::success("Request was successful, check status in your dashboard");
             return redirect()->back();
-
-
 
         }
 
@@ -326,26 +322,37 @@ class VisitorController extends Controller
 
 
 
-        if (\request()->institution) {
-            $booths = null;
-            $Usersf = User::where("institution",\request()->institution)->get();
-            foreach ($Usersf as $Userf){
-                if (booth::where("UserID",$Userf->id)->count() > 0) {
-                    $booths [] = booth::where("UserID",$Userf->id)->first();
-                }else{
-                    $booths = null;
-                }
-            }
-
-            if ($booths != null) {
-                return view('Visitor.VisitHistory')->with(['Booths' => $booths]);
-            }else {
-                Alert::error("nothing found");
-                return redirect()->back();
-            }
-
-
-        }
+//        if (\request()->profile) {
+//            $booths = null;
+//            $Usersf = User::where("profile",\request()->profile)->get();
+//
+//            foreach ($Usersf as $Userf){
+//                $ids[] = $Userf->id;
+//                $users = [];
+//                foreach ($ids as $id){
+//                    $users[] = User::where("id",$id)->first();
+//                }
+//
+//                foreach ($users as $user){
+//                    $booth = booth::where("UserID",$user->id)->first();
+//                    if (!empty($booth)) {
+//                        $booths2[] = $booth;
+//                    }
+//                }
+//
+//
+//            }
+//
+//
+//            if ($booths2 != null) {
+//                return view('Visitor.VisitHistory')->with(['Booths' => $booths2]);
+//            }else {
+//                Alert::error("nothing found");
+//                return redirect()->back();
+//            }
+//
+//
+//        }
 
 
         if (\request()->CompanyID){

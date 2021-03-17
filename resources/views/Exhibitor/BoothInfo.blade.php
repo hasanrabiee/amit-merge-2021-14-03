@@ -73,10 +73,12 @@
                                   enctype="multipart/form-data" class="w-100">
                             @csrf
                             <!-- Traffic sources -->
-                                <div class="card p-3" style="background-color:rgba(54,54,54,0.65);color: white">
+                                <div class="card p-3" style="background-color:#006B63;color: white">
                                     <div class="card-body py-0">
                                         <div class="alert alert-warning">
-                                            Note: When You Make a Change ; Please Click the Save Button to Apply Changes
+
+                                            {{__("message.BoothNote")}}
+
                                         </div>
                                         <div class="row">
                                             <div class="col-md-7 font-size-lg">
@@ -152,7 +154,7 @@
                                                     <div class="row">
                                                         <div class="col-6">
                                                             <label for="">
-                                                                Upload PDF (max:20MB)
+                                                                {{__("message.Upload")}} PDF (max:20MB)
                                                             </label>
 
                                                             <input type="file" class="form-control-file" name="PdfFile">
@@ -170,7 +172,7 @@
                                                 <div class="form-group mt-2">
 
                                                     <label for="">
-                                                        Youtube Video Link
+                                                        {{__("message.YoutubeVideoLink")}}
                                                     </label>
                                                     <input type="url" class="form-control" name="Video"
                                                            value="{{$Booth->Video}}">
@@ -179,7 +181,7 @@
                                                 <div class="form-group mt-2">
 
                                                     <label for="">
-                                                        Company Website
+                                                        {{__("message.YourCompanyWebSite")}}
                                                     </label>
                                                     <input type="text" class="form-control" name="WebSite"
                                                            value="{{$Booth->WebSite}}">
@@ -198,12 +200,12 @@
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content text-dark">
                                                             <div class="modal-header">
-                                                                <h4>Social Media Links</h4>
+                                                                <h4>{{__("message.SocialMediaLinks")}}</h4>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">×</span></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <h6>Please Add Your Company Social Media Link Which Will be ShowUp in Your Booth</h6>
+                                                                <h6>{{__("message.AddSocial")}}</h6>
                                                                 <div class="form-group">
                                                                     <label for="">Linkedin Link:</label>
                                                                     <input type="text" class="form-control" name="linkedin" value="{{$Booth->linkedin}}">
@@ -220,11 +222,11 @@
                                                             <div class="modal-footer">
 
                                                                 <p class="mb-2">
-                                                                    After Setting Your Media Links Please Click on Save Button to Apply Changes
+                                                                    {{__("message.AfterSettingYourMediaLink")}}
                                                                 </p>
 
                                                                 <button class="btn btn-success w-100" data-dismiss="modal" type="button">
-                                                                    Set
+                                                                    {{__("message.Set")}}
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -256,10 +258,10 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <p class="mb-2">
-                                                                    After Selecting Your Logo Please Click On Save Button To Apply Changes
+                                                                    {{__("message.AfterSelectingLogo")}}
                                                                 </p>
                                                                 <button class="btn btn-success w-100" data-dismiss="modal" type="button">
-                                                                    Select
+                                                                    {{__("message.Select")}}
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -302,11 +304,11 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <p class="text-dark mb-2">
-                                                                    After Selecting Your Colors Please Click On Save Button To Apply Changes
+                                                                    {{__("message.AfterSelectingColor")}}
                                                                 </p>
                                                                 <button class="btn btn-success btn-block"
                                                                         data-dismiss="modal" type="button">
-                                                                    Select
+                                                                    {{__("message.Select")}}
                                                                 </button>
                                                             </div>
                                                         </div>

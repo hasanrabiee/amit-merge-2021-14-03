@@ -69,6 +69,11 @@ Route::group(['prefix' => 'v1' , 'as' => 'Api.'],function (){
     Route::get("ios/rotation4","ApiController@rotation4");
     Route::get("ios/rotation5","ApiController@rotation5");
     Route::get("ios/rotation6","ApiController@rotation6");
+
+    Route::get("/autoLoginApp","ApiController@autoLoginApp")->name("autoLoginApp");
+    Route::get("/autoLoginAppDestroy","ApiController@autoLoginApiDestroy")->name("autoLoginApiDestroy");
+    Route::get("/url","ApiController@url");
+
     //hasan end here
 
 });

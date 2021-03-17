@@ -18,6 +18,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -418,11 +419,6 @@ class ApiController extends Controller
 
 
 
-        User::where("id",$request->UserID)->update([
-            "newmessage" => 1
-        ]);
-
-
 
         if ($Chat->id > 0) {
             return response()->json(
@@ -814,10 +810,6 @@ class ApiController extends Controller
     }
 
 
-
-
-
-
     public function Statistics(Request $request)
     {
 
@@ -848,6 +840,55 @@ class ApiController extends Controller
         return response()->json(
             $rgb
             , 200);
+    }
+
+//    Auto Login App
+
+
+    public function autoLoginApp(Request $request)
+    {
+
+        $request->validate([
+//            "UserIP"=>"required",
+        ]);
+
+        $user = User::where("app_token",$request->app_token)->first();
+        $password = $request->Password;
+        $user1 = [$user,$password];
+
+
+//        dd($user1);
+
+
+
+        Cache::put(\request("app_token"),["Username"=>$user->UserName,"Password"=>$request->Password],10);
+//            dd(Cache::get(\request("app_token")));
+        return response()->json($user1,200);
+
+
+
+    }
+
+
+    public function autoLoginApiDestroy(Request $request)
+    {
+        $request->validate([
+            "UserID"=>"required"
+        ]);
+        User::where('id', $request->UserID)->update(['logout' => true]);
+
+        return response()->json([
+            "status"=>"success"
+        ]);
+
+    }
+
+
+    public function url()
+    {
+        return response()->json([
+            "url"=>"http://185.81.96.44"
+        ]);
     }
 
 }

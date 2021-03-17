@@ -54,17 +54,7 @@
     <!-- Main content -->
 
     <div class="content-wrapper" style="overflow-x: hidden">
-    {{--            <div class="row mb-2">--}}
-    {{--                <div class="col-md-10"></div>--}}
-    {{--                <div class="col-md-2">--}}
-    {{--                    <a class="text-white" href="{{ url('locale/en') }}"><i--}}
-    {{--                            class="ml-2"></i>En</a>--}}
-    {{--                    <a class="text-white" href="{{ url('locale/de') }}"><i--}}
-    {{--                            class="ml-2"></i>Ge</a>--}}
-    {{--                    <a class="text-white" href="{{ url('locale/al') }}"><i--}}
-    {{--                            class="ml-2"></i>Al</a>--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
+
     <!-- Content area -->
         <div class="content">
 
@@ -74,7 +64,7 @@
                     <!-- Traffic sources -->
 
                     <div class="card pc-height-visitor-history  "
-                         style="background-color:rgba(54,54,54,0.65);color: white">
+                         style="background-color:#006B63;color: white">
                         <div class="card-body py-0">
                             <div class="row">
                                 <div class="col-md-4">
@@ -92,8 +82,8 @@
                                     <div style="height: 500px;overflow-y: auto;overflow-x: hidden">
                                         <table class="table">
                                             <thead>
-                                            <th>Company Name</th>
-                                            <th>Requested Date</th>
+                                            <th>{{__("message.CompanyName")}}</th>
+                                            <th>{{__("message.RequestedDate")}}</th>
                                             </thead>
                                         </table>
 
@@ -155,15 +145,14 @@
                                         <div class="alert alert-info mt-md-5" style="height: 500px;">
                                         <h4>
                                             <i class="fa fa-clock-o"></i>
-                                            Date: {{$selected_meeting->request_time}}</h4>
-
-
+                                            {{__("message.Date")}} {{$selected_meeting->request_time}}</h4>
 
                                         <h4>
 
                                             <i class="fa fa-pencil"></i>
-                                            Your Meeting is Pending and We will Inform You as soon as Exhibitor confirm
-                                            meeting</h4>
+                                                {{__("message.PendingExhibitorMeeting")}}
+
+                                        </h4>
 
 
                                             @elseif($selected_meeting->status == 'rejected')
@@ -173,14 +162,16 @@
                                                     <h4>
                                                         <i class="fa fa-clock-o"></i>
 
-                                                        Date: {{$selected_meeting->request_time}}</h4>
+                                                        {{__("message.Date")}}: {{$selected_meeting->request_time}}</h4>
 
 
 
                                                     <h4>
                                                         <i class="fa fa-pencil"></i>
 
-                                                        Your Meeting Request was rejected, you can request another meeting</h4>
+                                                       {{__("message.RejectedExhibitorMeeting")}}
+
+                                                    </h4>
 
 
 
@@ -190,13 +181,14 @@
                                                         <div class="alert alert-success mt-md-5" style="height: 500px;">
                                                             <h4>
                                                                 <i class="fa fa-clock-o"></i>
-                                                                Date: {{$selected_meeting->request_time}}</h4>
+                                                                {{__("message.Date")}}: {{$selected_meeting->request_time}}</h4>
 
 
 
                                                             <h4>
                                                                 <i class="fa fa-pencil"></i>
-                                                                Your Meeting Request has been Accepted</h4>
+                                                                {{__("message.AcceptedExhibitorMeeting")}}
+                                                                </h4>
 
 
 
@@ -205,24 +197,18 @@
 
                                                                 <a href="{{route('Visitor.meeting.join', $meeting_exhibitor->meeting_id )}}" class="btn btn-block btn-primary">
                                                                     <i class="fa fa-bullhorn"></i>
-                                                                    Enter Meeting
+                                                                    {{__("message.EnterMeeting")}}
                                                                 </a>
 
 
                                                             @elseif (\Carbon\Carbon::today()->toDateString() == \Carbon\Carbon::parse($meeting_exhibitor->request_time)->toDateString() and  \Carbon\Carbon::now()->toTimeString() < \Carbon\Carbon::parse($meeting_exhibitor->request_time)->toTimeString()  )
                                                                 <button disabled=""  class="btn btn-dark w-100">
-                                                                    Meeting not started yet
+                                                                    {{__("message.MeetingNotStartedYet")}}
                                                                 </button>
-
-
                                                             @else
-
                                                                 <button disabled=""  class="btn btn-dark w-100">
-                                                                    No Action
+                                                                    {{__("message.NoAction")}}
                                                                 </button>
-
-
-
                                                             @endif
 
 

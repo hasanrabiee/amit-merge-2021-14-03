@@ -49,7 +49,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="text-dark">Please Choose Your Items Which You Like To Be Filtered</h4>
+                    <h4 class="text-dark">{{__("message.ItemFiltered")}}</h4>
                     <button type="button" class="close" data-dismiss="modal"
                             aria-label="Close">
                         <span aria-hidden="true">×</span></button>
@@ -60,10 +60,10 @@
 
 
                     <h6>
-                        Institutions
+                        {{__("message.Profile")}}
                     </h6>
-                    @foreach(explode(',' , \App\ExhibitorForms::find(1)->institutionItems) as $item)
-                        <a href="?institution={{$item}}" class="btn btn-dark w-50 mb-2 btn-sm">
+                    @foreach(explode(',' , \App\VisitorForm::find(1)->profileItems) as $item)
+                        <a href="?profile={{$item}}" class="btn btn-dark w-50 mb-2 btn-sm">
                             {{$item}}
                         </a>
                     @endforeach
@@ -92,7 +92,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <!-- Traffic sources -->
-                        <div class="card p-3 pc-height-visitor-history" style="background-color:rgba(54,54,54,0.65);color: white;">
+                        <div class="card p-3 pc-height-visitor-history" style="background-color:#006B63;color: white;">
                             <div class="card-body py-0">
                                 <div class="row">
                                     <div class="col-md-4" style="">
@@ -133,86 +133,86 @@
 
                                             @if ($userInfo->companyAddress != null)
                                                 <p>
-                                                    Company Address : {{$userInfo->companyAddress}}
+                                                    {{__("message.CompanyAddress")}} : {{$userInfo->companyAddress}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->zipCode != null)
                                                 <p>
-                                                    Zip Code : {{$userInfo->zipCode}}
+                                                    {{__("message.Zipcode")}} : {{$userInfo->zipCode}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->mainCompany != null)
                                                 <p>
-                                                    Main Company : {{$userInfo->mainCompany}}
+                                                    {{__("message.MainCompany")}} : {{$userInfo->mainCompany}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->institutionEmail != null)
                                                 <p>
-                                                    Institution Email : {{$userInfo->institutionEmail}}
+                                                    {{__("message.InstitutionEmail")}} : {{$userInfo->institutionEmail}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->phone != null)
                                                 <p>
-                                                    phone : {{$userInfo->phone}}
+                                                    {{__("message.Tel")}} : {{$userInfo->phone}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->fax != null)
                                                 <p>
-                                                    Fax : {{$userInfo->fax}}
+                                                    {{__("message.Fax")}} : {{$userInfo->fax}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->institution != null)
                                                 <p>
-                                                    Institution : {{$userInfo->institution}}
+                                                    {{__("message.Institution")}} : {{$userInfo->institution}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->education != null)
                                                 <p>
-                                                    education : {{$userInfo->institution}}
+                                                    {{__("message.Education")}} : {{$userInfo->education}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->countryStudy != null)
                                                 <p>
-                                                    countryStudy : {{$userInfo->countryStudy}}
+                                                    {{__("message.CountryStudy")}} : {{$userInfo->countryStudy}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->InterestedDegree != null)
                                                 <p>
-                                                    interestedDegree : {{$userInfo->InterestedDegree}}
+                                                    {{__("message.InterestedDegree")}} : {{$userInfo->InterestedDegree}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->InterestedField != null)
                                                 <p>
-                                                    interestedField : {{$userInfo->InterestedField}}
+                                                    {{__("message.InterestedField")}} : {{$userInfo->InterestedField}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->languageOfStudy != null)
                                                 <p>
-                                                    languageOfStudy : {{$userInfo->languageOfStudy}}
+                                                    {{__("message.LanguageOfStudy")}} : {{$userInfo->languageOfStudy}}
                                                 </p>
                                             @endif
 
 
                                             @if ($userInfo->onlineDegreeProgram != null)
                                                 <p>
-                                                    onlineDegreeProgram : {{$userInfo->onlineDegreeProgram}}
+                                                    {{__("message.OnlineDegreeProgram")}} : {{$userInfo->onlineDegreeProgram}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->interestedScholarShip != null)
                                                 <p>
-                                                    interestedScholarShip : {{$userInfo->interestedScholarShip}}
+                                                    {{__("message.InterestedScholarShip")}} : {{$userInfo->interestedScholarShip}}
                                                 </p>
                                             @endif
 
@@ -247,7 +247,7 @@
                                                     <span class="fa fa-video-camera" style="font-size: 24px;">&nbsp;</span><a href="{{$Booth->Video}}" class="text-white" style="font-size: 20px;" target="_blank">See Company Movie</a>
                                                 </div>
                                             @endif
-                                            <h4 class="mt-3">Social Medias Links </h4>
+                                            <h4 class="mt-3">{{__("message.SocialMediaLinks")}} </h4>
                                             <div class="row mt-5">
 
                                                 <div class="col-4 text-center">

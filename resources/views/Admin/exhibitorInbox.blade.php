@@ -59,7 +59,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <!-- Traffic sources -->
-                        <div class="card p-3 card-admin" style="background-color:rgba(168,168,168,0.5);color: white">
+                        <div class="card p-3 card-admin" style="background-color:#006B63;color: white">
                             <div class="card-body py-0">
                                 <h3>Exhibitor Inbox</h3>
                                 <div class="row">
@@ -69,11 +69,11 @@
                                             <div class="input-group mt-2 mb-2">
                                                 <input type="text" class="form-control" placeholder="{{__('message.UserName')}}" name="SearchTermBooth">
                                                 <div class="input-group-append">
-                                                    <button class="btn btn-success" type="submit">Search</button>
+                                                    <button class="btn btn-success" type="submit" style="background-color: #01B5A8">Search</button>
                                                     <button  class="btn shadow-none" type="button"
                                                              style=""><i id="company_refresh"
                                                                          class="fa fa-cog text-dark"
-                                                                         style="font-size: 20px;"></i></button>
+                                                                         style="font-size: 20px; "></i></button>
                                                 </div>
                                             </div>
                                         </form>
@@ -84,47 +84,48 @@
                                         <br>
                                     </div>
                                     @if (request()->CompanyID)
-                                        <div class="col-md-4" style="border: 1px solid white;border-radius: 5px;height: 950px;overflow-y: auto">
+                                        <div class="col-md-4" style="border: 1px solid white;border-radius: 5px;height: 950px;overflow-y: auto;">
                                             <div class="mt-2">
                                                 <h3>{{\App\booth::find(request()->CompanyID)->HeaderName}} Information</h3>
                                                 <div class="text-center">
-                                                    <img src="{{\App\booth::find(request()->CompanyID)->Logo}}" alt="" style="width: 50px;height: 50px;border-radius: 50%">
+                                                    <img src="{{\App\booth::find(request()->CompanyID)->Logo}}" alt="" style="width: 100px;height: 100px;border-radius: 50%">
                                                 </div>
-                                                <p class="font-size-lg"><strong>CompanyName: </strong>{{\App\booth::find(request()->CompanyID)->CompanyName}}</p>
-                                                <p class="font-size-lg"><strong>Company HeaderName: </strong>{{\App\booth::find(request()->CompanyID)->HeaderName}}</p>
-                                                <p class="font-size-lg"><strong>Company Representative: </strong>{{\App\booth::find(request()->CompanyID)->Representative }}</p>
-                                                <p class="font-size-lg"><strong>Website: </strong><a href="https://{{\App\booth::find(request()->CompanyID)->WebSite}}">{{\App\booth::find(request()->CompanyID)->WebSite}}</a></p>
-                                                <p class="font-size-lg"><strong>Position: </strong>{{\App\booth::find(request()->CompanyID)->Position}}</p>
-                                                <p class="font-size-lg"><strong>Tel: </strong>{{\App\booth::find(request()->CompanyID)->user->PhoneNumber}}</p>
-                                                <p class="font-size-lg"><strong>Email: </strong>{{\App\booth::find(request()->CompanyID)->user->email}}</p>
+                                                <br>
+                                                <p class="font-size-lg"><strong>{{__("message.CompanyName")}}: </strong>{{\App\booth::find(request()->CompanyID)->CompanyName}}</p>
+                                                <p class="font-size-lg"><strong>{{__("message.BoothHeaderName")}}: </strong>{{\App\booth::find(request()->CompanyID)->HeaderName}}</p>
+                                                <p class="font-size-lg"><strong>{{__("message.CompanyRepresentative")}}: </strong>{{\App\booth::find(request()->CompanyID)->Representative }}</p>
+                                                <p class="font-size-lg"><strong>{{__("message.WebSite")}}: </strong><a href="https://{{\App\booth::find(request()->CompanyID)->WebSite}}">{{\App\booth::find(request()->CompanyID)->WebSite}}</a></p>
+                                                <p class="font-size-lg"><strong>{{__("message.Profile")}}: </strong>{{\App\booth::find(request()->CompanyID)->Position}}</p>
+                                                <p class="font-size-lg"><strong>{{__("message.Tel")}}: </strong>{{\App\booth::find(request()->CompanyID)->user->PhoneNumber}}</p>
+                                                <p class="font-size-lg"><strong>{{__("message.Email")}}: </strong>{{\App\booth::find(request()->CompanyID)->user->email}}</p>
 
 
                                                 @if (\App\booth::find(request()->CompanyID)->user->companyAddress != null)
-                                                    <p class="font-size-lg"><strong>company Address:</strong>{{\App\booth::find(request()->CompanyID)->user->companyAddress}}</p>
+                                                    <p class="font-size-lg"><strong>{{__("message.CompanyAddress")}}:</strong>{{\App\booth::find(request()->CompanyID)->user->companyAddress}}</p>
                                                 @endif
 
                                                 @if (\App\booth::find(request()->CompanyID)->user->zipCode != null)
-                                                    <p class="font-size-lg"><strong>zipCode :</strong>{{\App\booth::find(request()->CompanyID)->user->zipCode}}</p>
+                                                    <p class="font-size-lg"><strong>{{__("message.Zipcode")}} :</strong>{{\App\booth::find(request()->CompanyID)->user->zipCode}}</p>
                                                 @endif
 
                                                 @if (\App\booth::find(request()->CompanyID)->user->mainCompany != null)
-                                                    <p class="font-size-lg"><strong>Main Company :</strong>{{\App\booth::find(request()->CompanyID)->user->zipCode}}</p>
+                                                    <p class="font-size-lg"><strong>{{__("message.MainCompany")}} :</strong>{{\App\booth::find(request()->CompanyID)->user->zipCode}}</p>
                                                 @endif
 
                                                 @if (\App\booth::find(request()->CompanyID)->user->institutionEmail != null)
-                                                    <p class="font-size-lg"><strong>institutionEmail :</strong>{{\App\booth::find(request()->CompanyID)->user->institutionEmail}}</p>
+                                                    <p class="font-size-lg"><strong>{{__("message.InstitutionEmail")}} :</strong>{{\App\booth::find(request()->CompanyID)->user->institutionEmail}}</p>
                                                 @endif
 
                                                 @if (\App\booth::find(request()->CompanyID)->user->phone != null)
-                                                    <p class="font-size-lg"><strong>Phone :</strong>{{\App\booth::find(request()->CompanyID)->user->phone}}</p>
+                                                    <p class="font-size-lg"><strong>{{__("message.Phone")}}:</strong>{{\App\booth::find(request()->CompanyID)->user->phone}}</p>
                                                 @endif
 
                                                 @if (\App\booth::find(request()->CompanyID)->user->fax != null)
-                                                    <p class="font-size-lg"><strong>Phone :</strong>{{\App\booth::find(request()->CompanyID)->user->fax}}</p>
+                                                    <p class="font-size-lg"><strong>{{__("message.Fax")}} :</strong>{{\App\booth::find(request()->CompanyID)->user->fax}}</p>
                                                 @endif
 
                                                 @if (\App\booth::find(request()->CompanyID)->user->institution != null)
-                                                    <p class="font-size-lg"><strong>Phone :</strong>{{\App\booth::find(request()->CompanyID)->user->institution}}</p>
+                                                    <p class="font-size-lg"><strong>{{__("message.Institution")}} :</strong>{{\App\booth::find(request()->CompanyID)->user->institution}}</p>
                                                 @endif
 
 
@@ -140,14 +141,14 @@
                                                 @endif
                                             </strong>
                                         </h4>
-                                        <div style="background-color:transparent;border: 1px solid transparent ;height: 350px;border-radius: 5px;overflow-x:hidden ">
+                                        <div style="background-color:transparent;border: 1px solid transparent ;height: 350px;border-radius: 5px;overflow-x:hidden ;">
 
                                             <div>
                                                 <div class="scroll_box ChatsDiv" id="ChatsDiv">
                                                     @if($Chats->count() == 0)
                                                         {{__('message.NoMessageAvailable')}}
                                                     @else
-                                                        <p>Loading...</p>
+                                                        <p>{{__("message.Loading")}}</p>
                                                     @endif
                                                 </div>
                                             </div>
@@ -164,7 +165,7 @@
                                             <input type="hidden" name="Mode" id="MOOdee"
                                                    value="@if(request()->CompanyID) Company @else User @endif">
                                                 <div class="input-group-append">
-                                                    <button class="btn btn-success" onclick="sendMessage()">
+                                                    <button class="btn btn-success" onclick="sendMessage()" style="background: #01B5A8">
                                                         {{__('message.Send')}}
                                                     </button>
                                                 </div>

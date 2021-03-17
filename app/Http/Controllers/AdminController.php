@@ -136,6 +136,18 @@ class AdminController extends Controller
 
             $current_conference->save();
 
+
+            $active_conf = Conference::where('crid', \request()->cid)->first();
+            if($active_conf){
+
+                $active_conf->title = $request->title ?? '';
+                $active_conf->abstract = $request->abstract ?? '';
+                $active_conf->save();
+
+            }
+
+
+
             Alert::success('Conference Updated Successfully');
 
             return redirect()->back();
@@ -731,12 +743,87 @@ class AdminController extends Controller
 
         }
 
+        if (\request()->country) {
+            if (User::where("countryStudy",\request()->country)->count() >0) {
+                $Users = User::where("countryStudy",\request()->country)->get();
+                return view('Admin.History')->with(['Booths' => $Booths, 'Users' => $Users,'newMessage'=>$newMessage]);
+            }else {
+                Alert::error("nothing found");
+                return redirect()->back();
+            }
 
+        }
+
+        if (\request()->interestedDegree) {
+            if (User::where("InterestedDegree",\request()->interestedDegree)->count() >0) {
+                $Users = User::where("InterestedDegree",\request()->interestedDegree)->get();
+                return view('Admin.History')->with(['Booths' => $Booths, 'Users' => $Users,'newMessage'=>$newMessage]);
+            }else {
+                Alert::error("nothing found");
+                return redirect()->back();
+            }
+
+        }
+
+        if (\request()->interestedField) {
+            if (User::where("InterestedField",\request()->interestedField)->count() >0) {
+                $Users = User::where("InterestedField",\request()->interestedField)->get();
+                return view('Admin.History')->with(['Booths' => $Booths, 'Users' => $Users,'newMessage'=>$newMessage]);
+            }else {
+                Alert::error("nothing found");
+                return redirect()->back();
+            }
+
+        }
+
+        if (\request()->onDegree) {
+            if (User::where("onlineDegreeProgram",\request()->onDegree)->count() >0) {
+                $Users = User::where("onlineDegreeProgram",\request()->onDegree)->get();
+                return view('Admin.History')->with(['Booths' => $Booths, 'Users' => $Users,'newMessage'=>$newMessage]);
+            }else {
+                Alert::error("nothing found");
+                return redirect()->back();
+            }
+
+        }
+
+
+        if (\request()->adSem) {
+            if (User::where("admissionSemester",\request()->adSem)->count() >0) {
+                $Users = User::where("admissionSemester",\request()->adSem)->get();
+                return view('Admin.History')->with(['Booths' => $Booths, 'Users' => $Users,'newMessage'=>$newMessage]);
+            }else {
+                Alert::error("nothing found");
+                return redirect()->back();
+            }
+
+        }
+
+        if (\request()->intProf) {
+            if (User::where("professionInterestedToApply",\request()->intProf)->count() >0) {
+                $Users = User::where("professionInterestedToApply",\request()->intProf)->get();
+                return view('Admin.History')->with(['Booths' => $Booths, 'Users' => $Users,'newMessage'=>$newMessage]);
+            }else {
+                Alert::error("nothing found");
+                return redirect()->back();
+            }
+
+        }
+
+        if (\request()->profile) {
+            if (User::where("profile",\request()->profile)->count() >0) {
+                $Users = User::where("profile",\request()->profile)->get();
+                return view('Admin.History')->with(['Booths' => $Booths, 'Users' => $Users,'newMessage'=>$newMessage]);
+            }else {
+                Alert::error("nothing found");
+                return redirect()->back();
+            }
+
+        }
 
 
         return view('Admin.History')->with(['Booths' => $Booths, 'Users' => $User,'newMessage'=>$newMessage]);
     }
-
     public function Lounge()
     {
         $newMessage = $this->hasanChatCount();
@@ -1078,6 +1165,10 @@ class AdminController extends Controller
 
     public function create_webinar(Conference  $conference) {
 
+
+
+
+
         $user =  Zoom::user()->find(env('WEBINAR_MAIL'));
         $webinar = Zoom::webinar()->make([
             'topic' => $conference->title,
@@ -1105,6 +1196,12 @@ class AdminController extends Controller
 
         $this->start_webinar($conference);
 
+        $this->sendNotification("Webinar Started", $conference->title . " started right now");
+
+
+
+
+
         return view('zoom-webinar.start')->with([
             'webinar' => $conference,
             'role' => '1',
@@ -1112,6 +1209,106 @@ class AdminController extends Controller
         ]);
 
     }
+
+
+    public function sendNotification($title,$message)
+    {
+        $firebaseToken = User::whereNotNull('device_token')->pluck('device_token')->all();
+
+        $SERVER_API_KEY = env('FIREBASE_SERVER_KEY','xxxxxxxxx');
+
+        $data = [
+            "registration_ids" => $firebaseToken,
+            "notification" => [
+                "title" => $title,
+                "body" => $message,
+            ]
+        ];
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=' . $SERVER_API_KEY,
+            'Content-Type: application/json',
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+        $response = curl_exec($ch);
+
+
+        if(\request()->has('redirect')){
+
+            Alert::success('Openning Anounced to users');
+
+            return redirect()->back();
+        }
+
+
+    }
+
+
+
+    public function sendNotificationModal(Request $request)
+    {
+
+        $request->validate([
+
+            'title' => 'required',
+            'body' => 'nullable'
+
+        ]);
+
+
+        $firebaseToken = User::whereNotNull('device_token')->pluck('device_token')->all();
+
+        $SERVER_API_KEY = env('FIREBASE_SERVER_KEY','xxxxxxxxx');
+
+        $data = [
+            "registration_ids" => $firebaseToken,
+            "notification" => [
+                "title" => $request->title,
+                "body" => $request->body ?? 'N/A',
+            ]
+        ];
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=' . $SERVER_API_KEY,
+            'Content-Type: application/json',
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+        $response = curl_exec($ch);
+
+
+
+
+            Alert::success('Notification Sent to users successfully');
+
+            return redirect()->back();
+
+
+
+    }
+
+
+
+
 
     public function start_webinar(Conference $conference){
 
@@ -2033,6 +2230,7 @@ class AdminController extends Controller
 
 
 
+
         VisitorForm::whereId(1)->update([
             "education"=>$request->education,
             "countryStudy"=>$request->countryStudy,
@@ -2044,8 +2242,19 @@ class AdminController extends Controller
             "educationItems"=>$request->educationItems,
             "interestedDegreeItems"=>$request->interestedDegreeItems,
             "interestedFieldItems"=>$request->interestedFieldItems,
-            "gender"=>$request->gender
+            "gender"=>$request->gender,
+            "cityItems"=>$request->cityItems,
+            "countryInterestedItems"=>$request->countryInterestedItems,
+            "onlineDegreeProgramsItems"=>$request->onlineDegreeProgramsItems,
+            "admissionSemesterItems"=>$request->admissionSemesterItems,
+            "professionInterestedItems"=>$request->professionInterestedItems,
+            "profileItems"=>$request->profileItems,
+            "studentStatus"=>$request->studentStatus,
+            "jobSeekerStatus"=>$request->jobSeekerStatus,
+            "companyStatus"=>$request->companyStatus
+
         ]);
+
 
 
 
@@ -2057,6 +2266,8 @@ class AdminController extends Controller
         Alert::success("Your Changes Successfully Saved");
         return redirect()->back();
     }
+
+
 
 
     public static function onlineShow()

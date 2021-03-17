@@ -79,7 +79,7 @@
                         <!-- Traffic sources -->
                         <div class="row">
                             <div class="col-md-6" style="height: 600px !important;">
-                                <div class="card w-100" style="background-color:rgba(168,168,168,0.5);color: white;">
+                                <div class="card w-100" style="background-color:#006B63;color: white;">
                                     <div class="card-body">
                                         <div class="row w-100">
                                             <div class="w-100">

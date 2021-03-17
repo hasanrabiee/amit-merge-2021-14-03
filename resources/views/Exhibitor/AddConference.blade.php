@@ -67,7 +67,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <!-- Traffic sources -->
-                        <div class="card card-inbox-ex-h" style="background-color:rgba(54,54,54,0.65);color: white;">
+                        <div class="card card-inbox-ex-h" style="background-color:#006B63;color: white;">
                             <div class="card-header header-elements-inline">
 
                                 <div class="header-elements">
@@ -78,13 +78,13 @@
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <h4>Speaker Name Table</h4>
+                                            <h4>{{__("message.SpeakerNameTable")}}</h4>
                                             <div style="overflow-y: auto;height: 450px;">
                                                 <table class="table table-light table-hover table-bordered text-center"
                                                        style="">
                                                     <thead>
                                                     <th>id</th>
-                                                    <th>SpeakerName</th>
+                                                    <th>{{__("message.SpeakerName")}}</th>
                                                     </thead>
                                                     <tbody>
 
@@ -105,7 +105,7 @@
 
                                             @if($can_submit == 'yes')
                                             <button type="button" onclick="$('#AddSpeaker').modal('show')"
-                                                    class="btn btn-primary w-100">Add Speaker To List
+                                                    class="btn btn-primary w-100">{{__("message.AddSpeakerToList")}}
                                             </button>
                                                 @endif
                                         </div>
@@ -114,7 +114,7 @@
                                             <div class="form-group">
                                                 <input type="hidden" name="abstract" id="abstract_box" value="">
                                                 <label for="">
-                                                    Please Write Your Conference Title
+                                                    {{__("message.PleaseWriteYourConferenceTitle")}}
                                                 </label>
                                                 <input name="title" value="{{\request()->old('title')}} {{isset($current_conference->title) ? $current_conference->title : ''}}" type="text" class="form-control" @if(isset($current_conference->title)) disabled @endif>
                                             </div>
@@ -122,7 +122,7 @@
 
                                             <div class="form-group">
                                                 <label for="">
-                                                    Please Write Abstract Your Conference
+                                                    {{__("message.PleaseWriteAbstractYourConference")}}
                                                 </label>
                                                 <textarea name="abstract" type="text" class="form-control"
                                                           rows="10" @if(isset($current_conference->abstract)) disabled @endif>{{\request()->old('abstract')}} {{isset($current_conference->abstract) ? $current_conference->abstract : ''}}</textarea>
@@ -130,8 +130,9 @@
                                         </div>
 
                                         <div class="col-md-4">
-                                            <h4 class="mt-3 mt-md-0">Please Suggest Three Dates Which You Prefer For
-                                                Your Conference</h4>
+                                            <h4 class="mt-3 mt-md-0">
+                                                {{__("message.SuggestThreeDatesPreferForConference")}}
+                                            </h4>
                                             <div class="form-group">
                                                 <label for="">Prefer Date1 :</label>
                                                 <input name="date1" value="{{isset($current_conference->date1)  ? $current_conference->date1 : ''}}" @if (isset($current_conference->date1))
@@ -181,7 +182,7 @@
                                         @if (\Carbon\Carbon::today() == \Carbon\Carbon::parse($conference->start_date) and  \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($conference->start_time))  )
 
                                             <a href="{{route('AuditoriumPlay',$conference->id)  }}" class="btn btn-dark btn-block"
-                                               role="button" disabled="">Not started yet
+                                               role="button" disabled="">{{__("message.NotStartedYet")}}
                                                 <i class="fa fa-hourglass"></i>
                                             </a>
 
@@ -191,16 +192,15 @@
                                             @if ($conference->started )
 
                                                 <a href="{{route('join-webinar',$conference->id)  }}" class="btn btn-success btn-block"
-                                                   role="button" disabled="">Click to Re-Join the conference
+                                                   role="button" disabled="">{{__("message.ClickToJoinTheConference")}}
                                                     <i class="fa fa-plus"></i>
                                                 </a>
 
                                             @else
 
 
-
-                                                <a href="{{route('Exhibitor.create-webinar',$conference->id)  }}" class="btn btn-success btn-block"
-                                                   role="button" disabled="">Click to Start the conference
+                                                <a href="{{route('join-webinar',$conference->id)  }}" class="btn btn-success btn-block"
+                                                   role="button" disabled="">{{__("message.ClickToJoinTheConference")}}
                                                     <i class="fa fa-plus"></i>
                                                 </a>
 
@@ -223,7 +223,7 @@
 
 
                                                 <a href="{{$conference->recorded_video}}" class="btn btn-danger btn-block"
-                                                   role="button" disabled="">Recorded video
+                                                   role="button" disabled="">{{__("message.RecordedVideo")}}
                                                     <i class="fa fa-film"></i>
                                                 </a>
 
@@ -234,7 +234,7 @@
 
                                             <a href="{{route('AuditoriumPlay',$conference->id)  }}"
                                                class="btn btn-outline-dark btn-block"
-                                               role="button" disabled="">Conference is over
+                                               role="button" disabled="">{{__("message.ConferenceIsOver")}}
                                                 <i class="fa fa-cancel"></i>
                                             </a>
 
@@ -244,7 +244,7 @@
 
                                             <a href="{{route('AuditoriumPlay',$conference->id)  }}"
                                                class="btn btn-outline-dark btn-block"
-                                               role="button" disabled="">No action
+                                               role="button" disabled="">{{__("message.NoAction")}}
                                                 <i class="fa fa-cancel"></i>
                                             </a>
 
@@ -288,7 +288,7 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h4 class="text-dark">Speaker Information</h4>
+                                                <h4 class="text-dark">{{__("message.SpeakerInformation")}}</h4>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                     <span aria-hidden="true">×</span></button>
@@ -300,31 +300,31 @@
 
                                                     <div class="form-group">
                                                         <label for="">
-                                                            Username:
+                                                            {{__("message.UserName")}}:
                                                         </label>
                                                         <input name="UserName" type="text" class="form-control">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="">
-                                                            Nickname:
+                                                            {{__("message.Name")}}:
                                                         </label>
                                                         <input name="Name" type="text" class="form-control">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="">
-                                                            Email:
+                                                            {{__("message.Email")}}:
                                                         </label>
                                                         <input name="email" type="email" class="form-control">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="">
-                                                            Password
+                                                            {{__("message.password")}}:
                                                         </label>
                                                         <input name="password" type="password" class="form-control">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="">
-                                                            Password Confirmation
+                                                            {{__("message.passwordConfrimation")}}
                                                         </label>
                                                         <input name="password_confirmation" type="password" class="form-control">
                                                     </div>

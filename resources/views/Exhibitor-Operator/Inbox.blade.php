@@ -53,7 +53,7 @@
             <div class="row">
                 <div class="col-xl-12">
                     <!-- Traffic sources -->
-                    <div class="card p-3 card-inbox-ex-h" style="background-color:rgba(54,54,54,0.65);color: white;">
+                    <div class="card p-3 card-inbox-ex-h" style="background-color:#006B63;color: white;">
                         <div class="card-body py-0">
                             <div class="row">
                                 <div class="col-md-4" style="border: 1px solid white;border-radius: 5px; height: 600px;overflow-y: auto">

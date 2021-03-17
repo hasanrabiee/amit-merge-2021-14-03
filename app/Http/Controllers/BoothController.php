@@ -83,12 +83,12 @@ class BoothController extends Controller
 
         $User = User::create([
             'UserName' => $request->CompanyName,
-            'FirstName' => $request->firstName != null ? $request->firstName : 'System',
-            'LastName' => $request->lastName != null ? $request->lastName : 'User',
+            'FirstName' => $request->FirstName != null ? $request->FirstName : 'System',
+            'LastName' => $request->LastName != null ? $request->LastName : 'User',
             'password' => Hash::make($request->password),
             'City' => $request->City,
             'email' => $request->email,
-            'Gender' => 'Company',
+            'Gender' => $request->Gender,
             'Country' => $request->Country,
             'PhoneNumber' => $PhoneNumber,
             'AccountStatus' => 'Suspend',
@@ -103,7 +103,10 @@ class BoothController extends Controller
             'phone'=>isset($request->phone) ? $request->phone : null,
             'fax'=>isset($request->fax) ? $request->fax : null,
             'institution'=>isset($request->institution) ? $request->institution : null,
-            'ChatMode'=>'Available'
+            'ChatMode'=>'Available',
+            "profile"=>isset($request->profile) ? $request->profile : null,
+            "subProfile"=>isset($request->subProfile) ? $request->subProfile : null,
+            "tel"=>isset($request->tel) ? $request->tel : null,
         ]);
 
 
@@ -112,7 +115,7 @@ class BoothController extends Controller
 
         $Booth = booth::create([
             'CompanyName' => $request->CompanyName,
-            'Representative' => $request->Representative,
+            'Representative' => $request->Representative == null ? "null" : $request->Representative,
             'WebSite' => $request->WebSite != null ? $request->WebSite : '',
             'Status' => 'DeActive',
             'UserID' => $User->id,
@@ -221,7 +224,7 @@ class BoothController extends Controller
 
         $request->validate([
             'Logo' => 'image',
-            'Description' => 'required|string',
+            'Description' => 'string|nullable',
             'Position' => 'required|string',
             'HeaderName' => 'required|string',
             'WebSiteColor' => 'required|string',

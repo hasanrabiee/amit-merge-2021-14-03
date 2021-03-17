@@ -93,4 +93,23 @@ class AuthController extends Controller
         return back();
     }
 
+    public function jobSeeker()
+    {
+
+        return view("auth.register-jobseeker");
+
+    }
+
+    public function UserCompanyRegister()
+    {
+
+        return view("auth.register-company-user");
+
+    }
+
+    public function selectForm()
+    {
+        return view("auth.register-select");
+    }
+
 }

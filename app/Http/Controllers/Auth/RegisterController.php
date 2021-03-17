@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -84,28 +85,44 @@ class RegisterController extends Controller
         $CountryCode = isset($data['CountryCode']) ? $data['CountryCode'] : '+1';
         $PhoneNumber =  $CountryCode . $PhoneNumber;
         return User::create([
-            'FirstName' => $data['FirstName'] ,
-            'LastName' => $data['LastName'] ,
-            'UserName' => $data['UserName'] ,
-            'PhoneNumber' => $PhoneNumber != null  ? $PhoneNumber : 'Not Set',
-            'Profession' => isset($data['Profession']) ? $data['Profession'] : 'Other',
+            'FirstName' => $data['FirstName'],
+            'LastName' => $data['LastName'],
+            'UserName' => $data['UserName'],
+            'PhoneNumber' => $PhoneNumber != null ? $PhoneNumber : 'Not Set',
+            'Profession' => isset($data['professionInterestedToApply']) ? $data['professionInterestedToApply'] : 'Other',
             'Gender' => isset($data['Gender']) ? $data['Gender'] : 'Other',
             'Country' => $data['Country'],
             'City' => $data['City'],
-            'BirthDate' => isset($data['BirthDate']) ? $data['BirthDate'] : Carbon::now() ,
+            'BirthDate' => isset($data['BirthDate']) ? $data['BirthDate'] : Carbon::now(),
             'Image' => '/assets/img/DefaultPic.png',
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'Rule' => 'Visitor',
             'AccountStatus' => 'Active',
             'Payment' => $Payment > 0 ? 'UnPaid' : 'Paid',
-            'education'=>isset($data['education']) ? $data["education"] : null,
-            'countryStudy'=>isset($data['countryStudy']) ? $data["countryStudy"] : null,
-            'interestedDegree'=>isset($data['InterestedDegree']) ? $data['InterestedDegree'] : null,
-            'interestedField'=>isset($data['InterestedField']) ? $data['InterestedField'] : null,
-            'languageOfStudy'=>isset($data["languageOfStudy"]) ? $data["languageOfStudy"] : null,
-            'onlineDegreeProgram'=>isset($data['onlineDegreeProgram']) ? $data["onlineDegreeProgram"] :null,
-            'interestedScholarShip'=>isset($data['interestedScholarShip']) ? $data["interestedScholarShip"] : null,
+            'education' => isset($data['education']) ? $data["education"] : null,
+            'countryStudy' => isset($data['countryStudy']) ? $data["countryStudy"] : null,
+            'interestedDegree' => isset($data['InterestedDegree']) ? $data['InterestedDegree'] : null,
+            'interestedField' => isset($data['InterestedField']) ? $data['InterestedField'] : null,
+            'languageOfStudy' => isset($data["languageOfStudy"]) ? $data["languageOfStudy"] : null,
+            'onlineDegreeProgram' => isset($data['onlineDegreeProgram']) ? $data["onlineDegreeProgram"] : null,
+            'interestedScholarShip' => isset($data['interestedScholarShip']) ? $data["interestedScholarShip"] : null,
+            'admissionSemester' => isset($data['admissionSemester']) ? $data["admissionSemester"] : null,
+            'InterNationalPrograms' => isset($data['interNationalPrograms']) ? $data["interNationalPrograms"] : null,
+            'professionInterestedToApply' => isset($data['professionInterestedToApply']) ? $data["professionInterestedToApply"] : null,
+            'profile' => isset($data['profile']) ? $data["profile"] : null,
+            'userCompanyName' => isset($data['userCompanyName']) ? $data["userCompanyName"] : null,
+            'tel' => isset($data['tel']) ? $data["tel"] : null,
+            'website' => isset($data['website']) ? $data["website"] : null,
+            'zipCode' => isset($data['zipCode']) ? $data["zipCode"] : null,
+            'institutionEmail' => isset($data['institutionEmail']) ? $data["institutionEmail"] : null,
+            'fax' => isset($data['fax']) ? $data["fax"] : null,
+            'position' => isset($data['position']) ? $data["position"] : null,
+            'mainCompany' => isset($data['mainCompany']) ? $data["mainCompany"] : null,
+            'formRule' => isset($data['formRule']) ? $data["formRule"] : null,
+            'companyAddress' => isset($data['companyAddress']) ? $data["companyAddress"] : null,
+            "app_token" => Str::random(16),
         ]);
+
     }
 }

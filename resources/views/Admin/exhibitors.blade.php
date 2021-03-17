@@ -70,7 +70,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <!-- Traffic sources -->
-                        <div class="card card-admin" style="background-color:rgba(168,168,168,0.5);color: white">
+                        <div class="card card-admin" style="background-color:#006B63;color: white">
                             <div class="card-header header-elements-inline">
 
                                 <div class="header-elements">
@@ -83,7 +83,7 @@
                                                 <div class="input-group mt-2 mb-2">
                                                     <input type="text" class="form-control" name="SearchTerm" placeholder="{{__('message.Registered')}} {{__('message.Exhibitors')}} List">
                                                     <div class="input-group-append">
-                                                        <button class="btn btn-success" type="submit">Search</button>
+                                                        <button class="btn btn-success" type="submit" style="background-color: #01B5A8">{{__("message.Search")}}</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -121,11 +121,11 @@
                                             <div class="col-12 ml-md-1 mt-2 mt-md-0" style="border: 1px solid white;border-radius: 5px;height: 700px;overflow-y: auto">
                                                 <div class="ml-md-3 mt-2">
                                                     <div class="text-center">
-                                                        <img src="{{$Booth->Logo}}" alt="" width="100">
+                                                        <img src="{{$Booth->Logo}}" alt="" width="100" height="100" >
                                                     </div>
 
                                                     <h3>
-                                                        Booth Location : Hall {{$Booth->Hall}}  -  @if ($Booth->Position != null) No. {{$Booth->Position}} @else Not Chosen @endif
+                                                        {{__("message.BoothLocation")}} : {{__("message.Hall")}} {{$Booth->Hall}}  -  @if ($Booth->Position != null) No. {{$Booth->Position}} @else Not Chosen @endif
                                                     </h3>
 
                                                     <p><strong>{{__('message.Company')}} {{__('message.Name')}}
@@ -144,44 +144,44 @@
                                                     <p><strong>{{__('message.Tel')}}:</strong>&nbsp;<span>{{$Booth->User->PhoneNumber}}</span></p>
 
                                                     @if ($Booth->User->companyAddress != null)
-                                                        <p><strong>Company Address:&nbsp;</strong><span>{{$Booth->User->companyAddress}}</span></p>
+                                                        <p><strong>{{__("message.CompanyAddress")}}:&nbsp;</strong><span>{{$Booth->User->companyAddress}}</span></p>
                                                     @endif
 
                                                     @if ($Booth->User->zipCode != null)
-                                                        <p><strong>Zip Code:&nbsp;</strong><span>{{$Booth->User->zipCode}}</span></p>
+                                                        <p><strong>{{__("message.Zipcode")}}:&nbsp;</strong><span>{{$Booth->User->zipCode}}</span></p>
                                                     @endif
 
                                                     @if ($Booth->User->mainCompany != null)
-                                                        <p><strong>Main Company:&nbsp;</strong><span>{{$Booth->User->mainCompany}}</span></p>
+                                                        <p><strong>{{__("message.MainCompany")}}:&nbsp;</strong><span>{{$Booth->User->mainCompany}}</span></p>
                                                     @endif
 
                                                     @if ($Booth->User->institution != null)
-                                                        <p><strong>institution:&nbsp;</strong><span>{{$Booth->User->institution}}</span></p>
+                                                        <p><strong>{{__("message.Institution")}}:&nbsp;</strong><span>{{$Booth->User->institution}}</span></p>
                                                     @endif
 
 
                                                     @if ($Booth->User->institutionEmail != null)
-                                                        <p><strong>Institution Email:&nbsp;</strong><span>{{$Booth->User->institutionEmail}}</span></p>
+                                                        <p><strong>{{__("message.InstitutionEmail")}}:&nbsp;</strong><span>{{$Booth->User->institutionEmail}}</span></p>
                                                     @endif
 
                                                     @if ($Booth->User->PhoneNumber != null)
-                                                        <p><strong>phone:</strong><span>{{$Booth->User->PhoneNumber}}</span></p>
+                                                        <p><strong>{{__("message.Phone")}}:</strong><span>{{$Booth->User->PhoneNumber}}</span></p>
                                                     @endif
 
                                                     @if ($Booth->User->fax != null)
-                                                        <p><strong>fax:&nbsp;</strong><span>{{$Booth->User->fax}}</span></p>
+                                                        <p><strong>{{__("message.Fax")}}:&nbsp;</strong><span>{{$Booth->User->fax}}</span></p>
                                                     @endif
 
 
                                                     @if ($Booth->Description != null)
-                                                        <p><strong>Description:&nbsp;</strong><span>{{$Booth->Description}}</span></p>
+                                                        <p><strong>{{__("message.Description")}}:&nbsp;</strong><span>{{$Booth->Description}}</span></p>
                                                     @endif
 
 
 
 
 
-                                                    <p>Payment :
+                                                    <p>{{__("message.Payment")}} :
                                                         @if($Booth->User->Payment == 'Paid')
                                                             <button class="btn btn-success p-0"
                                                                     onclick="areyousurePayment()">{{__('message.Paid')}}</button>
@@ -198,18 +198,18 @@
 
 
 
-                                                            <a class="btn text-white w-100" data-toggle="modal" href="#job_vacan_mod" style="background-color:#808080;">
-                                                                Job Vacancies
+                                                            <a class="btn text-white w-100" data-toggle="modal" href="#job_vacan_mod" style="background-color:#2B3D4A;">
+                                                                {{__("message.JobVacancies")}}
                                                             </a>
                                                         </div>
                                                         <div class="col-md-4 mt-2 mt-md-0">
-                                                            <a data-toggle="modal" href="#operators_modal" class="btn text-white w-100" style="background-color:#808080;">
-                                                                Operators
+                                                            <a data-toggle="modal" href="#operators_modal" class="btn text-white w-100" style="background-color:#2B3D4A;">
+                                                                {{__("message.Operators")}}
                                                             </a>
                                                         </div>
                                                         <div class="col-md-4 mt-2 mt-md-0">
-                                                            <a data-toggle="modal" href="#booth_info_modal" class="btn text-white w-100" style="background-color:#808080;">
-                                                                Booth Info
+                                                            <a data-toggle="modal" href="#booth_info_modal" class="btn text-white w-100" style="background-color:#2B3D4A;">
+                                                                {{__("message.BoothInfo")}}
                                                             </a>
                                                         </div>
 
@@ -244,7 +244,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <button class="btn btn-success w-100" type="submit">
+                                                    <button class="btn btn-success w-100" type="submit" style=" background-color: #01B5A8">
                                                         {{__('message.Save')}}
                                                     </button>
                                                 </form>
@@ -280,26 +280,20 @@
                                                                 </div>
 
                                                                 <div>
-                                                                    <h6 style="font-weight: bolder">Number Of Vacencies :</h6>
+                                                                    <h6 style="font-weight: bolder">{{__("message.NumberofVacancies")}} :</h6>
                                                                     <p>
                                                                         {{$job->Number}}
                                                                     </p>
                                                                 </div>
 
                                                                 <div>
-                                                                    <h6 style="font-weight: bolder">Salary :</h6>
+                                                                    <h6 style="font-weight: bolder">{{__("message.Salary")}} :</h6>
                                                                     <p>
                                                                         {{$job->Salary}} €
                                                                     </p>
                                                                 </div>
                                                             </div>
                                                         @endforeach
-
-
-
-
-
-
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button class="btn btn-light btn-block" data-dismiss="modal"

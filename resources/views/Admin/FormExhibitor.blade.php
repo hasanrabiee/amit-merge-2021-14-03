@@ -60,7 +60,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <!-- Traffic sources -->
-                        <div class="card" style="background-color:rgba(168,168,168,0.5);color: white">
+                        <div class="card" style="background-color:#006B63;color: white">
 
                             <div class="card-header header-elements-inline">
 
@@ -68,25 +68,25 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <h3>Exhibitors Form</h3>
+                                <h3>{{__("message.ExhibitorsForms")}}</h3>
                                 <form action="{{route("Admin.ExhibitorFormPost")}}" class="w-100" method="post">
                                     @csrf
 
                                     <table class="table table-striped table-hover table-bordered table-light text-center">
                                         <thead>
-                                        <th>name</th>
-                                        <th>status</th>
-                                        <th>action</th>
+                                        <th>{{__("message.Name")}}</th>
+                                        <th>{{__("message.Status")}}</th>
+                                        <th>{{__("message.Action")}}</th>
                                         </thead>
 
                                         <tbody>
 
                                         <tr>
-                                            <td>position</td>
+                                            <td>{{__("message.Position")}}</td>
                                             @if (\App\ExhibitorForms::first()->position == "active")
-                                                <td>active</td>
+                                                <td>{{__("message.Active")}}</td>
                                             @else
-                                                <td>DeActive</td>
+                                                <td>{{__("message.DeActive")}}</td>
                                             @endif
                                             <td>
                                                 <input type="checkbox" value="active" style="width: 100px !important;" name="position"  @if (\App\ExhibitorForms::first()->position == "active") checked @endif>
@@ -95,12 +95,12 @@
 
 
                                         <tr>
-                                            <td>CompanyAddress</td>
+                                            <td>{{__("message.CompanyAddress")}}</td>
 
                                             @if (\App\ExhibitorForms::first()->companyAddress == "active")
-                                                <td>active</td>
+                                                <td>{{__("message.Active")}}</td>
                                             @else
-                                                <td>DeActive</td>
+                                                <td>{{__("message.DeActive")}}</td>
                                             @endif
                                             <td>
                                                 <input type="checkbox" value="active" style="width: 100px !important;" name="companyAddress"  @if (\App\ExhibitorForms::first()->companyAddress == "active") checked @endif>
@@ -109,22 +109,22 @@
 
 
                                         <tr>
-                                            <td>zipCode</td>
+                                            <td>{{__("message.Zipcode")}}</td>
                                             @if (\App\ExhibitorForms::first()->zipCode == "active")
-                                                <td>active</td>
+                                                <td>{{__("message.Active")}}</td>
                                             @else
-                                                <td>DeActive</td>
+                                                <td>{{__("message.DeActive")}}</td>
                                             @endif
                                             <td>
                                                 <input type="checkbox" value="active" style="width: 100px !important;" name="zipCode"  @if (\App\ExhibitorForms::first()->zipCode == "active") checked @endif>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>website</td>
+                                            <td>{{__("message.WebSite")}}</td>
                                             @if (\App\ExhibitorForms::first()->website == "active")
-                                                <td>active</td>
+                                                <td>{{__("message.Active")}}</td>
                                             @else
-                                                <td>DeActive</td>
+                                                <td>{{__("message.DeActive")}}</td>
                                             @endif
                                             <td>
                                                 <input type="checkbox" value="active" style="width: 100px !important;" name="website"  @if (\App\ExhibitorForms::first()->website == "active") checked @endif>
@@ -132,11 +132,11 @@
                                         </tr>
 
                                         <tr>
-                                            <td>mainCompany</td>
+                                            <td>{{__("message.MainCompany")}}</td>
                                             @if (\App\ExhibitorForms::first()->mainCompany == "active")
-                                                <td>active</td>
+                                                <td>{{__("message.Active")}}</td>
                                             @else
-                                                <td>DeActive</td>
+                                                <td>{{__("message.DeActive")}}</td>
                                             @endif
                                             <td>
                                                 <input type="checkbox" value="active" style="width: 100px !important;" name="mainCompany"  @if (\App\ExhibitorForms::first()->mainCompany == "active") checked @endif>
@@ -144,11 +144,11 @@
                                         </tr>
 
                                         <tr>
-                                            <td>institutionEmail</td>
+                                            <td>{{__("message.InstitutionEmail")}}</td>
                                             @if (\App\ExhibitorForms::first()->institutionEmail == "active")
-                                                <td>active</td>
+                                                <td>{{__("message.Active")}}</td>
                                             @else
-                                                <td>DeActive</td>
+                                                <td>{{__("message.DeActive")}}</td>
                                             @endif
                                             <td>
                                                 <input type="checkbox" value="active" style="width: 100px !important;" name="institutionEmail"  @if (\App\ExhibitorForms::first()->institutionEmail == "active") checked @endif>
@@ -158,11 +158,11 @@
 
 
                                         <tr>
-                                            <td>institution</td>
+                                            <td>{{__("message.Institution")}}</td>
                                             @if (\App\ExhibitorForms::first()->institution == "active")
-                                                <td>active</td>
+                                                <td>{{__("message.Active")}}</td>
                                             @else
-                                                <td>DeActive</td>
+                                                <td>{{__("message.DeActive")}}</td>
                                             @endif
                                             <td>
                                                 <input type="checkbox" value="active" style="width: 100px !important;" name="institution"  @if (\App\ExhibitorForms::first()->institution == "active") checked @endif>
@@ -170,11 +170,11 @@
                                         </tr>
 
                                         <tr>
-                                            <td>fax</td>
+                                            <td>{{__("message.Fax")}}</td>
                                             @if (\App\ExhibitorForms::first()->fax == "active")
-                                                <td>active</td>
+                                                <td>{{__("message.Active")}}</td>
                                             @else
-                                                <td>DeActive</td>
+                                                <td>{{__("message.DeActive")}}</td>
                                             @endif
                                             <td>
                                                 <input type="checkbox" value="active" style="width: 100px !important;" name="fax"  @if (\App\ExhibitorForms::first()->fax == "active") checked @endif>
@@ -186,7 +186,7 @@
                                     <br>
                                     <div class="form-group">
                                         <label for="" class="text-dark">
-                                            institutions:
+                                            {{__("message.Institution")}}:
                                         </label>
                                         <input type="text" class="form-control" name="institutionItems" value="{{\App\ExhibitorForms::first()->institutionItems}}">
                                     </div>

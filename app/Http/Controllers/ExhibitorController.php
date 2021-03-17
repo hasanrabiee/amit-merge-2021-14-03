@@ -991,7 +991,6 @@ class ExhibitorController extends Controller
             $final=[];
             foreach ($Users as $userFiltered) {
 
-//                    dd($userFiltered);
                 if ($userFiltered->Gender == \request()->gender) {
                     $final[]=$userFiltered;
                 }
@@ -1014,7 +1013,6 @@ class ExhibitorController extends Controller
             $final=[];
             foreach ($Users as $userFiltered) {
 
-//                    dd($userFiltered);
                 if ($userFiltered->Profession == \request()->profession) {
                     $final[]=$userFiltered;
                 }
@@ -1023,12 +1021,150 @@ class ExhibitorController extends Controller
 
 
             if (count($final) <= 0) {
+                Alert::error("nothing found");
                 return redirect()->back();
             }else{
                 return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $final]);
             }
 
 
+        }
+
+
+
+        if (\request()->interestedDegree) {
+            $final=[];
+            foreach ($Users as $userFiltered) {
+
+                if ($userFiltered->InterestedDegree == \request()->interestedDegree) {
+                    $final[] = $userFiltered;
+                }
+
+            }
+
+
+            if (count($final) <= 0) {
+                Alert::error("nothing found");
+
+                return redirect()->back();
+            }else{
+                return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $final]);
+            }
+
+
+        }
+
+
+        if (\request()->interestedField) {
+            $final=[];
+            foreach ($Users as $userFiltered) {
+
+                if ($userFiltered->InterestedField == \request()->interestedField) {
+                    $final[] = $userFiltered;
+                }
+
+            }
+
+
+            if (count($final) <= 0) {
+                Alert::error("nothing found");
+
+                return redirect()->back();
+            }else{
+                return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $final]);
+            }
+
+
+        }
+
+        if (\request()->onDegree) {
+            $final=[];
+            foreach ($Users as $userFiltered) {
+
+                if ($userFiltered->onlineDegreeProgram == \request()->onDegree) {
+                    $final[] = $userFiltered;
+                }
+
+            }
+
+            if (count($final) <= 0) {
+                Alert::error("nothing found");
+                return redirect()->back();
+            }else{
+                return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $final]);
+            }
+        }
+
+
+        if (\request()->adSem) {
+            $final=[];
+            foreach ($Users as $userFiltered) {
+
+                if ($userFiltered->admissionSemester == \request()->adSem) {
+                    $final[] = $userFiltered;
+                }
+
+            }
+
+            if (count($final) <= 0) {
+                Alert::error("nothing found");
+                return redirect()->back();
+            }else{
+                return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $final]);
+            }
+        }
+
+        if (\request()->intProf) {
+            $final=[];
+            foreach ($Users as $userFiltered) {
+
+                if ($userFiltered->professionInterestedToApply == \request()->intProf) {
+                    $final[] = $userFiltered;
+                }
+
+            }
+
+            if (count($final) <= 0) {
+                Alert::error("nothing found");
+                return redirect()->back();
+            }else{
+                return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $final]);
+            }
+        }
+
+
+        if (\request()->profile) {
+            $final=[];
+            foreach ($Users as $userFiltered) {
+
+                if ($userFiltered->profile == \request()->profile) {
+                    $final[] = $userFiltered;
+                }
+
+            }
+
+            if (count($final) <= 0) {
+                Alert::error("nothing found");
+                return redirect()->back();
+            }else{
+                return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $final]);
+            }
+        }
+
+        if (\request()->edu) {
+            $final=[];
+            foreach ($Users as $userFiltered) {
+                if ($userFiltered->education == \request()->edu) {
+                    $final[] = $userFiltered;
+                }
+            }
+
+            if (count($final) <= 0) {
+                Alert::error("nothing found");
+                return redirect()->back();
+            }else{
+                return view('Exhibitor.History')->with(['Booth' => $Booth, 'Users' => $final]);
+            }
         }
 
 

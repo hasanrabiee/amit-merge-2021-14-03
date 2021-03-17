@@ -9,14 +9,32 @@ use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use MacsiDigital\Zoom\Facades\Zoom;
 
 
 
+Route::post('/save-token', 'WebController@saveToken')->name('save-token');
+Route::get('/send-notification', 'WebController@sendNotification')->name('send.notification');
+Route::get('/testerrors', function () {
 
+
+        abort(403, 'testing...');
+
+
+});
 
 
 Route::get('/time', function () {
     dd(Carbon::now()->format('Y-m-d H:i') , date_default_timezone_get());
+});
+
+Route::get('/myrecordings', function(){
+
+    $user = Zoom::user()->find('info@ime-europe.eu');
+    $zoom_recordings = $user->recordings;
+    dd($zoom_recordings, $user->meetings()->all());
+
+
 });
 
 
@@ -28,6 +46,12 @@ Route::get('join-webinar/{webinar}', 'WebController@join_webinar')->name('join-w
 
 
 Auth::routes(['verify' => true]);
+
+Route::get("/register-job-seeker","AuthController@jobSeeker")->name("registerJobSeeker");
+Route::get("/register-company-user","AuthController@UserCompanyRegister")->name("registerCompanyUser");
+Route::get("/register-select","AuthController@selectForm")->name("selectForm");
+
+
 Route::group(['prefix' => 'Auditorium' , 'as' => 'Auditorium.'],function (){
     Route::get('Login','AuditoriumController@Login')->name('Login');
     Route::post('LoginPost','AuditoriumController@LoginPost')->name('LoginPost');
@@ -64,11 +88,27 @@ Route::get('/leave-meeting', 'ExhibitorController@leave_meeting')->name('meeting
 Route::group(['middleware' => ['auth']] , function (){
     Route::group(['prefix' => 'Admin', 'as' => 'Admin.' , 'middleware' => ['Admin']], function () {
 
+
+
+
+        Route::get('/conference/recordings','recordingsController@adminIndex' )->name('recordings-index');
+        Route::post('/conference/recordings','recordingsController@CreateRecording' )->name('recordings-create');
+
         Route::get('/conference/create', 'AdminController@AddConferenceIndex')->name('conference-create');
         Route::post('/conference/create', 'AdminController@AddConferenceAction')->name('conference-create');
         Route::post('/conference/addSpeaker', 'AdminController@AddSpeaker')->name('AddSpeaker');
         Route::post('/conference/UpdateSpeaker', 'AdminController@UpdateSpeaker')->name('UpdateSpeaker');
 
+
+        Route::get('/notifications/send/{title}/{message}', 'AdminController@sendNotification')->name('send-notification-to-users');
+        Route::post('/notifications/send/modal', 'AdminController@sendNotificationModal')->name('send-notification-modal');
+
+
+        Route::get('/map', function (){
+
+            return view('Admin.map');
+
+        })->name('AdminMap');
 
         Route::get('create-webinar/{conference}', 'AdminController@create_webinar')->name('create-webinar');
 
@@ -354,6 +394,7 @@ Route::group(['middleware' => ['auth']] , function (){
 
 
 
+    Route::get('/recordings', 'recordingsController@usersIndex')->name('recordings-users');
     Route::get('Auditorium','WebController@Auditorium')->name('Auditorium');
     Route::get('AuditoriumPlay/{ID}','WebController@AuditoriumPlay')->name('AuditoriumPlay');
     Route::get('Lounge','LoungeController@index')->name('Lounge');

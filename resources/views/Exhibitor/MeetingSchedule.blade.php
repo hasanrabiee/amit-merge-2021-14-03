@@ -80,7 +80,7 @@
                     <div class="col-xl-12">
                         <!-- Traffic sources -->
                         <div class="card pc-height-visitor-meeting"
-                             style="background-color:rgba(54,54,54,0.65);color: white;">
+                             style="background-color:#006B63;color: white;">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-2">
@@ -116,7 +116,7 @@
                                         <div class="col-md-3 mt-3 mt-md-0"
                                              style="height: 690px;border: 2px solid white;border-radius: 5px;">
                                             <p class="mt-2 mb-2">
-                                                please Select Your Available Time For Meeting
+                                               {{__("message.SelectAvailableTime")}}
                                             </p>
 
                                             <div class="row">
@@ -173,15 +173,17 @@
 
 
                                         <div class="col-md-7">
-                                            <h4 class="mt-2 mt-md-0">Requested Visitors For Meeting</h4>
+                                            <h4 class="mt-2 mt-md-0">
+                                                {{__("message.RequestedVisitorsForMeeting")}}
+                                            </h4>
                                             <div style="height: 350px;overflow-y: auto">
                                                 <table
                                                     class="table table-bordered table-striped table-hover table-light text-center">
                                                     <thead>
-                                                    <th>Visitor Name</th>
-                                                    <th>Requested Time</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
+                                                    <th>{{__("message.Visitor")}} {{__("message.Name")}}</th>
+                                                    <th>{{__("message.RequestedDate")}}</th>
+                                                    <th>{{__("message.Status")}}</th>
+                                                    <th>{{__("message.Action")}}</th>
                                                     </thead>
                                                     <tbody>
 
@@ -204,14 +206,12 @@
 
                                                                 <td>
                                                                     <div class="btn-group w-100">
-
                                                                         <a class="btn btn-success w-100" href="{{route('Exhibitor.MeetingAccept', $meet_req->id)}}">
-                                                                            Accept
+                                                                            {{__("message.Accept")}}
                                                                         </a>
                                                                         <a class="btn btn-danger w-100" href="{{route('Exhibitor.MeetingReject', $meet_req->id)}}">
-                                                                            Reject
+                                                                            {{__("message.Reject")}}
                                                                         </a>
-
                                                                     </div>
                                                                 </td>
 
@@ -221,7 +221,7 @@
 
 
                                                                         <a class="btn btn-danger w-100" href="#">
-                                                                            Rejected
+                                                                            {{__("message.Rejected")}}
                                                                         </a>
 
                                                                 </td>
@@ -239,23 +239,19 @@
                                                                 <td>
                                                                     <div class="btn-group w-100">
 
-                                                                        @if (\Carbon\Carbon::today()->toDateString() == \Carbon\Carbon::parse($meet_req->request_time)->toDateString() and  \Carbon\Carbon::now()->gte(Carbon\Carbon::parse($meet_req->request_time)) and \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($meet_req->request_time)->addMinutes(30)) )
+                                                                        @if (\Carbon\Carbon::now()->gte(Carbon\Carbon::parse($meet_req->request_time))  && \Carbon\Carbon::now()->lte(Carbon\Carbon::parse($meet_req->request_time)->addMinutes(30)) )
 
                                                                             <a target="_blank" class="btn btn-primary w-100" href="{{route('Exhibitor.meeting.join', $meet_req->id )}}">
-                                                                                Enter Meeting
+                                                                               {{__("message.EnterMeeting")}}
 
                                                                             </a>
 
-                                                                            @elseif (\Carbon\Carbon::today()->toDateString() == \Carbon\Carbon::parse($meet_req->request_time)->toDateString() and  \Carbon\Carbon::now()->toTimeString() < \Carbon\Carbon::parse($meet_req->request_time)->toTimeString()  )
-                                                                            <button disabled=""  class="btn btn-dark w-100">
-                                                                                Meeting not started yet
-                                                                            </button>
-
-
-                                                                        @else
+                                                                            @else
 
                                                                             <button disabled=""  class="btn btn-dark w-100">
-                                                                                Meeting is over
+
+                                                                                {{__("message.NoAction")}}
+
                                                                             </button>
 
 
@@ -265,7 +261,7 @@
 
 
                                                                         <a class="btn btn-danger w-100" href="{{route('Exhibitor.MeetingReject',$meet_req->id )}}">
-                                                                            Reject
+                                                                            {{__("message.Reject")}}
                                                                         </a>
 
                                                                     </div>
@@ -289,35 +285,35 @@
 
                                                 <div class="mt-3"
                                                      style="border: 2px solid black;border-radius: 5px;height: 288px;overflow-y: auto;overflow-x: hidden">
-                                                    <h3 class="mt-2 ml-2">Visitor Information</h3>
+                                                    <h3 class="mt-2 ml-2">{{__("message.VisitorInformation")}}</h3>
 
                                                     <div class="row">
                                                         <div class="col-md-5 ml-2 mt-2">
                                                             <p><span
-                                                                    style="font-weight: bolder">Firstname: </span>{{$visitor->FirstName}}
+                                                                    style="font-weight: bolder">{{__("message.Name")}}: </span>{{$visitor->FirstName}}
                                                             </p>
                                                             <p><span
-                                                                    style="font-weight: bolder">Lastname: </span>{{$visitor->Lastname}}
+                                                                    style="font-weight: bolder">{{__("message.LastName")}}: </span>{{$visitor->Lastname}}
                                                             </p>
                                                             <p><span
-                                                                    style="font-weight: bolder">Profession: </span>{{$visitor->Profession}}
+                                                                    style="font-weight: bolder">{{__("message.Profession")}}: </span>{{$visitor->Profession}}
                                                             </p>
                                                             <p><span
-                                                                    style="font-weight: bolder">City: </span>{{$visitor->City}}
+                                                                    style="font-weight: bolder">{{__("message.City")}}: </span>{{$visitor->City}}
                                                             </p>
                                                         </div>
                                                         <div class="col-md-5 ml-2 mt-2">
                                                             <p><span
-                                                                    style="font-weight: bolder">Gender: </span>{{$visitor->Gender}}
+                                                                    style="font-weight: bolder">{{__("message.Gender")}}: </span>{{$visitor->Gender}}
                                                             </p>
                                                             <p><span
-                                                                    style="font-weight: bolder">Country: </span>{{$visitor->Country}}
+                                                                    style="font-weight: bolder">{{__("message.Country")}}: </span>{{$visitor->Country}}
                                                             </p>
                                                             <p><span
-                                                                    style="font-weight: bolder">BirthDate: </span>{{$visitor->BirthDate}}
+                                                                    style="font-weight: bolder">{{__("message.BirthDate")}}: </span>{{$visitor->BirthDate}}
                                                             </p>
                                                             <p><span
-                                                                    style="font-weight: bolder">Email: </span>{{$visitor->email}}
+                                                                    style="font-weight: bolder">{{__("message.Email")}}: </span>{{$visitor->email}}
                                                             </p>
                                                         </div>
                                                     </div>

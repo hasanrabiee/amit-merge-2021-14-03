@@ -35,17 +35,17 @@
 
 
     <!-- Page content -->
-<body style="background: url('{{\App\Site::AdminBackground()}}') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    height: 100%;
-    ;">
+    <body style="background: url('{{\App\Site::AdminBackground()}}') no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        height: 100%;
+        ;">
 
     <div class="page-content pt-0">
     @include("Sidebars.admin-sidebar")
-        <!-- Main content -->
+    <!-- Main content -->
         <div class="content-wrapper">
 
             <!-- Content area -->
@@ -55,7 +55,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <!-- Traffic sources -->
-                        <div class="card card-admin" style="background-color:rgba(168,168,168,0.5);color: white">
+                        <div class="card card-admin" style="background-color:#006B63;color: white">
                             <div class="card-header header-elements-inline">
 
                                 <div class="header-elements">
@@ -67,7 +67,7 @@
                                         <div class="input-group mt-2 mb-2">
                                             <input type="text" class="form-control" placeholder="Registered Visitors List">
                                             <div class="input-group-append">
-                                                <button class="btn btn-success" type="submit">Search</button>
+                                                <button class="btn btn-success" type="submit" style="background-color: #01B5A8">Search</button>
                                             </div>
                                         </div>
 
@@ -79,7 +79,7 @@
                                                     <a href="?UserID={{$user->id}}" @if(request()->UserID == $user->id)
                                                     class="btn btn-primary w-100 mb-2"
                                                        @else
-                                                       class="btn btn-outline-dark text-white w-100 mb-2"
+                                                       class="btn btn-outline-light text-dark w-100 mb-2"
                                                         @endif
                                                     >
                                                         {{\Illuminate\Support\Str::limit($user->UserName , 20)}}
@@ -98,119 +98,217 @@
                                         @endforeach
                                     </div>
                                     @if(request()->UserID)
-                                    <div class="col-md-8">
-                                        <div class="row">
-                                            <div class="col-12 ml-md-1 mt-2 mt-md-0" style="border: 1px solid white;border-radius: 5px;height: 775px;">
-                                                <div class="ml-md-3 mt-2 mb-3">
-                                                    <div class="text-center">
-                                                        <img src="{{$User->Image}}" alt="" width="100">
-                                                    </div>
-                                                    <p>
-                                                        <strong>{{__('message.fn')}}:</strong>&nbsp;<span>{{$User->FirstName}}</span>
-                                                    </p>
-                                                    <p>
-                                                        <strong>{{__('message.ln')}}:&nbsp;</strong><span>{{$User->LastName}}</span>
-                                                    </p>
-                                                    <p>
-                                                        <strong>{{__('message.Gender')}}:&nbsp;</strong><span>{{$User->Gender}}</span>
-                                                    </p>
-
-                                                    <p>
-                                                        <strong>{{__('message.Profession')}}:</strong>&nbsp;<span>{{$User->Profession}}</span>
-
-                                                    </p>
-                                                    <p>
-                                                        <strong>{{__('message.City')}}:</strong>&nbsp;<span>{{$User->City}}</span>
-                                                    </p>
-                                                    <p>
-                                                        <strong>{{__('message.Country')}}:&nbsp;</strong><span>{{$User->Country}}</span>
-                                                    </p>
-                                                    <p>
-                                                        <strong>{{__('message.email')}}:&nbsp;</strong><span>{{$User->email}}</span>
-                                                    </p>
-
-                                                    <p>
-                                                        <strong>Phone Number:&nbsp;</strong><span>{{$User->PhoneNumber}}</span>
-                                                    </p>
-                                                    <p>
-                                                        <strong>Feedback:&nbsp;</strong><span>{{$User->VisitExperience}}</span>
-                                                    </p>
-
-
-
-                                                    @if ($User->education != null)
+                                        <div class="col-md-8">
+                                            <div class="row">
+                                                <div class="col-12 ml-md-1 mt-2 mt-md-0" style="border: 1px solid white;border-radius: 5px;height: 775px;overflow-y: auto">
+                                                    <div class="ml-md-3 mt-2 mb-3">
+                                                        <div class="text-center">
+                                                            <img src="{{$User->Image}}" alt="" width="100">
+                                                        </div>
+                                                        <div class="text-center" style="text-transform: capitalize">
+                                                            <h1>{{$User->formRule}}</h1>
+                                                        </div>
                                                         <p>
-                                                            <strong>Education:&nbsp;</strong><span>{{$User->education}}</span>
+                                                            <strong>{{__('message.fn')}}:</strong>&nbsp;<span>{{$User->FirstName}}</span>
                                                         </p>
-                                                    @endif
-
-                                                    @if ($User->countryStudy != null)
                                                         <p>
-                                                            <strong>countryStudy:&nbsp;</strong><span>{{$User->countryStudy}}</span>
+                                                            <strong>{{__('message.ln')}}:&nbsp;</strong><span>{{$User->LastName}}</span>
                                                         </p>
-                                                    @endif
-
-                                                    @if ($User->InterestedDegree != null)
                                                         <p>
-                                                            <strong>InterestedDegree:&nbsp;</strong><span>{{$User->InterestedDegree}}</span>
+                                                            <strong>{{__('message.Gender')}}:&nbsp;</strong><span>{{$User->Gender}}</span>
                                                         </p>
-                                                    @endif
 
-                                                    @if ($User->InterestedField != null)
                                                         <p>
-                                                            <strong>InterestedField:&nbsp;</strong><span>{{$User->InterestedField}}</span>
-                                                        </p>
-                                                    @endif
+                                                            <strong>{{__('message.Profession')}}:</strong>&nbsp;<span>{{$User->Profession}}</span>
 
-                                                    @if ($User->languageOfStudy != null)
+                                                        </p>
                                                         <p>
-                                                            <strong>Language Of Study:&nbsp;</strong><span>{{$User->languageOfStudy}}</span>
+                                                            <strong>{{__('message.City')}}:</strong>&nbsp;<span>{{$User->City}}</span>
                                                         </p>
-                                                    @endif
-
-                                                    @if ($User->onlineDegreeProgram != null)
                                                         <p>
-                                                            <strong>Online Degree Program:&nbsp;</strong><span>{{$User->onlineDegreeProgram}}</span>
+                                                            <strong>{{__('message.Country')}}:&nbsp;</strong><span>{{$User->Country}}</span>
                                                         </p>
-                                                    @endif
-
-                                                    @if ($User->interestedScholarShip != null)
                                                         <p>
-                                                            <strong>Interested ScholarShip:&nbsp;</strong><span>{{$User->interestedScholarShip}}</span>
+                                                            <strong>{{__('message.email')}}:&nbsp;</strong><span>{{$User->email}}</span>
                                                         </p>
-                                                    @endif
+
+                                                        <p>
+                                                            <strong>{{__("message.Phone")}}:&nbsp;</strong><span>{{$User->PhoneNumber}}</span>
+                                                        </p>
+                                                        <p>
+                                                            <strong>{{__("message.FeedBack")}}:&nbsp;</strong><span>{{$User->VisitExperience}}</span>
+                                                        </p>
 
 
-                                                    <p class="text-left">{{__('message.Payment')}}:
-                                                        @if($User->Payment == 'Paid')
-                                                            <button class="btn btn-success" onclick="areyousure()">{{__('message.Paid')}}</button>
-                                                        @else
-                                                            <button class="btn btn-danger" onclick="areyousure()">{{__('message.Unpaid')}}</button>
+
+                                                        @if ($User->education != null)
+                                                            <p>
+                                                                <strong>{{__("message.Education")}}:&nbsp;</strong><span>{{$User->education}}</span>
+                                                            </p>
                                                         @endif
-                                                    </p>
+
+                                                        @if ($User->countryStudy != null)
+                                                            <p>
+                                                                <strong>{{__("message.CountryStudy")}}:&nbsp;</strong><span>{{$User->countryStudy}}</span>
+                                                            </p>
+                                                        @endif
+
+                                                        @if ($User->InterestedDegree != null)
+                                                            <p>
+                                                                <strong>{{__("message.InterestedDegree")}}:&nbsp;</strong><span>{{$User->InterestedDegree}}</span>
+                                                            </p>
+                                                        @endif
+
+                                                        @if ($User->InterestedField != null)
+                                                            <p>
+                                                                <strong>{{__("message.InterestedField")}}:&nbsp;</strong><span>{{$User->InterestedField}}</span>
+                                                            </p>
+                                                        @endif
+
+                                                        @if ($User->languageOfStudy != null)
+                                                            <p>
+                                                                <strong>{{__("message.LanguageOfStudy")}}:&nbsp;</strong><span>{{$User->languageOfStudy}}</span>
+                                                            </p>
+                                                        @endif
+
+                                                        @if ($User->onlineDegreeProgram != null)
+                                                            <p>
+                                                                <strong>{{__("message.OnlineDegreeProgram")}}:&nbsp;</strong><span>{{$User->onlineDegreeProgram}}</span>
+                                                            </p>
+                                                        @endif
+
+                                                        @if ($User->interestedScholarShip != null)
+                                                            <p>
+                                                                <strong>{{__("message.InterestedScholarShip")}}:&nbsp;</strong><span>{{$User->interestedScholarShip}}</span>
+                                                            </p>
+                                                        @endif
+
+                                                        @if ($User->admissionSemester != null)
+                                                            <p>
+                                                                <strong>{{__("message.AdmissionSemester")}}</strong> : {{$User->admissionSemester}}
+                                                            </p>
+                                                        @endif
+
+                                                        @if ($User->professionInterestedToApply != null)
+                                                            <p>
+                                                                <strong>{{__("message.ProfessionInterestedToApply")}}</strong> : {{$User->professionInterestedToApply}}
+                                                            </p>
+                                                        @endif
+
+                                                        @if ($User->organization != null)
+                                                            <p>
+                                                                <strong>{{__("message.Organization")}}</strong> : {{$User->organization}}
+                                                            </p>
+                                                        @endif
+
+                                                        @if ($User->InterNationalPrograms != null)
+                                                            <p>
+                                                                <strong>{{__("message.InternationalPrograms")}}</strong> : {{$User->InterNationalPrograms}}
+                                                            </p>
+                                                        @endif
+
+                                                        @if ($User->website != null)
+                                                            <p>
+                                                                <strong>{{__("message.WebSite")}}</strong> : {{$User->website}}
+                                                            </p>
+                                                        @endif
+
+                                                        @if ($User->tel != null)
+                                                            <p>
+                                                                <strong>{{__("message.Tel")}}</strong> : {{$User->tel}}
+                                                            </p>
+                                                        @endif
+
+                                                        @if ($User->userCompanyName != null)
+                                                            <p>
+                                                                <strong>{{__("message.UserCompanyName")}}</strong> : {{$User->userCompanyName}}
+                                                            </p>
+                                                        @endif
+
+                                                        @if ($User->profile != null)
+                                                            <p>
+                                                                <strong>{{__("message.Profile")}}</strong> : {{$User->profile}}
+                                                            </p>
+                                                        @endif
+
+                                                        @if ($User->zipCode != null)
+                                                            <p>
+                                                                <strong>{{__("message.Zipcode")}}</strong> : {{$User->zipCode}}
+                                                            </p>
+                                                        @endif
+
+                                                        @if ($User->fax != null)
+                                                            <p>
+                                                                <strong>{{__("message.Fax")}}</strong> : {{$User->fax}}
+                                                            </p>
+                                                        @endif
+                                                        @if ($User->mainCompany != null)
+                                                            <p>
+                                                                <strong>{{__("message.MainCompany")}}</strong> : {{$User->mainCompany}}
+                                                            </p>
+                                                        @endif
+
+                                                        @if ($User->position != null)
+                                                            <p>
+                                                                <string>{{__("message.Position")}}</string> : {{$User->position}}
+                                                            </p>
+                                                        @endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        <p class="text-left"><strong>{{__('message.Payment')}}:</strong>
+                                                            @if($User->Payment == 'Paid')
+                                                                <button class="btn btn-success" onclick="areyousure()">{{__('message.Paid')}}</button>
+                                                            @else
+                                                                <button class="btn btn-danger" onclick="areyousure()">{{__('message.Unpaid')}}</button>
+                                                            @endif
+                                                        </p>
+                                                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                    <form id="mysinsin_form" action="{{route('Admin.UserPaid')}}" method="post">
+                                                        @csrf
+                                                        <input type="hidden" value="{{$User->id}}" name="UserID">
+                                                    </form>
+
+
                                                 </div>
-
-
-
-                                                <form id="mysinsin_form" action="{{route('Admin.UserPaid')}}" method="post">
-                                                    @csrf
-                                                    <input type="hidden" value="{{$User->id}}" name="UserID">
-                                                </form>
-
-
-                                            </div>
-                                            <form class="w-100 ml-2 mt-2" method="get" action="{{route('Admin.SuspendUser' , $User->id)}}">
-                                                <div class="form-group text-left">
+                                                <form class="w-100 ml-2 mt-2" method="get" action="{{route('Admin.SuspendUser' , $User->id)}}">
+                                                    <div class="form-group text-left">
                                                         <strong class="text-danger" style="font-size: 18px;">{{__('message.Suspended')}} {{__('message.user')}}:</strong>
                                                         <input type="checkbox" style="width: 21px;height: 17px;margin-left: 6px;" name="AccountStatus" @if($User->AccountStatus == 'Suspend') checked @endif>
-                                                    </p>
-                                                </div>
-                                                <button class="btn btn-block float-right" type="submit" style="margin-bottom: 0px;margin-top: -9px;background-color: #05c965;color: rgb(255,255,255);">
-                                                    {{__('message.Save')}}
-                                                </button>
-                                            </form>
+                                                        </p>
+                                                    </div>
+                                                    <button class="btn btn-block float-right" type="submit" style="margin-bottom: 0px;margin-top: -9px;background-color: #05c965;color: rgb(255,255,255);">
+                                                        {{__('message.Save')}}
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
-                                    </div>
                                     @endif
                                 </div>
                             </div>
@@ -225,7 +323,7 @@
         <!-- /main content -->
     </div>
     <!-- /page content -->
-</body>
+    </body>
 
 
 
@@ -256,3 +354,4 @@
 
     </script>
 @endsection
+

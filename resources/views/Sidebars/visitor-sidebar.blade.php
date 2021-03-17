@@ -245,7 +245,7 @@
 
                                     <a title="info" type="button" data-toggle="tooltip" data-placement="top" title="Change Language" onclick="$('#info').modal('show')" class="btn btn-info btn-sm"><i class="fa fa-info-circle"></i></a>
 
-{{--                                    <a href="" type="button" title="info" class="btn btn-info btn-sm" data-toggle="tooltip" onclick="$('#info').modal('show')" ><i class="fa fa-info-circle"></i></a>--}}
+                                    {{--                                    <a href="" type="button" title="info" class="btn btn-info btn-sm" data-toggle="tooltip" onclick="$('#info').modal('show')" ><i class="fa fa-info-circle"></i></a>--}}
 
 
                                 </div>
@@ -273,7 +273,7 @@
 
                     <!-- Main navigation -->
                     <div class="card-body p-0">
-                        <ul class="nav nav-sidebar" data-nav-type="accordion" style="height: 435px !important ;">
+                        <ul class="nav nav-sidebar" data-nav-type="accordion" style="height: 520px !important ;">
                             <!-- Main -->
                             <li class="nav-item">
                                 <a href="{{route('Visitor.index')}}" class="nav-link @if( Request::is("*index*")) active @endif">
@@ -292,7 +292,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('Visitor.Meeting')}}" class="nav-link @if( Request::is("*Meeting*")) active @endif"><i class="fa fas fa-camera"></i> <span>Meeting</span></a>
+                                <a href="{{route('Visitor.Meeting')}}" class="nav-link @if( Request::is("*Meeting*")) active @endif"><i class="fa fas fa-camera"></i> <span>{{__("message.Meeting")}}</span></a>
                             </li>
 
                             <li class="nav-item">
@@ -305,9 +305,27 @@
                                 <a href="{{route('Visitor.Contact')}}" class="nav-link @if( Request::is("*Contact*")) active @endif"><i class="fa fa-phone"></i> <span>{{__('message.ContactSupportTeam')}}</span></a>
                             </li>
 
+
                             <li class="nav-item text-center mt-md-5">
                                 <a href="http://amitisgroup.net/HTML5/" class="" target="_blank"><span class="btn btn-success btn-lg">{{__('message.EnterExhabition')}}</span></a>
                             </li>
+
+
+                            <li class="nav-item text-center mt-md-2">
+
+                                <div class="btn-group">
+                                    <a class="btn btn-dark" href="{{route("Auditorium")}}">
+
+                                        Auditorium
+
+                                    </a>
+                                    <a  class="btn btn-info" href="{{route("Lounge")}}">
+                                        Lounge
+                                    </a>
+                                </div>
+
+                            </li>
+
 
                             <!-- /main -->
                         </ul>

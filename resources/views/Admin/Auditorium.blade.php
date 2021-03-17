@@ -72,7 +72,7 @@
                     <div class="col-xl-12">
                         <!-- Traffic sources -->
 
-                        <div class="card p-3 card-admin" style="background-color:rgba(168,168,168,0.5);color: white">
+                        <div class="card p-3 card-admin" style="background-color:#006B63;color: white">
                             <div class="card-body py-0">
                                 <div class="row">
 
@@ -95,108 +95,6 @@
 
 
 
-                                        @if (\App\Conference::where('booth', '0')->first() != null)
-
-                                            @php
-                                                $conference = \App\Conference::where('booth', '0')->first();
-                                            @endphp
-
-
-
-
-                                            @if (\Carbon\Carbon::today() == \Carbon\Carbon::parse($conference->start_date) and  \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($conference->start_time))  )
-
-                                                <a href="{{route('AuditoriumPlay',$conference->id)  }}" class="btn btn-dark w-100"
-                                                   role="button" disabled="">Not started yet
-                                                    <i class="fa fa-hourglass"></i>
-                                                </a>
-
-                                            @elseif (\Carbon\Carbon::today() == \Carbon\Carbon::parse($conference->start_date) and  \Carbon\Carbon::now()->gte(Carbon\Carbon::parse($conference->start_time)) and \Carbon\Carbon::now()->lt(Carbon\Carbon::parse($conference->end_time)) )
-
-
-                                                @if ($conference->started )
-
-                                                    <a href="{{route('join-webinar',$conference->id)  }}" class="btn btn-success w-100"
-                                                       role="button" disabled="">Re-Join the conference
-
-                                                    </a>
-
-                                                @else
-
-
-
-                                                    <a href="{{route('Admin.create-webinar',$conference->id)  }}" class="btn btn-success w-100"
-                                                       role="button" disabled="">Start The Conference
-
-                                                    </a>
-
-
-                                                @endif
-
-
-
-
-
-
-
-
-
-                                            @elseif (\Carbon\Carbon::today() > \Carbon\Carbon::parse($conference->start_date) or ( \Carbon\Carbon::today() == \Carbon\Carbon::parse($conference->start_date) and  \Carbon\Carbon::now()->gte(Carbon\Carbon::parse($conference->end_time))  ))
-
-
-                                                @if($conference->recorded_video)
-
-
-
-                                                    <a href="{{$conference->recorded_video}}" class="btn btn-danger btn-block"
-                                                       role="button" disabled="">Recorded video
-
-                                                    </a>
-
-
-
-
-                                                @endif
-
-                                                <a href="{{route('AuditoriumPlay',$conference->id)  }}"
-                                                   class="btn btn-outline-dark btn-block"
-                                                   role="button" disabled="">Conference is over
-
-                                                </a>
-
-
-                                            @else
-
-
-                                                <a href="{{route('AuditoriumPlay',$conference->id)  }}"
-                                                   class="btn btn-outline-dark btn-block"
-                                                   role="button" disabled="">No action
-
-                                                </a>
-
-
-
-                                            @endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                        @endif
 
 
 
@@ -220,13 +118,15 @@
 
                                         <div class="col-md-5 mt-3 mt-md-0" style="height: 690px;border: 2px solid white;border-radius: 5px;overflow-y: auto">
                                             <h4 class="mt-2 mb-2">
-                                                Requested Conference for Selected day
+
+                                                {{__("message.RequestedConferenceForSelectedDay")}}
+
                                             </h4>
                                             <table class="table table-hover table-striped table-bordered table-light">
                                                 <thead>
-                                                <th>Conference Title</th>
-                                                <th>Company Name</th>
-                                                <th>Speakers</th>
+                                                <th>{{__("message.ConferenceTitle")}}</th>
+                                                <th>{{__("message.CompanyName")}}</th>
+                                                <th>{{__("message.Speaker")}}</th>
                                                 </thead>
                                                 <tbody>
 
@@ -235,7 +135,7 @@
 
                                                     <tr>
                                                         @if($cd_conf->used == 'notselected')
-                                                            <td>{{$cd_conf->title}}</td>
+                                                            <td>{{\Illuminate\Support\Str::limit($cd_conf->title, 10, '...')}}</td>
                                                             <td>{{ $cd_conf->booth != 0  ? \App\booth::where('id', $cd_conf->booth)->first()->CompanyName : 'Admin'       }}</td>
                                                             <td>{{\App\Speaker::where('cid', $cd_conf->id)->get()->count()}}</td>
                                                         @endif
@@ -253,11 +153,12 @@
 
 
                                         <div class="col-md-5">
-                                            <h4 class="mt-2 mt-md-0">Schedule Sheet
+                                            <h4 class="mt-2 mt-md-0">
+                                                {{__("message.ScheduleSheet")}}
                                                 <i class="fa fa-calendar"></i>
                                             </h4>
-                                            <p>Scheduled Conference : 1</p>
-                                            <p>Requested Conference : 1</p>
+                                            <p>{{__("message.ScheduledConference")}} : 1</p>
+                                            <p>{{__("message.RequestedConference")}} : 1</p>
 
                                             <button type="button" onclick="$('#AddSpeaker').modal('show')" class="btn btn-primary w-100">Add Conference to Auditorium
                                                 <i class="fa fa-plus"></i>
@@ -270,7 +171,7 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="text-dark">Add Conference to Auditorium
+                                                            <h4 class="text-dark">{{__("message.AddConferenceToAuditorium")}}
                                                                 <i class="fa fa-plus"></i></h4>
                                                             <button type="button" class="close" data-dismiss="modal"
                                                                     aria-label="Close">
@@ -286,20 +187,20 @@
                                                             <div class="modal-body text-dark">
                                                                 <div class="form-group">
                                                                     <label for="">
-                                                                        Begin:
+                                                                        {{__("message.Begin")}}:
                                                                     </label>
                                                                     <input name="start_time" type="time" class="form-control">
                                                                     <input name="day" value="{{\request()->day}}" type="hidden">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="">
-                                                                        End:
+                                                                        {{__("message.End")}}:
                                                                     </label>
                                                                     <input name="end_time" type="time" class="form-control">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="">
-                                                                        Select Conference:
+                                                                        {{__("message.SelectConference")}}
                                                                     </label>
                                                                     <select name="cid" id="" class="form-control">
 
@@ -319,7 +220,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="">
-                                                                        Select Conference:
+                                                                        {{__("message.SelectConference")}}
                                                                     </label>
                                                                     <select name="hall" id="" class="form-control">
                                                                         <option value="A">
@@ -348,20 +249,19 @@
                                                 </div>
                                             </div>
 
-                                            <a href="{{route('Admin.AuditoriumPublish')}}" class="btn btn-primary w-100 mt-2">Publish Sheet
+                                            <a href="{{route('Admin.AuditoriumPublish')}}" class="btn btn-primary w-100 mt-2">{{__("message.PublishSheet")}}
                                                 <i class="fa fa-send"></i>
                                             </a>
-                                            <a href="{{route('Auditorium')}}" target="_blank" class="btn btn-info w-100 mt-2">View Auditorium Agenda
+                                            <a href="{{route('Auditorium')}}" target="_blank" class="btn btn-info w-100 mt-2">{{__("message.ViewAuditoriumAgenda")}}
                                                 <i class="fa fa-eye"></i>
                                             </a>
 
                                             <table class="mt-5 table table-striped table-bordered table-hover table-light">
                                                 <thead>
-                                                <th>Conference Title</th>
-                                                <th>Time</th>
-                                                <th>Hall Name</th>
-                                                <th>Delete</th>
-
+                                                    <th>{{__("message.ConferenceTitle")}}</th>
+                                                    <th>{{__("message.Time")}}</th>
+                                                    <th>{{__("message.HallName")}}</th>
+                                                    <th>{{__("message.Action")}}</th>
                                                 </thead>
 
                                                 <tbody>
@@ -369,10 +269,27 @@
                                                 @foreach(\App\Conference::where('start_date', \request()->day)->get() as $conf)
 
                                                     <tr>
-                                                        <td>{{$conf->title}}</td>
-                                                        <td>{{$conf->start_time}}</td>
+                                                        <td>{{\Illuminate\Support\Str::limit($conf->title, 10 , '...')}}</td>
+                                                        <td>{{$conf->start_time}} - {{$conf->end_time}}</td>
                                                         <td>{{$conf->hall}}</td>
-                                                        <td><a href="{{route('Admin.AuditoriumDelete', $conf->id)}}" class="btn btn-danger p-0 w-100"><i class="fa fa-trash"></i></a></td>
+
+                                                        <td>
+
+
+                                                            @if (\Carbon\Carbon::parse(\Carbon\Carbon::now()->format('Y-m-d'))->eq(\Carbon\Carbon::parse($conf->start_date)) && \Carbon\Carbon::now()->gte(\Carbon\Carbon::parse($conf->start_time)) && \Carbon\Carbon::now()->lte(\Carbon\Carbon::parse($conf->end_time)))
+                                                                <a href="{{route('Admin.create-webinar',$conf->id)  }}"  target="_blank" class="btn btn-success btn-block"><i class="fa fa-play"></i></a>
+
+                                                            @else
+                                                                <button  class="btn btn-light btn-block" disabled=""><i class="fa fa-play"></i></button>
+
+                                                            @endif
+
+
+                                                                <a href="{{route('Admin.AuditoriumDelete', $conf->id)}}" class="btn btn-danger my-delete  btn-block"><i class="fa fa-trash"></i></a>
+
+
+
+                                                        </td>
                                                     </tr>
 
                                                 @endforeach
@@ -383,10 +300,6 @@
                                         </div>
 
                                     @endif
-
-
-
-
 
 
 
@@ -419,3 +332,44 @@
 
 
 @endsection
+
+@section("js")
+
+
+    <script>
+
+        $(".my-delete").on("click", function (e){
+
+            e.preventDefault()
+            const urlToRedirect = e.currentTarget.getAttribute('href'); //use currentTarget because the click may be on the nested i tag and not a tag causing the href to be empty
+
+
+            var result = Swal.fire({
+                title: 'Note: Are You Sure Deleting this Conference?',
+                showDenyButton: true,
+                showCancelButton: false,
+                confirmButtonText: `Yes`,
+                denyButtonText: `No`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire('Saved!', '', 'success')
+                    window.location = urlToRedirect
+                    return true
+                } else if (result.isDenied) {
+                    Swal.fire('Changes are not saved', '', 'error')
+                    return false
+                }
+            })
+
+
+
+        })
+
+
+
+    </script>
+
+
+
+
+    @endsection

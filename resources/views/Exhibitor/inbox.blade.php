@@ -1,4 +1,5 @@
 @extends('layouts.Panel')
+@extends('layouts.Panel')
 @section('Head')
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta name="_token" content="{{csrf_token()}}"/>
@@ -115,7 +116,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <!-- Traffic sources -->
-                        <div class="card p-3 card-inbox-ex-h" style="background-color:rgba(54,54,54,0.65);color: white;">
+                        <div class="card p-3 card-inbox-ex-h" style="background-color:#006B63;color: white;">
                             <div class="card-body py-0">
                                 <div class="row">
 

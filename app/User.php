@@ -24,8 +24,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'Profession','City','ChatMode','PositionUser','email_verified_at', 'laravel_remember_session',
         'companyAddress','zipCode','mainCompany','institutionEmail',
         'phone','fax','institution','education','countryStudy','interestedDegree','interestedField',
-        'languageOfStudy','onlineDegreeProgram','interestedScholarShip'
-
+        'languageOfStudy','onlineDegreeProgram','interestedScholarShip',
+        'device_token','admissionSemester','InterNationalPrograms',
+        'professionInterestedToApply','userCompanyName','profile','website','tel','app_token','position','formRule','subProfile'
     ];
 
     /**

@@ -75,7 +75,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <!-- Traffic sources -->
-                        <div class="card card-admin" style="background-color:rgba(168,168,168,0.5);color: white">
+                        <div class="card card-admin" style="background-color:#006B63;color: white">
                             <div class="card-header header-elements-inline">
 
                                 <div class="header-elements">
@@ -83,7 +83,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <h5>Theme</h5>
+                                <h5>{{__("message.Theme")}}</h5>
 
 
 
@@ -129,41 +129,41 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">
-                                                    Add Video Tutorial Youtube Link For Visitor Registration :
+                                                   {{__("message.AddVideoTutorialYoutubeLinkForVisitorRegistration")}}
                                                 </label>
                                                 <input type="text" class="form-control" name="visitorRegistrationVideo" value="{{$Site->visitorRegistrationVideo}}">
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="">
-                                                    Upload Tutorial PDF for Visitor Registration :
+                                                    {{__("message.UploadTutorialPDFForVisitorRegistration")}}
                                                 </label>
                                                 <input type="file" name="visitorRegistrationPDF" class="form-control-file">
                                                 @if (\App\Site::first()->visitorRegistrationPDF != null)
-                                                    <span class="text-success">Uploaded</span>
+                                                    <span class="text-success">{{__("message.Uploaded")}}</span>
                                                 @endif
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="">
-                                                    Add Video Tutorial Youtube Link For Visitor Panel :
+                                                    {{__("message.AddVideoTutorialYoutubeLinkForVisitorPanel :")}}
                                                 </label>
                                                 <input type="text" class="form-control" name="visitorPanelVideo" value="{{$Site->visitorPanelVideo}}">
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="">
-                                                   Upload Tutorial PDF for Visitor Panel:
+                                                   {{__("message.UploadTutorialPDFForVisitorPanel:")}}
                                                 </label>
                                                 <input type="file" class="form-control-file" name="visitorPanelPDF">
                                                 @if (\App\Site::first()->visitorPanelPDF != null)
-                                                    <span class="text-success">Uploaded</span>
+                                                    <span class="text-success">{{__("message.Uploaded")}}</span>
                                                 @endif
                                             </div>
 
                                         </div>
                                     </div>
-                                    <input type="submit" class="btn btn-success btn-lg w-100" value="save">
+                                    <input type="submit" class="btn btn-success btn-lg w-100" value="{{__("message.Save")}}">
                                 </form>
                             </div>
                         </div>

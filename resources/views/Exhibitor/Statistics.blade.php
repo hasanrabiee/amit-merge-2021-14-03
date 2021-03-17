@@ -167,18 +167,18 @@
             <div class="row">
                 <div class="col-xl-12">
                     <!-- Traffic sources -->
-                    <div class="card p-3" style="background-color:rgba(54,54,54,0.65);color: white;height: 650px;">
+                    <div class="card p-3" style="background-color:#006B63;color: white;height: 650px;">
                         <div class="card-body py-0">
                             <div class="row">
                                 <div class="col-12">
                                     <table class="table table-bordered table-hover table-light text-center">
                                         <thead>
                                             <th>
-                                                Number of Booth Visits
+                                                {{__("message.NumberofBoothVisitsPerDay")}}
                                             </th>
 
                                             <th>
-                                                Number Of Online Users
+                                                {{__("message.NumberOfUserOnline")}}
                                             </th>
                                         </thead>
                                         <tbody>
@@ -189,7 +189,7 @@
                                                     @if (\App\Site::first()->onlinesCountStatus)
                                                         {{\App\Site::first()->onlinesCount}}
                                                     @else
-                                                        Not Available Now
+                                                       {{__("message.NotAvailableNow")}}
                                                     @endif
 
                                                 </td>

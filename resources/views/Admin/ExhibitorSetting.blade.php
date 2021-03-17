@@ -72,7 +72,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <!-- Traffic sources -->
-                        <div class="card card-admin" style="background-color:rgba(168,168,168,0.5);color: white">
+                        <div class="card card-admin" style="background-color:#006B63;color: white">
                             <div class="card-header header-elements-inline">
 
                                 <div class="header-elements">
@@ -86,25 +86,25 @@
                                         <label for=""><h6>{{__('message.BackgroundPicture')}}</h6></label>
                                         <input type="file" name="ExhibitorBackGround">
                                         @if (\App\Site::first()->ExhibitorBackGround != null)
-                                            <span class="text-success">Uploaded</span>
+                                            <span class="text-success">{{__("message.Uploaded")}}</span>
                                         @endif
                                     </div>
                                     <h5>Info</h5>
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" placeholder="Welcome" name="ExhibitorWelcome" value="{{$Site->ExhibitorWelcome}}">
+                                                <input type="text" class="form-control" placeholder="{{__("message.ExhibitorWelcome")}}" name="ExhibitorWelcome" value="{{$Site->ExhibitorWelcome}}">
                                             </div>
                                             <div class="form-group">
-                                                <textarea class="form-control" rows="5" placeholder="About Exhibitor" name="ExhibitorAbout">{{$Site->ExhibitorAbout}}</textarea>
+                                                <textarea class="form-control" rows="5" placeholder="{{__("message.AboutPayment")}}" name="ExhibitorAbout">{{$Site->ExhibitorAbout}}</textarea>
                                             </div>
                                             <div class="form-group">
-                                                <textarea class="form-control" placeholder="About Payment" rows="5" name="ExhibitorAboutPayment">{{$Site->ExhibitorAboutPayment}}</textarea>
+                                                <textarea class="form-control" placeholder="{{__("message.ExhibitorAboutPayment")}}" rows="5" name="ExhibitorAboutPayment">{{$Site->ExhibitorAboutPayment}}</textarea>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <input type="text" placeholder="Entrance Fee" disabled class="form-control">
+                                                        <input type="text" placeholder="{{__("message.EntranceFee")}}" disabled class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -126,14 +126,14 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="">
-                                                    Add Video Tutorial Youtube Link For Exhibitor Registration :
+                                                   {{__("message.AddVideoTutorialYoutubeLinkForExhibitorRegistration")}}
                                                 </label>
                                                 <input type="text" class="form-control" name="exRegistrationVideo" value="{{$Site->exRegistrationVideo}}">
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="">
-                                                    Upload Tutorial PDF for Exhibitor Registration :
+                                                    {{__("message.UploadTutorialPDFForExhibitorRegistration")}}
                                                 </label>
                                                 <input type="file" name="exRegistrationPDF" class="form-control-file">
                                                 @if (\App\Site::first()->exRegistrationPDF != null)
@@ -143,18 +143,18 @@
 
                                             <div class="form-group">
                                                 <label for="">
-                                                    Add Video Tutorial Youtube Link For Exhibitor Panel :
+                                                    {{__("message.AddVideoTutorialYoutubeLinkForExhibitorPanel")}}
                                                 </label>
                                                 <input type="text" class="form-control" name="exPanelVideo" value="{{$Site->exPanelVideo}}">
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="">
-                                                    Upload Tutorial PDF for Visitor Panel:
+                                                    {{__("message.UploadTutorialPDFForVisitorPanel")}}
                                                 </label>
                                                 <input type="file" class="form-control-file" name="exPanelPDF">
                                                 @if (\App\Site::first()->exPanelPDF != null)
-                                                    <span class="text-success">Uploaded</span>
+                                                    <span class="text-success">{{__("message.Uploaded")}}</span>
                                                 @endif
                                             </div>
                                         </div>

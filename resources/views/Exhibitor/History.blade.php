@@ -63,7 +63,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="text-dark">Please Choose Your Items Which You Like To Be Filtered</h4>
+                        <h4 class="text-dark">{{__("message.ItemFiltered")}}</h4>
                         <button type="button" class="close" data-dismiss="modal"
                                 aria-label="Close">
                             <span aria-hidden="true">×</span></button>
@@ -73,22 +73,96 @@
 
 
 
+
                         <h6>
-                            Gender
+                            {{__("message.Gender")}}
                         </h6>
                         @foreach(explode(',' , \App\Site::find(1)->VisitorGender) as $Gender)
                             <a href="?gender={{$Gender}}" class="btn btn-dark w-50 mb-2 btn-sm">
                                 {{$Gender}}
                             </a>
                         @endforeach
+
+
+
                         <h6>
-                            Profession
+                            {{__("message.InterestedCountryToStudy")}}
                         </h6>
-                        @foreach(explode(',' , \App\Site::find(1)->VisitorProfession) as $profession)
-                            <a href="?profession={{$profession}}" class="btn btn-dark w-50 mb-2 btn-sm">
-                                {{$profession}}
+                        @foreach(explode(',' , \App\VisitorForm::find(1)->countryInterestedItems) as $country)
+                            <a href="?country={{$country}}" class="btn btn-dark w-50 mb-2 btn-sm">
+                                {{$country}}
                             </a>
                         @endforeach
+
+                        <h6>
+                           {{__("message.InterestedDegree")}}
+                        </h6>
+                        @foreach(explode(',' , \App\VisitorForm::find(1)->interestedDegreeItems) as $intDegree)
+                            <a href="?interestedDegree={{$intDegree}}" class="btn btn-dark w-50 mb-2 btn-sm">
+                                {{$intDegree}}
+                            </a>
+                        @endforeach
+                        <h6>
+                            {{__("message.InterestedField")}}
+                        </h6>
+                        @foreach(explode(',' , \App\VisitorForm::find(1)->interestedFieldItems) as $intField)
+                            <a href="?interestedField={{$intField}}" class="btn btn-dark w-50 mb-2 btn-sm">
+                                {{$intField}}
+                            </a>
+                        @endforeach
+
+                        <h6>
+                            {{__("message.OnlineDegreeProgram")}}
+                        </h6>
+                        @foreach(explode(',' , \App\VisitorForm::find(1)->onlineDegreeProgramsItems) as $onDegree)
+                            <a href="?onDegree={{$onDegree}}" class="btn btn-dark w-50 mb-2 btn-sm">
+                                {{$onDegree}}
+                            </a>
+                        @endforeach
+
+                        <h6>
+                            {{__("message.CurrentLevelOfEducation")}}
+                        </h6>
+                        @foreach(explode(',' , \App\VisitorForm::find(1)->educationItems) as $edu)
+                            <a href="?edu={{$edu}}" class="btn btn-dark w-50 mb-2 btn-sm">
+                                {{$edu}}
+                            </a>
+                        @endforeach
+
+
+                        <h6>
+                            {{__("message.AdmissionSemester")}}
+                        </h6>
+                        @foreach(explode(',' , \App\VisitorForm::find(1)->admissionSemesterItems) as $adSem)
+                            <a href="?adSem={{$adSem}}" class="btn btn-dark w-50 mb-2 btn-sm">
+                                {{$adSem}}
+                            </a>
+                        @endforeach
+
+                        <h6>
+                            {{__("message.Profession")}}
+                        </h6>
+                        @foreach(explode(',' , \App\VisitorForm::find(1)->professionInterestedItems) as $interestedProfession)
+                            <a href="?intProf={{$interestedProfession}}" class="btn btn-dark w-50 mb-2 btn-sm">
+                                {{$interestedProfession}}
+                            </a>
+                        @endforeach
+
+                        <h6>
+                            {{__("message.Profile")}}
+                        </h6>
+                        @foreach(explode(',' , \App\VisitorForm::find(1)->profileItems) as $profile)
+                            <a href="?profile={{$profile}}" class="btn btn-dark w-50 mb-2 btn-sm">
+                                {{$profile}}
+                            </a>
+                        @endforeach
+
+
+
+
+
+
+
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-light btn-block"
@@ -115,7 +189,7 @@
                         <div class="col-xl-12">
                             <!-- Traffic sources -->
                             <div class="card p-3 pc-height-exhibitor-history"
-                                 style="background-color:rgba(54,54,54,0.65);color: white;">
+                                 style="background-color:#006B63;color: white;">
                                 <div class="card-body py-0">
                                     <form action="{{route("Exhibitor.History")}}" method="get" class="w-100">
                                         <div class="row">
@@ -152,53 +226,136 @@
 
                                                 <div class="col-md-4 mt-md-0 mt-2"
                                                      style="border: 1px solid white;border-radius: 5px;height: 600px;overflow-y: auto">
-                                                    <h3 class="text-white mb-4">Visitor Information</h3>
+                                                    <h3 class="text-white mb-4">{{__("message.VisitorInformation")}}</h3>
                                                     <div class="text-center">
                                                         <img src="{{$User->Image}}" style="width: 65px;margin: 0 auto"
                                                              class="text-center">
-
+                                                    </div>
+                                                    <div class="text-center" style="text-transform: capitalize">
+                                                        <h1>{{$User->formRule}}</h1>
                                                     </div>
                                                     <p>{{__('message.UserName')}}: {{$User->UserName}}</p>
                                                     <p>{{__('message.fn')}}: {{$User->FirstName}}</p>
                                                     <p>{{__('message.ln')}}: {{$User->LastName}}</p>
                                                     <p>{{__('message.Profession')}}: {{$User->Profession}}</p>
                                                     <p>{{__('message.Gender')}}: {{$User->Gender}}</p>
+                                                    <p>{{__('message.City')}}: {{$User->City}}</p>
+                                                    <p>{{__('message.Country')}}: {{$User->Country}}</p>
+                                                    <p>{{__('message.BirthDate')}}: {{$User->BirthDate}}</p>
 
                                                     @if ($User->education != null)
                                                         <p>
-                                                            Education : {{$User->education}}
+                                                            {{__("message.Education")}} : {{$User->education}}
                                                         </p>
                                                     @endif
 
                                                     @if ($User->countryStudy != null)
                                                         <p>
-                                                            Country Study : {{$User->countryStudy}}
+                                                            {{__("message.CountryStudy")}} : {{$User->countryStudy}}
                                                         </p>
                                                     @endif
 
                                                     @if ($User->InterestedDegree != null)
                                                         <p>
-                                                            Interested Degree : {{$User->InterestedDegree}}
+                                                            {{__("message.InterestedDegree")}} : {{$User->InterestedDegree}}
                                                         </p>
                                                     @endif
 
                                                     @if ($User->languageOfStudy != null)
                                                         <p>
-                                                            Language Of Study : {{$User->languageOfStudy}}
+                                                           {{__("message.LanguageOfStudy")}} : {{$User->languageOfStudy}}
                                                         </p>
                                                     @endif
 
                                                     @if ($User->onlineDegreeProgram != null)
                                                         <p>
-                                                            Online Degree Program : {{$User->onlineDegreeProgram}}
+                                                            {{__("message.OnlineDegreeProgram")}} : {{$User->onlineDegreeProgram}}
                                                         </p>
                                                     @endif
 
                                                     @if ($User->interestedScholarShip != null)
                                                         <p>
-                                                            Interested Scholar Ship : {{$User->onlineDegreeProgram}}
+                                                            {{__("message.InterestedScholarShip")}} : {{$User->interestedScholarShip}}
                                                         </p>
                                                     @endif
+
+
+                                                    @if ($User->admissionSemester != null)
+                                                        <p>
+                                                            {{__("message.AdmissionSemester")}} : {{$User->admissionSemester}}
+                                                        </p>
+                                                    @endif
+
+                                                    @if ($User->professionInterestedToApply != null)
+                                                        <p>
+                                                            {{__("message.ProfessionInterestedToApply")}} : {{$User->professionInterestedToApply}}
+                                                        </p>
+                                                    @endif
+
+                                                    @if ($User->organization != null)
+                                                        <p>
+                                                            {{__("message.Organization")}} : {{$User->organization}}
+                                                        </p>
+                                                    @endif
+
+                                                    @if ($User->InterNationalPrograms != null)
+                                                        <p>
+                                                            {{__("message.InternationalPrograms")}} : {{$User->InterNationalPrograms}}
+                                                        </p>
+                                                    @endif
+
+                                                    @if ($User->website != null)
+                                                        <p>
+                                                            {{__("message.WebSite")}} : {{$User->website}}
+                                                        </p>
+                                                    @endif
+
+                                                    @if ($User->tel != null)
+                                                        <p>
+                                                            {{__("message.Tel")}} : {{$User->tel}}
+                                                        </p>
+                                                    @endif
+
+                                                    @if ($User->userCompanyName != null)
+                                                        <p>
+                                                            {{__("message.UserCompanyName")}} : {{$User->userCompanyName}}
+                                                        </p>
+                                                    @endif
+
+                                                    @if ($User->profile != null)
+                                                        <p>
+                                                            {{__("message.Profile")}} : {{$User->profile}}
+                                                        </p>
+                                                    @endif
+
+                                                    @if ($User->zipCode != null)
+                                                        <p>
+                                                           {{__("message.Zipcode")}} : {{$User->zipCode}}
+                                                        </p>
+                                                    @endif
+
+                                                    @if ($User->fax != null)
+                                                        <p>
+                                                            {{__("message.Fax")}} : {{$User->fax}}
+                                                        </p>
+                                                    @endif
+                                                    @if ($User->mainCompany != null)
+                                                        <p>
+                                                            {{__("message.MainCompany")}} : {{$User->mainCompany}}
+                                                        </p>
+                                                    @endif
+
+                                                    @if ($User->position != null)
+                                                        <p>
+                                                            {{__("message.Position")}} : {{$User->position}}
+                                                        </p>
+                                                    @endif
+
+
+
+
+
+
 
                                                     <p class="text-left">Download CV :
                                                         <a class="btn btn-primary" href="{{$User->resume}}" target="_blank">
@@ -211,7 +368,7 @@
 
 
                                                 <div class="col-md-4 mt-md-0 mt-2">
-                                                    <h4>Chat History</h4>
+                                                    <h4>{{__("message.ChatHistory")}}</h4>
                                                     <div class="pc-height-visitor-history-chat"
                                                          style="background-color:transparent;border: 1px solid transparent ;border-radius: 5px;overflow-y: auto;overflow-x:hidden ">
 

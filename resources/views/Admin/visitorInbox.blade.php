@@ -69,7 +69,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <!-- Traffic sources -->
-                        <div class="card p-3 card-admin" style="background-color:rgba(168,168,168,0.5);color: white">
+                        <div class="card p-3 card-admin" style="background-color:#006B63;color: white">
                             <div class="card-body py-0">
                                 <h3>Visitor Inbox</h3>
                                 <div class="row">
@@ -79,7 +79,7 @@
                                             <div class="input-group mt-2 mb-2">
                                                 <input type="text" class="form-control" placeholder="{{__('message.UserName')}}" name="SearchTermUser">
                                                 <div class="input-group-append">
-                                                    <button class="btn btn-success" type="submit">Search</button>
+                                                    <button class="btn btn-success" type="submit" style="background-color: #01B5A8">Search</button>
                                                     <button  class="btn shadow-none" type="button"
                                                              style=""><i id="visiotr_refresh"
                                                                          class="fa fa-cog text-dark"
@@ -97,57 +97,118 @@
                                             <div class="mt-2">
                                                 <h3>{{\App\User::find(request()->UserID)->UserName}} Information</h3>
                                                 <div class="text-center">
-                                                    <img src="{{\App\User::find(request()->UserID)->Image}}" alt="" style="width: 50px;height: 50px;border-radius: 50%">
+                                                    <img src="{{\App\User::find(request()->UserID)->Image}}" alt="" style="width: 100px;height: 100px;border-radius: 50%">
                                                 </div>
-                                                <p class="font-size-lg"><strong>Firstname:</strong>{{\App\User::find(request()->UserID)->FirstName}}</p>
-                                                <p class="font-size-lg"><strong>Lastname:</strong>{{\App\User::find(request()->UserID)->LastName}}</p>
-                                                <p class="font-size-lg"><strong>Gender:</strong>{{\App\User::find(request()->UserID)->Gender}}</p>
-                                                <p class="font-size-lg"><strong>Profession:</strong>{{\App\User::find(request()->UserID)->Profession}}</p>
-                                                <p class="font-size-lg"><strong>City:</strong>{{\App\User::find(request()->UserID)->City}}</p>
-                                                <p class="font-size-lg"><strong>Country:</strong>{{\App\User::find(request()->UserID)->Country}}</p>
-                                                <p class="font-size-lg"><strong>Email:</strong>{{\App\User::find(request()->UserID)->email}}</p>
-                                                <p class="font-size-lg"><strong>Feedback:</strong>{{\App\User::find(request()->UserID)->VisitExperience}}</p>
+                                                <p class="font-size-lg"><strong>{{__("message.fn")}}:</strong>{{\App\User::find(request()->UserID)->FirstName}}</p>
+                                                <p class="font-size-lg"><strong>{{__("message.ln")}}:</strong>{{\App\User::find(request()->UserID)->LastName}}</p>
+                                                <p class="font-size-lg"><strong>{{__("message.Gender")}}:</strong>{{\App\User::find(request()->UserID)->Gender}}</p>
+                                                <p class="font-size-lg"><strong>{{__("message.Profession")}}:</strong>{{\App\User::find(request()->UserID)->Profession}}</p>
+                                                <p class="font-size-lg"><strong>{{__("message.City")}}:</strong>{{\App\User::find(request()->UserID)->City}}</p>
+                                                <p class="font-size-lg"><strong>{{__("message.Country")}}:</strong>{{\App\User::find(request()->UserID)->Country}}</p>
+                                                <p class="font-size-lg"><strong>{{__("message.Email")}}:</strong>{{\App\User::find(request()->UserID)->email}}</p>
+                                                <p class="font-size-lg"><strong>{{__("message.FeedBack")}}:</strong>{{\App\User::find(request()->UserID)->VisitExperience}}</p>
 
 
                                                 @if (\App\User::find(request()->UserID)->education != null)
                                                     <p>
-                                                        Education : {{\App\User::find(request()->UserID)->education}}
+                                                        {{__("message.Education")}} : {{\App\User::find(request()->UserID)->education}}
                                                     </p>
                                                 @endif
 
                                                 @if (\App\User::find(request()->UserID)->countyStudy != null)
                                                     <p>
-                                                        Country Study : {{\App\User::find(request()->UserID)->countyStudy}}
+                                                        {{__("message.CountryStudy")}} : {{\App\User::find(request()->UserID)->countyStudy}}
                                                     </p>
                                                 @endif
 
                                                 @if (\App\User::find(request()->UserID)->InterestedDegree != null)
                                                     <p>
-                                                        Interested Degree : {{\App\User::find(request()->UserID)->InterestedDegree}}
+                                                        {{__("message.InterestedDegree")}} : {{\App\User::find(request()->UserID)->InterestedDegree}}
                                                     </p>
                                                 @endif
 
                                                 @if (\App\User::find(request()->UserID)->InterestedField != null)
                                                     <p>
-                                                        Interested Field: {{\App\User::find(request()->UserID)->InterestedField}}
+                                                        {{__("message.InterestedField")}}: {{\App\User::find(request()->UserID)->InterestedField}}
                                                     </p>
                                                 @endif
 
                                                 @if (\App\User::find(request()->UserID)->languageOfStudy != null)
                                                     <p>
-                                                        Language Of Study : {{\App\User::find(request()->UserID)->languageOfStudy}}
+                                                        {{__("message.LanguageOfStudy")}} : {{\App\User::find(request()->UserID)->languageOfStudy}}
                                                     </p>
                                                 @endif
 
-                                                @if (auth()->user()->onlineDegreeProgram != null)
+                                                @if (\App\User::find(request()->UserID)->onlineDegreeProgram != null)
                                                     <p>
-                                                        onlineDegreeProgram : {{\Illuminate\Support\Facades\Auth::user()->onlineDegreeProgram}}
+
+                                                        {{__("message.OnlineDegreeProgram")}} : {{\App\User::find(request()->UserID)->onlineDegreeProgram}}
                                                     </p>
                                                 @endif
 
-                                                @if (auth()->user()->interestedScholarShip != null)
+                                                @if (\App\User::find(request()->UserID)->interestedScholarShip != null)
                                                     <p>
-                                                        interestedScholarShip : {{\Illuminate\Support\Facades\Auth::user()->interestedScholarShip}}
+                                                        {{__("message.InterestedScholarShip")}} : {{\App\User::find(request()->UserID)->interestedScholarShip}}
+                                                    </p>
+                                                @endif
+
+
+                                                @if (\App\User::find(request()->UserID)->currentLevelOfEducation != null)
+                                                    <p>
+                                                        {{__("message.CurrentLevelOfEducation")}} : {{\App\User::find(request()->UserID)->currentLevelOfEducation}}
+                                                    </p>
+                                                @endif
+
+                                                @if (\App\User::find(request()->UserID)->position != null)
+                                                    <p>
+                                                        {{__("message.Position")}} : {{\App\User::find(request()->UserID)->currentLevelOfEducation}}
+                                                    </p>
+                                                @endif
+
+                                                @if (\App\User::find(request()->UserID)->admissionSemester != null)
+                                                    <p>
+                                                        {{__("message.AdmissionSemester")}} : {{\App\User::find(request()->UserID)->admissionSemester}}
+                                                    </p>
+                                                @endif
+
+
+                                                @if (\App\User::find(request()->UserID)->professionInterestedToApply != null)
+                                                    <p>
+                                                        {{__("message.ProfessionInterestedToApply")}} : {{\App\User::find(request()->UserID)->professionInterestedToApply}}
+                                                    </p>
+                                                @endif
+
+                                                @if (\App\User::find(request()->UserID)->organization != null)
+                                                    <p>
+                                                        {{__("message.Organization")}} : {{\App\User::find(request()->UserID)->organization}}
+                                                    </p>
+                                                @endif
+
+
+                                                @if (\App\User::find(request()->UserID)->InterNationalPrograms != null)
+                                                    <p>
+                                                        {{__("message.InternationalPrograms")}} : {{\App\User::find(request()->UserID)->InterNationalPrograms}}
+                                                    </p>
+                                                @endif
+
+
+                                                @if (\App\User::find(request()->UserID)->website != null)
+                                                    <p>
+                                                        {{__("message.WebSite")}} : {{\App\User::find(request()->UserID)->website}}
+                                                    </p>
+                                                @endif
+
+
+
+                                                @if (\App\User::find(request()->UserID)->tel != null)
+                                                    <p>
+                                                        {{__("message.Tel")}} : {{\App\User::find(request()->UserID)->tel}}
+                                                    </p>
+                                                @endif
+
+                                                @if (\App\User::find(request()->UserID)->profile != null)
+                                                    <p>
+                                                        {{__("message.Profile")}} : {{\App\User::find(request()->UserID)->profile}}
                                                     </p>
                                                 @endif
 
@@ -188,7 +249,7 @@
                                                 <input type="hidden" name="Mode" id="MOOdee"
                                                        value="@if(request()->CompanyID) Company @else User @endif">
                                                 <div class="input-group-append">
-                                                    <button class="btn btn-success" onclick="sendMessage()">
+                                                    <button class="btn btn-success" onclick="sendMessage()" style="background-color: #01B5A8">
                                                         {{__('message.Send')}}
                                                     </button>
                                                 </div>

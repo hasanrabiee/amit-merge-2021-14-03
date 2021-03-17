@@ -179,7 +179,7 @@
 
                 <!-- Main navigation -->
                 <div class="card-body p-0">
-                    <ul class="nav nav-sidebar" data-nav-type="accordion" style="height: 630px !important ;">
+                    <ul class="nav nav-sidebar" data-nav-type="accordion" style="height: 700px !important ;">
                         <!-- Main -->
                         <li class="nav-item">
                             <a href="{{route('Exhibitor.index')}}" class="nav-link @if( Request::is("*index*")) active @endif">
@@ -195,21 +195,21 @@
                             <a href="{{route('Exhibitor.Inbox')}}" class="nav-link @if( Request::is("*nbox*")) active @endif"> <span>{{__('message.Inbox')}}</span>
 
                                 @if (isset($newMessage) && $newMessage >0)
-                                    <span class="badge badge-info ml-3"> New Message</span>
+                                    <span class="badge badge-info ml-3"> {{__("message.NewMessage")}}</span>
                                 @endif
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('Exhibitor.MeetingSchedule')}}" class="nav-link @if( Request::is("*Meeting*")) active @endif"> <span>Meeting Schedule</span></a>
+                            <a href="{{route('Exhibitor.MeetingSchedule')}}" class="nav-link @if( Request::is("*Meeting*")) active @endif"> <span>{{__("message.MeetingSchedule")}}</span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('Exhibitor.AddConference')}}" class="nav-link @if( Request::is("*AddC*")) active @endif"> <span>Request Conference</span></a>
+                            <a href="{{route('Exhibitor.AddConference')}}" class="nav-link @if( Request::is("*AddC*")) active @endif"> <span>{{__("message.RequestConference")}}</span></a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('Exhibitor.History')}}" class="nav-link @if( Request::is("*History*")) active @endif"><span>{{__('message.History')}}</span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('Exhibitor.AddStaff')}}" class="nav-link @if( Request::is("*Staff*")) active @endif"><span>Add Staff</span></a>
+                            <a href="{{route('Exhibitor.AddStaff')}}" class="nav-link @if( Request::is("*Staff*")) active @endif"><span>{{__("message.AddStaff")}}</span></a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('Exhibitor.Statistics')}}" class="nav-link @if( Request::is("*Statistic*")) active @endif"> <span>{{__('message.Statistics')}}</span></a>
@@ -225,8 +225,22 @@
                         </li>
 
                         <li class="nav-item text-center mt-md-2">
-                            <a href="http://amitisgroup.net/HTML5/" class="" target="_blank"><span class="btn btn-success btn-lg">Enter Exhibition</span></a>
+                            <a href="http://amitisgroup.net/HTML5/" class="" target="_blank"><span class="btn btn-success btn-lg">{{__("message.EnterExhabition")}}</span></a>
                         </li>
+
+                        <li class="nav-item text-center mt-md-2">
+
+                            <div class="btn-group">
+                                <a class="btn btn-dark"  href="{{route("Auditorium")}}">
+                                    Auditorium
+                                </a>
+                                <a class="btn btn-info" href="{{route("Lounge")}}">
+                                    Lounge
+                                </a>
+                            </div>
+
+                        </li>
+
                         <!-- /main -->
                     </ul>
                 </div>

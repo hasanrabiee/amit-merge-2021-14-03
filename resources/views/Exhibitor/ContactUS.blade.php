@@ -88,7 +88,7 @@
                         <!-- Traffic sources -->
                         <div class="row">
                             <div class="col-md-6" style="height: 600px !important;">
-                                <div class="card w-100" style="background-color:rgba(168,168,168,0.5);color: white;">
+                                <div class="card w-100" style="background-color:#006B63;color: white;">
                                     <div class="card-body">
                                         <div class="row w-100">
                                             <div class="w-100">
@@ -116,7 +116,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mt-3 mt-md-0">
-                                    <div class="card" style="background-color:rgba(168,168,168,0.5);color: white;height: 620px !important">
+                                    <div class="card" style="background-color:#006B63;color: white;height: 620px !important">
                                         <div class="card-body">
                                             <h3>{{__("message.ContactUs")}}</h3>
                                             <h4 class="ml-md-3 ml-2" style="">{{\App\Site::find(1)->Name}}</h4>

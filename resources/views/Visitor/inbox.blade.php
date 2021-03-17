@@ -72,7 +72,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <!-- Traffic sources -->
-                        <div class="card p-3 card-inbox-ex-h" style="background-color:rgba(54,54,54,0.65);color: white;">
+                        <div class="card p-3 card-inbox-ex-h" style="background-color:#006B63;color: white;">
                             <div class="card-body py-0">
                                 <div class="row">
 
@@ -115,88 +115,153 @@
 
                                             @if ($userInfo->companyAddress != null)
                                                 <p>
-                                                    Company Address : {{$userInfo->companyAddress}}
+                                                    {{__("message.CompanyAddress")}} : {{$userInfo->companyAddress}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->zipCode != null)
                                                 <p>
-                                                    Zip Code : {{$userInfo->zipCode}}
+                                                    {{__("message.Zipcode")}} : {{$userInfo->zipCode}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->mainCompany != null)
                                                 <p>
-                                                    Main Company : {{$userInfo->mainCompany}}
+                                                    {{__("message.MainCompany")}} : {{$userInfo->mainCompany}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->institutionEmail != null)
                                                 <p>
-                                                    Institution Email : {{$userInfo->institutionEmail}}
+                                                    {{__("message.InstitutionEmail")}} : {{$userInfo->institutionEmail}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->phone != null)
                                                 <p>
-                                                    phone : {{$userInfo->phone}}
+                                                    {{__("message.Tel")}} : {{$userInfo->phone}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->fax != null)
                                                 <p>
-                                                    Fax : {{$userInfo->fax}}
+                                                    {{__("message.Fax")}} : {{$userInfo->fax}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->institution != null)
                                                 <p>
-                                                    Institution : {{$userInfo->institution}}
+                                                    {{__("message.Institution")}} : {{$userInfo->institution}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->education != null)
                                                 <p>
-                                                    education : {{$userInfo->institution}}
+                                                    {{__("message.Education")}} : {{$userInfo->education}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->countryStudy != null)
                                                 <p>
-                                                    countryStudy : {{$userInfo->countryStudy}}
+                                                    {{__("message.CountryStudy")}} : {{$userInfo->countryStudy}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->InterestedDegree != null)
                                                 <p>
-                                                    interestedDegree : {{$userInfo->InterestedDegree}}
+                                                    {{__("message.InterestedDegree")}} : {{$userInfo->InterestedDegree}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->InterestedField != null)
                                                 <p>
-                                                    interestedField : {{$userInfo->InterestedField}}
+                                                    {{__("message.InterestedField")}} : {{$userInfo->InterestedField}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->languageOfStudy != null)
                                                 <p>
-                                                    languageOfStudy : {{$userInfo->languageOfStudy}}
+                                                    {{__("message.LanguageOfStudy")}} : {{$userInfo->languageOfStudy}}
                                                 </p>
                                             @endif
 
 
                                             @if ($userInfo->onlineDegreeProgram != null)
                                                 <p>
-                                                    onlineDegreeProgram : {{$userInfo->onlineDegreeProgram}}
+                                                    {{__("message.OnlineDegreeProgram")}} : {{$userInfo->onlineDegreeProgram}}
                                                 </p>
                                             @endif
 
                                             @if ($userInfo->interestedScholarShip != null)
                                                 <p>
-                                                    interestedScholarShip : {{$userInfo->interestedScholarShip}}
+                                                    {{__("message.InterestedScholarShip")}} : {{$userInfo->interestedScholarShip}}
                                                 </p>
                                             @endif
+
+
+                                            @if ($userInfo->currentLevelOfEducation != null)
+                                                <p>
+                                                    {{__("message.CurrentLevelOfEducation")}} : {{$userInfo->currentLevelOfEducation}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->position != null)
+                                                <p>
+                                                    {{__("message.Position")}} : {{$userInfo->currentLevelOfEducation}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->admissionSemester != null)
+                                                <p>
+                                                    {{__("message.AdmissionSemester")}} : {{$userInfo->admissionSemester}}
+                                                </p>
+                                            @endif
+
+
+                                            @if ($userInfo->professionInterestedToApply != null)
+                                                <p>
+                                                    {{__("message.ProfessionInterestedToApply")}} : {{$userInfo->professionInterestedToApply}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->organization != null)
+                                                <p>
+                                                    {{__("message.Organization")}} : {{$userInfo->organization}}
+                                                </p>
+                                            @endif
+
+
+                                            @if ($userInfo->InterNationalPrograms != null)
+                                                <p>
+                                                    {{__("message.InternationalPrograms")}} : {{$userInfo->InterNationalPrograms}}
+                                                </p>
+                                            @endif
+
+
+                                            @if ($userInfo->website != null)
+                                                <p>
+                                                    {{__("message.WebSite")}} : {{$userInfo->website}}
+                                                </p>
+                                            @endif
+
+
+
+                                            @if ($userInfo->tel != null)
+                                                <p>
+                                                    {{__("message.Tel")}} : {{$userInfo->tel}}
+                                                </p>
+                                            @endif
+
+                                            @if ($userInfo->profile != null)
+                                                <p>
+                                                    {{__("message.Profile")}} : {{$userInfo->profile}}
+                                                </p>
+                                            @endif
+
+
+
+
+
 
 
 

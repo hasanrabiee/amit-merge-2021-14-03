@@ -74,7 +74,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <!-- Traffic sources -->
-                        <div class="card card-admin" style="background-color:rgba(168,168,168,0.5);color: white">
+                        <div class="card card-admin" style="background-color:#006B63;color: white">
                             <div class="card-header header-elements-inline">
 
                                 <div class="header-elements">
@@ -90,7 +90,7 @@
                                         <label for=""><h6>{{__("message.BackgroundPicture")}}</h6></label>
                                         <input type="file" class="form-control-file" name="SigninBackground">
                                         @if (\App\Site::first()->SigninBackground != null)
-                                            <span class="text-success">Uploaded</span>
+                                            <span class="text-success">{{__("message.Uploaded")}}</span>
                                         @endif
                                     </div>
                                     <div class="form-group">
@@ -98,7 +98,7 @@
                                         <input type="text" class="form-control" name="ExhabitionTitle" value="{{$Site->ExhabitionTitle}}">
                                     </div>
                                     <div class="form-group">
-                                        <input type="submit" class="btn btn-success w-100" value="Save">
+                                        <input type="submit" class="btn btn-success w-100" value="{{__("message.Save")}}" style="background-color: #01B5A8">
                                     </div>
                                 </form>
                             </div>

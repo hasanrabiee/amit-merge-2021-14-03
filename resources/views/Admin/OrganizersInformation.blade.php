@@ -59,14 +59,14 @@
             <div class="row">
                 <div class="col-xl-12">
                     <!-- Traffic sources -->
-                    <div class="card card-admin" style="background-color:rgba(168,168,168,0.5);color: white">
+                    <div class="card card-admin" style="background-color:#006B63;color: white">
                         <div class="card-header header-elements-inline">
 
                             <div class="header-elements">
                             </div>
                         </div>
                         <div class="card-body">
-                            <h5>Organizers</h5>
+                            <h5>{{__("message.Organizers")}}</h5>
                             <form class="w-100" method="post" action="{{route('Admin.OrganizersPost')}}"
                                   enctype="multipart/form-data">
                                 @csrf
@@ -86,27 +86,27 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="">Firstname:</label>
+                                            <label for="">{{__("message.fn")}}:</label>
                                             <input type="text" class="form-control" name="firstname">
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="">Surname:</label>
+                                            <label for="">{{__("message.ln")}}:</label>
                                             <input type="text" class="form-control" name="surname">
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="">Phone Number:</label>
+                                            <label for="">{{__("message.Phone")}}:</label>
                                             <input type="text" class="form-control" name="phoneNumber">
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="">Email:</label>
+                                            <label for="">{{__("message.Email")}}:</label>
                                             <input type="text" class="form-control" name="email">
                                         </div>
                                     </div>
 
-                                    <input type="submit" value="Add to List" class="btn btn-success w-100">
+                                    <input type="submit" value="{{__("message.AddToList")}}" class="btn btn-success w-100">
 
                                 </div>
 
@@ -114,7 +114,7 @@
 
                             <div class="row">
                                 <div class="col-md-4" style="border-right: 2px solid white">
-                                    <h3 class="text-white">Organizers Names</h3>
+                                    <h3 class="text-white">{{__("message.OrganizerNames")}}</h3>
 
                                     @foreach($Organizers as $Organizer)
 
@@ -145,10 +145,10 @@
                                             </div>
                                             <div class="col-md-7">
                                                 <div class="ml-md-3 mt-md-3 text-white">
-                                                    <p>FirstName: {{\App\Organizer::find($OrganizerID)->firstname}}</p>
-                                                    <p>Surname: {{\App\Organizer::find($OrganizerID)->surname}}</p>
-                                                    <p>PhoneNumber: {{\App\Organizer::find($OrganizerID)->phoneNumber}}</p>
-                                                    <p>Email: {{\App\Organizer::find($OrganizerID)->email}}</p>
+                                                    <p>{{__("message.fn")}}: {{\App\Organizer::find($OrganizerID)->firstname}}</p>
+                                                    <p>{{__("message.ln")}}: {{\App\Organizer::find($OrganizerID)->surname}}</p>
+                                                    <p>{{__("message.Phone")}}: {{\App\Organizer::find($OrganizerID)->phoneNumber}}</p>
+                                                    <p>{{__("message.Email")}}: {{\App\Organizer::find($OrganizerID)->email}}</p>
                                                 </div>
                                             </div>
                                         </div>

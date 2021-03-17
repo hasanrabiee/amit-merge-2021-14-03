@@ -307,17 +307,17 @@
                                                     <div class="form-group">
                                                         <p class="text-left">{{__('message.BoothBodyColor')}}<br></p>
                                                         <input class="form-control" type="color" name="Color2"
-                                                               value="{{$Booth->Color2}}" id="Color2">
+                                                               value="{{$Booth->Color2}}" id="Color2" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <p class="text-left">{{__('message.BoothHeaderColor')}}<br></p>
                                                         <input class="form-control" type="color" name="Color1"
-                                                               value="{{$Booth->Color1}}" id="Color1">
+                                                               value="{{$Booth->Color1}}" id="Color1" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <p class="text-left">{{__('message.BoothTextColor')}}</p>
                                                         <input class="form-control" type="color" name="WebSiteColor"
-                                                               value="{{$Booth->WebSiteColor}}" id="WebSiteColor">
+                                                               value="{{$Booth->WebSiteColor}}" id="WebSiteColor" required>
                                                     </div>
 
                                                 </div>
@@ -345,8 +345,7 @@
                                                 <div class="modal-body">
                                                     <div class="form-group">
                                                         <p class="text-left">{{__('message.BoothHeaderName')}}<br></p>
-                                                        <input class="form-control" type="text" name="HeaderName" id="HeaderName"
-
+                                                        <input class="form-control" type="text" name="HeaderName" id="HeaderName" required=""
                                                                value="{{$Booth->HeaderName}}"
                                                                placeholder="Max Characters 22" maxlength="22">
 
@@ -358,7 +357,7 @@
 
                                                         <textarea maxlength="300" name="Description"
                                                                   class="form-control" id="Description"
-                                                                  placeholder="Max Characters 300">{{$Booth->Description ?? old('Description')}}</textarea>
+                                                                  placeholder="Max Characters 300" required>{{$Booth->Description ?? old('Description')}}</textarea>
 
                                                     </div>
 
@@ -1048,11 +1047,12 @@
             var a = document.getElementById('Color1').value;
             var b = document.getElementById('Color2').value;
             var c = document.getElementById('WebSiteColor').value;
-            var d = document.getElementById('HeaderName').value;
-            var e = document.getElementById('Description').value;
+            var d = "ddasdas";
+            var e = document.getElementById('HeaderName').value;
             // var f = document.getElementById('test').value;
 
             if (a == null || a == "", b == null || b == "", c == null || c == "", d == null || d == "" , e == null || e == ""){
+
                 Swal.fire({
                     icon: 'error',
                     title: '{{__('message.PleaseFillAllFields')}}',

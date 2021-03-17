@@ -77,7 +77,7 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <!-- Traffic sources -->
-                            <div class="card" style="background-color:rgba(54,54,54,0.65);color: white;height: 630px">
+                            <div class="card" style="background-color:#006B63;color: white;height: 630px">
                                 <div class="card-header header-elements-inline">
 
                                     <div class="header-elements">

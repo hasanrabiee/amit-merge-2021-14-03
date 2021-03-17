@@ -41,7 +41,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="text-dark">Speaker Information</h4>
+                <h4 class="text-dark">{{__("message.SpeakerInformation")}}</h4>
                 <button type="button" class="close" data-dismiss="modal"
                         aria-label="Close">
                     <span aria-hidden="true">×</span></button>
@@ -53,39 +53,39 @@
 
                     <div class="form-group">
                         <label for="">
-                            Username:
+                            {{__("message.UserNamee")}}:
                         </label>
                         <input name="UserName" type="text" class="form-control">
                         <input name="cid" type="hidden" value="{{\request()->has('cid') ? \request()->cid : ''}}" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="">
-                            Nickname:
+                            {{__("message.fn")}}:
                         </label>
                         <input name="Name" type="text" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="">
-                            Email:
+                            {{__("message.Email")}}:
                         </label>
                         <input name="email" type="email" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="">
-                            Password
+                            {{__("message.password")}}:
                         </label>
                         <input name="password" type="password" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="">
-                            Password Confirmation
+                            {{__("message.passwordConfrimation")}}:
                         </label>
                         <input name="password_confirmation" type="password" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
 
-                    <button class="btn btn-success w-100">Save</button>
+                    <button class="btn btn-success w-100">{{__("message.Save")}}</button>
                     <button class="btn btn-light btn-block"
                             data-dismiss="modal" type="button">
                         {{__('message.Close')}}
@@ -130,7 +130,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <!-- Traffic sources -->
-                        <div class="card" style="background-color:rgba(168,168,168,0.5);color: white">
+                        <div class="card" style="background-color:#006B63;color: white">
                             <div class="card-header header-elements-inline">
                                 <div class="header-elements">
                                 </div>
@@ -147,7 +147,7 @@
 
                                         <input type="hidden" name="sid" value="{{\request()->sid}}">
 
-                                        <h4 class="text-dark">Edit Speaker Information</h4>
+                                        <h4 class="text-dark">{{__("message.Edit")}} {{__("message.SpeakerInformation")}}</h4>
 
                                         <row>
 
@@ -159,32 +159,32 @@
 
                                                         <div class="form-group">
                                                             <label for="">
-                                                                Username:
+                                                                {{__("message.UserName")}}:
                                                             </label>
                                                             <input name="UserName" value="{{$current_speakers->UserName ?? ''}}" type="text" class="form-control">
                                                             <input name="cid" type="hidden" value="{{\request()->has('cid') ? \request()->cid : ''}}" class="form-control">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="">
-                                                                Nickname:
+                                                                {{__("message.fn")}}:
                                                             </label>
                                                             <input name="Name" value="{{$current_speakers->Name ?? ''}}" type="text" class="form-control">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="">
-                                                                Email:
+                                                                {{__("message.email")}}:
                                                             </label>
                                                             <input name="email" value="{{$current_speakers->email ?? ''}}" type="email" class="form-control">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="">
-                                                                Password
+                                                                {{__("message.password")}}
                                                             </label>
                                                             <input name="password" placeholder="Optional: leave empty to have the current password" type="password" class="form-control">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="">
-                                                                Password Confirmation
+                                                                {{__("message.passwordConfrimation")}}
                                                             </label>
                                                             <input name="password_confirmation" placeholder="confirm password if filled" type="password" class="form-control">
                                                         </div>
@@ -255,7 +255,7 @@
 
 
                                                                 <div class="form-group">
-                                                                    <label for=""><h3>Conference Title</h3></label>
+                                                                    <label for=""><h3>{{__("message.ConferenceTitle")}}</h3></label>
                                                                     <input name="title" value="{{isset($current_conference->title) ? $current_conference->title : ''}}" type="text" class="form-control">
                                                                     <input name="date" type="hidden" value="{{\request()->day}}" class="form-control">
                                                                 </div>
@@ -264,7 +264,7 @@
                                                                 <div class="form-group mt-2">
                                                                     <label for="">
                                                                         <h3>
-                                                                            Add Conference Abstract
+                                                                            {{__("message.AddConferenceAbstract")}}
                                                                         </h3>
                                                                     </label>
                                                                     <textarea name="abstract" type="text" class="form-control"
@@ -279,14 +279,14 @@
 
 
 
-                                                                    <h4 class="mt-md-3">Selected Conference Speakers</h4>
+                                                                    <h4 class="mt-md-3">{{__("message.SelectedConferenceSpeakers")}}</h4>
                                                                     <div class=" w-100" style="height: 238px;overflow-y: auto">
                                                                         <table
                                                                             class="table table-hover table-bordered table-light text-center">
                                                                             <thead>
-                                                                            <th>Speaker Email</th>
-                                                                            <th>Edit</th>
-                                                                            <th>Delete</th>
+                                                                                <th>{{__("message.SpeakerEmail")}}</th>
+                                                                                <th>{{__("message.Edit")}}</th>
+                                                                                <th>{{__("message.Delete")}}</th>
                                                                             </thead>
                                                                             <tbody>
 
@@ -320,7 +320,7 @@
                                                                     <button type="button"
                                                                             onclick="$('#AddSpeaker').modal('show')"
                                                                             class="btn btn-primary w-100" data-toggle="modal"
-                                                                            data-target="#myModal">Add Speaker To List
+                                                                            data-target="#myModal">{{__("message.AddSpeakerToList")}}
                                                                     </button>
 
 
@@ -334,7 +334,7 @@
                                                         {{--                                    Requested Conference--}}
 
                                                         <div class="col-md-6">
-                                                            <h4 class="">Requested Conference</h4>
+                                                            <h4 class="">{{__("message.RequestedConference")}}</h4>
                                                             <div class="bg-white p-2"
                                                                  style="height: 270px;margin-top:22px;overflow-y: auto">
 
@@ -368,16 +368,16 @@
                                         @if (\request()->has('cid'))
                                             <input type="hidden" name="update" value="1">
                                             <input type="hidden" name="cid" value="{{\request()->cid}}">
-                                            <button type="submit" class="btn btn-success w-100 mt-2">
+                                            <button type="submit" class="btn btn-success w-100 mt-2" style="background-color: #01B5A8">
 
-                                                Update Conference Information
+                                                {{__("message.UpdateConferenceInformation")}}
                                                 <i class="fa fa-pencil"></i>
 
                                             </button>
                                         @else
-                                            <button type="submit" class="btn btn-success w-100 mt-2">
+                                            <button type="submit" class="btn btn-success w-100 mt-2" style="background-color: #01B5A8">
 
-                                                Create Conference
+                                                {{__("message.CreateConference")}}
                                                 <i class="fa fa-plus"></i>
 
                                             </button>

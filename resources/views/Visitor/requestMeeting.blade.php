@@ -42,7 +42,7 @@
                 <div>
                     <br>
                     <p style="font-size: 36px;color: white" class="">
-                        Request For Meeting to {{$company->CompanyName}}
+                        {{__("message.RequestForMeeting")}} {{$company->CompanyName}}
                     </p>
                 </div>
             </div>
@@ -53,10 +53,11 @@
         <div class="row">
             <div class="col-md-5 mt-4">
                 <h3>
-                    PLEASE SELECT A DATE AND TIME FOR ZOOM MEETING
+                    {{__("message.SelectDateZoom")}}
                 </h3>
                 <p style="font-size: 16px;">
-                    You will be able to see your request status <br> in your website panel at meeting section
+                     <br>
+                    {{__("message.WebsitePanelMeeting")}}
                 </p>
 
             </div>
@@ -64,7 +65,7 @@
                 <div class="container-fluid p-0 m-0" style="height: 100vh;background-color:#242B2E;">
                     <div class="p-2">
                         <h3 class="text-white">
-                            Dates
+                            {{__("message.Date")}}
                         </h3>
                         <p>
 
@@ -102,7 +103,7 @@
             </div>
             <div class="col-md-4 mt-md-4">
                 <h3>
-                    Please Select Your Meeting Time
+                   {{__("message.SelectYourMeetingTime")}}
                 </h3>
                 <div class="row">
                     <div class="col-md-6 text-center">
@@ -179,4 +180,40 @@
 
 @endsection
 
+
+@section("js")
+
+
+    <script>
+
+        $(".btn-success").on("click", function (e){
+
+            e.preventDefault()
+            const urlToRedirect = e.currentTarget.getAttribute('href'); //use currentTarget because the click may be on the nested i tag and not a tag causing the href to be empty
+
+
+            var result = Swal.fire({
+                title: 'Note: Are You Sure?',
+                showDenyButton: true,
+                showCancelButton: false,
+                confirmButtonText: `Yes`,
+                denyButtonText: `No`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire('Saved!', '', 'success')
+                    window.location = urlToRedirect
+                    return true
+                } else if (result.isDenied) {
+                    Swal.fire('Changes are not saved', '', 'error')
+                    return false
+                }
+            })
+
+
+
+        })
+
+    </script>
+
+    @endsection
 

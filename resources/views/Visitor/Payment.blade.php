@@ -58,7 +58,7 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <!-- Traffic sources -->
-                            <div class="card" style="background-color:rgba(54,54,54,0.65);color: white;height: 570px">
+                            <div class="card" style="background-color:#006B63;color: white;height: 570px">
                                 <div class="card-header header-elements-inline">
 
                                     <div class="header-elements">
@@ -86,7 +86,7 @@
                                                 <div class="alert alert-success">
                                                     <p class="">
                                                         <strong>{{__('message.Paid')}}</strong></p>
-                                                    <h3>Thank you ! Your Payment has been received</h3>
+                                                    <h3>{{__("message.ThankYouPayment")}}</h3>
                                                 </div>
                                             @endif
                                         </div>
@@ -94,7 +94,7 @@
                                         <div class="col-12 mt-3">
                                             <div class="text-center">
                                                 <p style="font-size: 18px;">
-                                                    About Payment
+                                                    {{__("message.Payment")}}
                                                 </p>
                                             </div>
                                         </div>
